@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageView, ActiveModal, ProjectItem } from './types';
+import { useLang } from './i18n/LangContext';
 import { Navbar } from './components/Navbar';
 import { MenuOverlay } from './components/MenuOverlay';
 import { HeroSection } from './components/HeroSection';
@@ -21,6 +22,7 @@ export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [toastText, setToastText] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
+  const { t } = useLang();
 
   // Hook para animaciones y observadores de intersección y parallax
   useScrollAnimations(currentView);
@@ -116,7 +118,7 @@ export const App: React.FC = () => {
 
       {/* Marca vertical lateral estilo editorial Robb Owen */}
       <div className="side-brand" aria-hidden="true">
-        <span>&copy; MMXXVI. Gwneud yn Ne Cymru.</span>
+        <span>{t.sideBrand}</span>
       </div>
 
       {/* Barra de navegación superior fija */}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLang } from '../i18n/LangContext';
 
 interface NavbarProps {
   onOpenMenu: () => void;
@@ -11,6 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenContact,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { lang, t, toggleLang } = useLang();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="main-nav">
-      {/* Izquierda: Logo geométrico Robb Owen + Divisor + MENU */}
+      {/* Izquierda: Logo geométrico + Divisor + MENU */}
       <div className="nav-left">
         <button
           className="nav-logo-btn"
@@ -31,13 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={onOpenMenu}
           aria-label="Abrir menú de navegación"
         >
-          {/* SVG Geométrico Robb Owen: Dos triángulos superpuestos con acento cyan */}
-          <svg
-            className="nav-logo-icon"
-            viewBox="0 0 56 30"
-            fill="none"
-          >
-            {/* Triángulo izquierdo con relleno cyan */}
+          <svg className="nav-logo-icon" viewBox="0 0 56 30" fill="none">
             <polygon
               points="4,26 22,6 40,26"
               fill="#aadcec"
@@ -45,7 +41,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               strokeWidth="2.2"
               strokeLinejoin="round"
             />
-            {/* Triángulo derecho superpuesto */}
             <polygon
               points="20,26 36,6 52,26"
               fill="transparent"
@@ -53,25 +48,32 @@ export const Navbar: React.FC<NavbarProps> = ({
               strokeWidth="2.2"
               strokeLinejoin="round"
             />
-            {/* Línea base */}
             <line
-              x1="2"
-              y1="26"
-              x2="54"
-              y2="26"
+              x1="2" y1="26" x2="54" y2="26"
               stroke="#682ae9"
               strokeWidth="2.2"
               strokeLinecap="round"
             />
           </svg>
-
           <span className="nav-divider" aria-hidden="true">|</span>
-          <span className="nav-menu-label">MENU</span>
+          <span className="nav-menu-label">{t.nav.menu}</span>
         </button>
       </div>
 
-      {/* Derecha: Icono de globo de diálogo + HIRE ME */}
+      {/* Derecha: Toggle de idioma + Icono de globo de diálogo + HIRE ME */}
       <div className="nav-right">
+        {/* Toggle ESP / ING */}
+        <button
+          className="nav-lang-toggle"
+          onClick={toggleLang}
+          aria-label={lang === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+          title={lang === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+        >
+          <span className={`nav-lang-option ${lang === 'en' ? 'active' : ''}`}>ING</span>
+          <span className="nav-lang-sep" aria-hidden="true">/</span>
+          <span className={`nav-lang-option ${lang === 'es' ? 'active' : ''}`}>ESP</span>
+        </button>
+
         <a
           href="#contacto"
           className="nav-hire-link"
@@ -95,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
-          <span className="nav-hire-label">HIRE ME</span>
+          <span className="nav-hire-label">{t.nav.hireMe}</span>
         </a>
       </div>
     </header>

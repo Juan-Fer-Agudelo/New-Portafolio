@@ -1,17 +1,19 @@
 import React from 'react';
 import { PageView } from '../types';
+import { useLang } from '../i18n/LangContext';
 
 interface HomeFooterProps {
   onNavigate: (view: PageView, hash?: string) => void;
 }
 
 export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
+  const { t } = useLang();
+  const f = t.footer;
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <p className="footer-copyright">
-          &copy; MMXXVI. Portafolio de Juan. Diseñado y construido con precisión artesanal en Medellín, Colombia.
-        </p>
+        <p className="footer-copyright">{f.copyright}</p>
         <div className="footer-links">
           <a
             href="#hero"
@@ -21,7 +23,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >
-            Subir al Inicio
+            {f.scrollTop}
           </a>
           <span style={{ color: 'var(--color-muted)' }}>&bull;</span>
           <a
@@ -31,7 +33,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
               document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Sobre Mí
+            {f.about}
           </a>
           <span style={{ color: 'var(--color-muted)' }}>&bull;</span>
           <a
@@ -41,7 +43,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
               document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Proyectos
+            {f.projects}
           </a>
           <span style={{ color: 'var(--color-muted)' }}>&bull;</span>
           <a
@@ -63,7 +65,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
               document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Contacto
+            {f.contact}
           </a>
         </div>
       </div>

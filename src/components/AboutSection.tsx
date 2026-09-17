@@ -1,24 +1,26 @@
 import React from 'react';
+import { useLang } from '../i18n/LangContext';
 
 interface AboutSectionProps {
   onOpenEnfoque: () => void;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenEnfoque }) => {
+  const { t } = useLang();
+  const a = t.about;
+
   return (
     <section id="about" className="section-reveal">
       <div className="about-inner">
         <h2 className="about-heading animate-on-scroll">
-          Trabajemos juntos<span className="dot">.</span>
+          {a.heading}<span className="dot">.</span>
         </h2>
 
-        {/* Línea corta horizontal en teal (~50px de ancho, 3px de alto) */}
         <div className="about-teal-line animate-on-scroll" data-delay="1"></div>
 
         <p className="about-description animate-on-scroll" data-delay="2">
-          Desde diseño de interacción hasta sistemas de diseño escalables, aplicaciones de página
-          única hasta algo más experimental con WebGL. Ayudo a personas increíbles a construir
-          proyectos web ambiciosos pero accesibles — <strong>entre más atrevido, mejor</strong>.
+          {a.description}
+          <strong>{a.boldPart}</strong>.
         </p>
 
         <div className="animate-on-scroll" data-delay="3">
@@ -27,7 +29,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenEnfoque }) => 
               <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
             </svg>
             <span className="btn-content">
-              <span>Sobre mi enfoque</span>
+              <span>{a.btnLabel}</span>
               <svg
                 width="16"
                 height="16"
