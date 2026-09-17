@@ -512,7 +512,7 @@
 
       .hero-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
         gap: 56px;
         align-items: center;
         width: 100%;
@@ -615,26 +615,6 @@
         overflow: visible;
       }
 
-      .hero-text-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-        pointer-events: none;
-      }
-
-      .hero-text-overlay .hero-title {
-        text-align: center;
-        font-size: clamp(64px, 8vw, 120px);
-        line-height: 1.2;
-        max-width: 90%;
-      }
-
       /* Franja decorativa de rayas diagonales Robb Owen */
       .hero-avatar-backdrop-stripes {
         position: absolute;
@@ -651,7 +631,27 @@
         );
         border: 1.5px solid rgba(162, 220, 234, 0.55);
         pointer-events: none;
-        z-index: 0;
+        z-index: 1;
+      }
+
+      .hero-text-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        pointer-events: none;
+      }
+
+      .hero-text-overlay .hero-title {
+        text-align: center;
+        font-size: clamp(64px, 8vw, 120px);
+        line-height: 1.2;
+        max-width: 90%;
       }
 
       .avatar-wrap {
@@ -659,7 +659,7 @@
         position: relative;
         width: 100%;
         height: 100%;
-        z-index: 1;
+        z-index: 5;
         overflow: visible;
       }
 
