@@ -6,49 +6,52 @@ export const HeroSection: React.FC = () => {
     <section id="hero">
       <div className="page-container hero-container">
         <div className="hero-grid">
-          {/* Columna Izquierda: Texto Principal Robb Owen */}
-          <div className="hero-text-col">
-            <h1 className="hero-title">
-              <span className="hero-line">
-                <span className="hero-word" style={{ '--w-idx': 0 } as React.CSSProperties}>
-                  Hi,
-                </span>
-                &nbsp;
-                <span className="hero-word" style={{ '--w-idx': 1 } as React.CSSProperties}>
-                  my
-                </span>
-              </span>
-              <br />
-              <span className="hero-line">
-                <span className="hero-word" style={{ '--w-idx': 2 } as React.CSSProperties}>
-                  name
-                </span>
-                &nbsp;
-                <span className="hero-word" style={{ '--w-idx': 3 } as React.CSSProperties}>
-                  is
-                </span>
-                &nbsp;
-                <span className="hero-word" style={{ '--w-idx': 4 } as React.CSSProperties}>
-                  <strong>Juan</strong>
-                  <span className="dot">.</span>
-                </span>
-              </span>
-            </h1>
-
-            <p className="hero-subtitle">
-              I'm an <strong>independent creative developer</strong> from{' '}
-              <br className="hero-sub-br" />
-              Abergavenny, South Wales.
-            </p>
-          </div>
-
-          {/* Columna Derecha: Avatar Animado Interactivo */}
+          {/* Avatar + Texto Superpuesto */}
           <div className="hero-illustration-col">
             <div className="hero-avatar-stage" id="hero-avatar-container">
               {/* Franja de rayas diagonales Robb Owen */}
               <div className="hero-avatar-backdrop-stripes" aria-hidden="true"></div>
               <RobbAvatar />
+              
+              {/* Texto superpuesto sobre el avatar */}
+              <div className="hero-text-overlay">
+                <h1 className="hero-title">
+                  <span className="hero-line">
+                    <span className="hero-word" style={{ '--w-idx': 0 } as React.CSSProperties}>
+                      Hi,
+                    </span>
+                    &nbsp;
+                    <span className="hero-word" style={{ '--w-idx': 1 } as React.CSSProperties}>
+                      my
+                    </span>
+                  </span>
+                  <br />
+                  <span className="hero-line">
+                    <span className="hero-word" style={{ '--w-idx': 2 } as React.CSSProperties}>
+                      name
+                    </span>
+                    &nbsp;
+                    <span className="hero-word" style={{ '--w-idx': 3 } as React.CSSProperties}>
+                      is
+                    </span>
+                    &nbsp;
+                    <span className="hero-word" style={{ '--w-idx': 4 } as React.CSSProperties}>
+                      <strong>Juan</strong>
+                      <span className="dot">.</span>
+                    </span>
+                  </span>
+                </h1>
+              </div>
             </div>
+          </div>
+
+          {/* Columna Derecha: Subtítulo */}
+          <div className="hero-text-col">
+            <p className="hero-subtitle">
+              I'm an <strong>independent creative developer</strong> from{' '}
+              <br className="hero-sub-br" />
+              Abergavenny, South Wales.
+            </p>
           </div>
         </div>
       </div>
