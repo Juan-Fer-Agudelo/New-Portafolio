@@ -21,7 +21,7 @@ export const translations = {
     },
 
     // Side brand
-    sideBrand: '© MMXXVI. Made in South Wales.',
+    sideBrand: '© MMXXVI. Made in Medellin, Colombia.',
 
     // About
     about: {
