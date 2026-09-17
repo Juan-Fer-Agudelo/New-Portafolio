@@ -40,48 +40,62 @@ export const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === '#work') {
-        setCurrentView('work');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        if (currentView === 'work' && hash) {
-          setCurrentView('home');
-          setTimeout(() => {
-            const target = document.querySelector(hash);
-            target?.scrollIntoView({ behavior: 'smooth' });
-          }, 100);
-        }
+      if (hash === '#work' || hash === '#proyectos') {
+        setCurrentView('home');
+        setTimeout(() => {
+          const target = document.querySelector('#proyectos');
+          target?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else if (hash) {
+        setCurrentView('home');
+        setTimeout(() => {
+          const target = document.querySelector(hash);
+          target?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
     };
 
     if (window.location.hash === '#work') {
-      setCurrentView('work');
+      setCurrentView('home');
+      setTimeout(() => {
+        const target = document.querySelector('#proyectos');
+        target?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
+  }, []);
 
   const handleNavigate = (view: PageView, hash?: string) => {
+    if (view === 'work' || hash === '#work' || hash === '#proyectos') {
+      setCurrentView('home');
+      window.location.hash = '#proyectos';
+      setTimeout(() => {
+        const el = document.querySelector('#proyectos');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+
     setCurrentView(view);
-    if (view === 'work') {
-      window.location.hash = '#work';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (hash) {
+      window.location.hash = hash;
+      setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
     } else {
-      if (hash) {
-        window.location.hash = hash;
-        setTimeout(() => {
-          const el = document.querySelector(hash);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        window.location.hash = '';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 

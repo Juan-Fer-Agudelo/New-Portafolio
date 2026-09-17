@@ -4,19 +4,20 @@
       :root {
         --bg: #f4f9fc;
         --bg-main: #f4f9fc;             /* Fondo principal off-white ligeramente azulado */
-        --color-primary: #2D1B69;       /* Púrpura profundo para texto principal, líneas, bordes */
-        --color-accent: #4ECDC4;        /* Teal / cyan para puntos y detalles activos */
-        --color-btn-border: #7f00e0;    /* Color de los bordes de los botones: #7f00e0 */
-        --color-body: #1B1464;          /* Azul oscuro para párrafos y lecturas */
-        --color-muted: #6B7B8D;         /* Gris azulado para subtítulos y metadatos */
-        --color-pattern-bg: #C5E3E8;    /* Celeste suave con opacidad baja */
-        --color-border-subtle: rgba(45, 27, 105, 0.12);
+        --color-primary: #0f1b61;       /* Azul marino profundo original de Robb Owen */
+        --color-accent: #73bbc5;        /* Teal / cyan original de Robb Owen */
+        --color-purple: #682ae9;        /* Púrpura eléctrico de Robb Owen */
+        --color-btn-border: #682ae9;    /* Color de los bordes de los botones: #682ae9 */
+        --color-body: #0f1b61;          /* Azul oscuro para párrafos y lecturas */
+        --color-muted: #53647f;         /* Gris azulado para subtítulos y metadatos */
+        --color-pattern-bg: #aadcec;    /* Celeste suave con opacidad baja */
+        --color-border-subtle: rgba(15, 27, 97, 0.12);
         --beard: #addded;               /* Color de la barba y vello facial */
         --stubble: #addded;
 
-        --font-heading: 'Playfair Display', Georgia, serif;
-        --font-slab: 'Zilla Slab', Georgia, serif;
-        --font-body: 'Work Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-heading: 'Bitter', Georgia, serif;
+        --font-slab: 'Bitter', Georgia, serif;
+        --font-body: 'Bitter', Georgia, serif;
       }
 
       *, *::before, *::after {
@@ -47,11 +48,11 @@
         transition: background-color 0.4s ease;
       }
 
-      /* Modo Work (#fff7f7 según solicitud y capturas de Robb Owen) */
+      /* Modo Work: Mantiene la paleta unificada del sitio (Navy, Cyan, Purple, Off-White) */
       html.theme-work,
       body.theme-work {
-        background-color: #fff7f7 !important;
-        --bg-main: #fff7f7;
+        background-color: var(--bg-main) !important;
+        --bg-main: #f4f9fc;
       }
 
       ::selection {
@@ -274,6 +275,44 @@
         }
       }
 
+      /* Botón original Robb Owen con interior de rayas diagonales y borde púrpura (#682ae9) */
+      .btn-striped {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #682ae9;
+        border-radius: 6px;
+        background: repeating-linear-gradient(
+          -45deg,
+          #f4f9fc,
+          #f4f9fc 3px,
+          rgba(170, 220, 236, 0.45) 3px,
+          rgba(170, 220, 236, 0.45) 7px
+        );
+        color: #682ae9;
+        font-family: var(--font-heading);
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        padding: 12px 28px;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+      }
+
+      .btn-striped:hover {
+        background: #682ae9;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(104, 42, 233, 0.25);
+        transform: translateY(-1px);
+      }
+
+      .btn-striped:active {
+        transform: translateY(1px);
+      }
+
       /* Estado normal: Borde redondeado (pill), 2px sólido púrpura (#7f00e0), fondo transparente, texto en itálica */
       .btn-outline {
         position: relative;
@@ -402,15 +441,17 @@
          ========================================================================== */
       .section-reveal {
         opacity: 0;
-        transform: translateY(60px);
-        transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1), transform 0.95s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(40px);
+        transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
         will-change: opacity, transform;
       }
 
       .section-reveal.visible,
+      .section-reveal.revealed,
+      .section-reveal.in-view,
       .section-reveal.section-revealed {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1 !important;
+        transform: translateY(0) !important;
       }
 
       /* ==========================================================================
@@ -418,14 +459,16 @@
          ========================================================================== */
       .animate-on-scroll {
         opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        transform: translateY(30px);
+        transition: opacity 0.65s ease-out, transform 0.65s ease-out;
         will-change: opacity, transform;
       }
 
-      .animate-on-scroll.visible {
-        opacity: 1;
-        transform: translateY(0);
+      .animate-on-scroll.visible,
+      .animate-on-scroll.in-view,
+      .animate-on-scroll.revealed {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
       }
 
       /* Delays escalonados especificados */
@@ -1018,6 +1061,10 @@
         transition: color 0.3s ease;
       }
 
+      .hero-scroll-label .scroll-accent {
+        color: var(--color-accent);
+      }
+
       .hero-scroll-indicator:hover .hero-scroll-label {
         color: var(--color-primary);
       }
@@ -1041,7 +1088,7 @@
         width: 1px;
         height: 0;
         opacity: 0;
-        background-color: rgba(45, 27, 105, 0.35);
+        background-color: rgba(15, 27, 97, 0.25);
         margin: 14px auto 0;
         animation: drawScrollLine 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
       }
@@ -1054,9 +1101,15 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        /* Gran espacio en blanco deliberado que genera anticipación */
-        padding-top: 140px;
-        padding-bottom: 140px;
+        padding-top: 120px;
+        padding-bottom: 120px;
+      }
+
+      .section-vertical-line {
+        width: 1px;
+        height: 120px;
+        background-color: rgba(15, 27, 97, 0.25);
+        margin: 0 0 54px 0;
       }
 
       .about-inner {
@@ -1065,74 +1118,175 @@
 
       .about-heading {
         font-family: var(--font-heading);
-        font-weight: 400;
-        font-size: clamp(40px, 5.2vw, 62px);
+        font-weight: 700;
+        font-size: clamp(42px, 5.2vw, 64px);
         line-height: 1.15;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.015em;
         color: var(--color-primary);
         margin-bottom: 24px;
       }
 
       .about-teal-line {
-        width: 50px;
+        width: 44px;
         height: 3px;
         background-color: var(--color-accent);
-        margin-bottom: 36px;
-        border-radius: 2px;
+        margin-bottom: 32px;
+        border-radius: 1.5px;
       }
 
       .about-description {
         font-family: var(--font-body);
         font-weight: 400;
-        font-size: clamp(17px, 1.7vw, 19px);
-        line-height: 1.8;
+        font-size: clamp(18px, 1.8vw, 21px);
+        line-height: 1.75;
         color: var(--color-muted);
-        max-width: 600px;
-        margin-bottom: 44px;
+        max-width: 660px;
+        margin-bottom: 40px;
       }
 
       .about-description strong {
-        font-weight: 600;
-        color: var(--color-body);
+        font-weight: 700;
+        color: var(--color-primary);
       }
 
       /* ==========================================================================
-         SECCIÓN 3: PROYECTOS / OPEN SOURCE
+         SECCIÓN 3: PROYECTOS / OPEN SOURCE (ESTILO EXACTO ROBB OWEN)
          ========================================================================== */
-      #proyectos {
-        padding-top: 120px;
-        padding-bottom: 120px;
+      .open-source-section {
+        padding: 120px 0 100px;
+        width: 100%;
       }
 
-      .projects-header-row {
+      .open-source-container {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+
+      .open-source-header-row {
         display: flex;
-        align-items: flex-start;
         justify-content: space-between;
-        gap: 32px;
-        margin-bottom: 40px;
-        position: relative;
+        align-items: flex-start;
+        gap: 48px;
+        margin-bottom: 72px;
       }
 
-      .projects-header-text {
-        max-width: 720px;
+      .open-source-header-text {
+        max-width: 620px;
       }
 
-      .projects-heading {
+      .open-source-heading {
         font-family: var(--font-heading);
-        font-weight: 400;
-        font-size: clamp(34px, 4.2vw, 48px);
-        line-height: 1.18;
-        letter-spacing: -0.015em;
+        font-size: clamp(38px, 4.5vw, 56px);
+        font-weight: 700;
         color: var(--color-primary);
-        margin-bottom: 18px;
+        line-height: 1.15;
+        margin-bottom: 20px;
       }
 
-      .projects-subtext {
+      .open-source-subtext {
         font-family: var(--font-body);
-        font-size: clamp(16px, 1.5vw, 18px);
-        line-height: 1.7;
+        font-size: clamp(17px, 1.6vw, 19px);
+        line-height: 1.75;
         color: var(--color-muted);
-        max-width: 640px;
+      }
+
+      .open-source-stripes-box {
+        width: 320px;
+        height: 125px;
+        background: repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 4px,
+          rgba(170, 220, 236, 0.5) 4px,
+          rgba(170, 220, 236, 0.5) 8px
+        );
+        border: 1.5px dashed rgba(170, 220, 236, 0.8);
+        flex-shrink: 0;
+      }
+
+      .open-source-projects-list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .open-source-item {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 64px;
+        align-items: center;
+        padding: 44px 0;
+      }
+
+      .open-source-art-col {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+
+      .open-source-art-col .project-svg-art {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+      }
+
+      .open-source-info-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: 660px;
+      }
+
+      .open-source-title {
+        font-family: var(--font-heading);
+        font-size: clamp(34px, 3.8vw, 46px);
+        font-weight: 700;
+        color: var(--color-primary);
+        line-height: 1.15;
+        margin-bottom: 20px;
+      }
+
+      .open-source-desc {
+        font-family: var(--font-body);
+        font-size: clamp(17px, 1.6vw, 19px);
+        line-height: 1.75;
+        color: var(--color-muted);
+        margin-bottom: 16px;
+      }
+
+      .open-source-action {
+        margin-top: 16px;
+      }
+
+      .open-source-divider {
+        width: 100%;
+        height: 1px;
+        background: rgba(15, 27, 97, 0.12);
+        margin: 28px 0;
+      }
+
+      @media (max-width: 860px) {
+        .open-source-header-row {
+          flex-direction: column;
+          gap: 28px;
+          margin-bottom: 48px;
+        }
+
+        .open-source-stripes-box {
+          width: 100%;
+          height: 80px;
+        }
+
+        .open-source-item {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding: 32px 0;
+        }
+
+        .open-source-container {
+          padding: 0 24px;
+        }
       }
 
       /* Rectángulo decorativo con patrón de puntos a la derecha del heading */
@@ -1810,8 +1964,8 @@
       }
 
       body.theme-work .navbar.scrolled {
-        background: rgba(255, 247, 247, 0.94) !important;
-        border-bottom: 1px solid rgba(255, 140, 163, 0.2);
+        background: rgba(244, 249, 252, 0.94) !important;
+        border-bottom: 1px solid rgba(15, 27, 97, 0.1);
       }
 
       /* Work Hero: "About my work." */
@@ -1836,13 +1990,13 @@
       }
 
       .pink-dot {
-        color: #ff8ca3;
+        color: var(--color-accent);
       }
 
       .work-pink-bar {
         width: 52px;
         height: 3.5px;
-        background-color: #ff8ca3;
+        background-color: var(--color-purple);
         border-radius: 2px;
         margin-bottom: 36px;
       }
@@ -1862,7 +2016,7 @@
       }
 
       .work-dashed {
-        text-decoration: underline dashed #ff8ca3;
+        text-decoration: underline dashed var(--color-accent);
         text-underline-offset: 5px;
         text-decoration-thickness: 2px;
       }
@@ -1951,8 +2105,8 @@
         border-radius: 50%;
         background: repeating-linear-gradient(
           -45deg,
-          #ffd7df,
-          #ffd7df 2px,
+          rgba(170, 220, 236, 0.65),
+          rgba(170, 220, 236, 0.65) 2px,
           transparent 2px,
           transparent 9px
         );
@@ -1988,7 +2142,7 @@
         top: 20px;
         width: 240px;
         height: 320px;
-        background-image: radial-gradient(#ffb4c2 1.8px, transparent 1.8px);
+        background-image: radial-gradient(rgba(170, 220, 236, 0.65) 1.8px, transparent 1.8px);
         background-size: 16px 16px;
         z-index: 0;
         opacity: 0.9;

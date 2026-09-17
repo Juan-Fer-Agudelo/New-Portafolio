@@ -3,17 +3,17 @@ import { PageView } from '../types';
 
 export function useScrollAnimations(currentView: PageView) {
   useEffect(() => {
-    // 1. Reveal and animate-on-scroll observers
+    // 1. Reveal and animate-on-scroll observers with forward-looking rootMargin
     const observerOptions: IntersectionObserverInit = {
       root: null,
-      rootMargin: '0px 0px -50px 0px',
-      threshold: 0.1,
+      rootMargin: '100px 0px 50px 0px',
+      threshold: 0.01,
     };
 
     const animateObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
+          entry.target.classList.add('in-view', 'visible', 'revealed');
           observer.unobserve(entry.target);
         }
       });
@@ -23,12 +23,12 @@ export function useScrollAnimations(currentView: PageView) {
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
+            entry.target.classList.add('revealed', 'visible', 'in-view', 'section-revealed');
             observer.unobserve(entry.target);
           }
         });
       },
-      { root: null, rootMargin: '0px 0px -30px 0px', threshold: 0.05 }
+      { root: null, rootMargin: '120px 0px 50px 0px', threshold: 0.01 }
     );
 
     const btnObserver = new IntersectionObserver(
@@ -40,38 +40,51 @@ export function useScrollAnimations(currentView: PageView) {
           }
         });
       },
-      { root: null, rootMargin: '0px 0px -20px 0px', threshold: 0.2 }
+      { root: null, rootMargin: '50px 0px 50px 0px', threshold: 0.05 }
     );
 
     const sepObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
+            entry.target.classList.add('in-view', 'visible');
             observer.unobserve(entry.target);
           }
         });
       },
-      { root: null, rootMargin: '0px 0px -20px 0px', threshold: 0.2 }
+      { root: null, rootMargin: '50px 0px 50px 0px', threshold: 0.05 }
     );
 
+    const checkVisibility = () => {
+      const windowH = window.innerHeight;
+      document.querySelectorAll('.section-reveal, .animate-on-scroll').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < windowH + 300 && rect.bottom > -100) {
+          el.classList.add('in-view', 'visible', 'revealed', 'section-revealed');
+        }
+      });
+    };
+
     const observeAll = () => {
-      document.querySelectorAll('.animate-on-scroll:not(.in-view)').forEach((el) => {
+      checkVisibility();
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
         animateObserver.observe(el);
       });
-      document.querySelectorAll('.section-reveal:not(.revealed)').forEach((el) => {
+      document.querySelectorAll('.section-reveal').forEach((el) => {
         sectionObserver.observe(el);
       });
-      document.querySelectorAll('.btn-outline:not(.drawn)').forEach((el) => {
+      document.querySelectorAll('.btn-outline').forEach((el) => {
         btnObserver.observe(el);
       });
-      document.querySelectorAll('.project-separator:not(.in-view)').forEach((el) => {
+      document.querySelectorAll('.project-separator').forEach((el) => {
         sepObserver.observe(el);
       });
     };
 
-    // Small delay to allow React DOM mounting
-    const timer = setTimeout(observeAll, 100);
+    // Immediate check and after React mounting
+    checkVisibility();
+    const timer = setTimeout(observeAll, 60);
+    const fallbackTimer = setTimeout(checkVisibility, 400);
 
     // 2. Parallax effect for decorative elements
     let ticking = false;

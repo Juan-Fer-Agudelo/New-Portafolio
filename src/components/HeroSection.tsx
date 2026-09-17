@@ -1,54 +1,51 @@
 import React from 'react';
 import { RobbAvatar } from './RobbAvatar';
-import { useLang } from '../i18n/LangContext';
 
 export const HeroSection: React.FC = () => {
-  const { t } = useLang();
-  const h = t.hero;
-
   return (
     <section id="hero">
       <div className="page-container hero-container">
         <div className="hero-grid">
-          {/* Columna Izquierda: Texto Principal */}
+          {/* Columna Izquierda: Texto Principal Robb Owen */}
           <div className="hero-text-col">
             <h1 className="hero-title">
               <span className="hero-line">
                 <span className="hero-word" style={{ '--w-idx': 0 } as React.CSSProperties}>
-                  {h.greeting.split(' ')[0]}
+                  Hi,
                 </span>
                 &nbsp;
                 <span className="hero-word" style={{ '--w-idx': 1 } as React.CSSProperties}>
-                  {h.greeting.split(' ')[1]}
+                  my
                 </span>
               </span>
               <br />
               <span className="hero-line">
                 <span className="hero-word" style={{ '--w-idx': 2 } as React.CSSProperties}>
-                  {h.nameLine.split(' ')[0]}
+                  name
                 </span>
                 &nbsp;
                 <span className="hero-word" style={{ '--w-idx': 3 } as React.CSSProperties}>
-                  {h.nameLine.split(' ')[1]}
+                  is
                 </span>
                 &nbsp;
                 <span className="hero-word" style={{ '--w-idx': 4 } as React.CSSProperties}>
-                  <strong>{h.name}</strong>
+                  <strong>Robb</strong>
                   <span className="dot">.</span>
                 </span>
               </span>
             </h1>
 
             <p className="hero-subtitle">
-              {h.subtitle} <strong>{h.role}</strong>{' '}
+              I'm an <strong>independent creative developer</strong> from{' '}
               <br className="hero-sub-br" />
-              {h.location}
+              Abergavenny, South Wales.
             </p>
           </div>
 
           {/* Columna Derecha: Avatar Animado Interactivo */}
           <div className="hero-illustration-col">
             <div className="hero-avatar-stage" id="hero-avatar-container">
+              {/* Franja de rayas diagonales Robb Owen */}
               <div className="hero-avatar-backdrop-stripes" aria-hidden="true"></div>
               <RobbAvatar />
             </div>
@@ -56,7 +53,7 @@ export const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Indicador de scroll */}
+      {/* Centro-abajo: Indicador de scroll con línea vertical */}
       <a
         href="#about"
         className="hero-scroll-indicator"
@@ -66,7 +63,9 @@ export const HeroSection: React.FC = () => {
           document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <span className="hero-scroll-label">{h.scroll}</span>
+        <span className="hero-scroll-label">
+          SCRO<span className="scroll-accent">LL</span>
+        </span>
         <div className="hero-scroll-line" id="hero-scroll-line"></div>
       </a>
     </section>

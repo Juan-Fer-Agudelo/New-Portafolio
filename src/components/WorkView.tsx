@@ -58,7 +58,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 xmlns="http://www.w3.org/2000/svg"
               >
                 {/* Cuerda y clavija para el pizarrón */}
-                <circle cx="170" cy="35" r="4" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2.2" />
+                <circle cx="170" cy="35" r="4" fill="#aadcec" stroke="#2D1B69" strokeWidth="2.2" />
                 <line x1="170" y1="39" x2="85" y2="85" stroke="#2D1B69" strokeWidth="2" strokeLinecap="round" />
                 <line x1="170" y1="39" x2="255" y2="85" stroke="#2D1B69" strokeWidth="2" strokeLinecap="round" />
 
@@ -66,12 +66,12 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 <rect x="75" y="85" width="190" height="135" rx="7" fill="#ffffff" stroke="#2D1B69" strokeWidth="2.4" />
                 {/* Cabecera del pizarrón */}
                 <line x1="75" y1="102" x2="265" y2="102" stroke="#2D1B69" strokeWidth="1.8" />
-                <circle cx="87" cy="94" r="2.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.2" />
-                <circle cx="95" cy="94" r="2.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.2" />
-                <circle cx="103" cy="94" r="2.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.2" />
+                <circle cx="87" cy="94" r="2.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.2" />
+                <circle cx="95" cy="94" r="2.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.2" />
+                <circle cx="103" cy="94" r="2.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.2" />
 
                 {/* Wireframe: tarjeta izquierda con flecha punteada */}
-                <rect x="88" y="112" width="34" height="32" rx="3" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.8" />
+                <rect x="88" y="112" width="34" height="32" rx="3" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.8" />
                 <line x1="94" y1="120" x2="114" y2="120" stroke="#2D1B69" strokeWidth="1.5" strokeLinecap="round" />
                 <line x1="94" y1="127" x2="110" y2="127" stroke="#2D1B69" strokeWidth="1.5" strokeLinecap="round" />
                 <path d="M105,145 L105,160" stroke="#2D1B69" strokeWidth="1.8" strokeDasharray="2.5,2.5" strokeLinecap="round" />
@@ -81,7 +81,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
                 {/* Wireframe: tarjeta central principal con placeholder X */}
                 <rect x="130" y="112" width="80" height="85" rx="4" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" />
-                <rect x="130" y="112" width="80" height="36" rx="4" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.6" />
+                <rect x="130" y="112" width="80" height="36" rx="4" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.6" />
                 <line x1="130" y1="112" x2="210" y2="148" stroke="#2D1B69" strokeWidth="1.5" />
                 <line x1="130" y1="148" x2="210" y2="112" stroke="#2D1B69" strokeWidth="1.5" />
                 <line x1="138" y1="158" x2="202" y2="158" stroke="#2D1B69" strokeWidth="2" strokeLinecap="round" />
@@ -90,13 +90,13 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
                 {/* Wireframe: controles derechos (sliders, buttons, toggle) */}
                 <rect x="218" y="116" width="36" height="6" rx="3" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.5" />
-                <circle cx="238" cy="119" r="4.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.6" />
+                <circle cx="238" cy="119" r="4.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.6" />
                 <rect x="218" y="130" width="36" height="6" rx="3" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.5" />
-                <circle cx="226" cy="133" r="4.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.6" />
+                <circle cx="226" cy="133" r="4.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.6" />
 
                 <circle cx="226" cy="150" r="5.5" stroke="#2D1B69" strokeWidth="1.6" fill="none" />
                 <polygon points="224,147 229,150 224,153" fill="#2D1B69" />
-                <circle cx="244" cy="150" r="5.5" stroke="#2D1B69" strokeWidth="1.6" fill="#ffd7df" />
+                <circle cx="244" cy="150" r="5.5" stroke="#2D1B69" strokeWidth="1.6" fill="#aadcec" />
 
                 {/* Toggle switch */}
                 <rect x="220" y="164" width="24" height="11" rx="5.5" fill="#2D1B69" stroke="#2D1B69" strokeWidth="1.5" />
@@ -107,28 +107,28 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
                 {/* Pila de libros a la izquierda con taza de café */}
                 <rect x="55" y="248" width="58" height="14" rx="2" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" />
-                <rect x="52" y="234" width="62" height="14" rx="2" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" />
+                <rect x="52" y="234" width="62" height="14" rx="2" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" />
                 <rect x="58" y="222" width="50" height="12" rx="2" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.8" />
 
                 {/* Taza de café con vapor */}
                 <path d="M72,204 L88,204 L86,222 L74,222 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
                 <path d="M88,208 C93,208 95,212 95,215 C95,218 92,219 86,219" fill="none" stroke="#2D1B69" strokeWidth="1.8" />
-                <path d="M77,196 Q80,190 77,184" fill="none" stroke="#ff8ca3" strokeWidth="1.6" strokeLinecap="round" />
-                <path d="M83,197 Q86,191 83,185" fill="none" stroke="#ff8ca3" strokeWidth="1.6" strokeLinecap="round" />
+                <path d="M77,196 Q80,190 77,184" fill="none" stroke="#73bbc5" strokeWidth="1.6" strokeLinecap="round" />
+                <path d="M83,197 Q86,191 83,185" fill="none" stroke="#73bbc5" strokeWidth="1.6" strokeLinecap="round" />
 
                 {/* Libro horizontal en el centro-derecha */}
                 <rect x="165" y="248" width="55" height="14" rx="2" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" />
-                <line x1="170" y1="255" x2="210" y2="255" stroke="#ffd7df" strokeWidth="2" />
+                <line x1="170" y1="255" x2="210" y2="255" stroke="#aadcec" strokeWidth="2" />
 
                 {/* Maceta con planta aloe/suculenta a la derecha */}
                 <path d="M235,234 L265,234 L260,262 L240,262 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                <line x1="237" y1="245" x2="263" y2="245" stroke="#ff8ca3" strokeWidth="2" />
+                <line x1="237" y1="245" x2="263" y2="245" stroke="#73bbc5" strokeWidth="2" />
                 {/* Hojas de suculenta */}
-                <path d="M250,234 Q250,195 250,188 Q250,195 250,234" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
-                <path d="M247,234 Q235,212 228,205 Q239,215 248,234" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M253,234 Q265,212 272,205 Q261,215 252,234" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M244,234 Q226,225 218,218 Q234,225 246,234" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M256,234 Q274,225 282,218 Q266,225 254,234" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M250,234 Q250,195 250,188 Q250,195 250,234" fill="#aadcec" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
+                <path d="M247,234 Q235,212 228,205 Q239,215 248,234" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M253,234 Q265,212 272,205 Q261,215 252,234" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M244,234 Q226,225 218,218 Q234,225 246,234" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M256,234 Q274,225 282,218 Q266,225 254,234" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
               </svg>
             </div>
           </div>
@@ -147,15 +147,15 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
               >
                 <line x1="40" y1="262" x2="300" y2="262" stroke="#2D1B69" strokeWidth="2.5" strokeLinecap="round" />
 
-                <path d="M232,228 L262,228 L257,262 L237,262 Z" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
-                <line x1="235" y1="240" x2="259" y2="240" stroke="#ff8ca3" strokeWidth="2" />
+                <path d="M232,228 L262,228 L257,262 L237,262 Z" fill="#aadcec" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
+                <line x1="235" y1="240" x2="259" y2="240" stroke="#73bbc5" strokeWidth="2" />
                 <path d="M247,228 Q250,180 265,130" stroke="#2D1B69" strokeWidth="2.2" fill="none" strokeLinecap="round" />
                 <path d="M245,210 Q225,185 210,170" stroke="#2D1B69" strokeWidth="2" fill="none" strokeLinecap="round" />
                 <path d="M265,130 C290,105 310,135 295,165 C285,185 260,180 255,160 C250,140 255,135 265,130 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
-                <circle cx="282" cy="142" r="3" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.2" />
-                <ellipse cx="275" cy="155" rx="3.5" ry="2" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.2" />
+                <circle cx="282" cy="142" r="3" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.2" />
+                <ellipse cx="275" cy="155" rx="3.5" ry="2" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.2" />
 
-                <path d="M210,170 C195,145 220,130 235,148 C245,160 235,180 220,185 Z" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M210,170 C195,145 220,130 235,148 C245,160 235,180 220,185 Z" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
                 <circle cx="218" cy="156" r="2.5" fill="#ffffff" stroke="#2D1B69" strokeWidth="1" />
 
                 <polygon points="65,257 205,257 215,262 55,262" fill="#ffffff" stroke="#2D1B69" strokeWidth="2.2" strokeLinejoin="round" />
@@ -166,21 +166,21 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
                 <line x1="86" y1="162" x2="114" y2="162" stroke="#2D1B69" strokeWidth="2.2" strokeLinecap="round" />
                 <line x1="92" y1="172" x2="140" y2="172" stroke="#682ae9" strokeWidth="2" strokeLinecap="round" />
-                <line x1="92" y1="182" x2="128" y2="182" stroke="#ff8ca3" strokeWidth="2" strokeLinecap="round" />
+                <line x1="92" y1="182" x2="128" y2="182" stroke="#73bbc5" strokeWidth="2" strokeLinecap="round" />
                 <line x1="100" y1="192" x2="152" y2="192" stroke="#2D1B69" strokeWidth="2" strokeLinecap="round" />
                 <line x1="100" y1="202" x2="138" y2="202" stroke="#4ECDC4" strokeWidth="2" strokeLinecap="round" />
                 <line x1="86" y1="214" x2="108" y2="214" stroke="#2D1B69" strokeWidth="2.2" strokeLinecap="round" />
-                <line x1="86" y1="226" x2="130" y2="226" stroke="#ff8ca3" strokeWidth="2" strokeLinecap="round" />
+                <line x1="86" y1="226" x2="130" y2="226" stroke="#73bbc5" strokeWidth="2" strokeLinecap="round" />
                 <line x1="86" y1="236" x2="145" y2="236" stroke="#682ae9" strokeWidth="2" strokeLinecap="round" />
 
                 <polygon points="126,180 126,196 131,191 138,200 141,197 135,189 142,189" fill="#2D1B69" stroke="#ffffff" strokeWidth="1" strokeLinejoin="round" />
 
                 <rect x="175" y="188" width="65" height="48" rx="5" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" />
-                <rect x="175" y="188" width="65" height="14" rx="5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.6" />
+                <rect x="175" y="188" width="65" height="14" rx="5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.6" />
                 <circle cx="183" cy="195" r="2" fill="#2D1B69" />
                 <circle cx="189" cy="195" r="2" fill="#2D1B69" />
                 <line x1="182" y1="210" x2="228" y2="210" stroke="#2D1B69" strokeWidth="1.6" strokeLinecap="round" />
-                <line x1="182" y1="218" x2="218" y2="218" stroke="#ff8ca3" strokeWidth="1.6" strokeLinecap="round" />
+                <line x1="182" y1="218" x2="218" y2="218" stroke="#73bbc5" strokeWidth="1.6" strokeLinecap="round" />
                 <line x1="182" y1="226" x2="205" y2="226" stroke="#682ae9" strokeWidth="1.6" strokeLinecap="round" />
 
                 <path d="M280,244 L294,244 L292,262 L282,262 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.8" />
@@ -242,13 +242,13 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 {/* Cubo 3D Isométrico (arriba izquierda) */}
                 <g transform="translate(65, 80)">
                   <polygon points="25,5 48,18 48,46 25,33" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                  <polygon points="25,5 48,18 25,31 2,18" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                  <polygon points="25,5 48,18 25,31 2,18" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
                   <polygon points="2,18 25,31 25,59 2,46" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
                 </g>
 
                 {/* React Atom (centro izquierda) */}
                 <g transform="translate(75, 175)">
-                  <circle cx="25" cy="25" r="5.5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" />
+                  <circle cx="25" cy="25" r="5.5" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" />
                   <ellipse cx="25" cy="25" rx="24" ry="9" transform="rotate(30 25 25)" fill="none" stroke="#2D1B69" strokeWidth="1.8" />
                   <ellipse cx="25" cy="25" rx="24" ry="9" transform="rotate(-30 25 25)" fill="none" stroke="#2D1B69" strokeWidth="1.8" />
                   <ellipse cx="25" cy="25" rx="24" ry="9" transform="rotate(90 25 25)" fill="none" stroke="#2D1B69" strokeWidth="1.8" />
@@ -257,19 +257,19 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 {/* Vue V Logo (centro derecha) */}
                 <g transform="translate(225, 160)">
                   <polygon points="5,5 25,40 45,5 35,5 25,23 15,5" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
-                  <polygon points="15,5 25,23 35,5 29,5 25,12 21,5" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.8" strokeLinejoin="round" />
+                  <polygon points="15,5 25,23 35,5 29,5 25,12 21,5" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.8" strokeLinejoin="round" />
                 </g>
 
                 {/* Gota de agua / llama (arriba derecha) */}
                 <g transform="translate(235, 75)">
-                  <path d="M20,5 C20,5 34,22 34,34 C34,43 28,50 20,50 C12,50 6,43 6,34 C6,22 20,5 20,5 Z" fill="#ffd7df" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
+                  <path d="M20,5 C20,5 34,22 34,34 C34,43 28,50 20,50 C12,50 6,43 6,34 C6,22 20,5 20,5 Z" fill="#aadcec" stroke="#2D1B69" strokeWidth="2" strokeLinejoin="round" />
                   <path d="M20,18 C20,18 26,28 26,35 C26,40 23,43 20,43 C17,43 14,40 14,35 C14,28 20,18 20,18 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.5" strokeLinejoin="round" />
                 </g>
 
                 {/* Svelte estilizado (abajo derecha) */}
                 <g transform="translate(210, 230)">
                   <rect x="0" y="0" width="46" height="46" rx="12" fill="#ffffff" stroke="#2D1B69" strokeWidth="2" />
-                  <path d="M14,32 C12,27 16,23 23,22 C30,21 34,18 32,14 C30,10 24,10 20,13" fill="none" stroke="#ff8ca3" strokeWidth="2.6" strokeLinecap="round" />
+                  <path d="M14,32 C12,27 16,23 23,22 C30,21 34,18 32,14 C30,10 24,10 20,13" fill="none" stroke="#73bbc5" strokeWidth="2.6" strokeLinecap="round" />
                   <path d="M32,14 C34,19 30,23 23,24 C16,25 12,28 14,32 C16,36 22,36 26,33" fill="none" stroke="#2D1B69" strokeWidth="2.6" strokeLinecap="round" />
                 </g>
 
@@ -277,20 +277,20 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 <g transform="translate(145, 235)">
                   <path d="M12,8 C6,8 6,14 6,14 L6,20 L18,20 L18,22 L4,22 C4,22 0,22 0,28 C0,34 5,34 5,34 L10,34 L10,30 C10,26 14,26 14,26 L22,26 C22,26 26,26 26,22 L26,14 C26,8 20,8 12,8 Z" fill="#ffffff" stroke="#2D1B69" strokeWidth="1.8" strokeLinejoin="round" />
                   <circle cx="10" cy="12" r="1.5" fill="#2D1B69" />
-                  <path d="M22,38 C28,38 28,32 28,32 L28,26 L16,26 L16,24 L30,24 C30,24 34,24 34,18 C34,12 29,12 29,12 L24,12 L24,16 C24,20 20,20 20,20 L12,20 C12,20 8,20 8,24 L8,32 C8,38 14,38 22,38 Z" fill="#ffd7df" stroke="#2D1B69" strokeWidth="1.8" strokeLinejoin="round" />
+                  <path d="M22,38 C28,38 28,32 28,32 L28,26 L16,26 L16,24 L30,24 C30,24 34,24 34,18 C34,12 29,12 29,12 L24,12 L24,16 C24,20 20,20 20,20 L12,20 C12,20 8,20 8,24 L8,32 C8,38 14,38 22,38 Z" fill="#aadcec" stroke="#2D1B69" strokeWidth="1.8" strokeLinejoin="round" />
                   <circle cx="24" cy="34" r="1.5" fill="#2D1B69" />
                 </g>
 
                 {/* Tokens de sintaxis y operadores flotantes */}
                 <text x="135" y="140" fontFamily="monospace" fontSize="22" fontWeight="bold" fill="#2D1B69">{}</text>
-                <text x="175" y="175" fontFamily="monospace" fontSize="20" fontWeight="bold" fill="#ff8ca3">==</text>
+                <text x="175" y="175" fontFamily="monospace" fontSize="20" fontWeight="bold" fill="#73bbc5">==</text>
                 <text x="130" y="200" fontFamily="monospace" fontSize="18" fontWeight="bold" fill="#682ae9">!==</text>
                 <text x="265" y="130" fontFamily="monospace" fontSize="20" fontWeight="bold" fill="#2D1B69">=&gt;</text>
-                <text x="45" y="160" fontFamily="monospace" fontSize="19" fontWeight="bold" fill="#ff8ca3">++</text>
+                <text x="45" y="160" fontFamily="monospace" fontSize="19" fontWeight="bold" fill="#73bbc5">++</text>
                 <text x="85" y="255" fontFamily="monospace" fontSize="20" fontWeight="bold" fill="#2D1B69">[]</text>
                 <text x="155" y="105" fontFamily="monospace" fontSize="18" fontWeight="bold" fill="#682ae9">#</text>
                 <text x="45" y="225" fontFamily="monospace" fontSize="19" fontWeight="bold" fill="#2D1B69">&lt;/&gt;</text>
-                <text x="270" y="215" fontFamily="monospace" fontSize="18" fontWeight="bold" fill="#ff8ca3">--</text>
+                <text x="270" y="215" fontFamily="monospace" fontSize="18" fontWeight="bold" fill="#73bbc5">--</text>
               </svg>
             </div>
           </div>
@@ -341,8 +341,8 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
       <footer
         className="site-footer"
         style={{
-          borderTop: '1px solid #ffd7df',
-          backgroundColor: '#fff7f7',
+          borderTop: '1px solid #aadcec',
+          backgroundColor: '#f4f9fc',
           marginTop: '60px',
         }}
       >
@@ -360,9 +360,9 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 onNavigate('home', '#hero');
               }}
             >
-              &larr; Volver al Home (Azul)
+              &larr; Back to Home
             </a>
-            <span style={{ color: '#ff8ca3' }}>&bull;</span>
+            <span style={{ color: '#73bbc5' }}>&bull;</span>
             <a
               href="#contacto"
               className="work-footer-contact-btn"
