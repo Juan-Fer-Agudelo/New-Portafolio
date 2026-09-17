@@ -29,7 +29,7 @@ export const HeroSection: React.FC = () => {
                 </span>
                 &nbsp;
                 <span className="hero-word" style={{ '--w-idx': 4 } as React.CSSProperties}>
-                  <strong>Robb</strong>
+                  <strong>Juan</strong>
                   <span className="dot">.</span>
                 </span>
               </span>
