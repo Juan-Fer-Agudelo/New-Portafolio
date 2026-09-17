@@ -38,7 +38,7 @@ export const HeroSection: React.FC = () => {
             <p className="hero-subtitle">
               I'm an <strong>independent creative developer</strong> from{' '}
               <br className="hero-sub-br" />
-              Abergavenny, South Wales.
+              Medellin, Colombia.
             </p>
           </div>
 
