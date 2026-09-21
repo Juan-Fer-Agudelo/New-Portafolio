@@ -48,52 +48,47 @@ export const Modals: React.FC<ModalsProps> = ({
     });
   };
 
-  const openMailtoFallback = () => {
-    const mailtoUrl = `mailto:juanfeeragudelo475@gmail.com?subject=${encodeURIComponent(
-      emailForm.subject
-    )}&body=${encodeURIComponent(
-      `${emailForm.body}\n\n---\nDe: ${emailForm.name} (${emailForm.email})`
-    )}`;
-    window.location.href = mailtoUrl;
-  };
-
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSending) return;
 
-    // Si EmailJS está configurado, envía el correo directamente
-    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
-      setIsSending(true);
-      try {
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          {
-            name: emailForm.name,
-            email: emailForm.email,
-            title: emailForm.subject,
-            message: emailForm.body,
-            // Alias adicionales por si el template usa otros nombres
-            from_name: emailForm.name,
-            from_email: emailForm.email,
-            subject: emailForm.subject,
-          },
-          EMAILJS_PUBLIC_KEY
-        );
-        onClose();
-        resetForm();
-        onShowToast('¡Mensaje enviado con éxito! Te responderé pronto.');
-      } catch {
-        onShowToast('No se pudo enviar. Abriendo tu cliente de correo...');
-        openMailtoFallback();
-      } finally {
-        setIsSending(false);
-      }
-    } else {
-      // Sin configuración de EmailJS: usa mailto como respaldo
-      openMailtoFallback();
+    // Verifica que EmailJS esté configurado
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      onShowToast('Falta configurar EmailJS. Revisa el archivo .env');
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      const result = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: emailForm.name,
+          email: emailForm.email,
+          title: emailForm.subject,
+          message: emailForm.body,
+          // Alias adicionales por si el template usa otros nombres de variable
+          from_name: emailForm.name,
+          from_email: emailForm.email,
+          reply_to: emailForm.email,
+          subject: emailForm.subject,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+      console.log('EmailJS success:', result.status, result.text);
       onClose();
-      onShowToast('Abriendo tu cliente de correo...');
+      resetForm();
+      onShowToast('¡Mensaje enviado con éxito! Te responderé pronto.');
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      const errorMsg =
+        err && typeof err === 'object' && 'text' in err
+          ? String((err as { text: unknown }).text)
+          : 'Error desconocido';
+      onShowToast(`No se pudo enviar: ${errorMsg}`);
+    } finally {
+      setIsSending(false);
     }
   };
 
