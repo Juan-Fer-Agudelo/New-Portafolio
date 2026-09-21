@@ -11,6 +11,9 @@ export interface ProjectItem {
   installCode: string;
   githubUrl: string;
   techStack: string[];
+  organization?: string;
+  date?: string;
+  url?: string;
 }
 
 export interface WritingArticle {

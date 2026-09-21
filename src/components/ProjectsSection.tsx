@@ -1,11 +1,6 @@
 import React from 'react';
 import { ProjectItem } from '../types';
 import { PROJECTS_DATA } from '../data/portfolioData';
-import {
-  SynthwaveIllustration,
-  TornisIllustration,
-  RekishiIllustration,
-} from './ProjectIllustrations';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -17,121 +12,147 @@ interface ProjectsSectionProps {
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   onSelectProject,
+  searchQuery = '',
+  setSearchQuery,
+  isSearchOpen = false,
+  setIsSearchOpen,
 }) => {
-  const synthwave = PROJECTS_DATA.find((p) => p.id === 'synthwave') || PROJECTS_DATA[0];
-  const tornis = PROJECTS_DATA.find((p) => p.id === 'tornis') || PROJECTS_DATA[1];
-  const rekishi = PROJECTS_DATA.find((p) => p.id === 'rekishi') || PROJECTS_DATA[2];
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const filteredProjects = normalizedQuery
+    ? PROJECTS_DATA.filter((project) => {
+        const haystack = [
+          project.title,
+          project.type,
+          project.subtitle,
+          project.description,
+          project.organization ?? '',
+          ...project.techStack,
+        ]
+          .join(' ')
+          .toLowerCase();
+        return haystack.includes(normalizedQuery);
+      })
+    : PROJECTS_DATA;
 
   return (
     <section id="proyectos" className="section-reveal open-source-section">
       <div className="open-source-container">
-        {/* Cabecera de Open Source con texto a la izquierda y caja de rayas a la derecha */}
+        {/* Cabecera de la sección */}
         <div className="open-source-header-row animate-on-scroll">
           <div className="open-source-header-text">
             <h2 className="open-source-heading">
-              Open Source<span className="dot">.</span>
+              Mis Proyectos<span className="dot">.</span>
             </h2>
             <p className="open-source-subtext">
-              From time to time I like to release open source projects to help the wider
-              web development community. Below are two of my most popular releases.
+              Una selección de plataformas web, e-commerce, aplicaciones móviles,
+              soluciones de inteligencia artificial y proyectos de automatización que
+              he construido para clientes y empresas.
             </p>
           </div>
 
-          {/* Franja decorativa de rayas diagonales Robb Owen */}
+          {/* Franja decorativa de rayas diagonales */}
           <div className="open-source-stripes-box" aria-hidden="true"></div>
         </div>
 
+        {/* Buscador */}
+        {isSearchOpen && setSearchQuery && (
+          <div className="projects-search-wrap animate-on-scroll">
+            <input
+              id="search-input-field"
+              type="text"
+              className="projects-search-input"
+              placeholder="Busca por tecnología, nombre o categoría..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {setIsSearchOpen && (
+              <button
+                className="projects-search-close"
+                onClick={() => {
+                  setSearchQuery('');
+                  setIsSearchOpen(false);
+                }}
+                aria-label="Cerrar búsqueda"
+              >
+                &times;
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Lista de proyectos */}
         <div className="open-source-projects-list">
-          {/* Proyecto 1: SynthWave '84 */}
-          <article className="open-source-item animate-on-scroll">
-            <div className="open-source-art-col">
-              <SynthwaveIllustration />
-            </div>
-            <div className="open-source-info-col">
-              <h3 className="open-source-title">
-                SynthWave '84<span className="dot">.</span>
-              </h3>
-              <p className="open-source-desc">
-                I'm a big fan of Visual Studio Code, but when I couldn't find a colour
-                scheme I liked, I decided to roll my own. SynthWave '84 was the result.
-              </p>
-              <p className="open-source-desc">
-                Since I first posted about its development the theme has proven to be
-                wildly popular, passing two million downloads in October 2024.
-              </p>
-              <div className="open-source-action">
-                <button
-                  className="btn-striped"
-                  onClick={() => onSelectProject(synthwave)}
-                >
-                  Get SynthWave '84
-                </button>
-              </div>
-            </div>
-          </article>
+          {filteredProjects.length === 0 ? (
+            <p className="projects-no-results">
+              No se encontraron proyectos para "{searchQuery}".
+            </p>
+          ) : (
+            filteredProjects.map((project, idx) => (
+              <React.Fragment key={project.id}>
+                <article className="open-source-item project-card-item animate-on-scroll">
+                  <div className="project-card-header">
+                    <span className="project-card-number">{project.number}</span>
+                    <span className="project-card-type">{project.type}</span>
+                  </div>
 
-          {/* Divisor horizontal */}
-          <div className="open-source-divider" aria-hidden="true"></div>
+                  <div className="project-card-body">
+                    <h3 className="open-source-title">
+                      {project.title}
+                      <span className="dot">.</span>
+                    </h3>
 
-          {/* Proyecto 2: Tornis */}
-          <article className="open-source-item animate-on-scroll">
-            <div className="open-source-art-col">
-              <TornisIllustration />
-            </div>
-            <div className="open-source-info-col">
-              <h3 className="open-source-title">
-                Tornis<span className="dot">.</span>
-              </h3>
-              <p className="open-source-desc">
-                Tornis is a minimal JavaScript library that watches the state of your browser's
-                viewport, allowing you to respond whenever something changes.
-              </p>
-              <p className="open-source-desc">
-                Think of it as a data store for your viewport, giving you access to screen size,
-                mouse cursor position, scroll position, gyroscope and more.
-              </p>
-              <div className="open-source-action">
-                <button
-                  className="btn-striped"
-                  onClick={() => onSelectProject(tornis)}
-                >
-                  Get Tornis
-                </button>
-              </div>
-            </div>
-          </article>
+                    <div className="project-card-meta">
+                      {project.organization && (
+                        <span className="project-card-org">{project.organization}</span>
+                      )}
+                      {project.date && (
+                        <span className="project-card-date">{project.date}</span>
+                      )}
+                    </div>
 
-          {/* Divisor horizontal */}
-          <div className="open-source-divider" aria-hidden="true"></div>
+                    <p className="open-source-desc">{project.description}</p>
 
-          {/* Proyecto 3: Rekishi */}
-          <article className="open-source-item animate-on-scroll">
-            <div className="open-source-art-col">
-              <RekishiIllustration />
-            </div>
-            <div className="open-source-info-col">
-              <h3 className="open-source-title">
-                Rekishi<span className="dot">.</span>
-              </h3>
-              <p className="open-source-desc">
-                Rekishi is a minimal wrapper for the History API that provides additional
-                pub/sub functionality.
-              </p>
-              <p className="open-source-desc">
-                If you need to create dynamic transitions between different pages or different
-                types of content, then Rekishi can help.
-              </p>
-              <div className="open-source-action">
-                <button
-                  className="btn-striped"
-                  onClick={() => onSelectProject(rekishi)}
-                >
-                  Get Rekishi
-                </button>
-              </div>
-            </div>
-          </article>
+                    <div className="project-card-tech">
+                      {project.techStack.slice(0, 6).map((tech) => (
+                        <span key={tech} className="project-tech-tag">
+                          {tech}
+                        </span>
+                      ))}
+                      {project.techStack.length > 6 && (
+                        <span className="project-tech-tag project-tech-more">
+                          +{project.techStack.length - 6}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="open-source-action">
+                      <button
+                        className="btn-striped"
+                        onClick={() => onSelectProject(project)}
+                      >
+                        Ver detalles
+                      </button>
+                      {project.url && (
+                        <a
+                          className="project-card-visit"
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visitar sitio &rarr;
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+
+                {idx < filteredProjects.length - 1 && (
+                  <div className="open-source-divider" aria-hidden="true"></div>
+                )}
+              </React.Fragment>
+            ))
+          )}
         </div>
       </div>
     </section>

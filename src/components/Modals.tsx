@@ -185,20 +185,43 @@ export const Modals: React.FC<ModalsProps> = ({
               &times;
             </button>
           </div>
+          {(selectedProject?.organization || selectedProject?.date) && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '18px' }}>
+              {selectedProject?.organization && (
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: 'var(--color-primary)' }}>
+                  {selectedProject.organization}
+                </span>
+              )}
+              {selectedProject?.date && (
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--color-accent)', fontWeight: 600 }}>
+                  {selectedProject.date}
+                </span>
+              )}
+            </div>
+          )}
           <p id="detail-desc" style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
             {selectedProject?.details}
           </p>
-          <div style={{ background: 'rgba(197, 227, 232, 0.25)', border: '1px dashed var(--color-primary)', padding: '18px', marginBottom: '24px', borderRadius: '4px' }}>
-            <span style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: '8px' }}>
-              {md.installLabel}
-            </span>
-            <code id="detail-code" style={{ fontFamily: 'monospace', fontSize: '13px', color: 'var(--color-primary)' }}>
-              {selectedProject?.installCode}
-            </code>
-          </div>
-          {selectedProject?.githubUrl && (
+          {selectedProject?.techStack && selectedProject.techStack.length > 0 && (
+            <div style={{ marginBottom: '24px' }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: '12px' }}>
+                Stack Tecnológico
+              </span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {selectedProject.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    style={{ fontFamily: 'var(--font-body)', fontSize: '13px', fontWeight: 500, color: 'var(--color-body)', background: 'rgba(170, 220, 236, 0.28)', padding: '6px 12px', borderRadius: '6px' }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {selectedProject?.url && (
             <a
-              href={selectedProject.githubUrl}
+              href={selectedProject.url}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline drawn"
@@ -209,7 +232,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
               </svg>
               <span className="btn-content">
-                <span>{md.btnGithub}</span>
+                <span>Visitar sitio</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
