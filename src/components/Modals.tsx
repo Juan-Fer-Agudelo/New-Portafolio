@@ -314,6 +314,15 @@ export const Modals: React.FC<ModalsProps> = ({
               &times;
             </button>
           </div>
+          {selectedProject?.image && (
+            <div style={{ width: '100%', borderRadius: '10px', overflow: 'hidden', marginBottom: '20px', border: '1px solid var(--color-border-subtle)' }}>
+              <img
+                src={selectedProject.image}
+                alt={`Vista previa de ${selectedProject.title}`}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+              />
+            </div>
+          )}
           {(selectedProject?.organization || selectedProject?.date) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '18px' }}>
               {selectedProject?.organization && (

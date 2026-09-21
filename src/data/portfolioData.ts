@@ -1,4 +1,7 @@
 import { ProjectItem, WritingArticle } from '../types';
+import enhanceOg from '../assets/images/enhance-og.jpg';
+import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
+import peptidosOg from '../assets/images/peptidos-og.jpg';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
@@ -7,6 +10,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     type: 'PLATAFORMA WEB B2B/B2C',
     title: 'Enhance.Work',
     subtitle: 'Plataforma líder de empleos en medicina estética del sur de Florida',
+    image: enhanceOg,
     organization: 'Enhance.Work (South Florida, FL)',
     date: 'Julio 2026',
     url: 'https://enhance.work',
@@ -37,6 +41,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     type: 'PLATAFORMA WEB',
     title: 'Miami Bounce Company',
     subtitle: 'Plataforma de reservas para alquiler de casas inflables en South Miami',
+    image: miamiBounceOg,
     organization: 'Miami Bounce (South Miami, FL)',
     date: 'Junio 2026',
     url: 'https://miabounce.com/',
@@ -70,6 +75,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     type: 'E-COMMERCE',
     title: 'Péptidos Venezuela',
     subtitle: 'E-commerce de péptidos importados con protocolo clínico',
+    image: peptidosOg,
     organization: 'Peptidos Venezuela',
     date: 'Mayo 2026',
     url: 'https://peptidosvzla.com/',

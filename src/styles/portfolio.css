@@ -1304,6 +1304,28 @@
         padding: 40px 0;
       }
 
+      .project-card-image-wrap {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        border: 1.5px solid var(--color-border-subtle);
+        background: #ffffff;
+        box-shadow: 0 6px 24px rgba(15, 27, 97, 0.08);
+      }
+
+      .project-card-image {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .project-card-image-wrap:hover .project-card-image {
+        transform: scale(1.02);
+      }
+
       .project-card-header {
         display: flex;
         align-items: center;

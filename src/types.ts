@@ -14,6 +14,7 @@ export interface ProjectItem {
   organization?: string;
   date?: string;
   url?: string;
+  image?: string;
 }
 
 export interface WritingArticle {

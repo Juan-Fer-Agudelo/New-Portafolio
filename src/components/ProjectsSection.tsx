@@ -91,6 +91,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             filteredProjects.map((project, idx) => (
               <React.Fragment key={project.id}>
                 <article className="open-source-item project-card-item animate-on-scroll">
+                  {project.image && (
+                    <div className="project-card-image-wrap">
+                      <img
+                        src={project.image}
+                        alt={`Vista previa de ${project.title}`}
+                        className="project-card-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
                   <div className="project-card-header">
                     <span className="project-card-number">{project.number}</span>
                     <span className="project-card-type">{project.type}</span>
