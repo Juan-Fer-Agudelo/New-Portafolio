@@ -75,20 +75,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         {/* Links de Redes Sociales */}
         <div className="contact-social-grid animate-on-scroll" data-delay="3">
           <a
-            href="https://github.com/robb0wen"
+            href="https://github.com/Juan-Fer-Agudelo"
             target="_blank"
             rel="noopener noreferrer"
             className="social-link"
           >
             GITHUB &rarr;
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-link"
-          >
-            X / TWITTER &rarr;
           </a>
           <a
             href="https://linkedin.com"
@@ -97,14 +89,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             className="social-link"
           >
             LINKEDIN &rarr;
-          </a>
-          <a
-            href="https://codepen.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-link"
-          >
-            CODEPEN &rarr;
           </a>
         </div>
       </div>
