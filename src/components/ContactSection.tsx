@@ -9,24 +9,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   onOpenContactModal,
   onShowToast,
 }) => {
-  const handleCopyEmail = async () => {
-    const email = 'juanfeeragudelo475@gmail.com';
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        const input = document.createElement('input');
-        input.value = email;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand('copy');
-        document.body.removeChild(input);
-      }
-      onShowToast('Copied juanfeeragudelo475@gmail.com to clipboard!');
-    } catch {
-      onShowToast('Manual copy: juanfeeragudelo475@gmail.com');
-    }
-  };
+  void onShowToast;
 
   return (
     <section id="contacto" className="section-reveal">
@@ -50,12 +33,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             Send me a message
           </button>
 
-          {/* Pill para copiar correo rápidamente */}
+          {/* Pill que abre el modal de contacto */}
           <button
             className="email-copy-pill"
             id="copy-email-btn"
-            onClick={handleCopyEmail}
-            title="Click to copy email"
+            onClick={onOpenContactModal}
+            title="Escríbeme un correo"
           >
             <svg
               width="14"

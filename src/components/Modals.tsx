@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { ProjectItem, ActiveModal, PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
+
+// Configuración de EmailJS - Reemplaza con tus credenciales de https://www.emailjs.com/
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
 
 interface ModalsProps {
   activeModal: ActiveModal;
@@ -22,22 +28,70 @@ export const Modals: React.FC<ModalsProps> = ({
   isToastVisible,
 }) => {
   const [emailForm, setEmailForm] = useState({
+    name: '',
+    email: '',
     subject: 'Quiero desarrollar un proyecto contigo',
     body: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
   });
+  const [isSending, setIsSending] = useState(false);
   const { t } = useLang();
   const me = t.modals.enfoque;
   const md = t.modals.projectDetail;
   const toast = t.toast;
 
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const resetForm = () => {
+    setEmailForm({
+      name: '',
+      email: '',
+      subject: 'Quiero desarrollar un proyecto contigo',
+      body: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
+    });
+  };
+
+  const openMailtoFallback = () => {
     const mailtoUrl = `mailto:juanfeeragudelo475@gmail.com?subject=${encodeURIComponent(
       emailForm.subject
-    )}&body=${encodeURIComponent(emailForm.body)}`;
+    )}&body=${encodeURIComponent(
+      `${emailForm.body}\n\n---\nDe: ${emailForm.name} (${emailForm.email})`
+    )}`;
     window.location.href = mailtoUrl;
-    onClose();
-    onShowToast('Abriendo tu cliente de correo...');
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSending) return;
+
+    // Si EmailJS está configurado, envía el correo directamente
+    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
+      setIsSending(true);
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            from_name: emailForm.name,
+            from_email: emailForm.email,
+            subject: emailForm.subject,
+            message: emailForm.body,
+            to_email: 'juanfeeragudelo475@gmail.com',
+          },
+          EMAILJS_PUBLIC_KEY
+        );
+        onClose();
+        resetForm();
+        onShowToast('¡Mensaje enviado con éxito! Te responderé pronto.');
+      } catch {
+        onShowToast('No se pudo enviar. Abriendo tu cliente de correo...');
+        openMailtoFallback();
+      } finally {
+        setIsSending(false);
+      }
+    } else {
+      // Sin configuración de EmailJS: usa mailto como respaldo
+      openMailtoFallback();
+      onClose();
+      onShowToast('Abriendo tu cliente de correo...');
+    }
   };
 
   return (
@@ -118,9 +172,33 @@ export const Modals: React.FC<ModalsProps> = ({
             </button>
           </div>
           <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-muted)', lineHeight: 1.6, marginBottom: '22px' }}>
-            Escríbeme para desarrollar un proyecto juntos. Puedes editar el asunto y el mensaje antes de enviar.
+            Escríbeme para desarrollar un proyecto juntos. Completa tus datos, el asunto y el mensaje antes de enviar.
           </p>
           <form id="contact-form" onSubmit={handleContactSubmit}>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email-name">Tu nombre</label>
+              <input
+                type="text"
+                id="email-name"
+                className="form-input"
+                placeholder="¿Cómo te llamas?"
+                required
+                value={emailForm.name}
+                onChange={(e) => setEmailForm({ ...emailForm, name: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email-from">Tu correo</label>
+              <input
+                type="email"
+                id="email-from"
+                className="form-input"
+                placeholder="tucorreo@ejemplo.com"
+                required
+                value={emailForm.email}
+                onChange={(e) => setEmailForm({ ...emailForm, email: e.target.value })}
+              />
+            </div>
             <div className="form-group">
               <label className="form-label" htmlFor="email-subject">Asunto</label>
               <input
@@ -151,17 +229,18 @@ export const Modals: React.FC<ModalsProps> = ({
                 className="btn-outline drawn"
                 style={{ flex: 1, borderColor: 'var(--color-muted)', color: 'var(--color-muted)' }}
                 onClick={onClose}
+                disabled={isSending}
               >
                 <span className="btn-content">
                   <span>Cancelar</span>
                 </span>
               </button>
-              <button type="submit" className="btn-outline drawn" style={{ flex: 1 }}>
+              <button type="submit" className="btn-outline drawn" style={{ flex: 1 }} disabled={isSending}>
                 <svg className="btn-stroke-svg" aria-hidden="true">
                   <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
                 </svg>
                 <span className="btn-content">
-                  <span>Enviar</span>
+                  <span>{isSending ? 'Enviando...' : 'Enviar'}</span>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
