@@ -62,7 +62,7 @@ export const Modals: React.FC<ModalsProps> = ({
 
     setIsSending(true);
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
@@ -78,11 +78,9 @@ export const Modals: React.FC<ModalsProps> = ({
         },
         EMAILJS_PUBLIC_KEY
       );
-      console.log('EmailJS success:', result.status, result.text);
       resetForm();
       onEmailSuccess();
     } catch (err) {
-      console.error('EmailJS error:', err);
       const errorMsg =
         err && typeof err === 'object' && 'text' in err
           ? String((err as { text: unknown }).text)
