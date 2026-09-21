@@ -25,11 +25,11 @@ export const translations = {
 
     // About
     about: {
-      heading: "Let's work together",
+      heading: 'Mis proyectos',
       description:
-        'From interaction design to scalable design systems, single-page applications to something more experimental with WebGL. I help incredible people build ambitious but accessible web projects — ',
-      boldPart: 'the bolder the better',
-      btnLabel: 'About my approach',
+        'Desde diseño de interacciones hasta sistemas de diseño escalables, aplicaciones de una sola página hasta experiencias más experimentales con WebGL. Descubre mi experiencia y los proyectos web que he construido — ',
+      boldPart: 'ambiciosos pero accesibles',
+      btnLabel: 'Ver mis proyectos',
     },
 
     // Projects
