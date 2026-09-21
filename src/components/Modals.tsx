@@ -32,7 +32,7 @@ export const Modals: React.FC<ModalsProps> = ({
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:juanferagudelo475@gmail.com?subject=${encodeURIComponent(
+    const mailtoUrl = `mailto:juanfeeragudelo475@gmail.com?subject=${encodeURIComponent(
       emailForm.subject
     )}&body=${encodeURIComponent(emailForm.body)}`;
     window.location.href = mailtoUrl;
@@ -265,3 +265,4 @@ export const Modals: React.FC<ModalsProps> = ({
     </>
   );
 };
+

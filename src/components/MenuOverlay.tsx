@@ -138,7 +138,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           </a>
           {/* Email */}
           <a
-            href="mailto:juanferagudelo475@gmail.com"
+            href="mailto:juanfeeragudelo475@gmail.com"
             className="menu-social-icon"
             aria-label="Email"
             title="Email"
@@ -212,3 +212,4 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
     </div>
   );
 };
+

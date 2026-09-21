@@ -10,7 +10,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   onShowToast,
 }) => {
   const handleCopyEmail = async () => {
-    const email = 'hello@robbowen.digital';
+    const email = 'juanfeeragudelo475@gmail.com';
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(email);
@@ -22,9 +22,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         document.execCommand('copy');
         document.body.removeChild(input);
       }
-      onShowToast('Copied hello@robbowen.digital to clipboard!');
+      onShowToast('Copied juanfeeragudelo475@gmail.com to clipboard!');
     } catch {
-      onShowToast('Manual copy: hello@robbowen.digital');
+      onShowToast('Manual copy: juanfeeragudelo475@gmail.com');
     }
   };
 
@@ -68,7 +68,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
-            <span>hello@robbowen.digital</span>
+            <span>juanfeeragudelo475@gmail.com</span>
           </button>
         </div>
 
@@ -111,3 +111,4 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     </section>
   );
 };
+
