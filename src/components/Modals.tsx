@@ -319,7 +319,7 @@ export const Modals: React.FC<ModalsProps> = ({
               <img
                 src={selectedProject.image}
                 alt={`Vista previa de ${selectedProject.title}`}
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', display: 'block' }}
               />
             </div>
           )}
