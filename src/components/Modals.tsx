@@ -21,19 +21,23 @@ export const Modals: React.FC<ModalsProps> = ({
   toastText,
   isToastVisible,
 }) => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [emailForm, setEmailForm] = useState({
+    subject: 'Quiero desarrollar un proyecto contigo',
+    body: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
+  });
   const { t } = useLang();
   const me = t.modals.enfoque;
-  const mc = t.modals.contact;
   const md = t.modals.projectDetail;
   const toast = t.toast;
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
+    const mailtoUrl = `mailto:juanferagudelo475@gmail.com?subject=${encodeURIComponent(
+      emailForm.subject
+    )}&body=${encodeURIComponent(emailForm.body)}`;
+    window.location.href = mailtoUrl;
     onClose();
-    setFormData({ name: '', email: '', message: '' });
-    onShowToast(toast.formSuccess.replace('{name}', formData.name));
+    onShowToast('Abriendo tu cliente de correo...');
   };
 
   return (
@@ -107,55 +111,57 @@ export const Modals: React.FC<ModalsProps> = ({
         <div className="modal-card">
           <div className="modal-header-row">
             <h3 className="modal-title" id="contact-form-title">
-              {mc.title}<span className="dot">.</span>
+              Contáctame<span className="dot">.</span>
             </h3>
             <button className="modal-close-icon-btn" id="contact-modal-close-btn" onClick={onClose} aria-label="Cerrar modal">
               &times;
             </button>
           </div>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-muted)', lineHeight: 1.6, marginBottom: '22px' }}>
+            Escríbeme para desarrollar un proyecto juntos. Puedes editar el asunto y el mensaje antes de enviar.
+          </p>
           <form id="contact-form" onSubmit={handleContactSubmit}>
             <div className="form-group">
-              <label className="form-label" htmlFor="client-name">{mc.labelName}</label>
+              <label className="form-label" htmlFor="email-subject">Asunto</label>
               <input
                 type="text"
-                id="client-name"
+                id="email-subject"
                 className="form-input"
-                placeholder={mc.placeholderName}
+                placeholder="Escribe el asunto del correo"
                 required
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={emailForm.subject}
+                onChange={(e) => setEmailForm({ ...emailForm, subject: e.target.value })}
               />
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="client-email">{mc.labelEmail}</label>
-              <input
-                type="email"
-                id="client-email"
-                className="form-input"
-                placeholder={mc.placeholderEmail}
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="client-msg">{mc.labelMsg}</label>
+              <label className="form-label" htmlFor="email-body">Descripción</label>
               <textarea
-                id="client-msg"
+                id="email-body"
                 className="form-textarea"
-                placeholder={mc.placeholderMsg}
+                placeholder="Cuéntame sobre tu proyecto..."
                 required
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                rows={6}
+                value={emailForm.body}
+                onChange={(e) => setEmailForm({ ...emailForm, body: e.target.value })}
               ></textarea>
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '14px', marginTop: '24px' }}>
-              <button type="submit" className="btn-outline drawn" style={{ width: '100%' }}>
+              <button
+                type="button"
+                className="btn-outline drawn"
+                style={{ flex: 1, borderColor: 'var(--color-muted)', color: 'var(--color-muted)' }}
+                onClick={onClose}
+              >
+                <span className="btn-content">
+                  <span>Cancelar</span>
+                </span>
+              </button>
+              <button type="submit" className="btn-outline drawn" style={{ flex: 1 }}>
                 <svg className="btn-stroke-svg" aria-hidden="true">
                   <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
                 </svg>
                 <span className="btn-content">
-                  <span>{mc.btnSend}</span>
+                  <span>Enviar</span>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

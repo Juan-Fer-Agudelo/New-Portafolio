@@ -116,7 +116,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           </a>
           {/* Instagram */}
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/juanfer2351"
             target="_blank"
             rel="noopener noreferrer"
             className="menu-social-icon"
@@ -138,7 +138,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           </a>
           {/* GitHub */}
           <a
-            href="https://github.com/robb0wen"
+            href="https://github.com/Juan-Fer-Agudelo"
             target="_blank"
             rel="noopener noreferrer"
             className="menu-social-icon"
@@ -172,10 +172,15 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           </a>
           {/* Email */}
           <a
-            href="mailto:hola@juandev.co"
+            href="mailto:juanferagudelo475@gmail.com"
             className="menu-social-icon"
             aria-label="Email"
             title="Email"
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+              setTimeout(onOpenContact, 350);
+            }}
           >
             <svg
               viewBox="0 0 24 24"
