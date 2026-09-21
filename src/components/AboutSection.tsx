@@ -5,6 +5,12 @@ interface AboutSectionProps {
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenEnfoque }) => {
+  const handleVerProyectos = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const projectsSection = document.getElementById('proyectos');
+    projectsSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="about" className="section-reveal about-section">
       {/* Línea vertical decorativa superior que conecta con el scroll del hero */}
@@ -25,7 +31,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenEnfoque }) => 
         </p>
 
         <div className="about-actions animate-on-scroll" data-delay="3">
-          <button className="btn-striped" id="enfoque-btn" onClick={onOpenEnfoque}>
+          <button className="btn-striped" id="enfoque-btn" onClick={handleVerProyectos}>
             Ver mis proyectos
           </button>
         </div>
