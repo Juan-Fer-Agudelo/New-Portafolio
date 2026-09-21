@@ -185,6 +185,7 @@ export const App: React.FC = () => {
         onClose={() => setActiveModal('none')}
         onNavigate={handleNavigate}
         onShowToast={handleShowToast}
+        onEmailSuccess={() => setActiveModal('email-success')}
         toastText={toastText}
         isToastVisible={isToastVisible}
       />

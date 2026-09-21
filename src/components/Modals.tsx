@@ -14,6 +14,7 @@ interface ModalsProps {
   onClose: () => void;
   onNavigate: (view: PageView, hash?: string) => void;
   onShowToast: (msg: string) => void;
+  onEmailSuccess: () => void;
   toastText: string;
   isToastVisible: boolean;
 }
@@ -24,6 +25,7 @@ export const Modals: React.FC<ModalsProps> = ({
   onClose,
   onNavigate,
   onShowToast,
+  onEmailSuccess,
   toastText,
   isToastVisible,
 }) => {
@@ -77,9 +79,8 @@ export const Modals: React.FC<ModalsProps> = ({
         EMAILJS_PUBLIC_KEY
       );
       console.log('EmailJS success:', result.status, result.text);
-      onClose();
       resetForm();
-      onShowToast('¡Mensaje enviado con éxito! Te responderé pronto.');
+      onEmailSuccess();
     } catch (err) {
       console.error('EmailJS error:', err);
       const errorMsg =
@@ -247,6 +248,53 @@ export const Modals: React.FC<ModalsProps> = ({
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      {/* MODAL: CORREO ENVIADO CON ÉXITO */}
+      <div
+        className={`modal-dialog ${activeModal === 'email-success' ? 'active' : ''}`}
+        id="email-success-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="email-success-title"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      >
+        <div className="modal-card" style={{ textAlign: 'center' }}>
+          <div
+            style={{
+              width: '72px',
+              height: '72px',
+              borderRadius: '50%',
+              background: 'rgba(78, 205, 196, 0.18)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '8px auto 20px auto',
+            }}
+          >
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4ECDC4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+          </div>
+          <h3 className="modal-title" id="email-success-title" style={{ marginBottom: '14px' }}>
+            ¡Mensaje enviado<span className="dot">!</span>
+          </h3>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '28px' }}>
+            Gracias por escribirme. He recibido tu mensaje y te responderé lo antes posible.
+          </p>
+          <button
+            className="btn-outline drawn"
+            style={{ width: '100%' }}
+            onClick={onClose}
+          >
+            <svg className="btn-stroke-svg" aria-hidden="true">
+              <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
+            </svg>
+            <span className="btn-content">
+              <span>Cerrar</span>
+            </span>
+          </button>
         </div>
       </div>
 

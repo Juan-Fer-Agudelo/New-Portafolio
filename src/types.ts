@@ -25,4 +25,4 @@ export interface WritingArticle {
   readTime: string;
 }
 
-export type ActiveModal = 'none' | 'enfoque' | 'contact' | 'project-detail';
+export type ActiveModal = 'none' | 'enfoque' | 'contact' | 'project-detail' | 'email-success';
