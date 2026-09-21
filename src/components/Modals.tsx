@@ -69,11 +69,14 @@ export const Modals: React.FC<ModalsProps> = ({
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
           {
+            name: emailForm.name,
+            email: emailForm.email,
+            title: emailForm.subject,
+            message: emailForm.body,
+            // Alias adicionales por si el template usa otros nombres
             from_name: emailForm.name,
             from_email: emailForm.email,
             subject: emailForm.subject,
-            message: emailForm.body,
-            to_email: 'juanfeeragudelo475@gmail.com',
           },
           EMAILJS_PUBLIC_KEY
         );
