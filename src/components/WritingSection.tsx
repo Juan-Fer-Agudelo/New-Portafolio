@@ -1,8 +1,13 @@
 import React from 'react';
 import { WRITING_ARTICLES } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
+import { WritingArticle } from '../types';
 
-export const WritingSection: React.FC = () => {
+interface WritingSectionProps {
+  onSelectArticle: (article: WritingArticle) => void;
+}
+
+export const WritingSection: React.FC<WritingSectionProps> = ({ onSelectArticle }) => {
   const { t } = useLang();
   const w = t.writing;
 
@@ -29,6 +34,15 @@ export const WritingSection: React.FC = () => {
               key={article.id}
               className="writing-card animate-on-scroll"
               data-delay={idx > 0 ? String(idx) : undefined}
+              role="button"
+              tabIndex={0}
+              onClick={() => onSelectArticle(article)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectArticle(article);
+                }
+              }}
             >
               <div className="writing-meta">
                 <span className="writing-date">{article.date}</span>

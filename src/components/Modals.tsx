@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { ProjectItem, ActiveModal, PageView } from '../types';
+import { ProjectItem, WritingArticle, ActiveModal, PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
+import { ARTICLE_AUTHOR } from '../data/portfolioData';
 
 // Configuración de EmailJS - Reemplaza con tus credenciales de https://www.emailjs.com/
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
@@ -11,10 +12,12 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
 interface ModalsProps {
   activeModal: ActiveModal;
   selectedProject: ProjectItem | null;
+  selectedArticle: WritingArticle | null;
   onClose: () => void;
   onNavigate: (view: PageView, hash?: string) => void;
   onShowToast: (msg: string) => void;
   onEmailSuccess: () => void;
+  onOpenContact: () => void;
   toastText: string;
   isToastVisible: boolean;
 }
@@ -22,10 +25,12 @@ interface ModalsProps {
 export const Modals: React.FC<ModalsProps> = ({
   activeModal,
   selectedProject,
+  selectedArticle,
   onClose,
   onNavigate,
   onShowToast,
   onEmailSuccess,
+  onOpenContact,
   toastText,
   isToastVisible,
 }) => {
@@ -390,6 +395,84 @@ export const Modals: React.FC<ModalsProps> = ({
                 </svg>
               </span>
             </a>
+          )}
+        </div>
+      </div>
+
+      {/* MODAL: DETALLE DE ARTÍCULO (BLOG) */}
+      <div
+        className={`modal-dialog ${activeModal === 'writing-detail' ? 'active' : ''}`}
+        id="writing-detail-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="article-title"
+        onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      >
+        <div className="modal-card modal-card--article">
+          <div className="modal-header-row">
+            <h3 className="modal-title" id="article-title">
+              {selectedArticle?.title}
+            </h3>
+            <button className="modal-close-icon-btn" id="article-close-btn" onClick={onClose} aria-label="Cerrar modal">
+              &times;
+            </button>
+          </div>
+
+          {selectedArticle && (
+            <>
+              <div className="writing-meta article-meta-row">
+                <span className="writing-date">{selectedArticle.date}</span>
+                <span className="writing-tag">{selectedArticle.tag}</span>
+                <span className="article-readtime">{selectedArticle.readTime}</span>
+              </div>
+
+              <div className="article-author-box">
+                <div className="article-author-avatar" aria-hidden="true">
+                  {ARTICLE_AUTHOR.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+                </div>
+                <div className="article-author-info">
+                  <span className="article-author-name">{ARTICLE_AUTHOR.name}</span>
+                  <span className="article-author-role">{ARTICLE_AUTHOR.role}</span>
+                  <p className="article-author-bio">{ARTICLE_AUTHOR.bio}</p>
+                </div>
+              </div>
+
+              {selectedArticle.contentHtml ? (
+                <div
+                  className="article-body"
+                  dangerouslySetInnerHTML={{ __html: selectedArticle.contentHtml }}
+                />
+              ) : (
+                <div className="article-body">
+                  <p className="article-intro">{selectedArticle.excerpt}</p>
+                </div>
+              )}
+
+              <div className="article-cta">
+                <h4 className="article-cta-title">¿Tienes un reto de arquitectura o backend por resolver?</h4>
+                <p className="article-cta-text">
+                  Ofrezco auditorías de arquitectura y desarrollo de sistemas backend escalables, como consultor
+                  freelance o en modalidad de contratación a término indefinido.
+                </p>
+                <button
+                  type="button"
+                  className="btn-outline drawn"
+                  style={{ width: '100%' }}
+                  onClick={onOpenContact}
+                >
+                  <svg className="btn-stroke-svg" aria-hidden="true">
+                    <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
+                  </svg>
+                  <span className="btn-content">
+                    <span>Hablemos de tu proyecto</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </>
           )}
         </div>
       </div>

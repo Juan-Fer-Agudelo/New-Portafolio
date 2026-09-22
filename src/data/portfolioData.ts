@@ -1,4 +1,4 @@
-import { ProjectItem, WritingArticle } from '../types';
+import { ProjectItem, WritingArticle, ArticleAuthor } from '../types';
 import enhanceOg from '../assets/images/enhance-og.jpg';
 import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
 import peptidosOg from '../assets/images/peptidos-og.jpg';
@@ -340,7 +340,159 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
 ];
 
+export const ARTICLE_AUTHOR: ArticleAuthor = {
+  name: 'Juan Fernando Agudelo',
+  role: 'Arquitecto de Software & Consultor Senior',
+  bio: 'Diseño sistemas distribuidos y arquitecturas backend escalables desde hace más de 4 años, ayudando a equipos de ingeniería a migrar sistemas legacy sin detener el negocio.',
+};
+
+const MONOLITH_TO_MICROSERVICES_CONTENT = `
+<p class="article-intro">Migrar a microservicios porque "es lo que hace todo el mundo" es la forma más rápida de convertir un sistema lento en un sistema lento, distribuido y difícil de depurar. La pregunta que de verdad importa no es arquitectónica, es operativa: ¿qué parte de tu monolito te está costando dinero o velocidad de entrega cada semana? Este artículo responde eso con criterios concretos y un plan de migración incremental, sin big bang, sin downtime y sin reescribir el sistema desde cero.</p>
+
+<div class="article-takeaways">
+  <span class="article-block-label">Puntos Clave</span>
+  <ul>
+    <li>Los microservicios no resuelven problemas de diseño: un monolito con módulos acoplados se convierte en microservicios acoplados por red, solo que más lentos y más difíciles de depurar.</li>
+    <li>Las señales reales para migrar son de despliegue y de organización de equipos, no de "líneas de código" ni de moda tecnológica.</li>
+    <li>El patrón Strangler Fig permite extraer servicios de forma incremental, con rollback inmediato si algo falla en producción.</li>
+    <li>La mayoría de los equipos de menos de 15 ingenieros no necesitan microservicios: necesitan un monolito mejor modularizado.</li>
+  </ul>
+</div>
+
+<div class="article-index">
+  <span class="article-block-label">Índice de Contenidos</span>
+  <ol>
+    <li><a href="#ms-pregunta">1. La pregunta equivocada: "¿Necesito microservicios?"</a></li>
+    <li>
+      <a href="#ms-senales">2. Las 3 señales reales de que tu monolito necesita cambiar</a>
+      <ol>
+        <li><a href="#ms-cuellos">2.1 Cuellos de botella de despliegue</a></li>
+        <li><a href="#ms-equipos">2.2 Límites de equipo, no solo de código</a></li>
+        <li><a href="#ms-escalado">2.3 Escalado desigual de módulos</a></li>
+      </ol>
+    </li>
+    <li><a href="#ms-comparativa">3. Monolito vs. microservicios: comparativa técnica</a></li>
+    <li><a href="#ms-strangler">4. La estrategia Strangler Fig: migrar sin romper producción</a></li>
+    <li><a href="#ms-errores">5. Errores comunes que convierten la migración en un incendio</a></li>
+    <li><a href="#ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</a></li>
+  </ol>
+</div>
+
+<h2 id="ms-pregunta">1. La pregunta equivocada: "¿Necesito microservicios?"</h2>
+<p>Esa pregunta no tiene una respuesta útil porque está planteada al revés. Ningún sistema "necesita" microservicios por sí mismo; una organización necesita desplegar más rápido, escalar un componente específico o dejar que equipos trabajen sin pisarse. La arquitectura es una consecuencia de esas restricciones, no un objetivo en sí misma. Antes de hablar de servicios, colas o service mesh, hay que identificar en qué parte exacta del ciclo de entrega está el dolor real: ¿en el despliegue, en el escalado, en la coordinación entre equipos, o simplemente en un código mal modularizado que nadie ha ordenado?</p>
+<p>La Ley de Conway explica por qué tantas migraciones fallan: los sistemas terminan replicando la estructura de comunicación de la organización que los construye. Si trocear el monolito en servicios no viene acompañado de equipos autónomos con ownership real sobre cada uno, el resultado es un monolito distribuido: la misma falta de límites claros, ahora con la latencia y la complejidad operativa de la red añadidas encima.</p>
+
+<h2 id="ms-senales">2. Las 3 señales reales de que tu monolito necesita cambiar</h2>
+<p>Hay señales legítimas para migrar y hay excusas disfrazadas de argumento técnico. Estas tres son las que valido primero en cualquier auditoría de arquitectura, porque son medibles y no dependen de preferencias personales.</p>
+
+<h3 id="ms-cuellos">2.1 Cuellos de botella de despliegue</h3>
+<p>Cuando un cambio de una línea en el módulo de facturación obliga a re-testear y desplegar todo el catálogo de productos, el costo de cada release deja de ser proporcional al cambio. Si tu equipo mide el "lead time" de un fix trivial en días en lugar de horas, y la causa es coordinación de despliegue (no falta de pruebas), esa es una señal real.</p>
+
+<h3 id="ms-equipos">2.2 Límites de equipo, no solo de código</h3>
+<p>Si tienes tres equipos con ownership de producto claramente distinto pero comparten un único pipeline de despliegue y un único repositorio sin límites de módulo, la arquitectura y la estructura organizacional están en conflicto. Este es el caso donde extraer servicios alineados a esos equipos reduce fricción real, no solo complejidad percibida.</p>
+
+<h3 id="ms-escalado">2.3 Escalado desigual de módulos</h3>
+<p>Un módulo de procesamiento de imágenes, generación de reportes o envío masivo de notificaciones puede consumir el 80% de la CPU en picos puntuales, mientras el resto del sistema está prácticamente ocioso. En un monolito, esto obliga a escalar horizontalmente todo el proceso para resolver el cuello de botella de una sola pieza, encareciendo la infraestructura sin necesidad.</p>
+
+<h2 id="ms-comparativa">3. Monolito vs. microservicios: comparativa técnica</h2>
+<p>Ninguna de las dos arquitecturas es superior en abstracto; cada una optimiza para restricciones distintas. Esta tabla resume las decisiones que de verdad cambian según el camino que tomes.</p>
+<table class="article-table">
+  <thead>
+    <tr>
+      <th>Criterio</th>
+      <th>Monolito</th>
+      <th>Microservicios</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Despliegue</td>
+      <td>Un solo pipeline, simple al inicio</td>
+      <td>Independiente por servicio, requiere CI/CD maduro</td>
+    </tr>
+    <tr>
+      <td>Escalabilidad</td>
+      <td>Vertical; escala todo el sistema junto</td>
+      <td>Horizontal; escala solo el servicio con carga</td>
+    </tr>
+    <tr>
+      <td>Complejidad operativa</td>
+      <td>Baja: un solo proceso, un solo log</td>
+      <td>Alta: orquestación, tracing distribuido, observabilidad</td>
+    </tr>
+    <tr>
+      <td>Consistencia de datos</td>
+      <td>Transacciones ACID nativas</td>
+      <td>Consistencia eventual; requiere sagas o CDC</td>
+    </tr>
+    <tr>
+      <td>Velocidad inicial</td>
+      <td>Alta; ideal para MVP y validación de mercado</td>
+      <td>Baja; overhead de infraestructura desde el día uno</td>
+    </tr>
+    <tr>
+      <td>Costo de infraestructura</td>
+      <td>Predecible y bajo</td>
+      <td>Mayor: red, colas, service mesh, monitoreo</td>
+    </tr>
+    <tr>
+      <td>Ideal para</td>
+      <td>Equipos &lt; 15 ingenieros, productos en validación</td>
+      <td>Organizaciones con equipos autónomos y dominios definidos</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ms-strangler">4. La estrategia Strangler Fig: migrar sin romper producción</h2>
+<p>El patrón Strangler Fig (popularizado por Martin Fowler) consiste en envolver el monolito con una capa de enrutamiento y extraer funcionalidad hacia servicios nuevos de forma incremental, mientras el sistema legacy sigue operando sin interrupción. Nunca hay un "big bang": en cualquier momento del proceso, el sistema en producción es una combinación funcional de monolito y servicios nuevos.</p>
+
+<h3>Paso 1 — Identificar el "seam" de dominio</h3>
+<p>Usando límites de dominio (bounded contexts), se elige el primer candidato a extraer. La regla que aplico: nunca el módulo transaccional core (pagos, inventario crítico); sí un módulo periférico, de alto dolor operativo y bajo acoplamiento de datos, como notificaciones, búsqueda o generación de reportes.</p>
+
+<h3>Paso 2 — Levantar un proxy de enrutamiento</h3>
+<p>Antes de mover una sola línea de lógica de negocio, se coloca un proxy o API Gateway delante del monolito. Esto permite decidir, por ruta, qué peticiones siguen yendo al sistema legacy y cuáles empiezan a resolverse en el nuevo servicio, sin que el cliente note el cambio.</p>
+<pre class="article-code"><code># nginx.conf — enrutamiento incremental estilo Strangler Fig
+# El módulo de notificaciones ya vive en un servicio nuevo;
+# todo lo demás sigue resolviéndose en el monolito.
+
+location /api/notifications/ {
+    proxy_pass http://notifications-service:4000;
+}
+
+location /api/ {
+    proxy_pass http://legacy-monolith:3000;
+}</code></pre>
+
+<h3>Paso 3 — Extraer, medir y tener plan de rollback</h3>
+<p>La lógica se mueve al nuevo servicio detrás de un feature flag o un rollout por porcentaje de tráfico (canary), comparando métricas de error y latencia contra la ruta legacy. El código antiguo se mantiene desplegable durante varias semanas: si algo falla, el rollback es cambiar una regla de enrutamiento, no un despliegue de emergencia. Solo se elimina el camino legacy cuando el nuevo servicio ha demostrado estabilidad bajo carga real.</p>
+
+<h2 id="ms-errores">5. Errores comunes que convierten la migración en un incendio</h2>
+<ul>
+  <li><strong>Migrar el módulo core primero.</strong> Empezar por el componente de mayor riesgo (pagos, autenticación) maximiza el blast radius del primer error.</li>
+  <li><strong>Partir el sistema sin observabilidad distribuida.</strong> Sin trazabilidad (correlation IDs, tracing) un error 500 se convierte en una cacería a ciegas entre varios servicios.</li>
+  <li><strong>Compartir una sola base de datos entre "microservicios".</strong> Eso no es una arquitectura de microservicios: es un monolito distribuido, con toda la complejidad de la red y ninguno de sus beneficios de aislamiento.</li>
+  <li><strong>No versionar los contratos de API.</strong> Cambiar un endpoint sin versión rompe a los consumidores en cada despliegue y erosiona la confianza en la migración.</li>
+  <li><strong>Subestimar la consistencia eventual.</strong> Migrar operaciones que cruzan varios servicios sin implementar sagas o compensaciones deja transacciones a medio completar cuando algo falla a mitad de camino.</li>
+</ul>
+
+<h2 id="ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</h2>
+<p>Si tu equipo tiene menos de 15 ingenieros y un solo pipeline de despliegue les funciona sin fricción notable, migrar a microservicios no resuelve un problema que tienes: crea uno nuevo. Los microservicios multiplican el costo operativo (red, colas, monitoreo distribuido, on-call más complejo) y ese costo solo se justifica cuando el dolor de despliegue, escalado o coordinación de equipos ya es real y medible. Si el problema es que el código está mal organizado dentro del monolito, la solución correcta casi siempre es más barata y menos arriesgada: convertirlo en un monolito modular, con límites de dominio claros dentro del mismo proceso, antes de pagar el costo de distribuirlo.</p>
+`;
+
 export const WRITING_ARTICLES: WritingArticle[] = [
+  {
+    id: 'art-monolito-microservicios',
+    slug: 'monolito-a-microservicios-sin-romper-produccion',
+    date: 'SEPTIEMBRE 2026',
+    tag: 'ARCHITECTURE',
+    title: 'Cuándo Migrar de un Monolito a Microservicios (y Cómo Hacerlo Sin Romper Producción)',
+    metaDescription:
+      'Guía técnica para decidir si tu monolito necesita microservicios y migrar con el patrón Strangler Fig sin downtime ni reescrituras arriesgadas.',
+    excerpt:
+      'Guía práctica para decidir si tu monolito necesita microservicios de verdad, con el patrón Strangler Fig y un plan de rollback para migrar sin downtime ni reescrituras arriesgadas.',
+    readTime: '9 min de lectura',
+    contentHtml: MONOLITH_TO_MICROSERVICES_CONTENT,
+  },
   {
     id: 'art-1',
     date: 'MARZO 2026',

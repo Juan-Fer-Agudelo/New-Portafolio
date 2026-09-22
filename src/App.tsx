@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { PageView, ActiveModal, ProjectItem } from './types';
+import { PageView, ActiveModal, ProjectItem, WritingArticle } from './types';
 import { useLang } from './i18n/LangContext';
+import { WRITING_ARTICLES } from './data/portfolioData';
 import { Navbar } from './components/Navbar';
 import { MenuOverlay } from './components/MenuOverlay';
 import { HeroSection } from './components/HeroSection';
@@ -15,6 +16,10 @@ import { SkillsView } from './components/SkillsView';
 import { Modals } from './components/Modals';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
 
+const DEFAULT_DOCUMENT_TITLE = document.title;
+const DEFAULT_META_DESCRIPTION =
+  document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<PageView>('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +27,7 @@ export const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModal, setActiveModal] = useState<ActiveModal>('none');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<WritingArticle | null>(null);
   const [toastText, setToastText] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
   const { t } = useLang();
@@ -38,11 +44,23 @@ export const App: React.FC = () => {
     }
   }, [currentView]);
 
+  // Abre el modal de un artículo del blog a partir de su slug (deep link vía #blog-<slug>)
+  const openArticleBySlug = (slug: string) => {
+    const article = WRITING_ARTICLES.find((a) => (a.slug || a.id) === slug);
+    if (article) {
+      setCurrentView('home');
+      setSelectedArticle(article);
+      setActiveModal('writing-detail');
+    }
+  };
+
   // Manejo de hashes en URL para navegación directa
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === '#work' || hash === '#proyectos') {
+      if (hash.startsWith('#blog-')) {
+        openArticleBySlug(hash.replace('#blog-', ''));
+      } else if (hash === '#work' || hash === '#proyectos') {
         setCurrentView('home');
         setTimeout(() => {
           const target = document.querySelector('#proyectos');
@@ -63,11 +81,32 @@ export const App: React.FC = () => {
         const target = document.querySelector('#proyectos');
         target?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
+    } else if (window.location.hash.startsWith('#blog-')) {
+      openArticleBySlug(window.location.hash.replace('#blog-', ''));
     }
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  // Sincroniza <title> y meta description con el artículo abierto (SEO básico en SPA)
+  useEffect(() => {
+    if (activeModal === 'writing-detail' && selectedArticle) {
+      document.title = `${selectedArticle.title} | Juan Fernando Agudelo`;
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute('content', selectedArticle.metaDescription || selectedArticle.excerpt);
+      history.replaceState(null, '', `#blog-${selectedArticle.slug || selectedArticle.id}`);
+    } else {
+      document.title = DEFAULT_DOCUMENT_TITLE;
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute('content', DEFAULT_META_DESCRIPTION);
+      if (window.location.hash.startsWith('#blog-')) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    }
+  }, [activeModal, selectedArticle]);
 
   const handleNavigate = (view: PageView, hash?: string) => {
     if (view === 'work' || hash === '#work' || hash === '#proyectos') {
@@ -131,6 +170,11 @@ export const App: React.FC = () => {
     setActiveModal('project-detail');
   };
 
+  const handleSelectArticle = (article: WritingArticle) => {
+    setSelectedArticle(article);
+    setActiveModal('writing-detail');
+  };
+
   const handleToggleSearch = () => {
     if (currentView !== 'home') {
       setCurrentView('home');
@@ -182,7 +226,7 @@ export const App: React.FC = () => {
               isSearchOpen={isSearchOpen}
               setIsSearchOpen={setIsSearchOpen}
             />
-            <WritingSection />
+            <WritingSection onSelectArticle={handleSelectArticle} />
             <ContactSection
               onOpenContactModal={() => setActiveModal('contact')}
               onShowToast={handleShowToast}
@@ -208,10 +252,12 @@ export const App: React.FC = () => {
       <Modals
         activeModal={activeModal}
         selectedProject={selectedProject}
+        selectedArticle={selectedArticle}
         onClose={() => setActiveModal('none')}
         onNavigate={handleNavigate}
         onShowToast={handleShowToast}
         onEmailSuccess={() => setActiveModal('email-success')}
+        onOpenContact={() => setActiveModal('contact')}
         toastText={toastText}
         isToastVisible={isToastVisible}
       />
