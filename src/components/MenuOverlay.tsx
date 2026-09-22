@@ -217,9 +217,10 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           </li>
           <li className="menu-nav-row">
             <a
-              href="#writing"
+              href="/blog.html"
+              target="_blank"
+              rel="noopener noreferrer"
               className="menu-nav-title menu-item-link"
-              onClick={(e) => handleLinkClick(e, 'home', '#writing')}
             >
               {m.writing}
             </a>
