@@ -71,7 +71,12 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
             <line x1="2" y1="26" x2="52" y2="26" />
           </svg>
           <span className="menu-header-divider" aria-hidden="true">|</span>
-          <span className="menu-close-label">{m.close}</span>
+          <span className="menu-close-label">
+            <span className="menu-close-label-inner">
+              <span className="menu-close-label-text">{m.close}</span>
+              <span className="menu-close-label-text" aria-hidden="true">{m.close}</span>
+            </span>
+          </span>
         </button>
 
         <a
