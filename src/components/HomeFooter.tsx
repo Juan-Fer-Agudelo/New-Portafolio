@@ -55,7 +55,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
               onNavigate('work');
             }}
           >
-            Work &rarr;
+            Mi trabajo &rarr;
           </a>
           <span style={{ color: 'var(--color-muted)' }}>&bull;</span>
           <a

@@ -68,7 +68,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
             <line x1="2" y1="26" x2="52" y2="26" />
           </svg>
           <span className="menu-header-divider" aria-hidden="true">|</span>
-          <span className="menu-close-label">CLOSE</span>
+          <span className="menu-close-label">CERRAR</span>
         </button>
 
         <a
@@ -93,7 +93,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
           >
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
-          <span>HIRE ME</span>
+          <span>CONTRÁTAME</span>
         </a>
       </div>
 
@@ -172,9 +172,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
               className="menu-nav-title menu-item-link"
               onClick={(e) => handleLinkClick(e, 'home', '#hero')}
             >
-              Home
+              Inicio
             </a>
-            <p className="menu-nav-desc">Back to the home page.</p>
+            <p className="menu-nav-desc">Volver a la página principal.</p>
           </li>
           <li className="menu-nav-row">
             <a
@@ -183,9 +183,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
               id="menu-work-link"
               onClick={(e) => handleLinkClick(e, 'home', '#proyectos')}
             >
-              Work
+              Proyectos
             </a>
-            <p className="menu-nav-desc">Selected projects and open source.</p>
+            <p className="menu-nav-desc">Proyectos seleccionados y experiencia.</p>
           </li>
           <li className="menu-nav-row">
             <a
@@ -193,9 +193,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
               className="menu-nav-title menu-item-link"
               onClick={(e) => handleLinkClick(e, 'home', '#about')}
             >
-              About
+              Sobre mí
             </a>
-            <p className="menu-nav-desc">A little about me and my background.</p>
+            <p className="menu-nav-desc">Un poco sobre mí y mi trayectoria.</p>
           </li>
           <li className="menu-nav-row">
             <a
@@ -203,9 +203,9 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
               className="menu-nav-title menu-item-link"
               onClick={(e) => handleLinkClick(e, 'home', '#writing')}
             >
-              Writing
+              Blog
             </a>
-            <p className="menu-nav-desc">My latest writing on tech and language.</p>
+            <p className="menu-nav-desc">Mis escritos más recientes sobre tecnología.</p>
           </li>
         </ul>
       </nav>

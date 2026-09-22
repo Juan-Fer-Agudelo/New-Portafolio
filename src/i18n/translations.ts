@@ -178,8 +178,8 @@ export const translations = {
   es: {
     // Navbar
     nav: {
-      menu: 'MENU',
-      hireMe: 'HIRE ME',
+      menu: 'MENÚ',
+      hireMe: 'CONTRÁTAME',
       langToggle: 'ING',
     },
 
@@ -187,15 +187,15 @@ export const translations = {
     hero: {
       greeting: 'Hola, mi',
       nameLine: 'nombre es',
-      name: 'Robb',
+      name: 'Juan',
       subtitle: 'Soy un',
       role: 'desarrollador creativo independiente',
-      location: 'de Abergavenny, Gales del Sur.',
+      location: 'de Medellín, Colombia.',
       scroll: 'SCROLL',
     },
 
     // Side brand
-    sideBrand: '© MMXXVI. Gwneud yn Ne Cymru.',
+    sideBrand: '© MMXXVI. Hecho en Medellín, Colombia.',
 
     // About
     about: {

@@ -13,15 +13,16 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
         {/* WORK HERO: About my work. */}
         <div className="work-hero animate-on-scroll">
           <h1 className="work-hero-title">
-            About my work<span className="pink-dot">.</span>
+            Sobre mi trabajo<span className="pink-dot">.</span>
           </h1>
           <div className="work-pink-bar" aria-hidden="true"></div>
           <p className="work-intro-text">
-            I work with forward-thinking people to design and build{' '}
-            <strong>interactive, accessible websites and products</strong>. From working on projects
-            for likes of Aardman Animations, <span className="work-dashed">UNHCR</span>,{' '}
-            <span className="work-dashed">RNLI</span>, and Honda, to working at startups in Tokyo,
-            I've devoted more than a decade to <strong>making the web a little bit brighter</strong>.
+            Trabajo con personas visionarias para diseñar y construir{' '}
+            <strong>sitios web y productos interactivos y accesibles</strong>. Desde plataformas
+            web B2B/B2C y e-commerce, hasta soluciones de{' '}
+            <span className="work-dashed">inteligencia artificial</span> y{' '}
+            <span className="work-dashed">automatización</span>, con más de 4 años de experiencia
+            dedicados a <strong>construir la web con propósito</strong>.
           </p>
 
           <div className="work-scroll-indicator" aria-hidden="true">
@@ -34,17 +35,17 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
         <div className="work-block-grid animate-on-scroll">
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              Considered development<span className="pink-dot">.</span>
+              Desarrollo considerado<span className="pink-dot">.</span>
             </h2>
             <p>
-              No two projects are the same and I take a pragmatic approach to each job I take on,
-              focussing on delivering work that is as accessible and optimised as possible.
+              No hay dos proyectos iguales, por eso tomo un enfoque pragmático en cada trabajo que
+              realizo, centrándome en entregar resultados lo más accesibles y optimizados posible.
             </p>
             <p>
-              More than a decade of experience building complex interfaces means that I'm happy to
-              deliver anything from single-page apps to scaleable design systems. I can help you
-              identify the most appropriate technology for your project and, whilst I love a good
-              framework, you can be sure that I will never use tech for tech's sake.
+              Mi experiencia construyendo interfaces complejas me permite entregar desde aplicaciones
+              de una sola página hasta sistemas de diseño escalables. Puedo ayudarte a identificar la
+              tecnología más adecuada para tu proyecto y, aunque me encanta un buen framework, puedes
+              estar seguro de que nunca usaré tecnología solo por usarla.
             </p>
           </div>
 
@@ -191,16 +192,16 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              Code Choreography<span className="pink-dot">.</span>
+              Coreografía de código<span className="pink-dot">.</span>
             </h2>
             <p>
-              I sweat the little details that bring a design to life. But, whether it's full-on WebGL
-              or a UI interaction, animation isn't just about looking cool - Good{' '}
-              <strong>interaction design</strong> grounds an interface with a sense of space and logic.
+              Cuido cada pequeño detalle que da vida a un diseño. Pero, ya sea WebGL completo o una
+              interacción de UI, la animación no se trata solo de verse bien: un buen{' '}
+              <strong>diseño de interacción</strong> le da a una interfaz un sentido de espacio y lógica.
             </p>
             <p>
-              I combine nuanced timing and motion with a deep understanding of browser rendering to
-              deliver logical interactions that are both full of character and outrageously smooth.
+              Combino tiempos y movimientos precisos con un profundo entendimiento del renderizado del
+              navegador para entregar interacciones lógicas, llenas de carácter y extraordinariamente fluidas.
             </p>
           </div>
         </div>
@@ -209,18 +210,18 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
         <div className="work-block-grid animate-on-scroll">
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              Server-side is my jam(stack)<span className="pink-dot">.</span>
+              El backend es lo mío<span className="pink-dot">.</span>
             </h2>
             <p>
-              Beyond front-end development, I'm a <strong>JAMstack</strong> specialist. Cloud CMS
-              platforms, lambda functions, site-generators - Whatever your requirements, I'm happy
-              to help you plan, build and deliver a JAMstack project that's fast, secure and reliable.
+              Más allá del desarrollo front-end, trabajo con <strong>bases de datos</strong> y
+              arquitecturas de servidor. Plataformas CMS en la nube, funciones serverless, APIs REST
+              e integraciones — sea cual sea tu requerimiento, te ayudo a planear, construir y entregar
+              un proyecto rápido, seguro y confiable.
             </p>
             <p>
-              If JAMstack isn't your thing, I'm equally at home developing for other server-side
-              technologies. If you need help putting together an application or API with{' '}
-              <strong>Node.js</strong> and Express, or <strong>Go</strong> with PostgreSQL, then
-              I've got your back.
+              Si necesitas ayuda armando una aplicación o API con <strong>Node.js</strong> y Express,
+              con <strong>PostgreSQL</strong>, o automatizaciones e integraciones con herramientas como{' '}
+              <strong>n8n</strong>, cuenta conmigo.
             </p>
           </div>
 
@@ -301,28 +302,25 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
           <div className="work-dots-backdrop" aria-hidden="true"></div>
           <div className="work-manifesto-content">
             <h2 className="work-manifesto-title">
-              Let's build something better<span className="pink-dot">.</span>
+              Construyamos algo mejor<span className="pink-dot">.</span>
             </h2>
             <p>
-              I strongly believe that designers and developers have a responsibility to make sure
-              that what we are building does no harm and I try to be as ethical as I can in taking
-              on projects.
+              Creo firmemente que los diseñadores y desarrolladores tenemos la responsabilidad de
+              asegurarnos de que lo que construimos no cause daño, y trato de ser lo más ético posible
+              al aceptar proyectos.
             </p>
             <p>
-              If your organisation represents online gambling, payday loans, big tobacco, or mines
-              and monetises personal data, then I am probably not the best fit for your project.
-              Due to its extremely wasteful energy consumption, I don't take on projects using crypto
-              technology. Similarly, due to its questionable data-provenance,{' '}
+              Me apasiona crear soluciones que generen un impacto positivo real: plataformas que
+              conectan personas con oportunidades, herramientas de{' '}
               <u className="work-dashed">
-                <strong>I also avoid working with generative AI</strong>
-              </u>
-              . I'm not one to completely write off a technology but I can't conscionably work with
-              either in their current form so, if your project hinges on either, I'm not your guy.
+                <strong>inteligencia artificial con propósito</strong>
+              </u>{' '}
+              y sistemas que optimizan procesos y ahorran tiempo valioso a las organizaciones.
             </p>
             <p>
-              All that said, if you are looking for help building something that promotes
-              sustainability, diversity, or generally aims to make a positive impact, then let's
-              talk.
+              En resumen, si buscas ayuda para construir algo que promueva la sostenibilidad, la
+              diversidad, la accesibilidad o que en general busque generar un impacto positivo,
+              entonces hablemos.
             </p>
 
             <button
@@ -331,7 +329,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
               type="button"
               onClick={onOpenContactModal}
             >
-              Get in touch
+              Contáctame
             </button>
           </div>
         </div>
@@ -348,7 +346,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
       >
         <div className="footer-inner">
           <p className="footer-copyright" style={{ color: '#6d5b7b' }}>
-            &copy; MMXXVI. Gwneud yn Ne Cymru.
+            &copy; MMXXVI. Hecho en Medellín, Colombia.
           </p>
           <div className="footer-links">
             <a
@@ -360,7 +358,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 onNavigate('home', '#hero');
               }}
             >
-              &larr; Back to Home
+              &larr; Volver al inicio
             </a>
             <span style={{ color: '#73bbc5' }}>&bull;</span>
             <a
@@ -372,7 +370,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 onOpenContactModal();
               }}
             >
-              Get in touch
+              Contáctame
             </a>
           </div>
         </div>

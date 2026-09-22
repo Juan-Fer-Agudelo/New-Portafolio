@@ -15,12 +15,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     <section id="contacto" className="section-reveal">
       <div className="contact-inner">
         <h2 className="contact-heading animate-on-scroll">
-          Got a project in mind<span className="dot">?</span>
+          ¿Tienes un proyecto en mente<span className="dot">?</span>
         </h2>
 
         <p className="contact-subtext animate-on-scroll" data-delay="1">
-          I'm currently available for select freelance projects, frontend technical consulting,
-          and creative collaborations. Send me a message or connect on the channels below.
+          Actualmente estoy disponible para proyectos freelance, consultoría técnica de frontend
+          y colaboraciones creativas. Envíame un mensaje o conéctate por los canales de abajo.
         </p>
 
         <div className="contact-actions-row animate-on-scroll" data-delay="2">
@@ -30,7 +30,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             id="contact-modal-btn"
             onClick={onOpenContactModal}
           >
-            Send me a message
+            Envíame un mensaje
           </button>
 
           {/* Pill que abre el modal de contacto */}
