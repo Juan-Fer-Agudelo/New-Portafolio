@@ -73,6 +73,7 @@ export const HeroSection: React.FC = () => {
         onClick={(e) => {
           e.preventDefault();
           document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+          history.replaceState(null, '', window.location.pathname);
         }}
       >
         <span className="hero-scroll-label">

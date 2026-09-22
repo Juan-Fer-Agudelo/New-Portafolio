@@ -72,7 +72,6 @@ export const App: React.FC = () => {
   const handleNavigate = (view: PageView, hash?: string) => {
     if (view === 'work' || hash === '#work' || hash === '#proyectos') {
       setCurrentView('home');
-      window.location.hash = '#proyectos';
       setTimeout(() => {
         const el = document.querySelector('#proyectos');
         if (el) {
@@ -80,6 +79,7 @@ export const App: React.FC = () => {
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        history.replaceState(null, '', window.location.pathname);
       }, 100);
       return;
     }
@@ -102,7 +102,6 @@ export const App: React.FC = () => {
 
     setCurrentView(view);
     if (hash) {
-      window.location.hash = hash;
       setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) {
@@ -110,10 +109,12 @@ export const App: React.FC = () => {
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        // Limpia el hash de la URL sin recargar ni saltar
+        history.replaceState(null, '', window.location.pathname);
       }, 100);
     } else {
-      window.location.hash = '';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', window.location.pathname);
     }
   };
 
