@@ -7,7 +7,6 @@ import { MenuOverlay } from './components/MenuOverlay';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
-import { WritingSection } from './components/WritingSection';
 import { ContactSection } from './components/ContactSection';
 import { HomeFooter } from './components/HomeFooter';
 import { WorkView } from './components/WorkView';
@@ -226,7 +225,6 @@ export const App: React.FC = () => {
               isSearchOpen={isSearchOpen}
               setIsSearchOpen={setIsSearchOpen}
             />
-            <WritingSection onSelectArticle={handleSelectArticle} />
             <ContactSection
               onOpenContactModal={() => setActiveModal('contact')}
               onShowToast={handleShowToast}
