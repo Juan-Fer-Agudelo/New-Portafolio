@@ -92,7 +92,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'shadcn/ui & Radix UI', ...L.adv, icon: SiRadixui, color: '#161618' },
       { name: 'Framer Motion / Motion', ...L.intAdv, icon: SiFramer, color: '#0055FF' },
       { name: 'TanStack React Query', ...L.intAdv, icon: SiReactquery, color: '#FF4154' },
-      { name: 'Wouter & SPA Routing', ...L.int, icon: null },
       { name: 'Vue.js', ...L.int, icon: SiVuedotjs, color: '#4FC08D' },
       { name: 'Nuxt.js', ...L.int, icon: SiNuxt, color: '#00DC82' },
       { name: 'Angular', ...L.int, icon: SiAngular, color: '#DD0031' },
