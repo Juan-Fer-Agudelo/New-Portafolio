@@ -3932,3 +3932,163 @@
           transform: translateY(0);
         }
       }
+
+      /* ==========================================================================
+         SECCIONES DE CREDENCIALES Y CV EN LA PÁGINA "SOBRE MÍ"
+         ========================================================================== */
+      .about-subsection-title {
+        font-family: var(--font-heading);
+        font-size: clamp(26px, 3.4vw, 38px);
+        font-weight: 800;
+        color: var(--color-primary);
+        margin-bottom: 28px;
+        letter-spacing: -0.01em;
+      }
+
+      .about-credentials {
+        margin-top: 72px;
+        padding-top: 48px;
+        border-top: 1px solid var(--color-border-subtle);
+      }
+
+      .credentials-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .credential-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 22px 24px;
+        background: #ffffff;
+        border: 1.5px solid var(--color-border-subtle);
+        border-radius: 12px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      .credential-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(15, 27, 97, 0.08);
+        border-color: var(--color-accent);
+      }
+
+      .credential-icon {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(104, 42, 233, 0.1);
+        color: var(--color-purple);
+      }
+
+      .credential-info {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .credential-title {
+        font-family: var(--font-heading);
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--color-primary);
+        line-height: 1.3;
+      }
+
+      .credential-issuer {
+        font-family: var(--font-body);
+        font-size: 14px;
+        color: var(--color-body);
+      }
+
+      .credential-date {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--color-accent);
+        font-weight: 600;
+      }
+
+      .credential-link {
+        font-family: var(--font-body);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-purple);
+        text-decoration: none;
+        margin-top: 6px;
+        transition: color 0.25s ease, transform 0.25s ease;
+      }
+
+      .credential-link:hover {
+        color: var(--color-accent);
+        transform: translateX(3px);
+      }
+
+      /* CV */
+      .about-cv {
+        margin-top: 64px;
+        padding-top: 48px;
+        border-top: 1px solid var(--color-border-subtle);
+      }
+
+      .about-cv-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .about-cv-header .about-subsection-title {
+        margin-bottom: 0;
+      }
+
+      .about-cv-download {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--color-purple);
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 2px solid var(--color-purple);
+        border-radius: 30px;
+        transition: color 0.25s ease, background 0.25s ease;
+      }
+
+      .about-cv-download:hover {
+        color: #ffffff;
+        background: var(--color-purple);
+      }
+
+      .cv-images {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .cv-image {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid var(--color-border-subtle);
+        box-shadow: 0 6px 24px rgba(15, 27, 97, 0.08);
+      }
+
+      .cv-empty {
+        padding: 60px 24px;
+        text-align: center;
+        border: 2px dashed var(--color-border-subtle);
+        border-radius: 12px;
+        font-family: var(--font-body);
+        font-size: 15px;
+        color: var(--color-muted);
+      }

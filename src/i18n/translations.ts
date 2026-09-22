@@ -123,6 +123,10 @@ export const translations = {
       representedBy: 'available for',
       representedByName: 'FREELANCE PROJECTS',
       bookings: 'CONTACT',
+      credentialsTitle: 'Credentials & Certifications',
+      cvTitle: 'My Resume',
+      cvDownload: 'Download PDF',
+      cvEmpty: 'Resume images will appear here soon.',
     },
     menuOverlay: {
       close: 'CLOSE',
@@ -311,6 +315,10 @@ export const translations = {
       representedBy: 'disponible para',
       representedByName: 'PROYECTOS FREELANCE',
       bookings: 'CONTACTO',
+      credentialsTitle: 'Credenciales & Certificaciones',
+      cvTitle: 'Mi Hoja de Vida',
+      cvDownload: 'Descargar PDF',
+      cvEmpty: 'Las imágenes de la hoja de vida aparecerán aquí pronto.',
     },
     menuOverlay: {
       close: 'CERRAR',
