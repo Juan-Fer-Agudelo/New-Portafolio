@@ -2003,19 +2003,19 @@
       .menu-nav-row {
         display: flex;
         align-items: baseline;
-        gap: 40px;
+        gap: 48px;
       }
 
       .menu-nav-title {
         font-family: var(--font-slab, 'Zilla Slab', Georgia, serif);
-        font-size: clamp(48px, 6.6vw, 78px);
+        font-size: clamp(44px, 6vw, 72px);
         font-weight: 700;
         line-height: 1;
         letter-spacing: -0.5px;
         color: #10243e;
         text-decoration: none;
-        width: 280px;
-        min-width: 250px;
+        width: 420px;
+        min-width: 420px;
         flex-shrink: 0;
         display: inline-block;
         transition: color 0.25s ease, transform 0.25s ease;
@@ -2033,6 +2033,8 @@
         color: #1f3856;
         line-height: 1.5;
         margin: 0;
+        flex: 1;
+        min-width: 0;
         transition: color 0.25s ease;
       }
 
