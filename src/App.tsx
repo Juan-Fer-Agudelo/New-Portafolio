@@ -258,6 +258,10 @@ export const App: React.FC = () => {
         onShowToast={handleShowToast}
         onEmailSuccess={() => setActiveModal('email-success')}
         onOpenContact={() => setActiveModal('contact')}
+        onOpenAbout={() => {
+          setActiveModal('none');
+          handleNavigate('about');
+        }}
         toastText={toastText}
         isToastVisible={isToastVisible}
       />
