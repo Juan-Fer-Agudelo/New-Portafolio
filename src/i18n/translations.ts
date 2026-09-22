@@ -105,6 +105,12 @@ export const translations = {
       work: 'My work',
       contact: 'Contact',
     },
+    skillsPage: {
+      title: 'Skills',
+      subtitle: 'Technologies, tools and abilities I work with',
+      technicalTitle: 'Technical Skills',
+      softTitle: 'Soft Skills',
+    },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'DEVELOPER + AI',
@@ -127,6 +133,8 @@ export const translations = {
       workDesc: 'Selected projects and experience.',
       about: 'About',
       aboutDesc: 'A little about me and my background.',
+      skills: 'Skills',
+      skillsDesc: 'Technologies and tools I work with.',
       writing: 'Blog',
       writingDesc: 'My latest writing on technology.',
     },
@@ -285,6 +293,12 @@ export const translations = {
       work: 'Mi trabajo',
       contact: 'Contacto',
     },
+    skillsPage: {
+      title: 'Habilidades',
+      subtitle: 'Tecnologías, herramientas y capacidades con las que trabajo',
+      technicalTitle: 'Habilidades Técnicas',
+      softTitle: 'Habilidades Blandas',
+    },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'DESARROLLADOR + IA',
@@ -307,6 +321,8 @@ export const translations = {
       workDesc: 'Proyectos seleccionados y experiencia.',
       about: 'Sobre mí',
       aboutDesc: 'Un poco sobre mí y mi trayectoria.',
+      skills: 'Habilidades',
+      skillsDesc: 'Tecnologías y herramientas con las que trabajo.',
       writing: 'Blog',
       writingDesc: 'Mis escritos más recientes sobre tecnología.',
     },
