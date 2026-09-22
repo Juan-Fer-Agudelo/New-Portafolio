@@ -34,6 +34,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'bcryptjs',
       'Node.js',
     ],
+    en: {
+      type: 'B2B/B2C WEB PLATFORM',
+      subtitle: 'Leading aesthetic medicine job platform in South Florida',
+      date: 'July 2026',
+      description:
+        'Leading B2B/B2C job platform in South Florida for the aesthetic medicine sector. It allows professionals to find jobs and clinics to hire talent, with independent dashboards for Employers and Candidates.',
+      details:
+        'High-performance B2B/B2C job platform specially designed for people living in South Florida within the aesthetic medicine sector (enhance.work). It offers workflows and interfaces fully tailored for both employers and candidates. Built on the frontend with Astro 6 in SSR mode and React 19 embedded via interactive islands, styled with pure Vanilla CSS. Backend server in Express 5 acting with Astro SSR middleware. Authentication system with express-session and bcryptjs, relational PostgreSQL database (pg client) and file and image storage in Replit Object Storage. Integrations with Stripe for payments and subscriptions, Resend for transactional emails and Google Sheets API for data synchronization.',
+    },
   },
   {
     id: 'miami-bounce-company',
@@ -68,6 +77,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Meta Pixel',
       'SEO Schemas',
     ],
+    en: {
+      type: 'WEB PLATFORM',
+      subtitle: 'Booking platform for bounce house rentals in South Miami',
+      date: 'June 2026',
+      description:
+        'Web platform for direct contact with the owner of a bounce house rental company located in South Miami, Florida.',
+      details:
+        'Modern, high-performance web platform for a bounce house rental company in South Miami, Florida. Designed to facilitate direct contact and booking with the business owner. Developed on the frontend with React, TypeScript, Vite, Tailwind CSS, Radix UI / shadcn/ui components, Framer Motion for smooth interactive animations, Wouter for routing and TanStack React Query for server state management. Backend powered by Node.js with Express running with tsx. Includes complete measurement and advertising integration through Google Tag Manager (GTM), Google Analytics 4 (GA4), Meta Pixel and optimized SEO Schemas.',
+    },
   },
   {
     id: 'peptidos-venezuela',
@@ -102,6 +120,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Microsoft Clarity',
       'SEO Schemas',
     ],
+    en: {
+      type: 'E-COMMERCE',
+      subtitle: 'E-commerce for imported peptides with clinical protocol',
+      date: 'May 2026',
+      description:
+        'E-commerce platform specialized in the sale of peptides imported from the United States with deliveries in Caracas and support under clinical protocol.',
+      details:
+        'Comprehensive development and integration of an e-commerce platform for the sale of peptides imported from the United States to Caracas, with support under clinical protocol. Built on the frontend with React, TypeScript, Vite, Wouter, Radix UI / shadcn/ui and TanStack Query for efficient server state management. Backend server in Node.js with Express and relational PostgreSQL database. Includes an advanced tracking and conversion suite (Google Tag Manager, GA4, Meta Pixel, Microsoft Clarity) and complete SEO optimization (structured SEO schemas, Open Graph metadata and optimized images) with 100% responsive design.',
+    },
   },
   {
     id: 'ai-support-analyst',
@@ -130,6 +157,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Radix UI',
       'LLM APIs (Python / Prompt Engineering)',
     ],
+    en: {
+      type: 'ARTIFICIAL INTELLIGENCE',
+      subtitle: 'AI system for support ticket analysis and response',
+      date: 'March 2026',
+      description:
+        'AI system for automated analysis, categorization and suggested responses for support tickets.',
+      details:
+        'Personal project developed to optimize help desk management. It uses large language models (LLM) to perform sentiment analysis, automatic categorization by urgency and topic, and generation of response drafts. Implemented with an architecture that allows processing large volumes of historical data to identify recurring failure patterns, reducing first response time by 40%.',
+    },
   },
   {
     id: 'cambios-estructura-nomina',
@@ -146,6 +182,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['React Native', 'TypeScript', 'Node.js', 'SQL Server'],
+    en: {
+      type: 'ENTERPRISE MOBILE APP',
+      subtitle: 'Mobile app for managing organizational changes and payroll',
+      date: 'May 2025 - October 2025',
+      description:
+        'Mobile app to manage critical organizational changes and payroll updates on the plant floor.',
+      details:
+        'Development of a React Native solution to automate the management of organizational structure and payroll updates. It reduced manual processes that took up to 14 hours down to just minutes (a 99% reduction), eliminating errors and benefiting more than 12 critical areas including Human Resources and Production.',
+    },
   },
   {
     id: 'automatizacion-tasas-cambio',
@@ -162,6 +207,14 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['n8n', 'APIs REST', 'JSON', 'RPA / Automation'],
+    en: {
+      type: 'AUTOMATION / RPA',
+      subtitle: 'RPA system for automatic currency updates',
+      date: 'February 2026 - March 2026',
+      description: 'RPA system for the automatic updating of currencies and financial reports.',
+      details:
+        'Implementation of an automation flow with n8n that updates more than 10 exchange rates daily through financial APIs. This system saved approximately 130 hours of manual work and completely eliminated the risk of human error in critical accounting reports.',
+    },
   },
   {
     id: 'analisis-datos-estadisticos',
@@ -178,6 +231,14 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['Power BI', 'Looker Studio', 'Dash', 'SQL'],
+    en: {
+      type: 'DATA ANALYSIS / BI',
+      subtitle: 'Analytical dashboards for strategic decision-making',
+      date: 'October 2025 - December 2025',
+      description: 'Structuring understandable analytical dashboards for strategic decision-making.',
+      details:
+        'Leadership in the reorganization and structuring of statistical and data analysis dashboards to transform them into intuitive and understandable tools, specifically designed for non-technical profiles such as selection psychologists. Use of Power BI, Looker Studio and Dash to present complex metrics clearly, facilitating candidate evaluation and the tracking of operational KPIs.',
+    },
   },
   {
     id: 'bi-erp-sap-epicor',
@@ -194,6 +255,14 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['SAP', 'SAP Business One', 'Epicor', 'Power BI', 'Looker Studio'],
+    en: {
+      type: 'BUSINESS INTELLIGENCE / ERP',
+      subtitle: 'Integration of financial data from SAP and Epicor',
+      date: 'November 2025 - March 2026',
+      description: 'Integration of financial and operational data from SAP and Epicor systems.',
+      details:
+        'Development of advanced reporting ecosystems integrating data from corporate ERPs such as SAP, SAP Business One and Epicor. Creation of executive dashboards in Power BI and Looker that provide complete visibility of the value chain, optimizing managerial response times through accurate data and high-impact analytical visualizations.',
+    },
   },
   {
     id: 'ia-empresarial-copilot',
@@ -210,6 +279,14 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['Copilot Studio', 'Generative AI', 'Process Automation'],
+    en: {
+      type: 'ENTERPRISE AI',
+      subtitle: 'Process optimization with intelligent assistants',
+      date: '2025',
+      description: 'Process optimization through intelligent assistants and Copilot Studio.',
+      details:
+        'Leadership in the adoption of generative AI in the corporate environment, using Microsoft Copilot Studio to create agents and assistants that optimize development, information analysis and the automation of repetitive workflows, boosting the team\'s operational productivity.',
+    },
   },
   {
     id: 'asistente-bambini-van-gogh',
@@ -226,6 +303,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['Python', 'Generative AI', 'Computer Vision', 'Voice Synthesis'],
+    en: {
+      type: 'AI / RESEARCH',
+      subtitle: 'Visual inclusion with AI for visually impaired people',
+      date: 'May 2025 - July 2025',
+      description:
+        'Intelligent voice assistant to improve the experience of visually impaired people in museums.',
+      details:
+        'Research project developed at Universidad Salazar y Herrera. Bambini is an AI assistant designed as a visual interpreter in museums and tourist sites in Colombia. Developed in Python with neural networks and computer vision to describe artworks, paintings and canvases in detail, providing an immersive, accessible and educational experience for people with visual impairment or low vision.',
+    },
   },
   {
     id: 'sitio-contadoras-aq',
@@ -242,6 +328,15 @@ export const PROJECTS_DATA: ProjectItem[] = [
     installCode: '',
     githubUrl: '',
     techStack: ['React', 'Next.js', 'TypeScript', 'Vercel'],
+    en: {
+      type: 'CORPORATE WEBSITE',
+      subtitle: 'Official web platform for an accounting firm',
+      date: 'March 2026 - April 2026',
+      description:
+        'Development and deployment of the official web platform for the accounting firm Contadoras AQ.',
+      details:
+        'Design and development of the official website for the accounting firm Contadoras AQ using React and Next.js to maximize performance and SEO ranking. Deployed on Vercel on its own corporate domain, becoming the central digital channel for client acquisition and the presentation of corporate services.',
+    },
   },
 ];
 

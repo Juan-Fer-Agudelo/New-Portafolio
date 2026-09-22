@@ -18,9 +18,27 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   isSearchOpen = false,
   setIsSearchOpen,
 }) => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const p = t.projects;
   const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  // Devuelve los campos de texto del proyecto en el idioma actual
+  const loc = (project: ProjectItem) => {
+    if (lang === 'en' && project.en) {
+      return {
+        type: project.en.type,
+        subtitle: project.en.subtitle,
+        description: project.en.description,
+        date: project.en.date ?? project.date,
+      };
+    }
+    return {
+      type: project.type,
+      subtitle: project.subtitle,
+      description: project.description,
+      date: project.date,
+    };
+  };
 
   const filteredProjects = normalizedQuery
     ? PROJECTS_DATA.filter((project) => {
@@ -29,6 +47,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           project.type,
           project.subtitle,
           project.description,
+          project.en?.type ?? '',
+          project.en?.subtitle ?? '',
+          project.en?.description ?? '',
           project.organization ?? '',
           ...project.techStack,
         ]
@@ -105,7 +126,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                   <div className="project-card-header">
                     <span className="project-card-number">{project.number}</span>
-                    <span className="project-card-type">{project.type}</span>
+                    <span className="project-card-type">{loc(project).type}</span>
                   </div>
 
                   <div className="project-card-body">
@@ -118,12 +139,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       {project.organization && (
                         <span className="project-card-org">{project.organization}</span>
                       )}
-                      {project.date && (
-                        <span className="project-card-date">{project.date}</span>
+                      {loc(project).date && (
+                        <span className="project-card-date">{loc(project).date}</span>
                       )}
                     </div>
 
-                    <p className="open-source-desc">{project.description}</p>
+                    <p className="open-source-desc">{loc(project).description}</p>
 
                     <div className="project-card-tech">
                       {project.techStack.slice(0, 6).map((tech) => (

@@ -29,11 +29,21 @@ export const Modals: React.FC<ModalsProps> = ({
   toastText,
   isToastVisible,
 }) => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const me = t.modals.enfoque;
   const md = t.modals.projectDetail;
   const mc = t.modals.contact;
   const toast = t.toast;
+
+  // Campos localizados del proyecto seleccionado
+  const projDetails =
+    lang === 'en' && selectedProject?.en
+      ? selectedProject.en.details
+      : selectedProject?.details;
+  const projDate =
+    lang === 'en' && selectedProject?.en?.date
+      ? selectedProject.en.date
+      : selectedProject?.date;
 
   const [emailForm, setEmailForm] = useState({
     name: '',
@@ -325,22 +335,22 @@ export const Modals: React.FC<ModalsProps> = ({
               />
             </div>
           )}
-          {(selectedProject?.organization || selectedProject?.date) && (
+          {(selectedProject?.organization || projDate) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '18px' }}>
               {selectedProject?.organization && (
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: 'var(--color-primary)' }}>
                   {selectedProject.organization}
                 </span>
               )}
-              {selectedProject?.date && (
+              {projDate && (
                 <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--color-accent)', fontWeight: 600 }}>
-                  {selectedProject.date}
+                  {projDate}
                 </span>
               )}
             </div>
           )}
           <p id="detail-desc" style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
-            {selectedProject?.details}
+            {projDetails}
           </p>
           {selectedProject?.techStack && selectedProject.techStack.length > 0 && (
             <div style={{ marginBottom: '24px' }}>

@@ -1,5 +1,13 @@
 export type PageView = 'home' | 'work';
 
+export interface ProjectLocale {
+  type: string;
+  subtitle: string;
+  description: string;
+  details: string;
+  date?: string;
+}
+
 export interface ProjectItem {
   id: string;
   number: string;
@@ -15,6 +23,8 @@ export interface ProjectItem {
   date?: string;
   url?: string;
   image?: string;
+  // Versión en inglés de los campos de texto traducibles
+  en?: ProjectLocale;
 }
 
 export interface WritingArticle {
