@@ -1698,11 +1698,12 @@
       .contact-heading {
         font-family: var(--font-heading);
         font-weight: 400;
-        font-size: clamp(38px, 5vw, 56px);
+        font-size: clamp(30px, 4.4vw, 56px);
         line-height: 1.15;
         letter-spacing: -0.02em;
         color: var(--color-primary);
         margin-bottom: 24px;
+        white-space: nowrap;
       }
 
       .contact-subtext {
@@ -2743,7 +2744,8 @@
         }
 
         .contact-heading {
-          font-size: 34px;
+          font-size: clamp(24px, 7vw, 34px);
+          white-space: normal;
         }
 
         .contact-actions-row {
