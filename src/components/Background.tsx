@@ -44,8 +44,8 @@ export const Background: React.FC = () => {
       'rgba(14, 165, 233, ',
     ];
 
-    const count = Math.floor((width * height) / 11000);
-    const particleCount = Math.max(30, Math.min(count, 90));
+    const count = Math.floor((width * height) / 4500);
+    const particleCount = Math.max(70, Math.min(count, 200));
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
@@ -161,7 +161,7 @@ export const Background: React.FC = () => {
           const ndx = p.x - p2.x;
           const ndy = p.y - p2.y;
           const nDistSq = ndx * ndx + ndy * ndy;
-          const maxDist = 120;
+          const maxDist = 130;
           if (nDistSq < maxDist * maxDist) {
             const nDist = Math.sqrt(nDistSq);
             const lineAlpha = (1 - nDist / maxDist) * 0.2;
