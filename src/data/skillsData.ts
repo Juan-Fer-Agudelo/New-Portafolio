@@ -74,6 +74,8 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'PostgreSQL (pg client)', ...L.intAdv, icon: 'postgresql', color: '4169E1' },
       { name: 'SQL Server (T-SQL)', ...L.int, icon: 'microsoftsqlserver', color: 'CC2927' },
       { name: 'MongoDB', ...L.int, icon: 'mongodb', color: '47A248' },
+      { name: 'Apache Kafka', ...L.int, icon: 'apachekafka', color: '231F20' },
+      { name: 'Apache Cassandra', ...L.int, icon: 'apachecassandra', color: '1287B1' },
       { name: 'SQL', ...L.intAdv, icon: null },
       { name: 'Modelado Relacional', ...L.intAdv, icon: null },
       { name: 'Replit Object Storage', ...L.int, icon: 'replit', color: 'F26207' },
