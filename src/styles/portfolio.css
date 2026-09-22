@@ -3221,3 +3221,75 @@
         position: relative;
         z-index: 3;
       }
+
+      /* ==========================================================================
+         TRANSICIONES SUAVES GLOBALES PARA ELEMENTOS INTERACTIVOS
+         ========================================================================== */
+      /* Enlaces, botones e íconos clickeables reciben una transición base suave */
+      a,
+      button,
+      .menu-social-icon,
+      .social-link,
+      .nav-menu-label,
+      .nav-hire-label,
+      .nav-hire-bubble,
+      .nav-lang-toggle,
+      .nav-lang-option,
+      .menu-nav-title,
+      .menu-nav-desc,
+      .menu-close-action,
+      .menu-close-label,
+      .menu-hire-link,
+      .footer-links a,
+      .project-card-visit,
+      .skill-label,
+      .about-page-bookings-btn {
+        transition:
+          color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          fill 0.3s ease,
+          stroke 0.3s ease;
+      }
+
+      /* Íconos SVG dentro de enlaces/botones también con transición */
+      a svg,
+      button svg,
+      .menu-social-icon svg,
+      .skill-label-icon svg {
+        transition:
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          fill 0.3s ease,
+          stroke 0.3s ease,
+          color 0.3s ease;
+      }
+
+      /* Íconos sociales del menú: leve elevación y escala al pasar el mouse */
+      .menu-social-icon:hover svg {
+        transform: translateY(-2px) scale(1.12);
+      }
+
+      /* Enlaces del footer con leve desplazamiento al hover */
+      .footer-links a:hover {
+        transform: translateX(2px);
+      }
+
+      /* Toggle de idioma: leve escala al pasar el mouse */
+      .nav-lang-toggle:hover {
+        transform: translateY(-1px);
+      }
+
+      /* Respetar preferencia de movimiento reducido por accesibilidad */
+      @media (prefers-reduced-motion: reduce) {
+        a,
+        button,
+        .menu-social-icon,
+        .social-link,
+        .menu-nav-title,
+        .skill-label {
+          transition-duration: 0.01ms !important;
+        }
+      }
