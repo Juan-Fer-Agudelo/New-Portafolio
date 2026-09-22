@@ -375,6 +375,8 @@ const MONOLITH_TO_MICROSERVICES_CONTENT = `
     <li><a href="#ms-strangler">4. La estrategia Strangler Fig: migrar sin romper producción</a></li>
     <li><a href="#ms-errores">5. Errores comunes que convierten la migración en un incendio</a></li>
     <li><a href="#ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</a></li>
+    <li><a href="#ms-faqs">Preguntas Frecuentes</a></li>
+    <li><a href="#ms-referencias">Referencias y Enlaces</a></li>
   </ol>
 </div>
 
@@ -477,6 +479,37 @@ location /api/ {
 
 <h2 id="ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</h2>
 <p>Si tu equipo tiene menos de 15 ingenieros y un solo pipeline de despliegue les funciona sin fricción notable, migrar a microservicios no resuelve un problema que tienes: crea uno nuevo. Los microservicios multiplican el costo operativo (red, colas, monitoreo distribuido, on-call más complejo) y ese costo solo se justifica cuando el dolor de despliegue, escalado o coordinación de equipos ya es real y medible. Si el problema es que el código está mal organizado dentro del monolito, la solución correcta casi siempre es más barata y menos arriesgada: convertirlo en un monolito modular, con límites de dominio claros dentro del mismo proceso, antes de pagar el costo de distribuirlo.</p>
+
+<h2 id="ms-faqs">Preguntas Frecuentes</h2>
+
+<h3>¿Cuánto tiempo tarda una migración típica a microservicios?</h3>
+<p>Depende del tamaño del monolito y de la capacidad de tu equipo. El patrón Strangler Fig es incremental, así que es más útil pensar en sprints de 2-4 semanas extrayendo un servicio a la vez, que en un proyecto global. Equipos de 5-10 ingenieros suelen tardar entre 6 y 18 meses en migrar un monolito de mediano tamaño de forma segura y sin pausar la entrega de features.</p>
+
+<h3>¿Necesito Kubernetes para usar microservicios?</h3>
+<p>No obligatoriamente. Kubernetes es una opción cuando tienes 15+ servicios y necesitas orquestación declarativa de recursos. Para un equipo pequeño empezando, Docker + Docker Compose o incluso serverless functions (AWS Lambda, Cloud Functions) pueden ser suficientes y menos complejos de operar.</p>
+
+<h3>¿Qué herramientas recomiendas para tracing distribuido?</h3>
+<p>Jaeger, Zipkin y Datadog son opciones maduras. Si usas AWS, X-Ray es una opción nativa. Para startups o equipos pequeños, comenzar con logging estructurado (ELK stack) y correlation IDs simples puede ser suficiente antes de invertir en APM full.</p>
+
+<h3>¿Es posible hacer rollback de una migración parcial?</h3>
+<p>Sí, ese es el punto del patrón Strangler Fig. Si un servicio nuevo falla bajo carga, cambias el proxy/gateway para que todas las peticiones vuelvan al monolito legacy en minutos. Por eso es crítico que el código antiguo permanezca desplegable durante la transición.</p>
+
+<h3>¿Qué pasa si el equipo no está preparado técnicamente?</h3>
+<p>Es la razón número uno por la que fracasan las migraciones. Antes de empezar, asegúrate de que tu equipo entienda: API versioning, eventual consistency, circuit breakers, distributed tracing y cómo debuggear fallos en la red. Si no, invierte primero en entrenamiento que en infraestructura.</p>
+
+<h2 id="ms-referencias">Referencias y Enlaces</h2>
+<ul>
+  <li><strong>Strangler Fig Pattern</strong> — Martin Fowler: <a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener noreferrer">martinfowler.com/bliki/StranglerFigApplication.html</a></li>
+  <li><strong>Building Microservices</strong> — Sam Newman (libro recomendado): Segunda edición cubre patrones modernos de migración incremental</li>
+  <li><strong>Microservices Patterns</strong> — Chris Richardson: Referencia sobre sagas, CDC y patrones de datos distribuidos</li>
+  <li><strong>The Art of Scalability</strong> — Martin Abbott &amp; Michael Fisher: Decisiones arquitectónicas basadas en escala real</li>
+  <li><strong>Conway's Law</strong> — Melvin E. Conway: <a href="https://www.melconway.com/Home/Committees_Paper.html" target="_blank" rel="noopener noreferrer">melconway.com/Home/Committees_Paper.html</a></li>
+  <li><strong>Observability Engineering</strong> — Yuri Shkuro: Trazabilidad distribuida en sistemas complejos</li>
+  <li><strong>Release It! (2nd Edition)</strong> — Michael T. Nygard: Estabilidad en producción y patrones de resiliencia</li>
+  <li><strong>Domain-Driven Design</strong> — Eric Evans: Fundamentación teórica de bounded contexts y agregados</li>
+</ul>
+
+<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. Si tienes preguntas específicas sobre tu arquitectura o necesitas auditoría técnica, no dudes en contactarme.</p>
 `;
 
 export const WRITING_ARTICLES: WritingArticle[] = [

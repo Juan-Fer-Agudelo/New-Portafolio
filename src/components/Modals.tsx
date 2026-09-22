@@ -18,6 +18,7 @@ interface ModalsProps {
   onShowToast: (msg: string) => void;
   onEmailSuccess: () => void;
   onOpenContact: () => void;
+  onOpenAbout: () => void;
   toastText: string;
   isToastVisible: boolean;
 }
@@ -31,6 +32,7 @@ export const Modals: React.FC<ModalsProps> = ({
   onShowToast,
   onEmailSuccess,
   onOpenContact,
+  onOpenAbout,
   toastText,
   isToastVisible,
 }) => {
@@ -427,11 +429,33 @@ export const Modals: React.FC<ModalsProps> = ({
               </div>
 
               <div className="article-author-box">
-                <div className="article-author-avatar" aria-hidden="true">
+                <button
+                  className="article-author-avatar"
+                  onClick={onOpenAbout}
+                  aria-label={`Ver perfil de ${ARTICLE_AUTHOR.name}`}
+                  style={{ cursor: 'pointer', border: 'none', padding: 0, background: 'none' }}
+                >
                   {ARTICLE_AUTHOR.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
-                </div>
+                </button>
                 <div className="article-author-info">
-                  <span className="article-author-name">{ARTICLE_AUTHOR.name}</span>
+                  <button
+                    className="article-author-name"
+                    onClick={onOpenAbout}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      fontFamily: 'inherit',
+                      fontSize: 'inherit',
+                      fontWeight: 'inherit',
+                      color: 'inherit',
+                      textAlign: 'left',
+                    }}
+                    aria-label={`Ver perfil de ${ARTICLE_AUTHOR.name}`}
+                  >
+                    {ARTICLE_AUTHOR.name}
+                  </button>
                   <span className="article-author-role">{ARTICLE_AUTHOR.role}</span>
                   <p className="article-author-bio">{ARTICLE_AUTHOR.bio}</p>
                 </div>
