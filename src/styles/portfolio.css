@@ -3843,3 +3843,92 @@
           padding: 32px 24px 0 24px;
         }
       }
+
+      /* ==========================================================================
+         ACORDEONES DE PREGUNTAS FRECUENTES (FAQ) EN ARTÍCULOS
+         ========================================================================== */
+      .article-faq {
+        border: 1.5px solid var(--color-border-subtle);
+        border-radius: 12px;
+        margin-bottom: 14px;
+        background: #ffffff;
+        overflow: hidden;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .article-faq[open] {
+        border-color: var(--color-accent);
+        box-shadow: 0 4px 16px rgba(15, 27, 97, 0.06);
+      }
+
+      .article-faq-question {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 24px;
+        cursor: pointer;
+        font-family: var(--font-heading);
+        font-size: clamp(16px, 1.7vw, 19px);
+        font-weight: 700;
+        color: var(--color-primary);
+        list-style: none;
+        user-select: none;
+        transition: color 0.25s ease;
+      }
+
+      /* Oculta el marcador nativo del <summary> */
+      .article-faq-question::-webkit-details-marker {
+        display: none;
+      }
+      .article-faq-question::marker {
+        content: '';
+      }
+
+      /* Ícono + / - a la derecha */
+      .article-faq-question::after {
+        content: '+';
+        font-size: 26px;
+        font-weight: 400;
+        color: var(--color-purple);
+        line-height: 1;
+        flex-shrink: 0;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .article-faq[open] .article-faq-question::after {
+        content: '−';
+        transform: rotate(180deg);
+      }
+
+      .article-faq-question:hover {
+        color: var(--color-purple);
+      }
+
+      .article-faq-answer {
+        padding: 0 24px 22px 24px;
+      }
+
+      .article-faq-answer p {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--color-muted);
+      }
+
+      /* Animación de apertura suave */
+      .article-faq[open] .article-faq-answer {
+        animation: faqReveal 0.35s ease;
+      }
+
+      @keyframes faqReveal {
+        from {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }

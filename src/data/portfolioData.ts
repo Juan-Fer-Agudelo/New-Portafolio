@@ -561,20 +561,30 @@ location /api/ {
 
 <h2 id="ms-faqs">Preguntas Frecuentes</h2>
 
-<h3>¿Cuánto tiempo tarda una migración típica a microservicios?</h3>
-<p>Depende del tamaño del monolito y de la capacidad de tu equipo. El patrón Strangler Fig es incremental, así que es más útil pensar en sprints de 2-4 semanas extrayendo un servicio a la vez, que en un proyecto global. Equipos de 5-10 ingenieros suelen tardar entre 6 y 18 meses en migrar un monolito de mediano tamaño de forma segura y sin pausar la entrega de features.</p>
+<details class="article-faq">
+  <summary class="article-faq-question">¿Cuánto tiempo tarda una migración típica a microservicios?</summary>
+  <div class="article-faq-answer"><p>Depende del tamaño del monolito y de la capacidad de tu equipo. El patrón Strangler Fig es incremental, así que es más útil pensar en sprints de 2-4 semanas extrayendo un servicio a la vez, que en un proyecto global. Equipos de 5-10 ingenieros suelen tardar entre 6 y 18 meses en migrar un monolito de mediano tamaño de forma segura y sin pausar la entrega de features.</p></div>
+</details>
 
-<h3>¿Necesito Kubernetes para usar microservicios?</h3>
-<p>No obligatoriamente. Kubernetes es una opción cuando tienes 15+ servicios y necesitas orquestación declarativa de recursos. Para un equipo pequeño empezando, Docker + Docker Compose o incluso serverless functions (AWS Lambda, Cloud Functions) pueden ser suficientes y menos complejos de operar.</p>
+<details class="article-faq">
+  <summary class="article-faq-question">¿Necesito Kubernetes para usar microservicios?</summary>
+  <div class="article-faq-answer"><p>No obligatoriamente. Kubernetes es una opción cuando tienes 15+ servicios y necesitas orquestación declarativa de recursos. Para un equipo pequeño empezando, Docker + Docker Compose o incluso serverless functions (AWS Lambda, Cloud Functions) pueden ser suficientes y menos complejos de operar.</p></div>
+</details>
 
-<h3>¿Qué herramientas recomiendas para tracing distribuido?</h3>
-<p>Jaeger, Zipkin y Datadog son opciones maduras. Si usas AWS, X-Ray es una opción nativa. Para startups o equipos pequeños, comenzar con logging estructurado (ELK stack) y correlation IDs simples puede ser suficiente antes de invertir en APM full.</p>
+<details class="article-faq">
+  <summary class="article-faq-question">¿Qué herramientas recomiendas para tracing distribuido?</summary>
+  <div class="article-faq-answer"><p>Jaeger, Zipkin y Datadog son opciones maduras. Si usas AWS, X-Ray es una opción nativa. Para startups o equipos pequeños, comenzar con logging estructurado (ELK stack) y correlation IDs simples puede ser suficiente antes de invertir en APM full.</p></div>
+</details>
 
-<h3>¿Es posible hacer rollback de una migración parcial?</h3>
-<p>Sí, ese es el punto del patrón Strangler Fig. Si un servicio nuevo falla bajo carga, cambias el proxy/gateway para que todas las peticiones vuelvan al monolito legacy en minutos. Por eso es crítico que el código antiguo permanezca desplegable durante la transición.</p>
+<details class="article-faq">
+  <summary class="article-faq-question">¿Es posible hacer rollback de una migración parcial?</summary>
+  <div class="article-faq-answer"><p>Sí, ese es el punto del patrón Strangler Fig. Si un servicio nuevo falla bajo carga, cambias el proxy/gateway para que todas las peticiones vuelvan al monolito legacy en minutos. Por eso es crítico que el código antiguo permanezca desplegable durante la transición.</p></div>
+</details>
 
-<h3>¿Qué pasa si el equipo no está preparado técnicamente?</h3>
-<p>Es la razón número uno por la que fracasan las migraciones. Antes de empezar, asegúrate de que tu equipo entienda: API versioning, eventual consistency, circuit breakers, distributed tracing y cómo debuggear fallos en la red. Si no, invierte primero en entrenamiento que en infraestructura.</p>
+<details class="article-faq">
+  <summary class="article-faq-question">¿Qué pasa si el equipo no está preparado técnicamente?</summary>
+  <div class="article-faq-answer"><p>Es la razón número uno por la que fracasan las migraciones. Antes de empezar, asegúrate de que tu equipo entienda: API versioning, eventual consistency, circuit breakers, distributed tracing y cómo debuggear fallos en la red. Si no, invierte primero en entrenamiento que en infraestructura.</p></div>
+</details>
 
 <h2 id="ms-referencias">Referencias y Enlaces</h2>
 <ul>
