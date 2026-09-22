@@ -24,6 +24,7 @@ import {
   SiPhp,
   SiGnubash,
   SiPostgresql,
+  SiMysql,
   SiMongodb,
   SiApachekafka,
   SiApachecassandra,
@@ -123,6 +124,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: 'PostgreSQL (pg client)', ...L.intAdv, icon: SiPostgresql, color: '#4169E1' },
       { name: 'SQL Server (T-SQL)', ...L.int, icon: FaMicrosoft, color: '#CC2927' },
+      { name: 'MySQL', ...L.int, icon: SiMysql, color: '#4479A1' },
       { name: 'MongoDB', ...L.int, icon: SiMongodb, color: '#47A248' },
       { name: 'Apache Kafka', ...L.int, icon: SiApachekafka, color: '#231F20' },
       { name: 'Apache Cassandra', ...L.int, icon: SiApachecassandra, color: '#1287B1' },
