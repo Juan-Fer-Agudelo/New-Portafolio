@@ -2,6 +2,7 @@ import React from 'react';
 import { PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
 import { CREDENTIALS, CV_IMAGES, CV_PDF_URL } from '../data/credentialsData';
+import profilePhoto from '../assets/images/photo.png';
 
 interface AboutViewProps {
   onNavigate: (view: PageView, hash?: string) => void;
@@ -25,22 +26,10 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
         <div className="about-page-grid">
           <div className="about-page-photo-col animate-on-scroll">
             <div className="about-page-photo-frame">
-              {/* Reemplaza el src cuando subas tu foto a src/assets/images/ */}
               <img
-                src="/src/assets/images/juan-photo.jpg"
+                src={profilePhoto}
                 alt="Juan Fernando Agudelo"
                 className="about-page-photo"
-                onError={(e) => {
-                  // Placeholder si aún no existe la foto
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  const parent = e.currentTarget.parentElement;
-                  if (parent && !parent.querySelector('.about-photo-placeholder')) {
-                    const ph = document.createElement('div');
-                    ph.className = 'about-photo-placeholder';
-                    ph.textContent = 'Tu foto aquí';
-                    parent.appendChild(ph);
-                  }
-                }}
               />
             </div>
           </div>
