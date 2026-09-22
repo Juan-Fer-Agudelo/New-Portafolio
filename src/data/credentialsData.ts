@@ -1,3 +1,6 @@
+import cvParte1 from '../assets/images/cv-parte-1.png';
+import cvParte2 from '../assets/images/cv-parte-2.png';
+
 // Credenciales y certificaciones. Edita esta lista con tus credenciales reales.
 export interface Credential {
   title: string;
@@ -24,12 +27,8 @@ export const CREDENTIALS: Credential[] = [
   },
 ];
 
-// Imágenes PNG de tu CV. Sube tus imágenes a src/assets/images/ y agrega las rutas aquí.
-// Ejemplo: '/src/assets/images/cv-pagina-1.png'
-export const CV_IMAGES: string[] = [
-  // '/src/assets/images/cv-pagina-1.png',
-  // '/src/assets/images/cv-pagina-2.png',
-];
+// Imágenes PNG de tu CV (2 páginas).
+export const CV_IMAGES: string[] = [cvParte1, cvParte2];
 
 // Enlace opcional al PDF de tu CV (déjalo vacío si no tienes)
 export const CV_PDF_URL = '';
