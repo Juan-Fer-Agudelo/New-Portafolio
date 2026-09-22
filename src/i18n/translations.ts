@@ -2,88 +2,121 @@ export type Lang = 'en' | 'es';
 
 export const translations = {
   en: {
-    // Navbar
     nav: {
       menu: 'MENU',
       hireMe: 'HIRE ME',
       langToggle: 'ESP',
     },
-
-    // Hero
     hero: {
       greeting: 'Hi, my',
       nameLine: 'name is',
-      name: 'Robb',
-      subtitle: "I'm an",
-      role: 'independent creative developer',
-      location: 'from Abergavenny, South Wales.',
+      name: 'Juan',
+      subtitlePrefix: "I'm an ",
+      roleBold: 'independent creative developer',
+      subtitleMid: ' from ',
+      location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
     },
-
-    // Side brand
-    sideBrand: '© MMXXVI. Made in Medellin, Colombia.',
-
-    // About
+    sideBrand: '© MMXXVI. Made in Medellín, Colombia.',
     about: {
-      heading: 'Mis proyectos',
-      description:
-        'Desde diseño de interacciones hasta sistemas de diseño escalables, aplicaciones de una sola página hasta experiencias más experimentales con WebGL. Descubre mi experiencia y los proyectos web que he construido — ',
-      boldPart: 'ambiciosos pero accesibles',
-      btnLabel: 'Ver mis proyectos',
+      heading: 'My projects',
+      descriptionPre:
+        'From interaction design to scalable design systems, single-page apps to more experimental experiences with WebGL. Discover my experience and the web projects I have built - ',
+      boldPart: 'ambitious yet accessible',
+      btnLabel: 'View my projects',
     },
-
-    // Projects
     projects: {
-      heading: 'Selected Projects',
+      heading: 'My Projects',
       subtext:
-        'A collection of open-source tools, frontend libraries and creative experiments crafted with attention to detail and an artisanal approach.',
+        'A selection of web platforms, e-commerce sites, mobile apps, artificial intelligence solutions and automation projects I have built for clients and companies.',
       searchPlaceholder: 'Search by technology, name or category...',
-      noResults: 'No projects found for "',
+      noResultsPre: 'No projects found for "',
       noResultsEnd: '".',
-      showAll: 'Show all projects',
-      viewDetails: 'View Details & Code',
+      viewDetails: 'View details',
+      visitSite: 'Visit site',
+      techLabel: 'Tech Stack',
     },
-
-    // Writing
+    work: {
+      heroTitle: 'About my work',
+      heroText1: 'I work with visionary people to design and build ',
+      heroTextBold1: 'interactive and accessible websites and products',
+      heroText2: '. From B2B/B2C web platforms and e-commerce, to ',
+      heroTextDash1: 'artificial intelligence',
+      heroText3: ' and ',
+      heroTextDash2: 'automation',
+      heroText4: ' solutions, with over 4 years of experience dedicated to ',
+      heroTextBold2: 'building the web with purpose',
+      sub1Title: 'Considered development',
+      sub1Text1:
+        'No two projects are the same, so I take a pragmatic approach to every job I do, focusing on delivering results that are as accessible and optimized as possible.',
+      sub1Text2:
+        'My experience building complex interfaces lets me deliver everything from single-page apps to scalable design systems. I can help you identify the most appropriate technology for your project and, although I love a good framework, you can be sure I will never use tech just for the sake of it.',
+      sub2Title: 'Code Choreography',
+      sub2Text1Pre:
+        'I sweat every little detail that brings a design to life. But, whether full WebGL or a UI interaction, animation is not just about looking good: good ',
+      sub2Text1Bold: 'interaction design',
+      sub2Text1Post: ' gives an interface a sense of space and logic.',
+      sub2Text2:
+        'I combine precise timing and motion with a deep understanding of browser rendering to deliver logical interactions that are full of character and outrageously smooth.',
+      sub3Title: 'The backend is my thing',
+      sub3Text1Pre: 'Beyond front-end development, I work with ',
+      sub3Text1Bold: 'databases',
+      sub3Text1Post:
+        ' and server architectures. Cloud CMS platforms, serverless functions, REST APIs and integrations - whatever your requirement, I help you plan, build and deliver a fast, secure and reliable project.',
+      sub3Text2Pre: 'If you need help building an application or API with ',
+      sub3Text2Bold1: 'Node.js',
+      sub3Text2Mid: ' and Express, with ',
+      sub3Text2Bold2: 'PostgreSQL',
+      sub3Text2Mid2: ', or automations and integrations with tools like ',
+      sub3Text2Bold3: 'n8n',
+      sub3Text2Post: ', count on me.',
+      manifestoTitle: "Let's build something better",
+      manifestoText1:
+        'I firmly believe that designers and developers have a responsibility to make sure what we build does no harm, and I try to be as ethical as possible when taking on projects.',
+      manifestoText2Pre:
+        'I am passionate about creating solutions that generate real positive impact: platforms that connect people with opportunities, ',
+      manifestoText2Bold: 'purposeful artificial intelligence',
+      manifestoText2Post:
+        ' tools and systems that optimize processes and save organizations valuable time.',
+      manifestoText3:
+        "In short, if you are looking for help building something that promotes sustainability, diversity, accessibility or that generally aims to make a positive impact, then let's talk.",
+      btnContact: 'Contact me',
+      backHome: 'Back to home',
+      footerCopyright: '© MMXXVI. Made in Medellín, Colombia.',
+      scroll: 'SCROLL',
+    },
     writing: {
       heading: 'Writing',
       subtext:
         'Reflections on native frontend engineering, typographic systems, microinteractions and digital craft.',
     },
-
-    // Contact
     contact: {
-      heading: 'Got a project in mind',
+      heading: 'Do you have a project in mind',
       subtext:
-        "I'm currently available for select freelance projects, frontend technical consulting and creative collaborations. Write to me at ",
-      subtextEnd: ' or connect on my socials below.',
+        "I'm currently available for freelance projects, frontend technical consulting and creative collaborations. Send me a message or connect through the channels below.",
       btnSend: 'Send me a message',
     },
-
-    // Footer
     footer: {
-      copyright: '© MMXXVI. Portfolio by Juan. Designed and built with artisanal precision in Medellín, Colombia.',
+      copyright:
+        '© MMXXVI. Portfolio by Juan. Designed and built with artisanal precision in Medellín, Colombia.',
       scrollTop: 'Back to Top',
       about: 'About',
       projects: 'Projects',
+      work: 'My work',
       contact: 'Contact',
     },
-
-    // Menu Overlay
     menuOverlay: {
       close: 'CLOSE',
       hireMe: 'HIRE ME',
       home: 'Home',
       homeDesc: 'Back to the home page.',
-      work: 'Work',
-      workDesc: 'My approach to development.',
+      work: 'Projects',
+      workDesc: 'Selected projects and experience.',
       about: 'About',
       aboutDesc: 'A little about me and my background.',
-      writing: 'Writing',
-      writingDesc: 'My latest writing on tech and language.',
+      writing: 'Blog',
+      writingDesc: 'My latest writing on technology.',
     },
-
-    // Modals
     modals: {
       enfoque: {
         title: 'My Creative Approach',
@@ -98,76 +131,36 @@ export const translations = {
         btnWork: 'See Work section →',
       },
       contact: {
-        title: 'Start the conversation',
-        labelName: 'Your Name',
-        placeholderName: 'e.g. Valentina Rossi',
-        labelEmail: 'Your Email',
-        placeholderEmail: 'e.g. valentina@studio.co',
-        labelMsg: 'Project Details',
-        placeholderMsg: 'Tell me about your vision, goals and timeline...',
-        btnSend: 'Send Message',
+        title: 'Contact me',
+        intro:
+          'Write to me to build a project together. Fill in your details, the subject and the message before sending.',
+        labelName: 'Your name',
+        placeholderName: 'What is your name?',
+        labelEmail: 'Your email',
+        placeholderEmail: 'youremail@example.com',
+        labelSubject: 'Subject',
+        placeholderSubject: 'Write the subject of the email',
+        labelBody: 'Description',
+        placeholderBody: 'Tell me about your project...',
+        defaultSubject: 'I want to build a project with you',
+        defaultBody: 'Hello Juan,\n\nI would like to contact you to develop a project. I am interested in the following:\n\n',
+        btnCancel: 'Cancel',
+        btnSend: 'Send',
+        btnSending: 'Sending...',
+        successTitle: 'Message sent',
+        successBody:
+          'Thanks for writing to me. I have received your message and will reply as soon as possible.',
+        btnClose: 'Close',
+        errorPrefix: 'Could not send: ',
+        notConfigured: 'EmailJS not configured. Check the .env file',
       },
       projectDetail: {
         installLabel: 'INSTALL / ACCESS',
         btnGithub: 'Visit GitHub Repository',
+        btnVisit: 'Visit site',
+        techLabel: 'Tech Stack',
       },
     },
-
-    // Portfolio data
-    data: {
-      projects: [
-        {
-          subtitle: 'Retro 80s theme for VS Code with neon & cyberpunk aesthetic',
-          description:
-            'A retro theme with vibrant colours, 80s poster-inspired typography and optional neon glow effect in the code editor. Over 1.2M global downloads.',
-          details:
-            '80s retro theme for VS Code with over 1.2M active installs, customisable neon glow effects and a palette inspired by cyberpunk films.',
-        },
-        {
-          subtitle: 'Ultra-lightweight viewport state tracker at 60fps',
-          description:
-            'Minimalist JavaScript library that subscribes your app to viewport state changes — scroll, window size and pointer position — without overloading the render thread.',
-          details:
-            'Ultra-minimalist vanilla JavaScript library that tracks browser viewport state (scroll position, pointer velocity, window size) with near-zero resource consumption.',
-        },
-        {
-          subtitle: 'Decoupled SPA router and browser history manager',
-          description:
-            'Modern navigation and browser history engine built for smooth page transitions, intelligent prefetching and a seamless editorial experience.',
-          details:
-            'Modern navigation and browser history engine designed for decoupled architectures and editorial experiences with smooth transition support.',
-        },
-        {
-          subtitle: 'Accessible design system with harmonic colour tokens',
-          description:
-            'Accessible component set that guarantees WCAG AAA contrast ratios, harmonic scales and subtle animations for digital publications.',
-          details:
-            'Design system and accessible token set with WCAG AAA ratio calculations, harmonic scales and components for refined digital publications.',
-        },
-      ],
-      articles: [
-        {
-          date: 'MARCH 2026',
-          excerpt:
-            'How to optimise passive listeners, requestAnimationFrame and transformation matrix calculations without overloading the browser main thread.',
-          readTime: '5 min read',
-        },
-        {
-          date: 'JANUARY 2026',
-          excerpt:
-            'Modular scales and optical contrast in contemporary web interfaces: building deliberate visual hierarchies without relying on industrial templates.',
-          readTime: '7 min read',
-        },
-        {
-          date: 'OCTOBER 2025',
-          excerpt:
-            'Why interactive software should feel like a handcrafted work, respecting negative space, tangible transitions and the unique tone of each project.',
-          readTime: '6 min read',
-        },
-      ],
-    },
-
-    // Toast
     toast: {
       emailCopied: 'Email juanfeeragudelo475@gmail.com copied to clipboard!',
       emailManual: 'Copy manually: juanfeeragudelo475@gmail.com',
@@ -176,88 +169,121 @@ export const translations = {
   },
 
   es: {
-    // Navbar
     nav: {
       menu: 'MENÚ',
       hireMe: 'CONTRÁTAME',
       langToggle: 'ING',
     },
-
-    // Hero
     hero: {
       greeting: 'Hola, mi',
       nameLine: 'nombre es',
       name: 'Juan',
-      subtitle: 'Soy un',
-      role: 'desarrollador creativo independiente',
-      location: 'de Medellín, Colombia.',
+      subtitlePrefix: 'Soy un ',
+      roleBold: 'desarrollador creativo independiente',
+      subtitleMid: ' de ',
+      location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
     },
-
-    // Side brand
     sideBrand: '© MMXXVI. Hecho en Medellín, Colombia.',
-
-    // About
     about: {
-      heading: 'Trabajemos juntos',
-      description:
-        'Desde diseño de interacción hasta sistemas de diseño escalables, aplicaciones de página única hasta algo más experimental con WebGL. Ayudo a personas increíbles a construir proyectos web ambiciosos pero accesibles — ',
-      boldPart: 'entre más atrevido, mejor',
-      btnLabel: 'Sobre mi enfoque',
+      heading: 'Mis proyectos',
+      descriptionPre:
+        'Desde diseño de interacciones hasta sistemas de diseño escalables, aplicaciones de una sola página hasta experiencias más experimentales con WebGL. Descubre mi experiencia y los proyectos web que he construido - ',
+      boldPart: 'ambiciosos pero accesibles',
+      btnLabel: 'Ver mis proyectos',
     },
-
-    // Projects
     projects: {
-      heading: 'Proyectos Seleccionados',
+      heading: 'Mis Proyectos',
       subtext:
-        'Una colección de herramientas de código abierto, librerías frontend y experimentos creativos diseñados con atención al detalle y enfoque artesanal.',
+        'Una selección de plataformas web, e-commerce, aplicaciones móviles, soluciones de inteligencia artificial y proyectos de automatización que he construido para clientes y empresas.',
       searchPlaceholder: 'Buscar por tecnología, nombre o categoría...',
-      noResults: 'No se encontraron proyectos con el término "',
+      noResultsPre: 'No se encontraron proyectos para "',
       noResultsEnd: '".',
-      showAll: 'Mostrar todos los proyectos',
-      viewDetails: 'Ver Detalles y Código',
+      viewDetails: 'Ver detalles',
+      visitSite: 'Visitar sitio',
+      techLabel: 'Stack Tecnológico',
     },
-
-    // Writing
+    work: {
+      heroTitle: 'Sobre mi trabajo',
+      heroText1: 'Trabajo con personas visionarias para diseñar y construir ',
+      heroTextBold1: 'sitios web y productos interactivos y accesibles',
+      heroText2: '. Desde plataformas web B2B/B2C y e-commerce, hasta soluciones de ',
+      heroTextDash1: 'inteligencia artificial',
+      heroText3: ' y ',
+      heroTextDash2: 'automatización',
+      heroText4: ', con más de 4 años de experiencia dedicados a ',
+      heroTextBold2: 'construir la web con propósito',
+      sub1Title: 'Desarrollo considerado',
+      sub1Text1:
+        'No hay dos proyectos iguales, por eso tomo un enfoque pragmático en cada trabajo que realizo, centrándome en entregar resultados lo más accesibles y optimizados posible.',
+      sub1Text2:
+        'Mi experiencia construyendo interfaces complejas me permite entregar desde aplicaciones de una sola página hasta sistemas de diseño escalables. Puedo ayudarte a identificar la tecnología más adecuada para tu proyecto y, aunque me encanta un buen framework, puedes estar seguro de que nunca usaré tecnología solo por usarla.',
+      sub2Title: 'Coreografía de código',
+      sub2Text1Pre:
+        'Cuido cada pequeño detalle que da vida a un diseño. Pero, ya sea WebGL completo o una interacción de UI, la animación no se trata solo de verse bien: un buen ',
+      sub2Text1Bold: 'diseño de interacción',
+      sub2Text1Post: ' le da a una interfaz un sentido de espacio y lógica.',
+      sub2Text2:
+        'Combino tiempos y movimientos precisos con un profundo entendimiento del renderizado del navegador para entregar interacciones lógicas, llenas de carácter y extraordinariamente fluidas.',
+      sub3Title: 'El backend es lo mío',
+      sub3Text1Pre: 'Más allá del desarrollo front-end, trabajo con ',
+      sub3Text1Bold: 'bases de datos',
+      sub3Text1Post:
+        ' y arquitecturas de servidor. Plataformas CMS en la nube, funciones serverless, APIs REST e integraciones - sea cual sea tu requerimiento, te ayudo a planear, construir y entregar un proyecto rápido, seguro y confiable.',
+      sub3Text2Pre: 'Si necesitas ayuda armando una aplicación o API con ',
+      sub3Text2Bold1: 'Node.js',
+      sub3Text2Mid: ' y Express, con ',
+      sub3Text2Bold2: 'PostgreSQL',
+      sub3Text2Mid2: ', o automatizaciones e integraciones con herramientas como ',
+      sub3Text2Bold3: 'n8n',
+      sub3Text2Post: ', cuenta conmigo.',
+      manifestoTitle: 'Construyamos algo mejor',
+      manifestoText1:
+        'Creo firmemente que los diseñadores y desarrolladores tenemos la responsabilidad de asegurarnos de que lo que construimos no cause daño, y trato de ser lo más ético posible al aceptar proyectos.',
+      manifestoText2Pre:
+        'Me apasiona crear soluciones que generen un impacto positivo real: plataformas que conectan personas con oportunidades, herramientas de ',
+      manifestoText2Bold: 'inteligencia artificial con propósito',
+      manifestoText2Post:
+        ' y sistemas que optimizan procesos y ahorran tiempo valioso a las organizaciones.',
+      manifestoText3:
+        'En resumen, si buscas ayuda para construir algo que promueva la sostenibilidad, la diversidad, la accesibilidad o que en general busque generar un impacto positivo, entonces hablemos.',
+      btnContact: 'Contáctame',
+      backHome: 'Volver al inicio',
+      footerCopyright: '© MMXXVI. Hecho en Medellín, Colombia.',
+      scroll: 'SCROLL',
+    },
     writing: {
       heading: 'Writing',
       subtext:
         'Reflexiones sobre ingeniería frontend nativa, sistemas tipográficos, microinteracciones y artesanía digital.',
     },
-
-    // Contact
     contact: {
-      heading: 'Tienes un proyecto en mente',
+      heading: '¿Tienes un proyecto en mente',
       subtext:
-        'Actualmente estoy disponible para proyectos freelance selectos, consultoría técnica de frontend y colaboraciones creativas. Escríbeme a ',
-      subtextEnd: ' o conéctate en mis redes de abajo.',
+        'Actualmente estoy disponible para proyectos freelance, consultoría técnica de frontend y colaboraciones creativas. Envíame un mensaje o conéctate por los canales de abajo.',
       btnSend: 'Envíame un mensaje',
     },
-
-    // Footer
     footer: {
-      copyright: '© MMXXVI. Portafolio de Juan. Diseñado y construido con precisión artesanal en Medellín, Colombia.',
+      copyright:
+        '© MMXXVI. Portafolio de Juan. Diseñado y construido con precisión artesanal en Medellín, Colombia.',
       scrollTop: 'Subir al Inicio',
       about: 'Sobre Mí',
       projects: 'Proyectos',
+      work: 'Mi trabajo',
       contact: 'Contacto',
     },
-
-    // Menu Overlay
     menuOverlay: {
-      close: 'CLOSE',
-      hireMe: 'HIRE ME',
-      home: 'Home',
-      homeDesc: 'Volver a la página de inicio.',
-      work: 'Work',
-      workDesc: 'Mi enfoque al desarrollo.',
-      about: 'About',
+      close: 'CERRAR',
+      hireMe: 'CONTRÁTAME',
+      home: 'Inicio',
+      homeDesc: 'Volver a la página principal.',
+      work: 'Proyectos',
+      workDesc: 'Proyectos seleccionados y experiencia.',
+      about: 'Sobre mí',
       aboutDesc: 'Un poco sobre mí y mi trayectoria.',
-      writing: 'Writing',
-      writingDesc: 'Mis últimos artículos sobre tecnología y lenguaje.',
+      writing: 'Blog',
+      writingDesc: 'Mis escritos más recientes sobre tecnología.',
     },
-
-    // Modals
     modals: {
       enfoque: {
         title: 'Mi Enfoque Creativo',
@@ -272,76 +298,36 @@ export const translations = {
         btnWork: 'Ver sección Work →',
       },
       contact: {
-        title: 'Inicia la conversación',
-        labelName: 'Tu Nombre',
-        placeholderName: 'ej. Valentina Rossi',
-        labelEmail: 'Tu Correo Electrónico',
-        placeholderEmail: 'ej. valentina@estudio.co',
-        labelMsg: 'Detalles del Proyecto',
-        placeholderMsg: 'Cuéntame sobre tu visión, metas y plazos...',
-        btnSend: 'Enviar Mensaje',
+        title: 'Contáctame',
+        intro:
+          'Escríbeme para desarrollar un proyecto juntos. Completa tus datos, el asunto y el mensaje antes de enviar.',
+        labelName: 'Tu nombre',
+        placeholderName: '¿Cómo te llamas?',
+        labelEmail: 'Tu correo',
+        placeholderEmail: 'tucorreo@ejemplo.com',
+        labelSubject: 'Asunto',
+        placeholderSubject: 'Escribe el asunto del correo',
+        labelBody: 'Descripción',
+        placeholderBody: 'Cuéntame sobre tu proyecto...',
+        defaultSubject: 'Quiero desarrollar un proyecto contigo',
+        defaultBody: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
+        btnCancel: 'Cancelar',
+        btnSend: 'Enviar',
+        btnSending: 'Enviando...',
+        successTitle: '¡Mensaje enviado',
+        successBody:
+          'Gracias por escribirme. He recibido tu mensaje y te responderé lo antes posible.',
+        btnClose: 'Cerrar',
+        errorPrefix: 'No se pudo enviar: ',
+        notConfigured: 'Falta configurar EmailJS. Revisa el archivo .env',
       },
       projectDetail: {
         installLabel: 'INSTALACIÓN / ACCESO',
         btnGithub: 'Visitar Repositorio en GitHub',
+        btnVisit: 'Visitar sitio',
+        techLabel: 'Stack Tecnológico',
       },
     },
-
-    // Portfolio data
-    data: {
-      projects: [
-        {
-          subtitle: 'Tema retro 80s para VS Code con estética neón & cyberpunk',
-          description:
-            'Un tema retro con colores vibrantes, tipografía inspirada en carteles de los 80s y efecto de brillo neón opcional en el editor de código. Más de 1.2M de descargas globales.',
-          details:
-            'Tema retro de los años 80 para VS Code con más de 1.2M de instalaciones activas, efectos de brillo neón personalizables y paleta inspirada en películas cyberpunk.',
-        },
-        {
-          subtitle: 'Rastreador de estado del viewport ultraliviano a 60fps',
-          description:
-            'Librería minimalista de JavaScript que suscribe tu aplicación a los cambios de estado del viewport: scroll, tamaño de ventana y posición del puntero sin sobrecargar el hilo de render.',
-          details:
-            'Biblioteca ultra minimalista en JavaScript vanilla que rastrea el estado del viewport del navegador (posición de scroll, velocidad del puntero, tamaño de ventana) con un consumo de recursos prácticamente nulo.',
-        },
-        {
-          subtitle: 'Enrutador SPA y gestor de historial de navegador desacoplado',
-          description:
-            'Motor moderno de navegación e historial del navegador pensado para transiciones de página fluidas, precarga inteligente y una experiencia editorial continua.',
-          details:
-            'Motor moderno de navegación e historial del navegador diseñado para arquitecturas desacopladas y experiencias editoriales con soporte de transiciones fluidas.',
-        },
-        {
-          subtitle: 'Sistema de diseño accesible con tokens de color armónicos',
-          description:
-            'Conjunto de componentes accesibles que garantizan contrastes WCAG AAA, escalas armónicas y animaciones sutiles para publicaciones digitales.',
-          details:
-            'Sistema de diseño y conjunto de tokens accesibles con cálculos de ratio WCAG AAA, escalas armónicas y componentes para publicaciones digitales refinadas.',
-        },
-      ],
-      articles: [
-        {
-          date: 'MARZO 2026',
-          excerpt:
-            'Cómo optimizar listeners pasivos, requestAnimationFrame y cálculos de matrices de transformación sin sobrecargar el hilo principal del navegador.',
-          readTime: '5 min de lectura',
-        },
-        {
-          date: 'ENERO 2026',
-          excerpt:
-            'Escalas modulares y contraste óptico en interfaces web contemporáneas: construyendo jerarquías visuales deliberadas sin depender de plantillas industriales.',
-          readTime: '7 min de lectura',
-        },
-        {
-          date: 'OCTUBRE 2025',
-          excerpt:
-            'Por qué el software interactivo debe sentirse como un trabajo artesanal, respetando el espacio negativo, las transiciones tangibles y el tono propio de cada proyecto.',
-          readTime: '6 min de lectura',
-        },
-      ],
-    },
-
-    // Toast
     toast: {
       emailCopied: '¡Correo juanfeeragudelo475@gmail.com copiado al portapapeles!',
       emailManual: 'Copia manual: juanfeeragudelo475@gmail.com',
@@ -349,4 +335,3 @@ export const translations = {
     },
   },
 } as const;
-

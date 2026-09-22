@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageView } from '../types';
+import { useLang } from '../i18n/LangContext';
 
 interface WorkViewProps {
   onNavigate: (view: PageView, hash?: string) => void;
@@ -7,26 +8,26 @@ interface WorkViewProps {
 }
 
 export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactModal }) => {
+  const { t } = useLang();
+  const w = t.work;
   return (
     <div id="view-work" className="page-view">
       <section id="work" className="work-section">
         {/* WORK HERO: About my work. */}
         <div className="work-hero animate-on-scroll">
           <h1 className="work-hero-title">
-            Sobre mi trabajo<span className="pink-dot">.</span>
+            {w.heroTitle}<span className="pink-dot">.</span>
           </h1>
           <div className="work-pink-bar" aria-hidden="true"></div>
           <p className="work-intro-text">
-            Trabajo con personas visionarias para diseñar y construir{' '}
-            <strong>sitios web y productos interactivos y accesibles</strong>. Desde plataformas
-            web B2B/B2C y e-commerce, hasta soluciones de{' '}
-            <span className="work-dashed">inteligencia artificial</span> y{' '}
-            <span className="work-dashed">automatización</span>, con más de 4 años de experiencia
-            dedicados a <strong>construir la web con propósito</strong>.
+            {w.heroText1}<strong>{w.heroTextBold1}</strong>{w.heroText2}
+            <span className="work-dashed">{w.heroTextDash1}</span>{w.heroText3}
+            <span className="work-dashed">{w.heroTextDash2}</span>{w.heroText4}
+            <strong>{w.heroTextBold2}</strong>.
           </p>
 
           <div className="work-scroll-indicator" aria-hidden="true">
-            <span className="work-scroll-label">SCROLL</span>
+            <span className="work-scroll-label">{w.scroll}</span>
             <div className="work-scroll-line"></div>
           </div>
         </div>
@@ -35,18 +36,10 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
         <div className="work-block-grid animate-on-scroll">
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              Desarrollo considerado<span className="pink-dot">.</span>
+              {w.sub1Title}<span className="pink-dot">.</span>
             </h2>
-            <p>
-              No hay dos proyectos iguales, por eso tomo un enfoque pragmático en cada trabajo que
-              realizo, centrándome en entregar resultados lo más accesibles y optimizados posible.
-            </p>
-            <p>
-              Mi experiencia construyendo interfaces complejas me permite entregar desde aplicaciones
-              de una sola página hasta sistemas de diseño escalables. Puedo ayudarte a identificar la
-              tecnología más adecuada para tu proyecto y, aunque me encanta un buen framework, puedes
-              estar seguro de que nunca usaré tecnología solo por usarla.
-            </p>
+            <p>{w.sub1Text1}</p>
+            <p>{w.sub1Text2}</p>
           </div>
 
           <div className="work-illustration-wrap">
@@ -192,17 +185,12 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
 
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              Coreografía de código<span className="pink-dot">.</span>
+              {w.sub2Title}<span className="pink-dot">.</span>
             </h2>
             <p>
-              Cuido cada pequeño detalle que da vida a un diseño. Pero, ya sea WebGL completo o una
-              interacción de UI, la animación no se trata solo de verse bien: un buen{' '}
-              <strong>diseño de interacción</strong> le da a una interfaz un sentido de espacio y lógica.
+              {w.sub2Text1Pre}<strong>{w.sub2Text1Bold}</strong>{w.sub2Text1Post}
             </p>
-            <p>
-              Combino tiempos y movimientos precisos con un profundo entendimiento del renderizado del
-              navegador para entregar interacciones lógicas, llenas de carácter y extraordinariamente fluidas.
-            </p>
+            <p>{w.sub2Text2}</p>
           </div>
         </div>
 
@@ -210,18 +198,15 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
         <div className="work-block-grid animate-on-scroll">
           <div className="work-block-text">
             <h2 className="work-sub-title">
-              El backend es lo mío<span className="pink-dot">.</span>
+              {w.sub3Title}<span className="pink-dot">.</span>
             </h2>
             <p>
-              Más allá del desarrollo front-end, trabajo con <strong>bases de datos</strong> y
-              arquitecturas de servidor. Plataformas CMS en la nube, funciones serverless, APIs REST
-              e integraciones — sea cual sea tu requerimiento, te ayudo a planear, construir y entregar
-              un proyecto rápido, seguro y confiable.
+              {w.sub3Text1Pre}<strong>{w.sub3Text1Bold}</strong>{w.sub3Text1Post}
             </p>
             <p>
-              Si necesitas ayuda armando una aplicación o API con <strong>Node.js</strong> y Express,
-              con <strong>PostgreSQL</strong>, o automatizaciones e integraciones con herramientas como{' '}
-              <strong>n8n</strong>, cuenta conmigo.
+              {w.sub3Text2Pre}<strong>{w.sub3Text2Bold1}</strong>{w.sub3Text2Mid}
+              <strong>{w.sub3Text2Bold2}</strong>{w.sub3Text2Mid2}
+              <strong>{w.sub3Text2Bold3}</strong>{w.sub3Text2Post}
             </p>
           </div>
 
@@ -302,26 +287,17 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
           <div className="work-dots-backdrop" aria-hidden="true"></div>
           <div className="work-manifesto-content">
             <h2 className="work-manifesto-title">
-              Construyamos algo mejor<span className="pink-dot">.</span>
+              {w.manifestoTitle}<span className="pink-dot">.</span>
             </h2>
+            <p>{w.manifestoText1}</p>
             <p>
-              Creo firmemente que los diseñadores y desarrolladores tenemos la responsabilidad de
-              asegurarnos de que lo que construimos no cause daño, y trato de ser lo más ético posible
-              al aceptar proyectos.
-            </p>
-            <p>
-              Me apasiona crear soluciones que generen un impacto positivo real: plataformas que
-              conectan personas con oportunidades, herramientas de{' '}
+              {w.manifestoText2Pre}
               <u className="work-dashed">
-                <strong>inteligencia artificial con propósito</strong>
-              </u>{' '}
-              y sistemas que optimizan procesos y ahorran tiempo valioso a las organizaciones.
+                <strong>{w.manifestoText2Bold}</strong>
+              </u>
+              {w.manifestoText2Post}
             </p>
-            <p>
-              En resumen, si buscas ayuda para construir algo que promueva la sostenibilidad, la
-              diversidad, la accesibilidad o que en general busque generar un impacto positivo,
-              entonces hablemos.
-            </p>
+            <p>{w.manifestoText3}</p>
 
             <button
               className="work-touch-btn"
@@ -329,7 +305,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
               type="button"
               onClick={onOpenContactModal}
             >
-              Contáctame
+              {w.btnContact}
             </button>
           </div>
         </div>
@@ -346,7 +322,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
       >
         <div className="footer-inner">
           <p className="footer-copyright" style={{ color: '#6d5b7b' }}>
-            &copy; MMXXVI. Hecho en Medellín, Colombia.
+            {w.footerCopyright}
           </p>
           <div className="footer-links">
             <a
@@ -358,7 +334,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 onNavigate('home', '#hero');
               }}
             >
-              &larr; Volver al inicio
+              &larr; {w.backHome}
             </a>
             <span style={{ color: '#73bbc5' }}>&bull;</span>
             <a
@@ -370,7 +346,7 @@ export const WorkView: React.FC<WorkViewProps> = ({ onNavigate, onOpenContactMod
                 onOpenContactModal();
               }}
             >
-              Contáctame
+              {w.btnContact}
             </a>
           </div>
         </div>

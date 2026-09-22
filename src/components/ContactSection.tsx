@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLang } from '../i18n/LangContext';
 
 interface ContactSectionProps {
   onOpenContactModal: () => void;
@@ -10,17 +11,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   onShowToast,
 }) => {
   void onShowToast;
+  const { t } = useLang();
+  const c = t.contact;
 
   return (
     <section id="contacto" className="section-reveal">
       <div className="contact-inner">
         <h2 className="contact-heading animate-on-scroll">
-          ¿Tienes un proyecto en mente<span className="dot">?</span>
+          {c.heading}<span className="dot">?</span>
         </h2>
 
         <p className="contact-subtext animate-on-scroll" data-delay="1">
-          Actualmente estoy disponible para proyectos freelance, consultoría técnica de frontend
-          y colaboraciones creativas. Envíame un mensaje o conéctate por los canales de abajo.
+          {c.subtext}
         </p>
 
         <div className="contact-actions-row animate-on-scroll" data-delay="2">
@@ -30,7 +32,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             id="contact-modal-btn"
             onClick={onOpenContactModal}
           >
-            Envíame un mensaje
+            {c.btnSend}
           </button>
 
           {/* Pill que abre el modal de contacto */}

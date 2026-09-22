@@ -5,7 +5,6 @@ import { useLang } from '../i18n/LangContext';
 export const WritingSection: React.FC = () => {
   const { t } = useLang();
   const w = t.writing;
-  const dataArticles = t.data.articles;
 
   return (
     <section id="writing" className="section-reveal" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
@@ -25,7 +24,6 @@ export const WritingSection: React.FC = () => {
 
       <div className="writing-articles-list">
         {WRITING_ARTICLES.map((article, idx) => {
-          const localizedArticle = dataArticles[idx];
           return (
             <article
               key={article.id}
@@ -33,13 +31,13 @@ export const WritingSection: React.FC = () => {
               data-delay={idx > 0 ? String(idx) : undefined}
             >
               <div className="writing-meta">
-                <span className="writing-date">{localizedArticle?.date ?? article.date}</span>
+                <span className="writing-date">{article.date}</span>
                 <span className="writing-tag">{article.tag}</span>
               </div>
               <h3 className="writing-title">{article.title}</h3>
-              <p className="writing-excerpt">{localizedArticle?.excerpt ?? article.excerpt}</p>
+              <p className="writing-excerpt">{article.excerpt}</p>
               <div className="writing-footer">
-                <span className="writing-readtime">{localizedArticle?.readTime ?? article.readTime}</span>
+                <span className="writing-readtime">{article.readTime}</span>
                 <span className="writing-arrow" aria-hidden="true">&rarr;</span>
               </div>
             </article>

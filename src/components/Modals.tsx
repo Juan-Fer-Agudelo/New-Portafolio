@@ -29,24 +29,26 @@ export const Modals: React.FC<ModalsProps> = ({
   toastText,
   isToastVisible,
 }) => {
-  const [emailForm, setEmailForm] = useState({
-    name: '',
-    email: '',
-    subject: 'Quiero desarrollar un proyecto contigo',
-    body: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
-  });
-  const [isSending, setIsSending] = useState(false);
   const { t } = useLang();
   const me = t.modals.enfoque;
   const md = t.modals.projectDetail;
+  const mc = t.modals.contact;
   const toast = t.toast;
+
+  const [emailForm, setEmailForm] = useState({
+    name: '',
+    email: '',
+    subject: mc.defaultSubject,
+    body: mc.defaultBody,
+  });
+  const [isSending, setIsSending] = useState(false);
 
   const resetForm = () => {
     setEmailForm({
       name: '',
       email: '',
-      subject: 'Quiero desarrollar un proyecto contigo',
-      body: 'Hola Juan,\n\nMe gustaría contactarte para desarrollar un proyecto. Me interesa lo siguiente:\n\n',
+      subject: mc.defaultSubject,
+      body: mc.defaultBody,
     });
   };
 
@@ -56,7 +58,7 @@ export const Modals: React.FC<ModalsProps> = ({
 
     // Verifica que EmailJS esté configurado
     if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-      onShowToast('Falta configurar EmailJS. Revisa el archivo .env');
+      onShowToast(mc.notConfigured);
       return;
     }
 
@@ -84,8 +86,8 @@ export const Modals: React.FC<ModalsProps> = ({
       const errorMsg =
         err && typeof err === 'object' && 'text' in err
           ? String((err as { text: unknown }).text)
-          : 'Error desconocido';
-      onShowToast(`No se pudo enviar: ${errorMsg}`);
+          : 'Error';
+      onShowToast(`${mc.errorPrefix}${errorMsg}`);
     } finally {
       setIsSending(false);
     }
@@ -162,58 +164,58 @@ export const Modals: React.FC<ModalsProps> = ({
         <div className="modal-card">
           <div className="modal-header-row">
             <h3 className="modal-title" id="contact-form-title">
-              Contáctame<span className="dot">.</span>
+              {mc.title}<span className="dot">.</span>
             </h3>
             <button className="modal-close-icon-btn" id="contact-modal-close-btn" onClick={onClose} aria-label="Cerrar modal">
               &times;
             </button>
           </div>
           <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-muted)', lineHeight: 1.6, marginBottom: '22px' }}>
-            Escríbeme para desarrollar un proyecto juntos. Completa tus datos, el asunto y el mensaje antes de enviar.
+            {mc.intro}
           </p>
           <form id="contact-form" onSubmit={handleContactSubmit}>
             <div className="form-group">
-              <label className="form-label" htmlFor="email-name">Tu nombre</label>
+              <label className="form-label" htmlFor="email-name">{mc.labelName}</label>
               <input
                 type="text"
                 id="email-name"
                 className="form-input"
-                placeholder="¿Cómo te llamas?"
+                placeholder={mc.placeholderName}
                 required
                 value={emailForm.name}
                 onChange={(e) => setEmailForm({ ...emailForm, name: e.target.value })}
               />
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="email-from">Tu correo</label>
+              <label className="form-label" htmlFor="email-from">{mc.labelEmail}</label>
               <input
                 type="email"
                 id="email-from"
                 className="form-input"
-                placeholder="tucorreo@ejemplo.com"
+                placeholder={mc.placeholderEmail}
                 required
                 value={emailForm.email}
                 onChange={(e) => setEmailForm({ ...emailForm, email: e.target.value })}
               />
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="email-subject">Asunto</label>
+              <label className="form-label" htmlFor="email-subject">{mc.labelSubject}</label>
               <input
                 type="text"
                 id="email-subject"
                 className="form-input"
-                placeholder="Escribe el asunto del correo"
+                placeholder={mc.placeholderSubject}
                 required
                 value={emailForm.subject}
                 onChange={(e) => setEmailForm({ ...emailForm, subject: e.target.value })}
               />
             </div>
             <div className="form-group">
-              <label className="form-label" htmlFor="email-body">Descripción</label>
+              <label className="form-label" htmlFor="email-body">{mc.labelBody}</label>
               <textarea
                 id="email-body"
                 className="form-textarea"
-                placeholder="Cuéntame sobre tu proyecto..."
+                placeholder={mc.placeholderBody}
                 required
                 rows={6}
                 value={emailForm.body}
@@ -229,7 +231,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 disabled={isSending}
               >
                 <span className="btn-content">
-                  <span>Cancelar</span>
+                  <span>{mc.btnCancel}</span>
                 </span>
               </button>
               <button type="submit" className="btn-outline drawn" style={{ flex: 1 }} disabled={isSending}>
@@ -237,7 +239,7 @@ export const Modals: React.FC<ModalsProps> = ({
                   <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
                 </svg>
                 <span className="btn-content">
-                  <span>{isSending ? 'Enviando...' : 'Enviar'}</span>
+                  <span>{isSending ? mc.btnSending : mc.btnSend}</span>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -276,10 +278,10 @@ export const Modals: React.FC<ModalsProps> = ({
             </svg>
           </div>
           <h3 className="modal-title" id="email-success-title" style={{ marginBottom: '14px' }}>
-            ¡Mensaje enviado<span className="dot">!</span>
+            {mc.successTitle}<span className="dot">!</span>
           </h3>
           <p style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '28px' }}>
-            Gracias por escribirme. He recibido tu mensaje y te responderé lo antes posible.
+            {mc.successBody}
           </p>
           <button
             className="btn-outline drawn"
@@ -290,7 +292,7 @@ export const Modals: React.FC<ModalsProps> = ({
               <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
             </svg>
             <span className="btn-content">
-              <span>Cerrar</span>
+              <span>{mc.btnClose}</span>
             </span>
           </button>
         </div>
@@ -343,7 +345,7 @@ export const Modals: React.FC<ModalsProps> = ({
           {selectedProject?.techStack && selectedProject.techStack.length > 0 && (
             <div style={{ marginBottom: '24px' }}>
               <span style={{ fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, color: 'var(--color-primary)', display: 'block', marginBottom: '12px' }}>
-                Stack Tecnológico
+                {md.techLabel}
               </span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {selectedProject.techStack.map((tech) => (
@@ -370,7 +372,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <rect x="1" y="1" rx="24" ry="24" pathLength="100"></rect>
               </svg>
               <span className="btn-content">
-                <span>Visitar sitio</span>
+                <span>{md.btnVisit}</span>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>

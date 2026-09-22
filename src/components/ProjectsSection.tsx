@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProjectItem } from '../types';
 import { PROJECTS_DATA } from '../data/portfolioData';
+import { useLang } from '../i18n/LangContext';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -17,6 +18,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   isSearchOpen = false,
   setIsSearchOpen,
 }) => {
+  const { t } = useLang();
+  const p = t.projects;
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredProjects = normalizedQuery
@@ -42,12 +45,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <div className="open-source-header-row animate-on-scroll">
           <div className="open-source-header-text">
             <h2 className="open-source-heading">
-              Mis Proyectos<span className="dot">.</span>
+              {p.heading}<span className="dot">.</span>
             </h2>
             <p className="open-source-subtext">
-              Una selección de plataformas web, e-commerce, aplicaciones móviles,
-              soluciones de inteligencia artificial y proyectos de automatización que
-              he construido para clientes y empresas.
+              {p.subtext}
             </p>
           </div>
 
@@ -62,7 +63,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               id="search-input-field"
               type="text"
               className="projects-search-input"
-              placeholder="Busca por tecnología, nombre o categoría..."
+              placeholder={p.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -85,7 +86,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <div className="open-source-projects-list">
           {filteredProjects.length === 0 ? (
             <p className="projects-no-results">
-              No se encontraron proyectos para "{searchQuery}".
+              {p.noResultsPre}{searchQuery}{p.noResultsEnd}
             </p>
           ) : (
             filteredProjects.map((project, idx) => (
@@ -142,7 +143,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         className="btn-striped"
                         onClick={() => onSelectProject(project)}
                       >
-                        Ver detalles
+                        {p.viewDetails}
                       </button>
                       {project.url && (
                         <a
@@ -151,7 +152,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Visitar sitio &rarr;
+                          {p.visitSite} &rarr;
                         </a>
                       )}
                     </div>
