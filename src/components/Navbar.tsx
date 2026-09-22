@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLang } from '../i18n/LangContext';
+import { Background } from './Background';
 
 interface NavbarProps {
   onOpenMenu: () => void;
@@ -25,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="main-nav">
+      <Background />
       {/* Izquierda: Logo geométrico + Divisor + MENU */}
       <div className="nav-left">
         <button
