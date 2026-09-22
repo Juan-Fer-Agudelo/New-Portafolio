@@ -398,6 +398,39 @@ const MONOLITH_TO_MICROSERVICES_CONTENT = `
 
 <h2 id="ms-comparativa">3. Monolito vs. microservicios: comparativa técnica</h2>
 <p>Ninguna de las dos arquitecturas es superior en abstracto; cada una optimiza para restricciones distintas. Esta tabla resume las decisiones que de verdad cambian según el camino que tomes.</p>
+
+<svg class="article-diagram" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; margin: 24px 0;">
+  <!-- Monolito -->
+  <g>
+    <rect x="50" y="50" width="350" height="300" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="8"/>
+    <text x="225" y="85" font-size="24" font-weight="bold" text-anchor="middle" fill="#0f1b61">Monolito</text>
+    <circle cx="225" cy="180" r="80" fill="#0f1b61" opacity="0.9"/>
+    <text x="225" y="190" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Todo en un</text>
+    <text x="225" y="210" font-size="14" font-weight="bold" text-anchor="middle" fill="white">proceso</text>
+    <text x="60" y="310" font-size="12" fill="#53647f">✓ Simple al inicio</text>
+    <text x="60" y="330" font-size="12" fill="#53647f">✓ Deploy único</text>
+  </g>
+
+  <!-- Microservicios -->
+  <g>
+    <rect x="600" y="50" width="350" height="300" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="8"/>
+    <text x="775" y="85" font-size="24" font-weight="bold" text-anchor="middle" fill="#0f1b61">Microservicios</text>
+    <circle cx="700" cy="180" r="40" fill="#73bbc5" opacity="0.9"/>
+    <circle cx="775" cy="200" r="40" fill="#682ae9" opacity="0.9"/>
+    <circle cx="850" cy="180" r="40" fill="#73bbc5" opacity="0.9"/>
+    <text x="775" y="195" font-size="10" font-weight="bold" text-anchor="middle" fill="white">API</text>
+    <text x="610" y="310" font-size="12" fill="#53647f">✓ Deploy independiente</text>
+    <text x="610" y="330" font-size="12" fill="#53647f">✓ Escalado granular</text>
+  </g>
+
+  <!-- Flechas de complejidad -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#682ae9"/>
+    </marker>
+  </defs>
+  <text x="500" y="30" font-size="14" font-weight="bold" text-anchor="middle" fill="#682ae9">Complejidad ➜</text>
+</svg>
 <table class="article-table">
   <thead>
     <tr>
@@ -453,6 +486,52 @@ const MONOLITH_TO_MICROSERVICES_CONTENT = `
 
 <h3>Paso 2 — Levantar un proxy de enrutamiento</h3>
 <p>Antes de mover una sola línea de lógica de negocio, se coloca un proxy o API Gateway delante del monolito. Esto permite decidir, por ruta, qué peticiones siguen yendo al sistema legacy y cuáles empiezan a resolverse en el nuevo servicio, sin que el cliente note el cambio.</p>
+
+<svg class="article-diagram" viewBox="0 0 1000 350" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; margin: 24px 0;">
+  <!-- Cliente -->
+  <circle cx="150" cy="100" r="40" fill="#0f1b61"/>
+  <text x="150" y="105" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Cliente</text>
+
+  <!-- API Gateway -->
+  <rect x="300" y="60" width="120" height="80" fill="#682ae9" rx="4"/>
+  <text x="360" y="90" font-size="12" font-weight="bold" text-anchor="middle" fill="white">API</text>
+  <text x="360" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Gateway</text>
+
+  <!-- Monolito Legacy (izquierda) -->
+  <rect x="550" y="40" width="130" height="100" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="4"/>
+  <text x="615" y="70" font-size="11" font-weight="bold" text-anchor="middle" fill="#0f1b61">Monolito</text>
+  <text x="615" y="90" font-size="11" font-weight="bold" text-anchor="middle" fill="#0f1b61">Legacy</text>
+  <text x="615" y="120" font-size="9" text-anchor="middle" fill="#53647f">/api/products</text>
+
+  <!-- Nuevo Servicio (derecha) -->
+  <rect x="550" y="180" width="130" height="100" fill="#73bbc5" opacity="0.8" rx="4"/>
+  <text x="615" y="210" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Nuevo</text>
+  <text x="615" y="230" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Servicio</text>
+  <text x="615" y="260" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.9)">/api/notifications</text>
+
+  <!-- Flechas -->
+  <defs>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#0f1b61"/>
+    </marker>
+  </defs>
+
+  <!-- Cliente a Gateway -->
+  <line x1="190" y1="100" x2="300" y2="100" stroke="#0f1b61" stroke-width="2" marker-end="url(#arrowhead2)"/>
+
+  <!-- Gateway a Monolito -->
+  <path d="M 420 80 Q 480 80 550 90" stroke="#682ae9" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  <text x="460" y="70" font-size="10" fill="#682ae9">/api/products →</text>
+
+  <!-- Gateway a Nuevo Servicio -->
+  <path d="M 420 120 Q 480 150 550 230" stroke="#4ECDC4" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
+  <text x="440" y="150" font-size="10" fill="#4ECDC4">← /api/notifications</text>
+
+  <!-- Leyenda -->
+  <text x="750" y="100" font-size="11" fill="#53647f">✓ Tráfico redirigido</text>
+  <text x="750" y="125" font-size="11" fill="#53647f">✓ Sin downtime</text>
+  <text x="750" y="150" font-size="11" fill="#53647f">✓ Rollback inmediato</text>
+</svg>
 <pre class="article-code"><code># nginx.conf — enrutamiento incremental estilo Strangler Fig
 # El módulo de notificaciones ya vive en un servicio nuevo;
 # todo lo demás sigue resolviéndose en el monolito.
@@ -525,32 +604,5 @@ export const WRITING_ARTICLES: WritingArticle[] = [
       'Guía práctica para decidir si tu monolito necesita microservicios de verdad, con el patrón Strangler Fig y un plan de rollback para migrar sin downtime ni reescrituras arriesgadas.',
     readTime: '9 min de lectura',
     contentHtml: MONOLITH_TO_MICROSERVICES_CONTENT,
-  },
-  {
-    id: 'art-1',
-    date: 'MARZO 2026',
-    tag: 'ENGINEERING',
-    title: '60fps Viewport State Tracking in Vanilla JS',
-    excerpt:
-      'Cómo optimizar listeners pasivos, requestAnimationFrame y cálculos de matrices de transformación sin sobrecargar el hilo principal del navegador.',
-    readTime: '5 min de lectura',
-  },
-  {
-    id: 'art-2',
-    date: 'ENERO 2026',
-    tag: 'TYPOGRAPHY',
-    title: 'The Optical Rhythm of Digital Interfaces',
-    excerpt:
-      'Escalas modulares y contraste óptico en interfaces web contemporáneas: construyendo jerarquías visuales deliberadas sin depender de plantillas industriales.',
-    readTime: '7 min de lectura',
-  },
-  {
-    id: 'art-3',
-    date: 'OCTUBRE 2025',
-    tag: 'PHILOSOPHY',
-    title: 'Craft Over Homogeneity in Frontend Development',
-    excerpt:
-      'Por qué el software interactivo debe sentirse como un trabajo artesanal, respetando el espacio negativo, las transiciones tangibles y el tono propio de cada proyecto.',
-    readTime: '6 min de lectura',
   },
 ];

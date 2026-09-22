@@ -2790,6 +2790,14 @@
         text-underline-offset: 2px;
       }
 
+      .article-diagram {
+        border: 1.5px solid var(--color-border-subtle);
+        border-radius: 10px;
+        padding: 20px;
+        background: #ffffff;
+        display: block;
+      }
+
       /* Bloque de Puntos Clave / Key Takeaways */
       .article-takeaways {
         background: rgba(115, 187, 197, 0.1);
