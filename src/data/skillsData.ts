@@ -51,7 +51,7 @@ import {
   SiJira,
   SiReplit,
 } from 'react-icons/si';
-import { FaDatabase, FaMicrosoft, FaWindows, FaCubes, FaRobot } from 'react-icons/fa';
+import { FaDatabase, FaMicrosoft, FaWindows, FaCubes, FaRobot, FaChartLine } from 'react-icons/fa';
 
 export interface Skill {
   name: string;
@@ -155,6 +155,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Power BI', ...L.adv, icon: FaMicrosoft, color: '#F2C811' },
       { name: 'Looker Studio', ...L.adv, icon: SiLooker, color: '#4285F4' },
       { name: 'Dash (Python Analytics)', ...L.int, icon: SiPlotly, color: '#3F4F75' },
+      { name: 'Spotfire (Data Science & Viz)', ...L.int, icon: FaChartLine, color: '#00AEEF' },
     ],
   },
   {
