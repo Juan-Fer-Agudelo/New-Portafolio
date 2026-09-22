@@ -183,8 +183,8 @@ export const translations = {
       },
     },
     toast: {
-      emailCopied: 'Email juanfeeragudelo475@gmail.com copied to clipboard!',
-      emailManual: 'Copy manually: juanfeeragudelo475@gmail.com',
+      emailCopied: 'Email juanferagudelo475@gmail.com copied to clipboard!',
+      emailManual: 'Copy manually: juanferagudelo475@gmail.com',
       formSuccess: 'Thanks, {name}! Message sent successfully.',
     },
   },
@@ -371,9 +371,10 @@ export const translations = {
       },
     },
     toast: {
-      emailCopied: '¡Correo juanfeeragudelo475@gmail.com copiado al portapapeles!',
-      emailManual: 'Copia manual: juanfeeragudelo475@gmail.com',
+      emailCopied: '¡Correo juanferagudelo475@gmail.com copiado al portapapeles!',
+      emailManual: 'Copia manual: juanferagudelo475@gmail.com',
       formSuccess: '¡Gracias, {name}! Mensaje enviado con éxito.',
     },
   },
 } as const;
+
