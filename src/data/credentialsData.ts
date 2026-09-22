@@ -1,29 +1,36 @@
 import cvParte1 from '../assets/images/cv-parte-1.png';
 import cvParte2 from '../assets/images/cv-parte-2.png';
+import awsNetworking from '../assets/images/aws-application-networking-demonstrated.png';
+import awsDataLakehouse from '../assets/images/aws-data-lakehouse-demonstrated.png';
+import awsServerless from '../assets/images/aws-serverless-demonstrated.png';
 
-// Credenciales y certificaciones. Edita esta lista con tus credenciales reales.
+// Credenciales y medallas. `image` es la insignia/medalla que se muestra.
 export interface Credential {
   title: string;
+  titleEn: string;
   issuer: string;
-  date: string;
+  image: string;
   url?: string;
 }
 
 export const CREDENTIALS: Credential[] = [
   {
-    title: 'Desarrollo Full-Stack Web',
-    issuer: 'Universidad Salazar y Herrera',
-    date: '2022 - 2025',
+    title: 'AWS Application Networking',
+    titleEn: 'AWS Application Networking',
+    issuer: 'Amazon Web Services',
+    image: awsNetworking,
   },
   {
-    title: 'Inteligencia Artificial y Copilot Studio',
-    issuer: 'Microsoft',
-    date: '2025',
+    title: 'AWS Data Lakehouse',
+    titleEn: 'AWS Data Lakehouse',
+    issuer: 'Amazon Web Services',
+    image: awsDataLakehouse,
   },
   {
-    title: 'Automatización de Procesos con n8n',
-    issuer: 'Certificación Profesional',
-    date: '2026',
+    title: 'AWS Serverless',
+    titleEn: 'AWS Serverless',
+    issuer: 'Amazon Web Services',
+    image: awsServerless,
   },
 ];
 

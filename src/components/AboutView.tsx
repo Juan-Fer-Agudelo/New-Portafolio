@@ -10,7 +10,7 @@ interface AboutViewProps {
 }
 
 export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactModal }) => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const a = t.aboutPage;
 
   return (
@@ -57,28 +57,25 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
           </div>
         </div>
 
-        {/* Sección de Credenciales & Certificaciones */}
+        {/* Sección de Credenciales & Medallas */}
         <div className="about-credentials animate-on-scroll">
           <h2 className="about-subsection-title">{a.credentialsTitle}</h2>
-          <div className="credentials-grid">
+          <div className="badges-grid">
             {CREDENTIALS.map((cred, i) => (
-              <div key={i} className="credential-card">
-                <div className="credential-icon" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="8" r="6" />
-                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-                  </svg>
-                </div>
-                <div className="credential-info">
-                  <h3 className="credential-title">{cred.title}</h3>
-                  <span className="credential-issuer">{cred.issuer}</span>
-                  <span className="credential-date">{cred.date}</span>
-                  {cred.url && (
-                    <a className="credential-link" href={cred.url} target="_blank" rel="noopener noreferrer">
-                      Ver credencial &rarr;
-                    </a>
-                  )}
-                </div>
+              <div key={i} className="badge-card">
+                <img
+                  src={cred.image}
+                  alt={lang === 'en' ? cred.titleEn : cred.title}
+                  className="badge-image"
+                  loading="lazy"
+                />
+                <h3 className="badge-title">{lang === 'en' ? cred.titleEn : cred.title}</h3>
+                <span className="badge-issuer">{cred.issuer}</span>
+                {cred.url && (
+                  <a className="credential-link" href={cred.url} target="_blank" rel="noopener noreferrer">
+                    {lang === 'en' ? 'View credential' : 'Ver credencial'} &rarr;
+                  </a>
+                )}
               </div>
             ))}
           </div>

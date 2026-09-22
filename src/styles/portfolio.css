@@ -3957,6 +3957,60 @@
         gap: 20px;
       }
 
+      /* Grid de medallas/insignias (AWS, etc.) */
+      .badges-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 28px;
+      }
+
+      .badge-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding: 28px 20px;
+        background: #ffffff;
+        border: 1.5px solid var(--color-border-subtle);
+        border-radius: 14px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      .badge-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 28px rgba(15, 27, 97, 0.1);
+        border-color: var(--color-accent);
+      }
+
+      .badge-image {
+        width: 130px;
+        height: 130px;
+        object-fit: contain;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .badge-card:hover .badge-image {
+        transform: scale(1.08) rotate(-2deg);
+      }
+
+      .badge-title {
+        font-family: var(--font-heading);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-primary);
+        line-height: 1.3;
+        margin-top: 6px;
+      }
+
+      .badge-issuer {
+        font-family: var(--font-body);
+        font-size: 13px;
+        color: var(--color-accent);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
       .credential-card {
         display: flex;
         align-items: flex-start;
