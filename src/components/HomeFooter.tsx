@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
+import { Background } from './Background';
 
 interface HomeFooterProps {
   onNavigate: (view: PageView, hash?: string) => void;
@@ -12,6 +13,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
 
   return (
     <footer className="site-footer">
+      <Background />
       <div className="footer-inner">
         <p className="footer-copyright">{f.copyright}</p>
         <div className="footer-links">
