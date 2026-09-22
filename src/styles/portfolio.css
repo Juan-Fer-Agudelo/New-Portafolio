@@ -1179,7 +1179,7 @@
       }
 
       .open-source-container {
-        max-width: 1320px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 0 48px;
       }
@@ -1686,8 +1686,9 @@
       }
 
       .contact-inner {
-        max-width: 760px;
+        max-width: 1200px;
         margin: 0 auto;
+        padding: 0 48px;
       }
 
       .contact-heading {
