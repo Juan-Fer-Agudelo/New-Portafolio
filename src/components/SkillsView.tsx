@@ -1,18 +1,11 @@
 import React from 'react';
 import { PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
-import { SKILL_CATEGORIES, SOFT_SKILLS, Skill } from '../data/skillsData';
+import { SKILL_CATEGORIES, SOFT_SKILLS } from '../data/skillsData';
 
 interface SkillsViewProps {
   onNavigate: (view: PageView, hash?: string) => void;
 }
-
-// Devuelve la URL del logo de marca desde Simple Icons CDN, o null si no hay
-const iconUrl = (skill: Skill): string | null => {
-  if (!skill.icon) return null;
-  const color = skill.color ?? '0f1b61';
-  return `https://cdn.simpleicons.org/${skill.icon}/${color}`;
-};
 
 export const SkillsView: React.FC<SkillsViewProps> = ({ onNavigate }) => {
   const { t, lang } = useLang();
@@ -38,17 +31,13 @@ export const SkillsView: React.FC<SkillsViewProps> = ({ onNavigate }) => {
               </h3>
               <div className="skills-labels">
                 {cat.skills.map((skill) => {
-                  const url = iconUrl(skill);
+                  const Icon = skill.icon;
                   return (
                     <span key={skill.name} className="skill-label" title={lang === 'en' ? skill.levelEn : skill.level}>
-                      {url ? (
-                        <img
-                          src={url}
-                          alt=""
-                          className="skill-label-icon"
-                          loading="lazy"
-                          aria-hidden="true"
-                        />
+                      {Icon ? (
+                        <span className="skill-label-icon" style={{ color: skill.color }} aria-hidden="true">
+                          <Icon />
+                        </span>
                       ) : (
                         <span className="skill-label-dot" aria-hidden="true"></span>
                       )}
