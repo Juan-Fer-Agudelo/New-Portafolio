@@ -105,6 +105,19 @@ export const translations = {
       work: 'My work',
       contact: 'Contact',
     },
+    aboutPage: {
+      name: 'JUAN FERNANDO AGUDELO',
+      subtitle: 'DEVELOPER + AI',
+      paragraphs: [
+        'JUAN FERNANDO AGUDELO is an independent creative developer based in Medellín, Colombia, with over 4 years of experience building web platforms, e-commerce sites, mobile apps and artificial intelligence solutions. His work combines clean, functional design with robust engineering, creating products that are as pleasant to use as they are reliable.',
+        'Beyond front-end development, Juan specializes in full-stack architectures, databases, process automation and integrating AI tools that generate real impact. He has worked on projects for companies in the United States, Venezuela and Colombia, from B2B/B2C job platforms to e-commerce with clinical protocols.',
+        'His enterprise experience includes work with Renault Sofasa and Simex, where he developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
+        'Juan continues to explore the intersection of design, development and artificial intelligence, building solutions that promote accessibility, efficiency and a positive impact on the organizations and people he works with.',
+      ],
+      representedBy: 'available for',
+      representedByName: 'FREELANCE PROJECTS',
+      bookings: 'CONTACT',
+    },
     menuOverlay: {
       close: 'CLOSE',
       hireMe: 'HIRE ME',
@@ -271,6 +284,19 @@ export const translations = {
       projects: 'Proyectos',
       work: 'Mi trabajo',
       contact: 'Contacto',
+    },
+    aboutPage: {
+      name: 'JUAN FERNANDO AGUDELO',
+      subtitle: 'DESARROLLADOR + IA',
+      paragraphs: [
+        'JUAN FERNANDO AGUDELO es un desarrollador creativo independiente radicado en Medellín, Colombia, con más de 4 años de experiencia construyendo plataformas web, e-commerce, aplicaciones móviles y soluciones de inteligencia artificial. Su trabajo combina un diseño limpio y funcional con una ingeniería robusta, creando productos tan agradables de usar como confiables.',
+        'Más allá del desarrollo front-end, Juan se especializa en arquitecturas full-stack, bases de datos, automatización de procesos e integración de herramientas de IA que generan un impacto real. Ha trabajado en proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos.',
+        'Su experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrolló aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
+        'Juan continúa explorando la intersección entre diseño, desarrollo e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',
+      ],
+      representedBy: 'disponible para',
+      representedByName: 'PROYECTOS FREELANCE',
+      bookings: 'CONTACTO',
     },
     menuOverlay: {
       close: 'CERRAR',

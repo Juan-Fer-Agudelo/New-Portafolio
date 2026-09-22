@@ -1,4 +1,4 @@
-export type PageView = 'home' | 'work';
+export type PageView = 'home' | 'work' | 'about';
 
 export interface ProjectLocale {
   type: string;

@@ -2799,3 +2799,155 @@
   font-size: 11px;
   font-weight: 400;
 }
+
+      /* ==========================================================================
+         PÁGINA "SOBRE MÍ" (ABOUT VIEW)
+         ========================================================================== */
+      .about-page {
+        min-height: 100vh;
+        padding: 120px 48px 80px 48px;
+        max-width: 1300px;
+        margin: 0 auto;
+      }
+
+      .about-page-header {
+        margin-bottom: 56px;
+      }
+
+      .about-page-name {
+        font-family: var(--font-heading);
+        font-size: clamp(40px, 7vw, 84px);
+        font-weight: 800;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: var(--color-primary);
+        text-transform: uppercase;
+      }
+
+      .about-page-subtitle {
+        font-family: var(--font-body);
+        font-size: clamp(14px, 1.6vw, 18px);
+        font-weight: 600;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-top: 8px;
+      }
+
+      .about-page-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 64px;
+        align-items: start;
+      }
+
+      .about-page-photo-frame {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+        background: #e8eef2;
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .about-page-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(100%);
+        transition: filter 0.5s ease;
+      }
+
+      .about-page-photo-frame:hover .about-page-photo {
+        filter: grayscale(0%);
+      }
+
+      .about-photo-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-body);
+        font-size: 16px;
+        color: var(--color-muted);
+        background: repeating-linear-gradient(
+          -45deg,
+          #eef3f6,
+          #eef3f6 10px,
+          #e2eaef 10px,
+          #e2eaef 20px
+        );
+      }
+
+      .about-page-text-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .about-page-paragraph {
+        font-family: var(--font-body);
+        font-size: clamp(15px, 1.4vw, 17px);
+        line-height: 1.75;
+        color: var(--color-body);
+        margin-bottom: 20px;
+      }
+
+      .about-page-meta {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid var(--color-border-subtle);
+      }
+
+      .about-page-represented {
+        font-family: var(--font-body);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 16px;
+      }
+
+      .about-page-represented-name {
+        color: var(--color-primary);
+        font-weight: 700;
+      }
+
+      .about-page-bookings-btn {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--color-purple);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px 0;
+        border-bottom: 2px solid var(--color-purple);
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+
+      .about-page-bookings-btn:hover {
+        color: var(--color-accent);
+        border-color: var(--color-accent);
+      }
+
+      .about-page-back {
+        margin-top: 64px;
+      }
+
+      @media (max-width: 860px) {
+        .about-page {
+          padding: 100px 24px 60px 24px;
+        }
+        .about-page-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .about-page-photo-frame {
+          max-width: 420px;
+          margin: 0 auto;
+        }
+      }

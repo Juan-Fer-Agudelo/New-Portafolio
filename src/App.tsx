@@ -10,6 +10,7 @@ import { WritingSection } from './components/WritingSection';
 import { ContactSection } from './components/ContactSection';
 import { HomeFooter } from './components/HomeFooter';
 import { WorkView } from './components/WorkView';
+import { AboutView } from './components/AboutView';
 import { Modals } from './components/Modals';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
 
@@ -79,6 +80,14 @@ export const App: React.FC = () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }, 100);
+      return;
+    }
+
+    // Navegación a la página "Sobre mí" (vista dedicada)
+    if (view === 'about' || hash === '#about') {
+      setCurrentView('about');
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -170,6 +179,11 @@ export const App: React.FC = () => {
             />
             <HomeFooter onNavigate={handleNavigate} />
           </div>
+        ) : currentView === 'about' ? (
+          <AboutView
+            onNavigate={handleNavigate}
+            onOpenContactModal={() => setActiveModal('contact')}
+          />
         ) : (
           <WorkView
             onNavigate={handleNavigate}

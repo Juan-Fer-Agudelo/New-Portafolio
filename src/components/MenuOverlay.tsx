@@ -194,7 +194,7 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
             <a
               href="#about"
               className="menu-nav-title menu-item-link"
-              onClick={(e) => handleLinkClick(e, 'home', '#about')}
+              onClick={(e) => handleLinkClick(e, 'about')}
             >
               {m.about}
             </a>
