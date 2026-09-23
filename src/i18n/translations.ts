@@ -11,8 +11,8 @@ export const translations = {
       greeting: 'Hi, my',
       nameLine: 'name is',
       name: 'Juan',
-      subtitlePrefix: "I'm an ",
-      roleBold: 'independent creative developer',
+      subtitlePrefix: "I'm a ",
+      roleBold: 'software architect & data/AI engineer',
       subtitleMid: ' from ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
@@ -21,7 +21,7 @@ export const translations = {
     about: {
       heading: 'My projects',
       descriptionPre:
-        'From interaction design to scalable design systems, single-page apps to more experimental experiences with WebGL. Discover my experience and the web projects I have built - ',
+        'From software architectures to scalable platforms, data analysis pipelines to artificial intelligence solutions. Discover my experience and the projects I have built - ',
       boldPart: 'ambitious yet accessible',
       btnLabel: 'View my projects',
     },
@@ -58,11 +58,11 @@ export const translations = {
       sub2Text1Post: ' gives an interface a sense of space and logic.',
       sub2Text2:
         'I combine precise timing and motion with a deep understanding of browser rendering to deliver logical interactions that are full of character and outrageously smooth.',
-      sub3Title: 'The backend is my thing',
-      sub3Text1Pre: 'Beyond front-end development, I work with ',
+      sub3Title: 'Software Architecture & Backend',
+      sub3Text1Pre: 'As a software architect, I design robust systems, ',
       sub3Text1Bold: 'databases',
       sub3Text1Post:
-        ' and server architectures. Cloud CMS platforms, serverless functions, REST APIs and integrations - whatever your requirement, I help you plan, build and deliver a fast, secure and reliable project.',
+        ', data pipelines and server architectures. Cloud CMS platforms, serverless functions, REST APIs and integrations - whatever your requirement, I help you plan, build and deliver a fast, secure and scalable project.',
       sub3Text2Pre: 'If you need help building an application or API with ',
       sub3Text2Bold1: 'Node.js',
       sub3Text2Mid: ' and Express, with ',
@@ -93,7 +93,7 @@ export const translations = {
     contact: {
       heading: 'Do you have a project in mind',
       subtext:
-        "I'm currently available for freelance projects, frontend technical consulting and creative collaborations. Send me a message or connect through the channels below.",
+        "I'm currently available for freelance projects, software architecture consulting and data & AI engineering. Send me a message or connect through the channels below.",
       btnSend: 'Send me a message',
     },
     footer: {
@@ -113,15 +113,15 @@ export const translations = {
     },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
-      subtitle: 'DEVELOPER + AI',
+      subtitle: 'SOFTWARE ARCHITECT + DATA & AI',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO is an independent creative developer based in Medellín, Colombia, with over 4 years of experience building web platforms, e-commerce sites, mobile apps and artificial intelligence solutions. His work combines clean, functional design with robust engineering, creating products that are as pleasant to use as they are reliable.',
-        'Beyond front-end development, Juan specializes in full-stack architectures, databases, process automation and integrating AI tools that generate real impact. He has worked on projects for companies in the United States, Venezuela and Colombia, from B2B/B2C job platforms to e-commerce with clinical protocols.',
+        'JUAN FERNANDO AGUDELO is a software architect and engineer based in Medellín, Colombia, combining over 4 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
+        'As a software architect, Juan specializes in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. He has led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
         'His enterprise experience includes work with Renault Sofasa and Simex, where he developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
-        'Juan continues to explore the intersection of design, development and artificial intelligence, building solutions that promote accessibility, efficiency and a positive impact on the organizations and people he works with.',
+        'Juan continues to lead at the intersection of software architecture, data science and artificial intelligence, building solutions that promote efficiency, scalability and a positive impact on the organizations and people he works with.',
       ],
       representedBy: 'available for',
-      representedByName: 'FREELANCE PROJECTS',
+      representedByName: 'ARCHITECTURE & FREELANCE PROJECTS',
       bookings: 'CONTACT',
       credentialsTitle: 'Credentials & Certifications',
       cvTitle: 'My Resume',
@@ -203,8 +203,8 @@ export const translations = {
       greeting: 'Hola, mi',
       nameLine: 'nombre es',
       name: 'Juan',
-      subtitlePrefix: 'Soy un ',
-      roleBold: 'desarrollador creativo independiente',
+      subtitlePrefix: 'Soy ',
+      roleBold: 'arquitecto de software e ingeniero de datos e IA',
       subtitleMid: ' de ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
@@ -213,7 +213,7 @@ export const translations = {
     about: {
       heading: 'Mis proyectos',
       descriptionPre:
-        'Desde diseño de interacciones hasta sistemas de diseño escalables, aplicaciones de una sola página hasta experiencias más experimentales con WebGL. Descubre mi experiencia y los proyectos web que he construido - ',
+        'Desde arquitecturas de software y plataformas escalables, hasta pipelines de análisis de datos y soluciones con inteligencia artificial. Descubre mi experiencia y los proyectos que he construido - ',
       boldPart: 'ambiciosos pero accesibles',
       btnLabel: 'Ver mis proyectos',
     },
@@ -250,11 +250,11 @@ export const translations = {
       sub2Text1Post: ' le da a una interfaz un sentido de espacio y lógica.',
       sub2Text2:
         'Combino tiempos y movimientos precisos con un profundo entendimiento del renderizado del navegador para entregar interacciones lógicas, llenas de carácter y extraordinariamente fluidas.',
-      sub3Title: 'El backend es lo mío',
-      sub3Text1Pre: 'Más allá del desarrollo front-end, trabajo con ',
+      sub3Title: 'Arquitectura de Software y Backend',
+      sub3Text1Pre: 'Como arquitecto de software, diseño sistemas robustos, ',
       sub3Text1Bold: 'bases de datos',
       sub3Text1Post:
-        ' y arquitecturas de servidor. Plataformas CMS en la nube, funciones serverless, APIs REST e integraciones - sea cual sea tu requerimiento, te ayudo a planear, construir y entregar un proyecto rápido, seguro y confiable.',
+        ', pipelines de análisis de datos y arquitecturas de servidor. Plataformas en la nube, funciones serverless, APIs REST e integraciones: te ayudo a planear, estructurar y entregar proyectos rápidos, seguros y escalables.',
       sub3Text2Pre: 'Si necesitas ayuda armando una aplicación o API con ',
       sub3Text2Bold1: 'Node.js',
       sub3Text2Mid: ' y Express, con ',
@@ -285,7 +285,7 @@ export const translations = {
     contact: {
       heading: '¿Tienes un proyecto en mente',
       subtext:
-        'Actualmente estoy disponible para proyectos freelance, consultoría técnica de frontend y colaboraciones creativas. Envíame un mensaje o conéctate por los canales de abajo.',
+        'Actualmente estoy disponible para proyectos freelance, consultoría en arquitectura de software, análisis de datos e IA. Envíame un mensaje o conéctate por los canales de abajo.',
       btnSend: 'Envíame un mensaje',
     },
     footer: {
@@ -305,15 +305,15 @@ export const translations = {
     },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
-      subtitle: 'DESARROLLADOR + IA',
+      subtitle: 'ARQUITECTO DE SOFTWARE + DATOS & IA',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO es un desarrollador creativo independiente radicado en Medellín, Colombia, con más de 4 años de experiencia construyendo plataformas web, e-commerce, aplicaciones móviles y soluciones de inteligencia artificial. Su trabajo combina un diseño limpio y funcional con una ingeniería robusta, creando productos tan agradables de usar como confiables.',
-        'Más allá del desarrollo front-end, Juan se especializa en arquitecturas full-stack, bases de datos, automatización de procesos e integración de herramientas de IA que generan un impacto real. Ha trabajado en proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos.',
+        'JUAN FERNANDO AGUDELO es un arquitecto de software y desarrollador radicado en Medellín, Colombia, que combina más de 4 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
+        'Como arquitecto de software, Juan se especializa en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. Ha liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
         'Su experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrolló aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
-        'Juan continúa explorando la intersección entre diseño, desarrollo e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',
+        'Juan continúa liderando en la intersección entre arquitectura de software, ciencia de datos e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',
       ],
       representedBy: 'disponible para',
-      representedByName: 'PROYECTOS FREELANCE',
+      representedByName: 'PROYECTOS DE ARQUITECTURA Y FREELANCE',
       bookings: 'CONTACTO',
       credentialsTitle: 'Credenciales & Certificaciones',
       cvTitle: 'Mi Hoja de Vida',
