@@ -1,4 +1,4 @@
-export type PageView = 'home' | 'work' | 'about' | 'skills';
+export type PageView = 'home' | 'work' | 'about' | 'skills' | 'admin';
 
 export interface ArticleAuthor {
   name: string;

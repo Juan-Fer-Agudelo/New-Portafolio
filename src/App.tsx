@@ -13,6 +13,7 @@ import { WorkView } from './components/WorkView';
 import { AboutView } from './components/AboutView';
 import { SkillsView } from './components/SkillsView';
 import { Modals } from './components/Modals';
+import { AdminLogin } from './components/AdminLogin';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
 
 const DEFAULT_DOCUMENT_TITLE = document.title;
@@ -20,7 +21,14 @@ const DEFAULT_META_DESCRIPTION =
   document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<PageView>('home');
+  const isInitialAdmin =
+    typeof window !== 'undefined' &&
+    (window.location.pathname === '/admin' ||
+      window.location.pathname === '/admin/' ||
+      window.location.hash === '#admin' ||
+      window.location.hash.startsWith('#admin'));
+
+  const [currentView, setCurrentView] = useState<PageView>(isInitialAdmin ? 'admin' : 'home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,10 +61,17 @@ export const App: React.FC = () => {
     }
   };
 
-  // Manejo de hashes en URL para navegación directa
+  // Manejo de hashes y rutas en URL para navegación directa
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleLocationChange = () => {
+      const path = window.location.pathname;
       const hash = window.location.hash;
+
+      if (path === '/admin' || path === '/admin/' || hash === '#admin') {
+        setCurrentView('admin');
+        return;
+      }
+
       if (hash.startsWith('#blog-')) {
         openArticleBySlug(hash.replace('#blog-', ''));
       } else if (hash === '#work' || hash === '#proyectos') {
@@ -74,7 +89,9 @@ export const App: React.FC = () => {
       }
     };
 
-    if (window.location.hash === '#work') {
+    if (window.location.pathname === '/admin' || window.location.pathname === '/admin/' || window.location.hash === '#admin') {
+      setCurrentView('admin');
+    } else if (window.location.hash === '#work') {
       setCurrentView('home');
       setTimeout(() => {
         const target = document.querySelector('#proyectos');
@@ -84,12 +101,24 @@ export const App: React.FC = () => {
       openArticleBySlug(window.location.hash.replace('#blog-', ''));
     }
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
-  // Sincroniza <title> y meta description con el artículo abierto (SEO básico en SPA)
+  // Sincroniza <title> y meta description
   useEffect(() => {
+    if (currentView === 'admin') {
+      document.title = 'Bienvenido | PERFECT B Aesthetic Medicine';
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute('content', 'Ingreso administrativo PERFECT B Aesthetic Medicine');
+      return;
+    }
+
     if (activeModal === 'writing-detail' && selectedArticle) {
       document.title = `${selectedArticle.title} | Juan Fernando Agudelo`;
       document
@@ -105,9 +134,20 @@ export const App: React.FC = () => {
         history.replaceState(null, '', window.location.pathname);
       }
     }
-  }, [activeModal, selectedArticle]);
+  }, [currentView, activeModal, selectedArticle]);
 
   const handleNavigate = (view: PageView, hash?: string) => {
+    if (view === 'admin') {
+      setCurrentView('admin');
+      history.pushState(null, '', '/admin');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    if (currentView === 'admin') {
+      history.pushState(null, '', '/');
+    }
+
     if (view === 'work' || hash === '#work' || hash === '#proyectos') {
       setCurrentView('home');
       setTimeout(() => {
@@ -186,6 +226,10 @@ export const App: React.FC = () => {
       searchInput?.focus();
     }, 200);
   };
+
+  if (currentView === 'admin') {
+    return <AdminLogin onBackToHome={() => handleNavigate('home')} />;
+  }
 
   return (
     <>
