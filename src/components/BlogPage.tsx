@@ -1,9 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WRITING_ARTICLES, ARTICLE_AUTHOR } from '../data/portfolioData';
 import { WritingArticle } from '../types';
+import { getPublishedArticles } from '../data/blogStore';
 
 export const BlogPage: React.FC = () => {
   const [selected, setSelected] = useState<WritingArticle | null>(null);
+
+  // Combina los artículos estáticos con los creados desde el panel admin
+  const [articles, setArticles] = useState<WritingArticle[]>(WRITING_ARTICLES);
+
+  useEffect(() => {
+    const refresh = () => {
+      const stored = getPublishedArticles();
+      setArticles([...stored, ...WRITING_ARTICLES]);
+    };
+    refresh();
+    window.addEventListener('blog-posts-updated', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('blog-posts-updated', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, []);
 
   const openArticle = (article: WritingArticle) => {
     setSelected(article);
@@ -41,7 +59,7 @@ export const BlogPage: React.FC = () => {
         <h2 className="blog-page-section-heading">Blogs recientes</h2>
 
         <div className="blog-cards-grid">
-          {WRITING_ARTICLES.map((article) => (
+          {articles.map((article) => (
             <article
               key={article.id}
               className="blog-card"

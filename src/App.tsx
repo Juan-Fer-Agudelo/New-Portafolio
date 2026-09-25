@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PageView, ActiveModal, ProjectItem, WritingArticle } from './types';
 import { useLang } from './i18n/LangContext';
 import { WRITING_ARTICLES } from './data/portfolioData';
+import { getPublishedArticles } from './data/blogStore';
 import { Navbar } from './components/Navbar';
 import { MenuOverlay } from './components/MenuOverlay';
 import { HeroSection } from './components/HeroSection';
@@ -14,6 +15,7 @@ import { AboutView } from './components/AboutView';
 import { SkillsView } from './components/SkillsView';
 import { Modals } from './components/Modals';
 import { AdminLogin } from './components/AdminLogin';
+import { AdminDashboard } from './components/AdminDashboard';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
 
 const DEFAULT_DOCUMENT_TITLE = document.title;
@@ -29,6 +31,12 @@ export const App: React.FC = () => {
       window.location.hash.startsWith('#admin'));
 
   const [currentView, setCurrentView] = useState<PageView>(isInitialAdmin ? 'admin' : 'home');
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('adminLoggedIn') === 'true';
+    }
+    return false;
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,7 +61,8 @@ export const App: React.FC = () => {
 
   // Abre el modal de un artículo del blog a partir de su slug (deep link vía #blog-<slug>)
   const openArticleBySlug = (slug: string) => {
-    const article = WRITING_ARTICLES.find((a) => (a.slug || a.id) === slug);
+    const allArticles = [...getPublishedArticles(), ...WRITING_ARTICLES];
+    const article = allArticles.find((a) => (a.slug || a.id) === slug);
     if (article) {
       setCurrentView('home');
       setSelectedArticle(article);
@@ -227,8 +236,26 @@ export const App: React.FC = () => {
     }, 200);
   };
 
+  if (currentView === 'admin' && isAdminLoggedIn) {
+    return (
+      <AdminDashboard
+        onLogout={() => {
+          localStorage.removeItem('adminLoggedIn');
+          setIsAdminLoggedIn(false);
+          setCurrentView('home');
+          window.location.href = '/';
+        }}
+      />
+    );
+  }
+
   if (currentView === 'admin') {
-    return <AdminLogin onBackToHome={() => handleNavigate('home')} />;
+    return (
+      <AdminLogin
+        onBackToHome={() => handleNavigate('home')}
+        onLoginSuccess={() => setIsAdminLoggedIn(true)}
+      />
+    );
   }
 
   return (

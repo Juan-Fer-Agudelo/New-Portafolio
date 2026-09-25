@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { WRITING_ARTICLES } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
 import { WritingArticle } from '../types';
+import { getPublishedArticles } from '../data/blogStore';
 
 interface WritingSectionProps {
   onSelectArticle: (article: WritingArticle) => void;
@@ -10,6 +11,23 @@ interface WritingSectionProps {
 export const WritingSection: React.FC<WritingSectionProps> = ({ onSelectArticle }) => {
   const { t } = useLang();
   const w = t.writing;
+
+  // Combina los artículos estáticos con los creados desde el panel admin
+  const [articles, setArticles] = useState<WritingArticle[]>(WRITING_ARTICLES);
+
+  useEffect(() => {
+    const refresh = () => {
+      const stored = getPublishedArticles();
+      setArticles([...stored, ...WRITING_ARTICLES]);
+    };
+    refresh();
+    window.addEventListener('blog-posts-updated', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('blog-posts-updated', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, []);
 
   return (
     <section id="writing" className="section-reveal" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
@@ -28,7 +46,7 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ onSelectArticle 
       </div>
 
       <div className="writing-articles-list">
-        {WRITING_ARTICLES.map((article, idx) => {
+        {articles.map((article, idx) => {
           return (
             <article
               key={article.id}

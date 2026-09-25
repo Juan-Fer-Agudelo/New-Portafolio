@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, CheckCircle2, AlertCircle, ArrowLeft } from 'lucide-react';
+import faviconLogo from '../assets/images/favicon-32x32.png';
 
 interface AdminLoginProps {
   onBackToHome?: () => void;
+  onLoginSuccess?: () => void;
 }
 
-export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
-  const [email, setEmail] = useState('juan.colorado@talentphi.com');
-  const [password, setPassword] = useState('admin123456');
+export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome, onLoginSuccess }) => {
+  const [email, setEmail] = useState('juanferagudelo475@gmail.com');
+  const [password, setPassword] = useState('juanfernandoagu15');
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(true);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -21,6 +23,15 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
       return;
     }
 
+    // Validar credenciales
+    const validEmail = 'juanferagudelo475@gmail.com';
+    const validPassword = 'juanfernandoagu15';
+
+    if (email !== validEmail || password !== validPassword) {
+      setStatusMessage({ type: 'error', text: 'Email o contraseña incorrectos.' });
+      return;
+    }
+
     setIsLoading(true);
     setStatusMessage(null);
 
@@ -30,6 +41,12 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
         type: 'success',
         text: '¡Credenciales correctas! Redirigiendo...',
       });
+      
+      // Guardar en localStorage y llamar callback
+      localStorage.setItem('adminLoggedIn', 'true');
+      if (onLoginSuccess) {
+        setTimeout(() => onLoginSuccess(), 800);
+      }
     }, 1000);
   };
 
@@ -57,59 +74,26 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
       )}
 
       {/* Tarjeta de Login EXACTA a la imagen */}
-      <div className="w-full max-w-[425px] bg-white rounded-[26px] shadow-[0_12px_45px_-8px_rgba(0,0,0,0.07),0_4px_16px_rgba(0,0,0,0.02)] border border-slate-100/70 p-8 sm:p-10 relative z-10 transition-all">
+      <div className="w-full max-w-[400px] bg-white rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-slate-200 p-10 sm:p-12 relative z-10 transition-all">
         
-        {/* LOGO PERFECT B Aesthetic Medicine */}
-        <div className="flex items-center justify-center gap-1.5 mb-5">
-          <div className="flex flex-col items-start justify-center leading-none">
-            <span className="text-[19px] font-semibold tracking-[0.18em] text-[#374557] font-sans">
-              PERFECT
-            </span>
-            <span className="text-[7.5px] font-normal tracking-[0.24em] text-[#8695a7] mt-[3px] uppercase">
-              Aesthetic Medicine
-            </span>
-          </div>
-
-          {/* Icono 'B' estilizado en color teal turquesa */}
-          <div className="flex items-center justify-center text-[#1cb7a5] ml-0.5">
-            <svg
-              className="w-[26px] h-[26px]"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 5C8 3.89543 8.89543 3 10 3H17.5C21.0899 3 24 5.91015 24 9.5C24 12.1868 22.3664 14.4925 20.0381 15.4578C22.9554 16.3688 25 19.0664 25 22.25C25 26.5302 21.5302 30 17.25 30H10C8.89543 30 8 29.1046 8 28V5Z"
-                stroke="#1cb7a5"
-                strokeWidth="2.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 16H17C19.2091 16 21 14.2091 21 12C21 9.79086 19.2091 8 17 8H8"
-                stroke="#1cb7a5"
-                strokeWidth="2.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 26H17.5C19.9853 26 22 23.9853 22 21.5C22 19.0147 19.9853 17 17.5 17H8"
-                stroke="#1cb7a5"
-                strokeWidth="2.3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="21" cy="7.5" r="1.5" fill="#1cb7a5" />
-            </svg>
-          </div>
+        {/* LOGO Portafolio con Favicon */}
+        <div className="flex items-center justify-center gap-3 mb-12">
+          <img 
+            src={faviconLogo} 
+            alt="Portafolio Logo" 
+            className="w-8 h-8"
+          />
+          <h2 className="text-[24px] font-bold text-[#1a202c] tracking-tight">
+            Portafolio
+          </h2>
         </div>
 
         {/* Título: Bienvenido */}
-        <div className="text-center mb-6">
-          <h1 className="text-[26px] sm:text-[28px] font-extrabold text-[#111f35] tracking-tight mb-1">
+        <div className="text-center mb-12">
+          <h1 className="text-[32px] sm:text-[36px] font-bold text-[#1a202c] tracking-tight mb-4">
             Bienvenido
           </h1>
-          <p className="text-[12.5px] text-[#6b7c93] font-normal">
+          <p className="text-[13.5px] text-[#6b7c93] font-normal leading-relaxed">
             Ingresar con tus credenciales para continuar
           </p>
         </div>
@@ -117,7 +101,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
         {/* Alerta de estado */}
         {statusMessage && (
           <div
-            className={`mb-4 p-3 rounded-lg text-xs flex items-center gap-2 transition-all ${
+            className={`mb-5 p-3.5 rounded-lg text-xs flex items-center gap-2.5 transition-all ${
               statusMessage.type === 'success'
                 ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                 : 'bg-rose-50 text-rose-800 border border-rose-200'
@@ -128,26 +112,26 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
             ) : (
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             )}
-            <span>{statusMessage.text}</span>
+            <span className="text-[12.5px]">{statusMessage.text}</span>
           </div>
         )}
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-8">
           
           {/* Campo Correo electrónico */}
           <div>
             <label
               htmlFor="email-input"
-              className="block text-[12.5px] font-semibold text-[#1e293b] mb-1.5 text-left"
+              className="block text-[13.5px] font-semibold text-[#1e293b] mb-4 text-center"
             >
               Correo electrónico
             </label>
             <div
-              className={`w-full bg-[#edf4fd] rounded-[10px] border transition-all ${
+              className={`w-full bg-white rounded-[14px] border-2 transition-all ${
                 isEmailFocused
-                  ? 'border-[#1cb7a5] ring-2 ring-[#1cb7a5]/20'
-                  : 'border-[#d0e0f3]'
+                  ? 'border-[#9d41e8] shadow-[0_0_0_4px_rgba(157,65,232,0.1)]'
+                  : 'border-[#9d41e8] hover:border-[#9d41e8]'
               }`}
             >
               <input
@@ -157,9 +141,9 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => setIsEmailFocused(true)}
                 onBlur={() => setIsEmailFocused(false)}
-                placeholder="juan.colorado@talentphi.com"
+                placeholder="juanferagudelo475@gmail.com"
                 required
-                className="w-full px-3.5 py-2.5 bg-transparent rounded-[10px] text-[13.5px] text-[#1e293b] placeholder:text-[#94a3b8] focus:outline-none"
+                className="w-full px-4 py-3.5 bg-transparent rounded-[12px] text-[14.5px] text-[#1e293b] placeholder:text-[#a0aec0] focus:outline-none"
               />
             </div>
           </div>
@@ -168,15 +152,15 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
           <div>
             <label
               htmlFor="password-input"
-              className="block text-[12.5px] font-semibold text-[#1e293b] mb-1.5 text-left"
+              className="block text-[13.5px] font-semibold text-[#1e293b] mb-4 text-center"
             >
               Contraseña
             </label>
             <div
-              className={`w-full bg-[#edf4fd] rounded-[10px] border relative transition-all ${
+              className={`w-full bg-white rounded-[14px] border-2 relative transition-all ${
                 isPasswordFocused
-                  ? 'border-[#1cb7a5] ring-2 ring-[#1cb7a5]/20'
-                  : 'border-[#d0e0f3]'
+                  ? 'border-[#9d41e8] shadow-[0_0_0_4px_rgba(157,65,232,0.1)]'
+                  : 'border-[#9d41e8] hover:border-[#9d41e8]'
               }`}
             >
               <input
@@ -188,30 +172,30 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
                 onBlur={() => setIsPasswordFocused(false)}
                 placeholder="••••••••••••••••"
                 required
-                className="w-full px-3.5 py-2.5 pr-10 bg-transparent rounded-[10px] text-[14px] text-[#1e293b] placeholder:text-[#94a3b8] focus:outline-none font-mono tracking-widest"
+                className="w-full px-4 py-3.5 pr-12 bg-transparent rounded-[12px] text-[14.5px] text-[#1e293b] placeholder:text-[#a0aec0] focus:outline-none font-mono tracking-widest"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8ea1b4] hover:text-[#52647c] transition-colors p-1 cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#64748b] transition-colors p-1 cursor-pointer"
                 title={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
                 aria-label={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
               >
                 {showPassword ? (
-                  <EyeOff className="w-4 h-4" />
+                  <EyeOff className="w-5 h-5" />
                 ) : (
-                  <Eye className="w-4 h-4" />
+                  <Eye className="w-5 h-5" />
                 )}
               </button>
             </div>
           </div>
 
           {/* Botón Ingresar */}
-          <div className="pt-2">
+          <div className="pt-6">
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-[#1cb7a5] hover:bg-[#16a494] active:bg-[#128f81] text-white font-medium text-[14px] rounded-[10px] shadow-[0_6px_18px_rgba(28,183,165,0.32)] hover:shadow-[0_8px_22px_rgba(28,183,165,0.42)] transition-all duration-200 cursor-pointer disabled:opacity-75 flex items-center justify-center gap-2"
+              className="w-full py-4 px-4 bg-[#9d41e8] hover:bg-[#8a35d1] active:bg-[#7629b8] text-white font-semibold text-[16px] rounded-[16px] border-2 border-[#9d41e8] shadow-[0_6px_20px_rgba(157,65,232,0.3)] hover:shadow-[0_8px_28px_rgba(157,65,232,0.4)] transition-all duration-200 cursor-pointer disabled:opacity-70 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -245,12 +229,12 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome }) => {
         </form>
 
         {/* Texto inferior de soporte técnico */}
-        <div className="mt-6 text-center">
-          <p className="text-[12px] text-[#748294]">
+        <div className="mt-10 pt-8 border-t border-slate-100 text-center">
+          <p className="text-[12px] text-[#6b7c93] leading-relaxed">
             ¿Problemas para ingresar?{' '}
             <a
               href="mailto:soporte@perfectb.com"
-              className="text-[#1e293b] hover:text-[#1cb7a5] font-semibold transition-colors hover:underline cursor-pointer"
+              className="text-[#1e293b] hover:text-[#9d41e8] font-semibold transition-colors hover:underline cursor-pointer"
             >
               Solicitar soporte técnico
             </a>

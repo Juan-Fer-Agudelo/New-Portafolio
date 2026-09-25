@@ -15,9 +15,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
     date: 'Julio 2026',
     url: 'https://enhance.work',
     description:
-      'Plataforma web B2B/B2C líder de empleos en el sur de Florida para el sector de medicina estética. Permite a profesionales encontrar empleo y a clínicas contratar talento con paneles independientes para Employers y Candidates.',
+      'Plataforma web B2B/B2C líder de empleos en el sur de Florida para el sector de medicina estética. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza. Todos los derechos reservados son reservados para Talent Phi.',
     details:
-      'Plataforma de empleo B2B/B2C de alto rendimiento diseñada especialmente para las personas que viven en el sur de Florida dentro del sector de medicina estética (enhance.work). Ofrece flujos de trabajo e interfaces completamente adaptadas tanto para empleadores (Employers) como para candidatos (Candidates). Construida en el frontend con Astro 6 en modo SSR y React 19 embebido mediante islas interactivas, estilizada con CSS Vanilla puro. Servidor backend en Express 5 actuando con middleware de Astro SSR. Sistema de autenticación con express-session y bcryptjs, base de datos relacional PostgreSQL (cliente pg) y almacenamiento de archivos e imágenes en Replit Object Storage. Integraciones con Stripe para cobros y suscripciones, Resend para correos transaccionales y Google Sheets API para sincronización de datos.',
+      'Plataforma de empleo B2B/B2C de alto rendimiento diseñada especialmente para las personas que viven en el sur de Florida dentro del sector de medicina estética (enhance.work). Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza (todos los derechos reservados son reservados para Talent Phi). Ofrece flujos de trabajo e interfaces completamente adaptadas tanto para empleadores (Employers) como para candidatos (Candidates). Construida en el frontend con Astro 6 en modo SSR y React 19 embebido mediante islas interactivas, estilizada con CSS Vanilla puro. Servidor backend en Express 5 actuando con middleware de Astro SSR. Sistema de autenticación con express-session y bcryptjs, base de datos relacional PostgreSQL (cliente pg) y almacenamiento de archivos e imágenes en Replit Object Storage. Integraciones con Stripe para cobros y suscripciones, Resend para correos transaccionales y Google Sheets API para sincronización de datos.',
     installCode: 'https://enhance.work',
     githubUrl: 'https://enhance.work',
     techStack: [
@@ -39,9 +39,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
       subtitle: 'Leading aesthetic medicine job platform in South Florida',
       date: 'July 2026',
       description:
-        'Leading B2B/B2C job platform in South Florida for the aesthetic medicine sector. It allows professionals to find jobs and clinics to hire talent, with independent dashboards for Employers and Candidates.',
+        'Leading B2B/B2C job platform in South Florida for the aesthetic medicine sector. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza. All rights reserved to Talent Phi.',
       details:
-        'High-performance B2B/B2C job platform specially designed for people living in South Florida within the aesthetic medicine sector (enhance.work). It offers workflows and interfaces fully tailored for both employers and candidates. Built on the frontend with Astro 6 in SSR mode and React 19 embedded via interactive islands, styled with pure Vanilla CSS. Backend server in Express 5 acting with Astro SSR middleware. Authentication system with express-session and bcryptjs, relational PostgreSQL database (pg client) and file and image storage in Replit Object Storage. Integrations with Stripe for payments and subscriptions, Resend for transactional emails and Google Sheets API for data synchronization.',
+        'High-performance B2B/B2C job platform specially designed for people living in South Florida within the aesthetic medicine sector (enhance.work). Developed in partnership with Talent Phi and full stack developer Santiago Loaiza (all rights reserved to Talent Phi). It offers workflows and interfaces fully tailored for both employers and candidates. Built on the frontend with Astro 6 in SSR mode and React 19 embedded via interactive islands, styled with pure Vanilla CSS. Backend server in Express 5 acting with Astro SSR middleware. Authentication system with express-session and bcryptjs, relational PostgreSQL database (pg client) and file and image storage in Replit Object Storage. Integrations with Stripe for payments and subscriptions, Resend for transactional emails and Google Sheets API for data synchronization.',
     },
   },
   {
@@ -55,9 +55,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
     date: 'Junio 2026',
     url: 'https://miabounce.com/',
     description:
-      'Plataforma web de contacto directo con la dueña de una empresa de alquiler de casas inflables (Bounce Houses) ubicada en South Miami, Florida.',
+      'Plataforma web de contacto directo y reservas para empresa de alquiler de casas inflables (Bounce Houses) ubicada en South Miami, Florida. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza. Todos los derechos reservados son reservados para Talent Phi.',
     details:
-      'Plataforma web moderna y de alto rendimiento para empresa de alquiler de casas inflables (Bounce Houses) en South Miami, Florida. Diseñada para facilitar el contacto directo y la reserva con la dueña del negocio. Desarrollada en el frontend con React, TypeScript, Vite, Tailwind CSS, componentes Radix UI / shadcn/ui, Framer Motion para animaciones interactivas fluidas, Wouter para enrutamiento y TanStack React Query para la gestión del estado del servidor. Backend impulsado por Node.js con Express ejecutado con tsx. Incluye integración completa de medición y pauta publicitaria mediante Google Tag Manager (GTM), Google Analytics 4 (GA4), Meta Pixel y estructuras SEO Schemas optimizadas.',
+      'Plataforma web moderna y de alto rendimiento para empresa de alquiler de casas inflables (Bounce Houses) en South Miami, Florida. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza (todos los derechos reservados son reservados para Talent Phi). Diseñada para facilitar el contacto directo y la reserva con la dueña del negocio. Desarrollada en el frontend con React, TypeScript, Vite, Tailwind CSS, componentes Radix UI / shadcn/ui, Framer Motion para animaciones interactivas fluidas, Wouter para enrutamiento y TanStack React Query para la gestión del estado del servidor. Backend impulsado por Node.js con Express ejecutado con tsx. Incluye integración completa de medición y pauta publicitaria mediante Google Tag Manager (GTM), Google Analytics 4 (GA4), Meta Pixel y estructuras SEO Schemas optimizadas.',
     installCode: 'https://miabounce.com/',
     githubUrl: 'https://miabounce.com/',
     techStack: [
@@ -82,9 +82,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
       subtitle: 'Booking platform for bounce house rentals in South Miami',
       date: 'June 2026',
       description:
-        'Web platform for direct contact with the owner of a bounce house rental company located in South Miami, Florida.',
+        'Web platform for direct contact and booking for a bounce house rental company located in South Miami, Florida. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza. All rights reserved to Talent Phi.',
       details:
-        'Modern, high-performance web platform for a bounce house rental company in South Miami, Florida. Designed to facilitate direct contact and booking with the business owner. Developed on the frontend with React, TypeScript, Vite, Tailwind CSS, Radix UI / shadcn/ui components, Framer Motion for smooth interactive animations, Wouter for routing and TanStack React Query for server state management. Backend powered by Node.js with Express running with tsx. Includes complete measurement and advertising integration through Google Tag Manager (GTM), Google Analytics 4 (GA4), Meta Pixel and optimized SEO Schemas.',
+        'Modern, high-performance web platform for a bounce house rental company in South Miami, Florida. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza (all rights reserved to Talent Phi). Designed to facilitate direct contact and booking with the business owner. Developed on the frontend with React, TypeScript, Vite, Tailwind CSS, Radix UI / shadcn/ui components, Framer Motion for smooth interactive animations, Wouter for routing and TanStack React Query for server state management. Backend powered by Node.js with Express running with tsx. Includes complete measurement and advertising integration through Google Tag Manager (GTM), Google Analytics 4 (GA4), Meta Pixel and optimized SEO Schemas.',
     },
   },
   {
@@ -98,9 +98,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
     date: 'Mayo 2026',
     url: 'https://peptidosvzla.com/',
     description:
-      'Plataforma de e-commerce especializada en la venta de péptidos importados de Estados Unidos con entregas en Caracas y acompañamiento bajo protocolo clínico.',
+      'Plataforma de e-commerce especializada en la venta de péptidos importados con protocolo clínico. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza. Todos los derechos reservados son reservados para Talent Phi.',
     details:
-      'Desarrollo e integración integral de plataforma e-commerce para la comercialización de péptidos importados de Estados Unidos a Caracas, con acompañamiento bajo protocolo clínico. Construido en el frontend con React, TypeScript, Vite, Wouter, Radix UI / shadcn/ui y TanStack Query para una gestión eficiente del estado del servidor. Servidor backend en Node.js con Express y base de datos relacional PostgreSQL. Incluye suite avanzada de rastreo y conversión (Google Tag Manager, GA4, Meta Pixel, Microsoft Clarity) y optimización SEO completa (esquemas SEO estructurados, metadatos Open Graph e imágenes optimizadas) con diseño 100% responsive.',
+      'Desarrollo e integración integral de plataforma e-commerce para la comercialización de péptidos importados de Estados Unidos a Caracas, con acompañamiento bajo protocolo clínico. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza (todos los derechos reservados son reservados para Talent Phi). Construido en el frontend con React, TypeScript, Vite, Wouter, Radix UI / shadcn/ui y TanStack Query para una gestión eficiente del estado del servidor. Servidor backend en Node.js con Express y base de datos relacional PostgreSQL. Incluye suite avanzada de rastreo y conversión (Google Tag Manager, GA4, Meta Pixel, Microsoft Clarity) y optimización SEO completa (esquemas SEO estructurados, metadatos Open Graph e imágenes optimizadas) con diseño 100% responsive.',
     installCode: 'https://peptidosvzla.com/',
     githubUrl: 'https://peptidosvzla.com/',
     techStack: [
@@ -125,9 +125,9 @@ export const PROJECTS_DATA: ProjectItem[] = [
       subtitle: 'E-commerce for imported peptides with clinical protocol',
       date: 'May 2026',
       description:
-        'E-commerce platform specialized in the sale of peptides imported from the United States with deliveries in Caracas and support under clinical protocol.',
+        'E-commerce platform specialized in the sale of imported peptides with clinical protocol support. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza. All rights reserved to Talent Phi.',
       details:
-        'Comprehensive development and integration of an e-commerce platform for the sale of peptides imported from the United States to Caracas, with support under clinical protocol. Built on the frontend with React, TypeScript, Vite, Wouter, Radix UI / shadcn/ui and TanStack Query for efficient server state management. Backend server in Node.js with Express and relational PostgreSQL database. Includes an advanced tracking and conversion suite (Google Tag Manager, GA4, Meta Pixel, Microsoft Clarity) and complete SEO optimization (structured SEO schemas, Open Graph metadata and optimized images) with 100% responsive design.',
+        'Comprehensive development and integration of an e-commerce platform for the sale of peptides imported from the United States to Caracas, with support under clinical protocol. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza (all rights reserved to Talent Phi). Built on the frontend with React, TypeScript, Vite, Wouter, Radix UI / shadcn/ui and TanStack Query for efficient server state management. Backend server in Node.js with Express and relational PostgreSQL database. Includes an advanced tracking and conversion suite (Google Tag Manager, GA4, Meta Pixel, Microsoft Clarity) and complete SEO optimization (structured SEO schemas, Open Graph metadata and optimized images) with 100% responsive design.',
     },
   },
   {
