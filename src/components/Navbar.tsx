@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`} id="main-nav">
-      <Background />
+      <Background variant="navbar" />
       {/* Izquierda: Logo geométrico + Divisor + MENU */}
       <div className="nav-left">
         <button

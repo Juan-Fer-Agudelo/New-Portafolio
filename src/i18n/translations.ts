@@ -44,7 +44,7 @@ export const translations = {
       heroTextDash1: 'artificial intelligence',
       heroText3: ' and ',
       heroTextDash2: 'automation',
-      heroText4: ' solutions, with over 4 years of experience dedicated to ',
+      heroText4: ' solutions, with over 3 years of experience dedicated to ',
       heroTextBold2: 'building the web with purpose',
       sub1Title: 'Considered development',
       sub1Text1:
@@ -115,7 +115,7 @@ export const translations = {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'FULLSTACK DEVELOPER + DATA & AI',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO is a Fullstack developer and engineer based in Medellín, Colombia, combining over 4 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
+        'JUAN FERNANDO AGUDELO is a Fullstack developer and engineer based in Medellín, Colombia, combining over 3 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
         'As a Fullstack developer, Juan specializes in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. He has led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
         'His enterprise experience includes work with Renault Sofasa and Simex, where he developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
         'Juan continues to lead at the intersection of software architecture, data science and artificial intelligence, building solutions that promote efficiency, scalability and a positive impact on the organizations and people he works with.',
@@ -236,7 +236,7 @@ export const translations = {
       heroTextDash1: 'inteligencia artificial',
       heroText3: ' y ',
       heroTextDash2: 'automatización',
-      heroText4: ', con más de 4 años de experiencia dedicados a ',
+      heroText4: ', con más de 3 años de experiencia dedicados a ',
       heroTextBold2: 'construir la web con propósito',
       sub1Title: 'Desarrollo considerado',
       sub1Text1:
@@ -307,7 +307,7 @@ export const translations = {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'DESARROLLADOR FULLSTACK + DATOS & IA',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO es un desarrollador Fullstack radicado en Medellín, Colombia, que combina más de 4 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
+        'JUAN FERNANDO AGUDELO es un desarrollador Fullstack radicado en Medellín, Colombia, que combina más de 3 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
         'Como desarrollador Fullstack, Juan se especializa en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. Ha liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
         'Su experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrolló aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
         'Juan continúa liderando en la intersección entre arquitectura de software, ciencia de datos e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',

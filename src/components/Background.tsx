@@ -19,7 +19,11 @@ interface Ripple {
   alpha: number;
 }
 
-export const Background: React.FC = () => {
+interface BackgroundProps {
+  variant?: 'navbar' | 'footer';
+}
+
+export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -31,11 +35,10 @@ export const Background: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
-    // El canvas se dimensiona según el contenedor (el footer), no la ventana
     let width = (canvas.width = container.offsetWidth);
     let height = (canvas.height = container.offsetHeight);
 
-    const mouse = { x: -1000, y: -1000, radius: 140, active: false };
+    const mouse = { x: -1000, y: -1000, radius: variant === 'navbar' ? 80 : 120, active: false };
 
     const colors = [
       'rgba(59, 130, 246, ',
@@ -44,8 +47,12 @@ export const Background: React.FC = () => {
       'rgba(14, 165, 233, ',
     ];
 
-    const count = Math.floor((width * height) / 4500);
-    const particleCount = Math.max(70, Math.min(count, 200));
+    // Cantidad reducida y limpia de partículas
+    const particleCount =
+      variant === 'navbar'
+        ? Math.max(6, Math.min(Math.floor(width / 140), 12))
+        : Math.max(14, Math.min(Math.floor((width * height) / 18000), 28));
+
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
@@ -53,10 +60,10 @@ export const Background: React.FC = () => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 1.8 + 1.2,
-        baseAlpha: Math.random() * 0.45 + 0.35,
+        vx: (Math.random() - 0.5) * (variant === 'navbar' ? 0.35 : 0.5),
+        vy: (Math.random() - 0.5) * (variant === 'navbar' ? 0.35 : 0.5),
+        radius: variant === 'navbar' ? Math.random() * 1.2 + 0.8 : Math.random() * 1.5 + 1.0,
+        baseAlpha: variant === 'navbar' ? Math.random() * 0.25 + 0.15 : Math.random() * 0.35 + 0.2,
         color: colorBase,
       });
     }
@@ -161,10 +168,10 @@ export const Background: React.FC = () => {
           const ndx = p.x - p2.x;
           const ndy = p.y - p2.y;
           const nDistSq = ndx * ndx + ndy * ndy;
-          const maxDist = 130;
+          const maxDist = variant === 'navbar' ? 85 : 115;
           if (nDistSq < maxDist * maxDist) {
             const nDist = Math.sqrt(nDistSq);
-            const lineAlpha = (1 - nDist / maxDist) * 0.2;
+            const lineAlpha = (1 - nDist / maxDist) * (variant === 'navbar' ? 0.14 : 0.2);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);

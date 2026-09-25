@@ -13,7 +13,7 @@ export const HomeFooter: React.FC<HomeFooterProps> = ({ onNavigate }) => {
 
   return (
     <footer className="site-footer">
-      <Background />
+      <Background variant="footer" />
       <div className="footer-inner">
         <p className="footer-copyright">{f.copyright}</p>
         <div className="footer-links">

@@ -343,7 +343,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 export const ARTICLE_AUTHOR: ArticleAuthor = {
   name: 'Juan Fernando Agudelo',
   role: 'Desarrollador Fullstack & Consultor Senior',
-  bio: 'Diseño sistemas distribuidos y arquitecturas backend escalables desde hace más de 4 años, ayudando a equipos de ingeniería a migrar sistemas legacy sin detener el negocio.',
+  bio: 'Diseño sistemas distribuidos y arquitecturas backend escalables desde hace más de 3 años, ayudando a equipos de ingeniería a migrar sistemas legacy sin detener el negocio.',
 };
 
 const MONOLITH_TO_MICROSERVICES_CONTENT = `
