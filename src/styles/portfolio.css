@@ -5117,26 +5117,38 @@
         }
       }
 
-      /* Resaltado de Derechos Reservados */
+      /* Resaltado de Derechos Reservados como Enlace a Talent Phi */
       .rights-highlight-badge {
         display: inline-flex;
         align-items: center;
-        gap: 4px;
+        gap: 5px;
         font-weight: 700;
         color: #682ae9;
         background: rgba(104, 42, 233, 0.12);
-        border: 1px solid rgba(104, 42, 233, 0.28);
-        padding: 2px 8px;
+        border: 1px solid rgba(104, 42, 233, 0.32);
+        padding: 3px 9px;
         border-radius: 6px;
         font-size: 0.9em;
         margin: 2px 2px;
         letter-spacing: 0.2px;
-        transition: background-color 0.2s ease, border-color 0.2s ease;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        vertical-align: middle;
       }
 
       .rights-highlight-badge:hover {
-        background: rgba(104, 42, 233, 0.18);
-        border-color: rgba(104, 42, 233, 0.45);
+        background: rgba(104, 42, 233, 0.22);
+        border-color: #682ae9;
+        color: #531ecc;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(104, 42, 233, 0.2);
+        text-decoration: none;
+      }
+
+      .rights-highlight-badge:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 4px rgba(104, 42, 233, 0.15);
       }
 
       .rights-highlight-icon {
