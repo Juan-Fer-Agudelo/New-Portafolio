@@ -12,7 +12,7 @@ export const translations = {
       nameLine: 'name is',
       name: 'Juan',
       subtitlePrefix: "I'm a ",
-      roleBold: 'Fullstack developer & data/AI engineer',
+      roleBold: 'Fullstack developer & data/AI analyst',
       subtitleMid: ' from ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
@@ -93,7 +93,7 @@ export const translations = {
     contact: {
       heading: 'Do you have a project in mind',
       subtext:
-        "I'm currently available for freelance projects, software architecture consulting and data & AI engineering. Send me a message or connect through the channels below.",
+        "I'm currently available for freelance projects, software architecture consulting and data & AI analysis. Send me a message or connect through the channels below.",
       btnSend: 'Send me a message',
     },
     footer: {
@@ -204,7 +204,7 @@ export const translations = {
       nameLine: 'nombre es',
       name: 'Juan',
       subtitlePrefix: 'Soy ',
-      roleBold: 'desarrollador Fullstack e ingeniero de datos e IA',
+      roleBold: 'desarrollador Fullstack y analista de datos e IA',
       subtitleMid: ' de ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
