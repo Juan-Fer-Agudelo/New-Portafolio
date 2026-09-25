@@ -47,11 +47,11 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
       'rgba(14, 165, 233, ',
     ];
 
-    // Cantidad reducida y limpia de partículas
+    // Cantidad mínima y minimalista de partículas
     const particleCount =
       variant === 'navbar'
-        ? Math.max(6, Math.min(Math.floor(width / 140), 12))
-        : Math.max(14, Math.min(Math.floor((width * height) / 18000), 28));
+        ? Math.max(3, Math.min(Math.floor(width / 350), 6))
+        : Math.max(6, Math.min(Math.floor((width * height) / 40000), 12));
 
     const particles: Particle[] = [];
 
@@ -60,10 +60,10 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * (variant === 'navbar' ? 0.35 : 0.5),
-        vy: (Math.random() - 0.5) * (variant === 'navbar' ? 0.35 : 0.5),
-        radius: variant === 'navbar' ? Math.random() * 1.2 + 0.8 : Math.random() * 1.5 + 1.0,
-        baseAlpha: variant === 'navbar' ? Math.random() * 0.25 + 0.15 : Math.random() * 0.35 + 0.2,
+        vx: (Math.random() - 0.5) * (variant === 'navbar' ? 0.25 : 0.35),
+        vy: (Math.random() - 0.5) * (variant === 'navbar' ? 0.25 : 0.35),
+        radius: variant === 'navbar' ? Math.random() * 1.0 + 0.8 : Math.random() * 1.3 + 0.9,
+        baseAlpha: variant === 'navbar' ? Math.random() * 0.2 + 0.12 : Math.random() * 0.25 + 0.15,
         color: colorBase,
       });
     }
@@ -98,8 +98,8 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
     const handleClick = (e: MouseEvent) => {
       const { x, y } = toLocal(e.clientX, e.clientY);
       if (x < 0 || y < 0 || x > width || y > height) return;
-      if (ripples.length < 4) {
-        ripples.push({ x, y, radius: 0, maxRadius: 150, alpha: 0.5 });
+      if (ripples.length < 3) {
+        ripples.push({ x, y, radius: 0, maxRadius: 100, alpha: 0.35 });
       }
     };
 
@@ -115,7 +115,7 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
         const gradient = ctx.createRadialGradient(
           mouse.x, mouse.y, 0, mouse.x, mouse.y, mouse.radius
         );
-        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.1)');
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.08)');
         gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = gradient;
         ctx.beginPath();
@@ -125,7 +125,7 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
 
       for (let i = ripples.length - 1; i >= 0; i--) {
         const r = ripples[i];
-        r.radius += 3.5;
+        r.radius += 2.5;
         r.alpha -= 0.015;
         if (r.alpha <= 0 || r.radius >= r.maxRadius) {
           ripples.splice(i, 1);
@@ -134,7 +134,7 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
         ctx.beginPath();
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(99, 102, 241, ${r.alpha})`;
-        ctx.lineWidth = 1.2;
+        ctx.lineWidth = 1.0;
         ctx.stroke();
       }
 
@@ -153,9 +153,9 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
         if (distSq < mouse.radius * mouse.radius) {
           const dist = Math.sqrt(distSq) || 1;
           const force = (mouse.radius - dist) / mouse.radius;
-          p.x += (dx / dist) * force * 1.1;
-          p.y += (dy / dist) * force * 1.1;
-          currentAlpha = Math.min(0.9, p.baseAlpha + force * 0.3);
+          p.x += (dx / dist) * force * 0.8;
+          p.y += (dy / dist) * force * 0.8;
+          currentAlpha = Math.min(0.6, p.baseAlpha + force * 0.2);
         }
 
         ctx.beginPath();
@@ -168,15 +168,15 @@ export const Background: React.FC<BackgroundProps> = ({ variant = 'footer' }) =>
           const ndx = p.x - p2.x;
           const ndy = p.y - p2.y;
           const nDistSq = ndx * ndx + ndy * ndy;
-          const maxDist = variant === 'navbar' ? 85 : 115;
+          const maxDist = variant === 'navbar' ? 65 : 95;
           if (nDistSq < maxDist * maxDist) {
             const nDist = Math.sqrt(nDistSq);
-            const lineAlpha = (1 - nDist / maxDist) * (variant === 'navbar' ? 0.14 : 0.2);
+            const lineAlpha = (1 - nDist / maxDist) * (variant === 'navbar' ? 0.08 : 0.12);
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(99, 102, 241, ${lineAlpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
