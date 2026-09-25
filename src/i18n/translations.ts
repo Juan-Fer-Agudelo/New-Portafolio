@@ -12,7 +12,7 @@ export const translations = {
       nameLine: 'name is',
       name: 'Juan',
       subtitlePrefix: "I'm a ",
-      roleBold: 'software architect & data/AI engineer',
+      roleBold: 'Fullstack developer & data/AI engineer',
       subtitleMid: ' from ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
@@ -59,7 +59,7 @@ export const translations = {
       sub2Text2:
         'I combine precise timing and motion with a deep understanding of browser rendering to deliver logical interactions that are full of character and outrageously smooth.',
       sub3Title: 'Software Architecture & Backend',
-      sub3Text1Pre: 'As a software architect, I design robust systems, ',
+      sub3Text1Pre: 'As a fullstack developer, I design robust systems, ',
       sub3Text1Bold: 'databases',
       sub3Text1Post:
         ', data pipelines and server architectures. Cloud CMS platforms, serverless functions, REST APIs and integrations - whatever your requirement, I help you plan, build and deliver a fast, secure and scalable project.',
@@ -113,10 +113,10 @@ export const translations = {
     },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
-      subtitle: 'SOFTWARE ARCHITECT + DATA & AI',
+      subtitle: 'FULLSTACK DEVELOPER + DATA & AI',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO is a software architect and engineer based in Medellín, Colombia, combining over 4 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
-        'As a software architect, Juan specializes in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. He has led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
+        'JUAN FERNANDO AGUDELO is a Fullstack developer and engineer based in Medellín, Colombia, combining over 4 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
+        'As a Fullstack developer, Juan specializes in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. He has led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
         'His enterprise experience includes work with Renault Sofasa and Simex, where he developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
         'Juan continues to lead at the intersection of software architecture, data science and artificial intelligence, building solutions that promote efficiency, scalability and a positive impact on the organizations and people he works with.',
       ],
@@ -204,7 +204,7 @@ export const translations = {
       nameLine: 'nombre es',
       name: 'Juan',
       subtitlePrefix: 'Soy ',
-      roleBold: 'arquitecto de software e ingeniero de datos e IA',
+      roleBold: 'desarrollador Fullstack e ingeniero de datos e IA',
       subtitleMid: ' de ',
       location: 'Medellín, Colombia.',
       scroll: 'SCROLL',
@@ -251,7 +251,7 @@ export const translations = {
       sub2Text2:
         'Combino tiempos y movimientos precisos con un profundo entendimiento del renderizado del navegador para entregar interacciones lógicas, llenas de carácter y extraordinariamente fluidas.',
       sub3Title: 'Arquitectura de Software y Backend',
-      sub3Text1Pre: 'Como arquitecto de software, diseño sistemas robustos, ',
+      sub3Text1Pre: 'Como desarrollador Fullstack, diseño sistemas robustos, ',
       sub3Text1Bold: 'bases de datos',
       sub3Text1Post:
         ', pipelines de análisis de datos y arquitecturas de servidor. Plataformas en la nube, funciones serverless, APIs REST e integraciones: te ayudo a planear, estructurar y entregar proyectos rápidos, seguros y escalables.',
@@ -305,10 +305,10 @@ export const translations = {
     },
     aboutPage: {
       name: 'JUAN FERNANDO AGUDELO',
-      subtitle: 'ARQUITECTO DE SOFTWARE + DATOS & IA',
+      subtitle: 'DESARROLLADOR FULLSTACK + DATOS & IA',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO es un arquitecto de software y desarrollador radicado en Medellín, Colombia, que combina más de 4 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
-        'Como arquitecto de software, Juan se especializa en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. Ha liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
+        'JUAN FERNANDO AGUDELO es un desarrollador Fullstack radicado en Medellín, Colombia, que combina más de 4 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
+        'Como desarrollador Fullstack, Juan se especializa en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. Ha liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
         'Su experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrolló aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
         'Juan continúa liderando en la intersección entre arquitectura de software, ciencia de datos e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',
       ],
