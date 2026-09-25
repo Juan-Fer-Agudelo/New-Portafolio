@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import { ProjectItem, WritingArticle, ActiveModal, PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
 import { ARTICLE_AUTHOR } from '../data/portfolioData';
+import { renderWithRightsHighlight } from '../utils/textHighlight';
 
 // Configuración de EmailJS - Reemplaza con tus credenciales de https://www.emailjs.com/
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
@@ -357,7 +358,7 @@ export const Modals: React.FC<ModalsProps> = ({
             </div>
           )}
           <p id="detail-desc" style={{ fontFamily: 'var(--font-body)', fontSize: '15px', color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '24px' }}>
-            {projDetails}
+            {renderWithRightsHighlight(projDetails)}
           </p>
           {selectedProject?.techStack && selectedProject.techStack.length > 0 && (
             <div style={{ marginBottom: '24px' }}>

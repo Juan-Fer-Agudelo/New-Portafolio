@@ -2,6 +2,7 @@ import React from 'react';
 import { ProjectItem } from '../types';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
+import { renderWithRightsHighlight } from '../utils/textHighlight';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -144,7 +145,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       )}
                     </div>
 
-                    <p className="open-source-desc">{loc(project).description}</p>
+                    <p className="open-source-desc">{renderWithRightsHighlight(loc(project).description)}</p>
 
                     <div className="project-card-tech">
                       {project.techStack.slice(0, 6).map((tech) => (
