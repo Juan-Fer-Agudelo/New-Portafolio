@@ -5,8 +5,48 @@ import peptidosOg from '../assets/images/peptidos-og.jpg';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
-    id: 'miami-bounce-company',
+    id: 'enhance-work',
     number: '01',
+    type: 'PLATAFORMA WEB B2B/B2C',
+    title: 'Enhance.Work',
+    subtitle: 'Plataforma líder de empleos en medicina estética del sur de Florida',
+    image: enhanceOg,
+    organization: 'Enhance.Work (South Florida, FL)',
+    date: 'Julio 2026',
+    url: 'https://enhance.work',
+    description:
+      'Plataforma web B2B/B2C líder de empleos en el sur de Florida para el sector de medicina estética. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza. Todos los derechos reservados son reservados para Talent Phi.',
+    details:
+      'Plataforma de empleo B2B/B2C de alto rendimiento diseñada especialmente para las personas que viven en el sur de Florida dentro del sector de medicina estética (enhance.work). Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza (todos los derechos reservados son reservados para Talent Phi). Ofrece flujos de trabajo e interfaces completamente adaptadas tanto para empleadores (Employers) como para candidatos (Candidates). Construida en el frontend con Astro 6 en modo SSR y React 19 embebido mediante islas interactivas, estilizada con CSS Vanilla puro. Servidor backend en Express 5 actuando con middleware de Astro SSR. Sistema de autenticación con express-session y bcryptjs, base de datos relacional PostgreSQL (cliente pg) y almacenamiento de archivos e imágenes en Replit Object Storage. Integraciones con Stripe para cobros y suscripciones, Resend para correos transaccionales y Google Sheets API para sincronización de datos.',
+    installCode: 'https://enhance.work',
+    githubUrl: 'https://enhance.work',
+    techStack: [
+      'Astro 6 (SSR)',
+      'React 19',
+      'Express 5',
+      'PostgreSQL',
+      'CSS Vanilla',
+      'Stripe',
+      'Resend',
+      'Google Sheets API',
+      'Replit Object Storage',
+      'express-session',
+      'bcryptjs',
+      'Node.js',
+    ],
+    en: {
+      type: 'B2B/B2C WEB PLATFORM',
+      subtitle: 'Leading aesthetic medicine job platform in South Florida',
+      date: 'July 2026',
+      description:
+        'Leading B2B/B2C job platform in South Florida for the aesthetic medicine sector. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza. All rights reserved to Talent Phi.',
+      details:
+        'High-performance B2B/B2C job platform specially designed for people living in South Florida within the aesthetic medicine sector (enhance.work). Developed in partnership with Talent Phi and full stack developer Santiago Loaiza (all rights reserved to Talent Phi). It offers workflows and interfaces fully tailored for both employers and candidates. Built on the frontend with Astro 6 in SSR mode and React 19 embedded via interactive islands, styled with pure Vanilla CSS. Backend server in Express 5 acting with Astro SSR middleware. Authentication system with express-session and bcryptjs, relational PostgreSQL database (pg client) and file and image storage in Replit Object Storage. Integrations with Stripe for payments and subscriptions, Resend for transactional emails and Google Sheets API for data synchronization.',
+    },
+  },
+  {
+    id: 'miami-bounce-company',
+    number: '02',
     type: 'PLATAFORMA WEB',
     title: 'Miami Bounce Company',
     subtitle: 'Plataforma de reservas para alquiler de casas inflables en South Miami',
@@ -49,7 +89,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'peptidos-venezuela',
-    number: '02',
+    number: '03',
     type: 'E-COMMERCE',
     title: 'Péptidos Venezuela',
     subtitle: 'E-commerce de péptidos importados con protocolo clínico',
@@ -92,7 +132,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'ai-support-analyst',
-    number: '03',
+    number: '04',
     type: 'INTELIGENCIA ARTIFICIAL',
     title: 'AI Support Analyst',
     subtitle: 'Sistema de IA para análisis y respuesta de tickets de soporte',
@@ -129,7 +169,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'cambios-estructura-nomina',
-    number: '04',
+    number: '05',
     type: 'APP MÓVIL EMPRESARIAL',
     title: 'Cambios de Estructura y Nómina',
     subtitle: 'Aplicativo móvil para gestión de cambios organizacionales y nómina',
@@ -154,7 +194,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'automatizacion-tasas-cambio',
-    number: '05',
+    number: '06',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Automatización de Tasas de Cambio',
     subtitle: 'Sistema RPA para actualización automática de divisas',
@@ -178,7 +218,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'analisis-datos-estadisticos',
-    number: '06',
+    number: '07',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
     subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
@@ -202,7 +242,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'bi-erp-sap-epicor',
-    number: '07',
+    number: '08',
     type: 'BUSINESS INTELLIGENCE / ERP',
     title: 'Inteligencia de Negocios y ERP',
     subtitle: 'Integración de datos financieros desde SAP y Epicor',
@@ -226,7 +266,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'ia-empresarial-copilot',
-    number: '08',
+    number: '09',
     type: 'IA EMPRESARIAL',
     title: 'IA Empresarial y Copilot',
     subtitle: 'Optimización de procesos con asistentes inteligentes',
@@ -250,7 +290,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'asistente-bambini-van-gogh',
-    number: '09',
+    number: '10',
     type: 'IA / INVESTIGACIÓN',
     title: 'Asistente Bambini (Van Gogh)',
     subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
@@ -275,7 +315,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'sitio-contadoras-aq',
-    number: '10',
+    number: '11',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',
