@@ -2,6 +2,7 @@ import { ProjectItem, WritingArticle, ArticleAuthor } from '../types';
 import enhanceOg from '../assets/images/enhance-og.jpg';
 import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
 import peptidosOg from '../assets/images/peptidos-og.jpg';
+import perfectbOg from '../assets/images/perfectb-og.webp';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
@@ -131,8 +132,51 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'ai-support-analyst',
+    id: 'perfect-b-aesthetic',
     number: '04',
+    type: 'SITIO WEB CLÍNICO / RESERVAS',
+    title: 'Perfect B',
+    subtitle: 'Sitio para clínica de medicina estética con reservas y pagos online',
+    image: perfectbOg,
+    organization: 'Perfect B Aesthetic Medicine (Doral, FL)',
+    date: 'Abril 2026',
+    url: 'https://perfectb.com/',
+    description:
+      'Sitio web para Perfect B Aesthetic Medicine, clínica de medicina estética en Doral, Florida. Funciona como vitrina de tratamientos y como sistema de reservas online, con pasarela de pagos Stripe, agenda de citas y tratamientos vía la API de Phorest y automatizaciones con Zapier. Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza. Todos los derechos reservados son reservados para Talent Phi.',
+    details:
+      'Sitio web para Perfect B Aesthetic Medicine, clínica de medicina estética y dermatología cosmética de pago directo ubicada en Doral, Florida (perfectb.com). Desarrollada en conjunto con la empresa Talent Phi y el programador full stack Santiago Loaiza (todos los derechos reservados son reservados para Talent Phi). Funciona como vitrina de los tratamientos (neurotoxina, tightening de piel, eliminación de tatuajes, péptidos, PDRN, acné y otros) y como sistema de reservas online totalmente bilingüe (inglés y español). Sitio principal construido con Astro, con componentes React y TypeScript en las partes interactivas como el buscador "Look it up" y el asistente Tina. El book de reservas es una aplicación PHP con panel de administración propio que gestiona el flujo de pasos, fechas disponibles y búsqueda con IA, guardando los datos en MySQL. Incluye una calculadora de precios de eliminación de tatuajes (PHP + JavaScript) que sirve byetattoo.com y perfectb.com/tattoo-removal-calculator. Integra pasarela de pagos con Stripe, agenda de citas, tratamientos y pagos de la clínica mediante la API de Phorest, y Podium para mensajes y llamadas. Suite completa de tracking y marketing con Google Tag Manager, GA4, Meta Pixel con la API de Conversiones, Microsoft Clarity y Trustindex para reseñas, además de múltiples automatizaciones con Zapier. Desplegado en un servidor propio en DigitalOcean con LiteSpeed y CyberPanel.',
+    installCode: 'https://perfectb.com/',
+    githubUrl: 'https://perfectb.com/',
+    techStack: [
+      'Astro',
+      'React',
+      'TypeScript',
+      'PHP',
+      'MySQL',
+      'Stripe',
+      'Phorest API',
+      'Zapier',
+      'Podium',
+      'Google Tag Manager',
+      'Google Analytics 4',
+      'Meta Pixel (CAPI)',
+      'Microsoft Clarity',
+      'DigitalOcean',
+      'LiteSpeed / CyberPanel',
+    ],
+    en: {
+      type: 'CLINIC WEBSITE / BOOKING',
+      subtitle: 'Aesthetic medicine clinic site with online booking and payments',
+      date: 'April 2026',
+      description:
+        'Website for Perfect B Aesthetic Medicine, an aesthetic medicine clinic in Doral, Florida. It works as a showcase of treatments and as an online booking system, with a Stripe payment gateway, appointment and treatment scheduling via the Phorest API, and automations with Zapier. Developed in partnership with Talent Phi and full stack developer Santiago Loaiza. All rights reserved to Talent Phi.',
+      details:
+        'Website for Perfect B Aesthetic Medicine, a direct-pay aesthetic medicine and cosmetic dermatology clinic located in Doral, Florida (perfectb.com). Developed in partnership with Talent Phi and full stack developer Santiago Loaiza (all rights reserved to Talent Phi). It works as a showcase of treatments (neurotoxin, skin tightening, tattoo removal, peptides, PDRN, acne and others) and as a fully bilingual (English and Spanish) online booking system. The main site is built with Astro, with React and TypeScript components in the interactive parts such as the "Look it up" search and the Tina assistant. The booking app is a PHP application with its own admin panel that manages the step flow, available dates and AI-powered search, storing data in MySQL. It includes a tattoo removal pricing calculator (PHP + JavaScript) serving byetattoo.com and perfectb.com/tattoo-removal-calculator. It integrates a Stripe payment gateway, appointment scheduling, treatments and clinic payments through the Phorest API, and Podium for messages and calls. Complete tracking and marketing suite with Google Tag Manager, GA4, Meta Pixel with the Conversions API, Microsoft Clarity and Trustindex for reviews, plus multiple automations with Zapier. Deployed on a dedicated DigitalOcean server with LiteSpeed and CyberPanel.',
+    },
+  },
+  {
+    id: 'ai-support-analyst',
+    number: '05',
     type: 'INTELIGENCIA ARTIFICIAL',
     title: 'AI Support Analyst',
     subtitle: 'Sistema de IA para análisis y respuesta de tickets de soporte',
@@ -169,7 +213,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'cambios-estructura-nomina',
-    number: '05',
+    number: '06',
     type: 'APP MÓVIL EMPRESARIAL',
     title: 'Cambios de Estructura y Nómina',
     subtitle: 'Aplicativo móvil para gestión de cambios organizacionales y nómina',
@@ -194,7 +238,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'automatizacion-tasas-cambio',
-    number: '06',
+    number: '07',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Automatización de Tasas de Cambio',
     subtitle: 'Sistema RPA para actualización automática de divisas',
@@ -218,7 +262,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'analisis-datos-estadisticos',
-    number: '07',
+    number: '08',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
     subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
@@ -242,7 +286,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'bi-erp-sap-epicor',
-    number: '08',
+    number: '09',
     type: 'BUSINESS INTELLIGENCE / ERP',
     title: 'Inteligencia de Negocios y ERP',
     subtitle: 'Integración de datos financieros desde SAP y Epicor',
@@ -266,7 +310,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'ia-empresarial-copilot',
-    number: '09',
+    number: '10',
     type: 'IA EMPRESARIAL',
     title: 'IA Empresarial y Copilot',
     subtitle: 'Optimización de procesos con asistentes inteligentes',
@@ -290,7 +334,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'asistente-bambini-van-gogh',
-    number: '10',
+    number: '11',
     type: 'IA / INVESTIGACIÓN',
     title: 'Asistente Bambini (Van Gogh)',
     subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
@@ -315,7 +359,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'sitio-contadoras-aq',
-    number: '11',
+    number: '12',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',
