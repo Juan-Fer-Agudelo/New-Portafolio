@@ -387,8 +387,11 @@ export const PROJECTS_DATA: ProjectItem[] = [
 
 export const ARTICLE_AUTHOR: ArticleAuthor = {
   name: 'Juan Fernando Agudelo',
-  role: 'Desarrollador Fullstack & Consultor Senior',
-  bio: 'Diseño sistemas distribuidos y arquitecturas backend escalables desde hace más de 3 años, ayudando a equipos de ingeniería a migrar sistemas legacy sin detener el negocio.',
+  role: 'Desarrollador Fullstack & Data/AI',
+  bio: 'Juan Fernando Agudelo es desarrollador Fullstack con más de 3 años de experiencia en desarrollo web escalable, análisis de datos y soluciones de IA. Ha construido plataformas en producción para clínicas, e-commerce y empresas del sur de Florida junto a Talent Phi, además de proyectos de automatización, Business Intelligence e IA empresarial. Le apasiona convertir problemas de negocio en sistemas simples, medibles y fáciles de mantener.',
+  profileLabel: 'GitHub',
+  profileHandle: 'Juan-Fer-Agudelo',
+  profileUrl: 'https://github.com/Juan-Fer-Agudelo',
 };
 
 const MONOLITH_TO_MICROSERVICES_CONTENT = `

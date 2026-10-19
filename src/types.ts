@@ -4,6 +4,10 @@ export interface ArticleAuthor {
   name: string;
   role: string;
   bio: string;
+  /** Enlace de perfil público mostrado al pie de la tarjeta de autor. */
+  profileLabel?: string;
+  profileHandle?: string;
+  profileUrl?: string;
 }
 
 export interface ProjectLocale {

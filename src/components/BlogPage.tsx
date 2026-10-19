@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { WRITING_ARTICLES, ARTICLE_AUTHOR } from '../data/portfolioData';
+import { WRITING_ARTICLES } from '../data/portfolioData';
+import { ArticleAuthorCard } from './ArticleAuthorCard';
 import { WritingArticle } from '../types';
 import { getPublishedArticles } from '../data/blogStore';
 
@@ -115,16 +116,12 @@ export const BlogPage: React.FC = () => {
               <span className="article-readtime">{selected.readTime}</span>
             </div>
 
-            <div className="article-author-box">
-              <div className="article-author-avatar" aria-hidden="true">
-                {ARTICLE_AUTHOR.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
-              </div>
-              <div className="article-author-info">
-                <span className="article-author-name">{ARTICLE_AUTHOR.name}</span>
-                <span className="article-author-role">{ARTICLE_AUTHOR.role}</span>
-                <p className="article-author-bio">{ARTICLE_AUTHOR.bio}</p>
-              </div>
-            </div>
+            <ArticleAuthorCard
+              date={selected.date}
+              onOpenProfile={() => {
+                window.location.href = '/#about';
+              }}
+            />
 
             {selected.contentHtml ? (
               <div className="article-body" dangerouslySetInnerHTML={{ __html: selected.contentHtml }} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { ProjectItem, WritingArticle, ActiveModal, PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
-import { ARTICLE_AUTHOR } from '../data/portfolioData';
+import { ArticleAuthorCard } from './ArticleAuthorCard';
 import { renderWithRightsHighlight } from '../utils/textHighlight';
 
 // Configuración de EmailJS - Reemplaza con tus credenciales de https://www.emailjs.com/
@@ -429,38 +429,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 <span className="article-readtime">{selectedArticle.readTime}</span>
               </div>
 
-              <div className="article-author-box">
-                <button
-                  className="article-author-avatar"
-                  onClick={onOpenAbout}
-                  aria-label={`Ver perfil de ${ARTICLE_AUTHOR.name}`}
-                  style={{ cursor: 'pointer', border: 'none', padding: 0, background: 'none' }}
-                >
-                  {ARTICLE_AUTHOR.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
-                </button>
-                <div className="article-author-info">
-                  <button
-                    className="article-author-name"
-                    onClick={onOpenAbout}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      fontFamily: 'inherit',
-                      fontSize: 'inherit',
-                      fontWeight: 'inherit',
-                      color: 'inherit',
-                      textAlign: 'left',
-                    }}
-                    aria-label={`Ver perfil de ${ARTICLE_AUTHOR.name}`}
-                  >
-                    {ARTICLE_AUTHOR.name}
-                  </button>
-                  <span className="article-author-role">{ARTICLE_AUTHOR.role}</span>
-                  <p className="article-author-bio">{ARTICLE_AUTHOR.bio}</p>
-                </div>
-              </div>
+              <ArticleAuthorCard date={selectedArticle.date} onOpenProfile={onOpenAbout} />
 
               {selectedArticle.contentHtml ? (
                 <div
