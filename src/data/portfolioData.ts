@@ -3,6 +3,7 @@ import enhanceOg from '../assets/images/enhance-og.jpg';
 import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
 import peptidosOg from '../assets/images/peptidos-og.jpg';
 import perfectbOg from '../assets/images/perfectb-og.webp';
+import { EXTRA_WRITING_ARTICLES } from './blogArticles';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
@@ -966,4 +967,5 @@ export const WRITING_ARTICLES: WritingArticle[] = [
     readTime: '7 min de lectura',
     contentHtml: WEB_SECURITY_CONTENT,
   },
+  ...EXTRA_WRITING_ARTICLES,
 ];
