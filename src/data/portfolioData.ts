@@ -645,6 +645,261 @@ location /api/ {
 <p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. Si tienes preguntas específicas sobre tu arquitectura o necesitas auditoría técnica, no dudes en contactarme.</p>
 `;
 
+const RENDER_PERF_CONTENT = `
+<p class="article-intro">Una aplicación React lenta rara vez lo es por "React". Casi siempre es por renders que no deberían ocurrir, trabajo pesado en el hilo principal y datos que viajan sin control entre componentes. Este artículo recorre las causas reales de los cuellos de botella de rendimiento en el frontend y cómo medirlas antes de optimizar a ciegas.</p>
+
+<div class="article-takeaways">
+  <span class="article-block-label">Puntos Clave</span>
+  <ul>
+    <li>Optimizar sin medir es adivinar: el React Profiler y las Performance tabs del navegador te dicen dónde está el costo real.</li>
+    <li>La mayoría de los re-renders innecesarios vienen de referencias nuevas en cada render (objetos, funciones, arrays) pasadas como props.</li>
+    <li>memo, useMemo y useCallback son herramientas quirúrgicas, no decoradores que se ponen en todos lados.</li>
+    <li>El code splitting y la carga diferida reducen el bundle inicial, que suele ser el mayor factor de lentitud percibida.</li>
+  </ul>
+</div>
+
+<div class="article-index">
+  <span class="article-block-label">Índice de Contenidos</span>
+  <ol>
+    <li><a href="#rp-medir">1. Primero medir, nunca adivinar</a></li>
+    <li><a href="#rp-renders">2. Por qué se re-renderiza lo que no debería</a></li>
+    <li><a href="#rp-memo">3. memo, useMemo y useCallback sin abusar</a></li>
+    <li><a href="#rp-bundle">4. Bundle inicial y code splitting</a></li>
+    <li><a href="#rp-faqs">Preguntas Frecuentes</a></li>
+    <li><a href="#rp-referencias">Referencias y Enlaces</a></li>
+  </ol>
+</div>
+
+<h2 id="rp-medir">1. Primero medir, nunca adivinar</h2>
+<p>Antes de tocar una sola línea, abre el React DevTools Profiler y graba una interacción típica. Te muestra qué componentes se renderizaron, cuántas veces y cuánto costó cada uno. La pestaña Performance del navegador complementa esto con el panorama completo: layout, paint, scripting y tareas largas que bloquean el hilo principal. Si no tienes un número antes y después, no estás optimizando, estás reorganizando código y esperando suerte.</p>
+<p>La métrica que importa al usuario no es cuántos renders ocurren, sino cuánto tarda la interfaz en responder. Un render extra de un componente trivial no se nota; uno de 300 ms en una lista grande sí. Prioriza por impacto medible.</p>
+
+<h2 id="rp-renders">2. Por qué se re-renderiza lo que no debería</h2>
+<p>Cuando un componente padre se renderiza, todos sus hijos se renderizan por defecto, aunque sus props no hayan cambiado de valor. El problema se agrava cuando pasas props que son referencias nuevas en cada render: un objeto literal, una función inline o un array recién creado. Para React esas referencias son distintas en cada ciclo, así que rompe cualquier comparación superficial.</p>
+<p>La solución no es memoizar todo, sino estabilizar las referencias que realmente se pasan a componentes costosos o memoizados, y mantener el estado lo más cerca posible de donde se usa para que el árbol que se re-renderiza sea pequeño.</p>
+
+<h2 id="rp-memo">3. memo, useMemo y useCallback sin abusar</h2>
+<p><code>React.memo</code> evita el re-render de un componente si sus props no cambiaron por comparación superficial. <code>useMemo</code> cachea el resultado de un cálculo costoso y <code>useCallback</code> estabiliza la identidad de una función. La clave: cada uno tiene un costo propio (comparar props, guardar en caché). Aplicarlos a componentes baratos añade complejidad sin beneficio, y a veces empeora el rendimiento.</p>
+<p>Regla práctica: memoiza cuando el componente es caro de renderizar, recibe las mismas props con frecuencia, o cuando una referencia inestable rompe la memoización de un hijo. Fuera de esos casos, déjalo simple.</p>
+
+<h2 id="rp-bundle">4. Bundle inicial y code splitting</h2>
+<p>El mayor costo de "lentitud" que percibe un usuario nuevo suele ser el tiempo de descarga y parseo del JavaScript inicial. Dividir el bundle con <code>React.lazy</code> y <code>Suspense</code>, cargar rutas bajo demanda y diferir librerías pesadas (editores, gráficos, mapas) hasta que se usen reduce drásticamente el Time To Interactive. Herramientas como el analizador de bundles de Vite o webpack-bundle-analyzer te muestran qué dependencias están inflando el paquete.</p>
+
+<h2 id="rp-faqs">Preguntas Frecuentes</h2>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Debo envolver todos mis componentes en React.memo?</summary>
+  <div class="article-faq-answer"><p>No. memo tiene un costo de comparación de props en cada render. En componentes baratos ese costo no se recupera. Úsalo en componentes costosos o que reciben las mismas props repetidamente.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿useMemo mejora siempre el rendimiento?</summary>
+  <div class="article-faq-answer"><p>No. useMemo guarda un valor en caché y compara dependencias en cada render. Para cálculos triviales el overhead es mayor que el ahorro. Resérvalo para cálculos genuinamente costosos o referencias que deben mantenerse estables.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Cómo sé si mi bundle es demasiado grande?</summary>
+  <div class="article-faq-answer"><p>Usa un analizador de bundle (Vite tiene rollup-plugin-visualizer). Como referencia, si tu JS inicial supera varios cientos de KB comprimidos, el code splitting suele dar la mayor mejora en tiempo de carga.</p></div>
+</details>
+
+<h2 id="rp-referencias">Referencias y Enlaces</h2>
+<ul>
+  <li><strong>React Docs — Render and Commit</strong>: <a href="https://react.dev/learn/render-and-commit" target="_blank" rel="noopener noreferrer">react.dev/learn/render-and-commit</a></li>
+  <li><strong>web.dev — Performance</strong>: <a href="https://web.dev/performance" target="_blank" rel="noopener noreferrer">web.dev/performance</a></li>
+</ul>
+
+<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Dudas sobre el rendimiento de tu frontend? Escríbeme.</p>
+`;
+
+const RAG_LLM_CONTENT = `
+<p class="article-intro">Conectar un LLM a tus propios datos sin reentrenarlo es, hoy, el patrón más práctico para construir asistentes útiles. Se llama RAG (Retrieval-Augmented Generation) y combina una búsqueda semántica sobre tu información con la capacidad de redacción del modelo. Aquí explico cómo funciona de verdad y los errores que arruinan la calidad de las respuestas.</p>
+
+<div class="article-takeaways">
+  <span class="article-block-label">Puntos Clave</span>
+  <ul>
+    <li>RAG recupera fragmentos relevantes de tus datos y los inyecta en el prompt, en lugar de reentrenar el modelo.</li>
+    <li>La calidad del RAG depende más del chunking y los embeddings que del propio modelo de lenguaje.</li>
+    <li>Sin citar las fuentes recuperadas, pierdes trazabilidad y abres la puerta a alucinaciones difíciles de detectar.</li>
+    <li>Un buen sistema de evaluación (preguntas y respuestas esperadas) es lo que separa un demo de un producto confiable.</li>
+  </ul>
+</div>
+
+<div class="article-index">
+  <span class="article-block-label">Índice de Contenidos</span>
+  <ol>
+    <li><a href="#rag-que">1. Qué es RAG y por qué no reentrenar</a></li>
+    <li><a href="#rag-pipeline">2. El pipeline: chunking, embeddings y recuperación</a></li>
+    <li><a href="#rag-errores">3. Errores que arruinan la calidad</a></li>
+    <li><a href="#rag-eval">4. Cómo evaluar un sistema RAG</a></li>
+    <li><a href="#rag-faqs">Preguntas Frecuentes</a></li>
+    <li><a href="#rag-referencias">Referencias y Enlaces</a></li>
+  </ol>
+</div>
+
+<h2 id="rag-que">1. Qué es RAG y por qué no reentrenar</h2>
+<p>Reentrenar o hacer fine-tuning de un modelo para que "aprenda" tus documentos es caro, lento y se queda obsoleto en cuanto cambian los datos. RAG resuelve el problema de otra forma: en el momento de la pregunta, busca los fragmentos más relevantes de tu base de conocimiento y los pasa al modelo como contexto. El modelo no memoriza nada; redacta la respuesta usando lo que le entregaste. Actualizar el conocimiento es tan simple como actualizar los documentos indexados.</p>
+
+<h2 id="rag-pipeline">2. El pipeline: chunking, embeddings y recuperación</h2>
+<p>El flujo tiene tres piezas. Primero, el <strong>chunking</strong>: dividir los documentos en fragmentos coherentes, ni tan grandes que diluyan la relevancia ni tan pequeños que pierdan contexto. Segundo, los <strong>embeddings</strong>: convertir cada fragmento en un vector numérico que captura su significado, almacenado en una base vectorial. Tercero, la <strong>recuperación</strong>: convertir la pregunta en un vector y buscar los fragmentos más cercanos, que se inyectan en el prompt final.</p>
+
+<h2 id="rag-errores">3. Errores que arruinan la calidad</h2>
+<p>Los fallos más comunes no están en el modelo. Chunks mal cortados que parten una idea a la mitad, embeddings de baja calidad para el idioma de tus datos, recuperar demasiados fragmentos irrelevantes que confunden al modelo, y no incluir instrucciones claras para que responda solo con el contexto dado. Cada uno degrada la respuesta de forma silenciosa.</p>
+
+<h2 id="rag-eval">4. Cómo evaluar un sistema RAG</h2>
+<p>Un demo que responde bien a tres preguntas no es un producto. Construye un conjunto de evaluación con preguntas reales y respuestas esperadas, mide si la recuperación trae los fragmentos correctos y si la respuesta final es fiel a esos fragmentos. Sin esta métrica, cualquier cambio que hagas es una apuesta a ciegas.</p>
+
+<h2 id="rag-faqs">Preguntas Frecuentes</h2>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿RAG o fine-tuning?</summary>
+  <div class="article-faq-answer"><p>RAG para conocimiento que cambia y necesita trazabilidad. Fine-tuning para ajustar estilo, formato o comportamiento. A menudo se combinan: fine-tuning para el tono, RAG para los datos.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Qué base de datos vectorial elijo?</summary>
+  <div class="article-faq-answer"><p>Para empezar, pgvector sobre PostgreSQL es suficiente y evita añadir infraestructura. Para escala alta, opciones dedicadas como Pinecone, Qdrant o Weaviate ofrecen más rendimiento y funciones de filtrado.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Cómo evito que el modelo invente respuestas?</summary>
+  <div class="article-faq-answer"><p>Instruye explícitamente al modelo para responder solo con el contexto recuperado y decir "no lo sé" si no está. Y cita siempre las fuentes para que el usuario pueda verificar.</p></div>
+</details>
+
+<h2 id="rag-referencias">Referencias y Enlaces</h2>
+<ul>
+  <li><strong>Paper original de RAG</strong> — Lewis et al.: <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">arxiv.org/abs/2005.11401</a></li>
+  <li><strong>pgvector</strong>: <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">github.com/pgvector/pgvector</a></li>
+</ul>
+
+<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Quieres construir un asistente con tus datos? Hablemos.</p>
+`;
+
+const POSTGRES_INDEX_CONTENT = `
+<p class="article-intro">Una consulta que tarda 2 segundos no siempre necesita una base de datos más grande; casi siempre necesita el índice correcto. Entender cómo PostgreSQL decide ejecutar una consulta, y cómo leer su plan de ejecución, es la diferencia entre adivinar y resolver. Este artículo va directo a lo que importa.</p>
+
+<div class="article-takeaways">
+  <span class="article-block-label">Puntos Clave</span>
+  <ul>
+    <li>EXPLAIN ANALYZE es la herramienta número uno: muestra el plan real y dónde se va el tiempo.</li>
+    <li>Un Seq Scan sobre una tabla grande casi siempre indica que falta un índice útil para ese filtro.</li>
+    <li>Los índices aceleran lecturas pero ralentizan escrituras y ocupan espacio: no se indexa todo.</li>
+    <li>El orden de las columnas en un índice compuesto determina qué consultas puede acelerar.</li>
+  </ul>
+</div>
+
+<div class="article-index">
+  <span class="article-block-label">Índice de Contenidos</span>
+  <ol>
+    <li><a href="#pg-explain">1. Leer el plan con EXPLAIN ANALYZE</a></li>
+    <li><a href="#pg-scans">2. Seq Scan vs. Index Scan</a></li>
+    <li><a href="#pg-compuestos">3. Índices compuestos y orden de columnas</a></li>
+    <li><a href="#pg-costo">4. El costo oculto de indexar de más</a></li>
+    <li><a href="#pg-faqs">Preguntas Frecuentes</a></li>
+    <li><a href="#pg-referencias">Referencias y Enlaces</a></li>
+  </ol>
+</div>
+
+<h2 id="pg-explain">1. Leer el plan con EXPLAIN ANALYZE</h2>
+<p>Antes de añadir un índice, ejecuta <code>EXPLAIN ANALYZE</code> sobre la consulta lenta. Esto no solo estima el plan, lo ejecuta y mide tiempos reales. Fíjate en los nodos más costosos, el número de filas estimadas frente a las reales (una gran diferencia indica estadísticas desactualizadas) y si aparece un escaneo secuencial sobre una tabla grande.</p>
+
+<h2 id="pg-scans">2. Seq Scan vs. Index Scan</h2>
+<p>Un <strong>Seq Scan</strong> lee toda la tabla fila por fila. Para tablas pequeñas es lo correcto y más rápido. Para tablas grandes filtradas por una columna selectiva, es una señal de que falta un índice. Un <strong>Index Scan</strong> usa un índice para saltar directo a las filas relevantes. El planner elige según sus estadísticas, así que mantener <code>ANALYZE</code> al día es parte del trabajo.</p>
+
+<h2 id="pg-compuestos">3. Índices compuestos y orden de columnas</h2>
+<p>Un índice sobre <code>(a, b)</code> acelera filtros por <code>a</code> y por <code>a, b</code>, pero no por <code>b</code> solo. El orden importa: pon primero la columna que más filtra o que aparece en igualdades, y después la de rango. Un índice mal ordenado simplemente no se usa.</p>
+
+<h2 id="pg-costo">4. El costo oculto de indexar de más</h2>
+<p>Cada índice debe mantenerse en cada INSERT, UPDATE y DELETE, y ocupa espacio en disco y memoria. Indexar columnas que nunca se filtran, o duplicar índices que se solapan, ralentiza las escrituras sin beneficio. Audita periódicamente los índices no utilizados con las vistas de estadísticas de PostgreSQL.</p>
+
+<h2 id="pg-faqs">Preguntas Frecuentes</h2>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Por qué mi índice no se usa?</summary>
+  <div class="article-faq-answer"><p>Causas típicas: la columna está dentro de una función en el WHERE, hay un cast implícito de tipos, la tabla es tan pequeña que el Seq Scan es más barato, o las estadísticas están desactualizadas. Ejecuta ANALYZE y revisa el WHERE.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Qué tipo de índice uso?</summary>
+  <div class="article-faq-answer"><p>B-tree es el predeterminado y cubre la mayoría de los casos (igualdad y rangos). GIN para búsquedas en arrays y JSONB, GiST para datos geométricos y búsquedas por proximidad.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Indexar siempre mejora el rendimiento?</summary>
+  <div class="article-faq-answer"><p>No. Mejora las lecturas filtradas pero penaliza las escrituras y consume recursos. En tablas con muchas escrituras y pocas lecturas, un exceso de índices perjudica.</p></div>
+</details>
+
+<h2 id="pg-referencias">Referencias y Enlaces</h2>
+<ul>
+  <li><strong>PostgreSQL Docs — Using EXPLAIN</strong>: <a href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener noreferrer">postgresql.org/docs/current/using-explain.html</a></li>
+  <li><strong>Use The Index, Luke</strong>: <a href="https://use-the-index-luke.com" target="_blank" rel="noopener noreferrer">use-the-index-luke.com</a></li>
+</ul>
+
+<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Consultas lentas en producción? Puedo ayudarte a auditarlas.</p>
+`;
+
+const WEB_SECURITY_CONTENT = `
+<p class="article-intro">La mayoría de las brechas de seguridad en aplicaciones web no vienen de ataques sofisticados, sino de descuidos básicos: validación que falta, secretos expuestos y confianza ciega en datos del cliente. Este artículo repasa los fundamentos que todo desarrollador fullstack debería aplicar por defecto, sin necesidad de ser experto en seguridad.</p>
+
+<div class="article-takeaways">
+  <span class="article-block-label">Puntos Clave</span>
+  <ul>
+    <li>Nunca confíes en datos del cliente: valida y sanitiza en el servidor, siempre.</li>
+    <li>Las consultas parametrizadas eliminan la inyección SQL; concatenar strings la invita.</li>
+    <li>Los secretos van en variables de entorno, nunca en el código ni en el repositorio.</li>
+    <li>HTTPS, cabeceras de seguridad y cookies con flags adecuados son protección de base, no opcional.</li>
+  </ul>
+</div>
+
+<div class="article-index">
+  <span class="article-block-label">Índice de Contenidos</span>
+  <ol>
+    <li><a href="#sec-validar">1. Valida en el servidor, no solo en el cliente</a></li>
+    <li><a href="#sec-inyeccion">2. Inyección SQL y consultas parametrizadas</a></li>
+    <li><a href="#sec-secretos">3. Manejo de secretos y variables de entorno</a></li>
+    <li><a href="#sec-headers">4. HTTPS, cabeceras y cookies seguras</a></li>
+    <li><a href="#sec-faqs">Preguntas Frecuentes</a></li>
+    <li><a href="#sec-referencias">Referencias y Enlaces</a></li>
+  </ol>
+</div>
+
+<h2 id="sec-validar">1. Valida en el servidor, no solo en el cliente</h2>
+<p>La validación en el navegador mejora la experiencia de usuario, pero no es seguridad: cualquiera puede saltarse el frontend y llamar directo a tu API. Toda entrada que llega al servidor debe validarse ahí: tipos, longitudes, formatos y rangos permitidos. Trata cada dato externo como potencialmente malicioso hasta demostrar lo contrario.</p>
+
+<h2 id="sec-inyeccion">2. Inyección SQL y consultas parametrizadas</h2>
+<p>La inyección SQL ocurre cuando construyes consultas concatenando entrada del usuario. La defensa es simple y total: usa consultas parametrizadas o un ORM que las use por debajo. Nunca interpoles valores directamente en el string de la consulta. Esta única práctica elimina toda una clase de vulnerabilidades críticas.</p>
+
+<h2 id="sec-secretos">3. Manejo de secretos y variables de entorno</h2>
+<p>Claves de API, contraseñas de base de datos y tokens jamás deben vivir en el código ni subirse al repositorio. Van en variables de entorno, fuera del control de versiones (con el <code>.env</code> en el <code>.gitignore</code>). Si un secreto se filtra alguna vez, revócalo de inmediato: una vez en el historial de git, se considera comprometido.</p>
+
+<h2 id="sec-headers">4. HTTPS, cabeceras y cookies seguras</h2>
+<p>HTTPS cifra el tráfico y hoy es obligatorio, no opcional. Añade cabeceras de seguridad (Content-Security-Policy, X-Content-Type-Options, Strict-Transport-Security) para reducir la superficie de ataque. Las cookies de sesión deben marcarse <code>HttpOnly</code>, <code>Secure</code> y <code>SameSite</code> para mitigar robo de sesión y CSRF.</p>
+
+<h2 id="sec-faqs">Preguntas Frecuentes</h2>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Un ORM me protege de la inyección SQL?</summary>
+  <div class="article-faq-answer"><p>En sus operaciones normales sí, porque parametriza. Pero si usas consultas crudas (raw queries) concatenando entrada, vuelves a ser vulnerable. Mantén la parametrización incluso en raw queries.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">Subí una clave de API al repositorio por error, ¿qué hago?</summary>
+  <div class="article-faq-answer"><p>Revócala y genera una nueva de inmediato. Reescribir el historial de git ayuda, pero debes asumir que la clave quedó comprometida desde el momento en que se subió.</p></div>
+</details>
+
+<details class="article-faq">
+  <summary class="article-faq-question">¿Necesito un pentest para estar seguro?</summary>
+  <div class="article-faq-answer"><p>Un pentest es valioso, pero primero cubre lo básico: validación en servidor, consultas parametrizadas, gestión de secretos, HTTPS y dependencias actualizadas. La mayoría de incidentes explotan fallos básicos, no vulnerabilidades exóticas.</p></div>
+</details>
+
+<h2 id="sec-referencias">Referencias y Enlaces</h2>
+<ul>
+  <li><strong>OWASP Top 10</strong>: <a href="https://owasp.org/www-project-top-ten" target="_blank" rel="noopener noreferrer">owasp.org/www-project-top-ten</a></li>
+  <li><strong>OWASP Cheat Sheet Series</strong>: <a href="https://cheatsheetseries.owasp.org" target="_blank" rel="noopener noreferrer">cheatsheetseries.owasp.org</a></li>
+</ul>
+
+<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Quieres una revisión de seguridad de tu app? Contáctame.</p>
+`;
+
 export const WRITING_ARTICLES: WritingArticle[] = [
   {
     id: 'art-monolito-microservicios',
@@ -658,5 +913,57 @@ export const WRITING_ARTICLES: WritingArticle[] = [
       'Guía práctica para decidir si tu monolito necesita microservicios de verdad, con el patrón Strangler Fig y un plan de rollback para migrar sin downtime ni reescrituras arriesgadas.',
     readTime: '9 min de lectura',
     contentHtml: MONOLITH_TO_MICROSERVICES_CONTENT,
+  },
+  {
+    id: 'art-rendimiento-react',
+    slug: 'optimizar-rendimiento-react-sin-adivinar',
+    date: 'AGOSTO 2026',
+    tag: 'FRONTEND',
+    title: 'Optimizar el Rendimiento de React Sin Adivinar: Renders, Memoización y Bundle',
+    metaDescription:
+      'Cómo encontrar y resolver cuellos de botella reales en React: medir con el Profiler, evitar re-renders, usar memo/useMemo/useCallback con criterio y reducir el bundle inicial.',
+    excerpt:
+      'Guía práctica para diagnosticar por qué tu app React va lenta y resolverlo midiendo primero: re-renders innecesarios, memoización con criterio y code splitting para reducir el bundle.',
+    readTime: '7 min de lectura',
+    contentHtml: RENDER_PERF_CONTENT,
+  },
+  {
+    id: 'art-rag-llm',
+    slug: 'rag-conectar-llm-a-tus-datos',
+    date: 'JULIO 2026',
+    tag: 'AI / LLM',
+    title: 'RAG: Cómo Conectar un LLM a Tus Propios Datos Sin Reentrenarlo',
+    metaDescription:
+      'Qué es Retrieval-Augmented Generation (RAG), cómo funciona el pipeline de chunking, embeddings y recuperación, y los errores que arruinan la calidad de las respuestas.',
+    excerpt:
+      'El patrón más práctico para construir asistentes con tus datos sin fine-tuning: cómo funciona el pipeline de RAG, los errores que degradan la calidad y cómo evaluarlo de verdad.',
+    readTime: '8 min de lectura',
+    contentHtml: RAG_LLM_CONTENT,
+  },
+  {
+    id: 'art-postgres-indices',
+    slug: 'indices-postgresql-consultas-lentas',
+    date: 'JUNIO 2026',
+    tag: 'DATABASES',
+    title: 'Índices en PostgreSQL: Por Qué Tu Consulta Es Lenta y Cómo Arreglarla',
+    metaDescription:
+      'Cómo leer EXPLAIN ANALYZE, diferenciar Seq Scan de Index Scan, diseñar índices compuestos con el orden correcto y evitar el costo oculto de indexar de más en PostgreSQL.',
+    excerpt:
+      'Una consulta lenta rara vez necesita más hardware: necesita el índice correcto. Cómo leer el plan de ejecución, elegir índices y evitar el costo oculto de indexar de más.',
+    readTime: '7 min de lectura',
+    contentHtml: POSTGRES_INDEX_CONTENT,
+  },
+  {
+    id: 'art-seguridad-web',
+    slug: 'fundamentos-seguridad-web-fullstack',
+    date: 'MAYO 2026',
+    tag: 'SECURITY',
+    title: 'Seguridad Web para Fullstack: Los Fundamentos Que Evitan el 90% de las Brechas',
+    metaDescription:
+      'Validación en servidor, consultas parametrizadas contra inyección SQL, manejo seguro de secretos y configuración de HTTPS, cabeceras y cookies: lo básico que todo fullstack debe aplicar.',
+    excerpt:
+      'La mayoría de las brechas explotan descuidos básicos, no ataques sofisticados. Validación en servidor, consultas parametrizadas, gestión de secretos y cabeceras seguras aplicadas por defecto.',
+    readTime: '7 min de lectura',
+    contentHtml: WEB_SECURITY_CONTENT,
   },
 ];
