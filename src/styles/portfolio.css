@@ -5197,6 +5197,8 @@
 
 .article-author-photo {
   display: block;
+  position: relative;
+  top: -6px;
   flex-shrink: 0;
   width: 96px;
   height: 96px;
