@@ -27,106 +27,20 @@ import {
 import { createPortal } from 'react-dom';
 import '../styles/massalud-demo.css';
 
-/* ==========================================================================
-   Demo del módulo "Registro Horario" del ERP The Efficient Business System
-   de Farmacias MasSalud. Todos los datos son FICTICIOS y se generan aquí
-   para la demostración; no hay conexión con ningún sistema real.
-   ========================================================================== */
+import {
+  ALL_RECORDS,
+  DAY_NAMES,
+  DEPARTMENTS,
+  DemoEmployee,
+  EmployeeName,
+  MONTH_SHORT,
+  fmtSec,
+} from './massaludData';
+import { MasSaludSlack } from './MasSaludSlack';
+import { RightsNotice } from './massaludData';
 
-interface DemoEmployee {
-  name: string;
-  code: number;
-  dept: string;
-  expected: string; // HH:MM
-}
-
-interface DemoRecord {
-  id: string;
-  employee: DemoEmployee;
-  date: Date;
-  iso: string; // YYYY-MM-DD
-  markedSec: number;
-  lateMin: number; // 0 = a tiempo
-}
-
-const FICTITIOUS_TIP = 'Empleado ficticio para demostración';
-
-const EMPLOYEES: DemoEmployee[] = [
-  { name: 'Valentina Rojas', code: 16, dept: 'Dependientes', expected: '07:45' },
-  { name: 'Mateo Peralta', code: 21, dept: 'Dependientes', expected: '07:45' },
-  { name: 'Camila Báez', code: 24, dept: 'Caja', expected: '08:00' },
-  { name: 'Luis Almonte', code: 31, dept: 'Farmacia', expected: '07:30' },
-  { name: 'Sofía Guzmán', code: 33, dept: 'Caja', expected: '08:00' },
-  { name: 'Andrés Tejada', code: 38, dept: 'Almacén', expected: '07:00' },
-  { name: 'Paola Núñez', code: 42, dept: 'Farmacia', expected: '07:30' },
-  { name: 'Kevin Mejía', code: 47, dept: 'Dependientes', expected: '07:45' },
-  { name: 'Daniela Rosario', code: 52, dept: 'Administración', expected: '08:30' },
-  { name: 'Ramón Cabrera', code: 55, dept: 'Almacén', expected: '07:00' },
-  { name: 'Yesenia Polanco', code: 61, dept: 'Dependientes', expected: '07:45' },
-  { name: 'Jorge Familia', code: 64, dept: 'Administración', expected: '08:30' },
-];
-
-const DEPARTMENTS = Array.from(new Set(EMPLOYEES.map((e) => e.dept)));
-
-const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-const MONTH_SHORT = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-// Generador pseudoaleatorio con semilla: los datos son iguales en cada carga
-const seeded = (seed: number) => {
-  let s = seed;
-  return () => {
-    s = (s * 16807) % 2147483647;
-    return (s - 1) / 2147483646;
-  };
-};
-
-const toSec = (hhmm: string) => {
-  const [h, m] = hhmm.split(':').map(Number);
-  return h * 3600 + m * 60;
-};
-
-const fmtSec = (sec: number) => {
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = sec % 60;
-  return [h, m, s].map((n) => String(n).padStart(2, '0')).join(':');
-};
-
-const pad = (n: number) => String(n).padStart(2, '0');
-
-const buildRecords = (): DemoRecord[] => {
-  const rand = seeded(20261023);
-  const records: DemoRecord[] = [];
-  for (let day = 1; day <= 23; day++) {
-    const date = new Date(2026, 9, day);
-    if (date.getDay() === 0) continue; // domingo cerrado
-    EMPLOYEES.forEach((employee) => {
-      const late = rand() < 0.32;
-      const offset = late
-        ? (1 + Math.floor(rand() * 24)) * 60 + Math.floor(rand() * 60)
-        : -Math.floor(rand() * 14 * 60);
-      records.push({
-        id: `${employee.code}-${day}`,
-        employee,
-        date,
-        iso: `2026-10-${pad(day)}`,
-        markedSec: toSec(employee.expected) + offset,
-        lateMin: late ? Math.floor(offset / 60) : 0,
-      });
-    });
-  }
-  // Más recientes primero
-  return records.sort((a, b) => b.date.getTime() - a.date.getTime() || a.employee.code - b.employee.code);
-};
-
-const ALL_RECORDS = buildRecords();
-
-const EmployeeName: React.FC<{ name: string }> = ({ name }) => (
-  <span className="msd-tip" tabIndex={0} data-tooltip={FICTITIOUS_TIP}>
-    {name}
-    <span className="msd-sr-only"> ({FICTITIOUS_TIP})</span>
-  </span>
-);
+/* Demo del ERP de Farmacias MasSalud (módulo Registro Horario + alertas en Slack).
+   Todos los datos son ficticios; ver massaludData.tsx. */
 
 interface MasSaludDemoProps {
   isOpen: boolean;
@@ -134,7 +48,9 @@ interface MasSaludDemoProps {
 }
 
 export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) => {
-  const [step, setStep] = useState<'notice' | 'demo'>('notice');
+  // notice → aviso inicial · demo → ERP · slack-notice → aviso de datos ficticios · slack → canal de Slack
+  const [step, setStep] = useState<'notice' | 'demo' | 'slack-notice' | 'slack'>('notice');
+  const slackBtnRef = useRef<HTMLButtonElement>(null);
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('');
   const [from, setFrom] = useState('');
@@ -163,6 +79,11 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
       window.clearInterval(timer);
     };
   }, [isOpen]);
+
+  // Lleva el foco al botón principal del aviso de Slack
+  useEffect(() => {
+    if (step === 'slack-notice') slackBtnRef.current?.focus();
+  }, [step]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -239,10 +160,70 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
             <li>La misma marcación se registra en el módulo Registro Horario del ERP.</li>
             <li>Solo Recursos Humanos y la Gerencia General tienen acceso a este módulo.</li>
           </ul>
-          <button ref={noticeBtnRef} className="msd-btn-primary" onClick={() => setStep('demo')}>
-            Ver demostración
-          </button>
+          <div className="msd-notice-actions">
+            <button ref={noticeBtnRef} className="msd-btn-primary" onClick={() => setStep('demo')}>
+              Ver demostración del ERP
+            </button>
+            <button className="msd-btn-secondary" onClick={() => setStep('slack-notice')}>
+              Ver alertas en Slack
+            </button>
+          </div>
+          <RightsNotice />
         </div>
+      </div>,
+      document.body
+    );
+  }
+
+  if (step === 'slack-notice') {
+    return createPortal(
+      <div
+        className="msd-overlay msd-overlay--center"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="msd-slack-notice-title"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+      >
+        <div className="msd-notice">
+          <button className="msd-notice-close" onClick={onClose} aria-label="Cerrar">
+            <X size={18} />
+          </button>
+          <span className="msd-notice-icon msd-notice-icon--warn" aria-hidden="true">
+            <Info size={22} />
+          </span>
+          <h2 id="msd-slack-notice-title" className="msd-notice-title">
+            Antes de continuar: todos los datos son ficticios
+          </h2>
+          <p className="msd-notice-highlight">
+            Los nombres, departamentos, horas y mensajes que vas a ver en Slack <strong>no son reales</strong>. Se
+            crearon solo para esta demostración y no corresponden a ningún empleado de Farmacias MasSalud.
+          </p>
+          <p className="msd-notice-text">
+            La vista recrea el canal privado <strong>#registro-de-horario</strong>. Cada vez que un empleado marca
+            su huella en Nteco y llega después de su hora límite, Zapier publica automáticamente una alerta como
+            estas para que el jefe se entere en tiempo real.
+          </p>
+          <div className="msd-notice-actions">
+            <button ref={slackBtnRef} className="msd-btn-primary" onClick={() => setStep('slack')}>
+              Entendido, ver Slack
+            </button>
+            <button className="msd-btn-secondary" onClick={() => setStep('demo')}>
+              Ir al ERP
+            </button>
+          </div>
+          <RightsNotice />
+        </div>
+      </div>,
+      document.body
+    );
+  }
+
+  if (step === 'slack') {
+    return createPortal(
+      <div className="msd-overlay" role="dialog" aria-modal="true" aria-label="Demo de alertas en Slack (datos ficticios)">
+        <MasSaludSlack onBack={() => setStep('demo')} onClose={onClose} />
       </div>,
       document.body
     );
@@ -328,6 +309,9 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
               <Info size={14} /> Datos ficticios
             </span>
             <div className="msd-topbar-actions">
+              <button className="msd-slack-link" onClick={() => setStep('slack-notice')}>
+                Ver alertas en Slack
+              </button>
               <span className="msd-icon-btn" aria-hidden="true">
                 <RefreshCw size={17} />
               </span>
@@ -366,6 +350,18 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
                 </button>
               </div>
             </div>
+
+            {/* En móvil el botón de la barra superior no cabe: se muestra aquí a todo el ancho */}
+            <button className="msd-slack-cta" onClick={() => setStep('slack-notice')}>
+              <span className="msd-slack-cta-icon" aria-hidden="true">
+                #
+              </span>
+              <span className="msd-slack-cta-text">
+                <strong>Ver alertas en Slack</strong>
+                <span>Notificaciones de llegada tarde enviadas por Zapier</span>
+              </span>
+              <ChevronRight size={18} aria-hidden="true" />
+            </button>
 
             <div className="msd-access">
               <ShieldCheck size={16} />
@@ -542,6 +538,8 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
                 </div>
               )}
             </section>
+
+            <RightsNotice />
           </main>
         </div>
       </div>
