@@ -5313,3 +5313,16 @@ span.article-author-card-name {
     font-size: 15px;
   }
 }
+
+/* Botón "Ver proyecto" (demo interactiva) con el mismo estilo que el enlace "Visitar sitio" */
+.project-card-demo-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.project-card-demo-btn:focus-visible {
+  outline: 2px solid var(--color-purple);
+  outline-offset: 4px;
+}

@@ -51,7 +51,9 @@ import {
   SiKalilinux,
   SiJira,
   SiReplit,
+  SiGraphql,
 } from 'react-icons/si';
+import { VscAzureDevops } from 'react-icons/vsc';
 import { FaDatabase, FaMicrosoft, FaWindows, FaCubes, FaRobot, FaChartLine } from 'react-icons/fa';
 
 export interface Skill {
@@ -142,6 +144,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'Resend API', ...L.adv, icon: SiResend, color: '#000000' },
       { name: 'Google Sheets API', ...L.adv, icon: SiGooglesheets, color: '#34A853' },
       { name: 'APIs REST & Webhooks', ...L.adv, icon: null },
+      { name: 'APIs GraphQL', ...L.intAdv, icon: SiGraphql, color: '#E10098' },
     ],
   },
   {
@@ -151,6 +154,8 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: 'LLM Integration & Prompt Engineering', ...L.intAdv, icon: FaRobot, color: '#412991' },
       { name: 'Claude', ...L.intAdv, icon: SiAnthropic, color: '#D97757' },
+      { name: 'Agentes de IA', ...L.intAdv, icon: FaRobot, color: '#682ae9' },
+      { name: 'OpenClaw', ...L.intAdv, icon: FaRobot, color: '#E5484D' },
       { name: 'Microsoft Copilot Studio', ...L.intAdv, icon: FaMicrosoft, color: '#0078D4' },
       { name: 'Computer Vision & Redes Neuronales', ...L.int, icon: SiPython, color: '#3776AB' },
       { name: 'Voice Synthesis / TTS', ...L.int, icon: null },
@@ -192,6 +197,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     titleEn: 'Tools & DevOps',
     skills: [
       { name: 'Git & GitHub', ...L.adv, icon: SiGithub, color: '#181717' },
+      { name: 'Azure DevOps', ...L.intAdv, icon: VscAzureDevops, color: '#0078D7' },
       { name: 'Docker', ...L.int, icon: SiDocker, color: '#2496ED' },
       { name: 'Vercel', ...L.adv, icon: SiVercel, color: '#000000' },
       { name: 'Cloud Run / Contenedores', ...L.int, icon: SiGooglecloud, color: '#4285F4' },

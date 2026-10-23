@@ -33,6 +33,8 @@ export interface ProjectItem {
   date?: string;
   url?: string;
   image?: string;
+  /** Demo interactiva con datos ficticios que se abre con el botón "Ver proyecto". */
+  demo?: 'massalud-erp';
   // Versión en inglés de los campos de texto traducibles
   en?: ProjectLocale;
 }

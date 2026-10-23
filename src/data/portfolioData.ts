@@ -262,8 +262,40 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'analisis-datos-estadisticos',
+    id: 'massalud-control-asistencia',
     number: '08',
+    type: 'AUTOMATIZACIÓN / RPA',
+    title: 'Control de Asistencia MasSalud',
+    subtitle: 'Alertas de llegadas tarde en Slack e indicadores de asistencia en el ERP',
+    organization: 'Farmacias MasSalud (Santo Domingo, República Dominicana)',
+    demo: 'massalud-erp',
+    description:
+      'Automatización RPA con Zapier para Farmacias MasSalud: cada vez que un empleado marca su huella en el sistema biométrico Nteco y llega tarde, el jefe recibe la notificación en Slack y la marcación se registra en el ERP interno "The Efficient Business System", en un módulo de indicadores visible solo para Recursos Humanos y la Gerencia General.',
+    details:
+      'Automatización del control de asistencia para Farmacias MasSalud en Santo Domingo, República Dominicana. Cada marcación de huella en el sistema biométrico Nteco dispara un flujo en Zapier que compara la hora de marcación con la hora esperada del turno del empleado. Si la llegada es tarde, envía en tiempo real una notificación al Slack del jefe con el nombre del empleado, la hora y los minutos de retraso. En paralelo, todas las marcaciones se registran en el ERP interno de la compañía, "The Efficient Business System", dentro del módulo Registro Horario: un panel con los indicadores clave (llegadas tarde, empleados con tardanza, minutos acumulados), filtros por fechas, nombre y departamento, y el registro detallado de fichajes. El módulo tiene acceso restringido y solo pueden verlo los usuarios de Recursos Humanos y el gerente general. Como el ERP es de uso empresarial privado, la demostración de este portafolio es una copia con información ficticia.',
+    installCode: '',
+    githubUrl: '',
+    techStack: [
+      'Zapier',
+      'Nteco (biométrico)',
+      'Slack',
+      'Webhooks',
+      'APIs REST',
+      'ERP The Efficient Business System',
+      'RPA / Automation',
+    ],
+    en: {
+      type: 'AUTOMATION / RPA',
+      subtitle: 'Late-arrival alerts in Slack and attendance KPIs in the ERP',
+      description:
+        'RPA automation with Zapier for Farmacias MasSalud: every time an employee clocks in with their fingerprint on the Nteco biometric system and arrives late, the manager gets a Slack notification and the punch is recorded in the internal ERP "The Efficient Business System", in a KPI module visible only to Human Resources and the General Manager.',
+      details:
+        'Attendance control automation for Farmacias MasSalud in Santo Domingo, Dominican Republic. Each fingerprint punch on the Nteco biometric system triggers a Zapier flow that compares the punch time with the employee\'s expected shift time. If the arrival is late, it sends a real-time notification to the manager\'s Slack with the employee name, time and minutes late. In parallel, every punch is recorded in the company\'s internal ERP, "The Efficient Business System", in the Time Tracking module: a dashboard with key indicators (late arrivals, employees with lateness, accumulated minutes), filters by date, name and department, and the detailed punch log. The module has restricted access and can only be viewed by Human Resources users and the general manager. Since the ERP is for private business use, the demo in this portfolio is a copy with fictitious data.',
+    },
+  },
+  {
+    id: 'analisis-datos-estadisticos',
+    number: '09',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
     subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
@@ -287,7 +319,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'bi-erp-sap-epicor',
-    number: '09',
+    number: '10',
     type: 'BUSINESS INTELLIGENCE / ERP',
     title: 'Inteligencia de Negocios y ERP',
     subtitle: 'Integración de datos financieros desde SAP y Epicor',
@@ -311,7 +343,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'ia-empresarial-copilot',
-    number: '10',
+    number: '11',
     type: 'IA EMPRESARIAL',
     title: 'IA Empresarial y Copilot',
     subtitle: 'Optimización de procesos con asistentes inteligentes',
@@ -335,7 +367,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'asistente-bambini-van-gogh',
-    number: '11',
+    number: '12',
     type: 'IA / INVESTIGACIÓN',
     title: 'Asistente Bambini (Van Gogh)',
     subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
@@ -360,7 +392,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'sitio-contadoras-aq',
-    number: '12',
+    number: '13',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',

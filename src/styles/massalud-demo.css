@@ -1,0 +1,804 @@
+/* ==========================================================================
+   DEMO ERP MASSALUD — Registro Horario (todas las clases con prefijo msd-)
+   ========================================================================== */
+.msd-overlay {
+  --msd-teal: #2bb5a3;
+  --msd-teal-dark: #1f9a8a;
+  --msd-teal-soft: #e6f6f3;
+  --msd-purple: #6a3fa0;
+  --msd-text: #111827;
+  --msd-muted: #6b7280;
+  --msd-border: #e5e7eb;
+  --msd-bg: #f3f4f6;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(15, 23, 42, 0.55);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--msd-text);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.msd-overlay *,
+.msd-overlay *::before,
+.msd-overlay *::after {
+  box-sizing: border-box;
+}
+
+.msd-overlay--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.msd-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Pop-up de aviso ---------- */
+.msd-notice {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 34px 32px 28px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+}
+
+.msd-notice-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  border: none;
+  background: none;
+  color: var(--msd-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.msd-notice-close:hover {
+  background: var(--msd-bg);
+}
+
+.msd-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--msd-teal-soft);
+  color: var(--msd-teal-dark);
+  margin-bottom: 16px;
+}
+
+.msd-notice-title {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  color: var(--msd-text);
+}
+
+.msd-notice-text {
+  margin: 0 0 16px;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.msd-notice-list {
+  margin: 0 0 24px;
+  padding-left: 18px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.msd-notice-list li + li {
+  margin-top: 4px;
+}
+
+.msd-btn-primary {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: var(--msd-teal);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.msd-btn-primary:hover {
+  background: var(--msd-teal-dark);
+}
+
+.msd-btn-primary:focus-visible,
+.msd-close:focus-visible,
+.msd-card-head:focus-visible,
+.msd-tip:focus-visible,
+.msd-input:focus-visible {
+  outline: 2px solid var(--msd-purple);
+  outline-offset: 2px;
+}
+
+/* ---------- Layout de la app ---------- */
+.msd-app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--msd-bg);
+}
+
+.msd-sidebar {
+  flex-shrink: 0;
+  width: 238px;
+  background: #fff;
+  border-right: 1px solid var(--msd-border);
+  padding: 4px 14px 20px;
+  overflow-y: auto;
+}
+
+.msd-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 4px 14px;
+}
+
+.msd-brand-cross {
+  display: flex;
+  color: var(--msd-teal);
+}
+
+.msd-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.msd-brand-small {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--msd-purple);
+  margin-left: 4px;
+}
+
+.msd-brand-big {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--msd-teal);
+}
+
+.msd-brand-big span {
+  color: var(--msd-purple);
+}
+
+.msd-brand-collapse {
+  display: flex;
+  margin-left: auto;
+  padding: 5px;
+  border-radius: 8px;
+  background: var(--msd-bg);
+  color: #374151;
+}
+
+.msd-clock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 8px 16px;
+}
+
+.msd-clock strong {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.msd-clock span {
+  font-size: 11.5px;
+  color: #374151;
+}
+
+.msd-cash-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--msd-teal);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(43, 181, 163, 0.35);
+  margin-bottom: 16px;
+}
+
+.msd-cash-btn span {
+  flex: 1;
+}
+
+.msd-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.msd-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--msd-bg);
+  border-radius: 10px;
+  padding: 10px 2px;
+  font-size: 10.5px;
+  color: #374151;
+}
+
+.msd-tile svg {
+  color: var(--msd-teal);
+}
+
+.msd-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.msd-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  color: #1f2937;
+  font-size: 13.5px;
+}
+
+.msd-nav-caret {
+  margin-left: auto;
+}
+
+.msd-nav-item--active {
+  background: var(--msd-teal);
+  color: #fff;
+  font-weight: 500;
+}
+
+.msd-nav-section {
+  margin-top: 14px;
+  padding: 12px 10px 6px;
+  border-top: 1px solid var(--msd-border);
+  color: var(--msd-teal-dark);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.msd-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.msd-topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 52px;
+  padding: 0 18px;
+  background: #fff;
+  border-bottom: 1px solid var(--msd-border);
+}
+
+.msd-topbar-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.msd-demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.msd-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.msd-icon-btn {
+  display: flex;
+  color: #374151;
+}
+
+.msd-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #374151;
+}
+
+.msd-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--msd-teal);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.msd-user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.msd-user-text strong {
+  font-size: 13px;
+  color: var(--msd-text);
+}
+
+.msd-user-text span {
+  font-size: 11px;
+  color: var(--msd-muted);
+}
+
+.msd-close {
+  display: flex;
+  border: 1px solid var(--msd-border);
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.msd-close:hover {
+  background: var(--msd-bg);
+}
+
+.msd-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 34px 48px 48px;
+}
+
+.msd-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.msd-page-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--msd-text);
+}
+
+.msd-page-title svg {
+  color: var(--msd-teal);
+}
+
+.msd-page-sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--msd-muted);
+}
+
+.msd-month {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.msd-square-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: #fff;
+  border: 1px solid var(--msd-border);
+  border-radius: 8px;
+  color: #374151;
+}
+
+.msd-square-btn:disabled {
+  cursor: not-allowed;
+}
+
+.msd-access {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--msd-teal-dark);
+  background: var(--msd-teal-soft);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 18px;
+}
+
+.msd-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.msd-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--msd-border);
+  border-radius: 12px;
+  padding: 20px 20px 22px;
+}
+
+.msd-kpi span {
+  font-size: 12.5px;
+  color: #374151;
+}
+
+.msd-kpi strong {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.msd-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.msd-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.msd-range-sep {
+  color: var(--msd-muted);
+  font-size: 12px;
+}
+
+.msd-input {
+  height: 36px;
+  background: #fff;
+  border: 1px solid var(--msd-border);
+  border-radius: 8px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--msd-text);
+}
+
+.msd-input--search {
+  flex: 1;
+  min-width: 200px;
+  max-width: 260px;
+}
+
+.msd-card {
+  background: #fff;
+  border: 1px solid var(--msd-border);
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.msd-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--msd-border);
+  border-radius: 12px 12px 0 0;
+  font-family: inherit;
+  color: var(--msd-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.msd-card-head--static {
+  cursor: default;
+}
+
+.msd-card-head svg:first-child {
+  color: var(--msd-teal);
+}
+
+.msd-card-head h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.msd-card-head > svg:last-child:not(:first-child) {
+  margin-left: 0;
+}
+
+.msd-count {
+  margin-right: auto;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--msd-teal-dark);
+  background: var(--msd-teal-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+/* ---------- Lista de empleados ---------- */
+.msd-emp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.msd-emp {
+  display: flex;
+  gap: 12px;
+  border: 1px solid var(--msd-border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.msd-emp-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--msd-teal-soft);
+  color: var(--msd-teal-dark);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.msd-emp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.msd-emp-body .msd-tip {
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+.msd-emp-meta,
+.msd-emp-stats {
+  font-size: 11.5px;
+  color: var(--msd-muted);
+}
+
+.msd-emp-bar {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--msd-bg);
+  overflow: hidden;
+  margin: 4px 0 2px;
+}
+
+.msd-emp-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f59e0b, #dc2626);
+}
+
+/* ---------- Tooltip "empleado ficticio" ---------- */
+.msd-tip {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed #9ca3af;
+}
+
+.msd-tip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  white-space: nowrap;
+  background: #111827;
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 6px 9px;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.msd-tip:hover::after,
+.msd-tip:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Tabla de fichajes ---------- */
+.msd-table-wrap {
+  overflow: auto;
+  max-height: 520px;
+}
+
+.msd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.msd-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f9fafb;
+  text-align: left;
+  font-weight: 500;
+  color: #374151;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--msd-border);
+  white-space: nowrap;
+}
+
+.msd-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--msd-border);
+  white-space: nowrap;
+}
+
+.msd-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* El tooltip de la primera fila se abriría bajo la cabecera fija: se muestra hacia abajo */
+.msd-table tbody tr:first-child .msd-tip::after {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+
+.msd-td-name {
+  font-weight: 600;
+}
+
+.msd-td-code,
+.msd-td-dept {
+  color: var(--msd-muted);
+}
+
+.msd-status {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 3px 7px;
+}
+
+.msd-status--late {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.msd-status--ok {
+  color: #047857;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+.msd-trash {
+  display: flex;
+  color: #9ca3af;
+}
+
+.msd-empty {
+  margin: 0;
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--msd-muted);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .msd-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .msd-sidebar {
+    display: none;
+  }
+
+  .msd-content {
+    padding: 22px 16px 32px;
+  }
+
+  .msd-user-text,
+  .msd-icon-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .msd-page-head {
+    flex-direction: column;
+  }
+
+  .msd-demo-badge {
+    display: none;
+  }
+
+  .msd-kpi {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .msd-range,
+  .msd-input--search,
+  .msd-filters select {
+    width: 100%;
+    max-width: none;
+  }
+
+  .msd-range .msd-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .msd-notice {
+    padding: 28px 22px 22px;
+  }
+}

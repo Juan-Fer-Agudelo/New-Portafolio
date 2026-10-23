@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { ProjectItem } from '../types';
+import { MasSaludDemo } from './MasSaludDemo';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
 import { renderWithRightsHighlight } from '../utils/textHighlight';
@@ -21,6 +22,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 }) => {
   const { t, lang } = useLang();
   const p = t.projects;
+  const [openDemo, setOpenDemo] = useState<ProjectItem['demo'] | null>(null);
+  const closeDemo = useCallback(() => setOpenDemo(null), []);
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   // Devuelve los campos de texto del proyecto en el idioma actual
@@ -167,6 +170,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       >
                         {p.viewDetails}
                       </button>
+                      {project.demo && (
+                        <button
+                          type="button"
+                          className="project-card-visit project-card-demo-btn"
+                          onClick={() => setOpenDemo(project.demo ?? null)}
+                        >
+                          {lang === 'en' ? 'View project' : 'Ver proyecto'} &rarr;
+                        </button>
+                      )}
                       {project.url && (
                         <a
                           className="project-card-visit"
@@ -189,6 +201,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           )}
         </div>
       </div>
+
+      <MasSaludDemo isOpen={openDemo === 'massalud-erp'} onClose={closeDemo} />
     </section>
   );
 };
