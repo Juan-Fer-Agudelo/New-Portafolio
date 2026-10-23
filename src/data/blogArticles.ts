@@ -18,7 +18,7 @@ interface ArticleSpec {
   closing: string;
 }
 
-const buildArticle = (a: ArticleSpec): string => {
+export const buildArticle = (a: ArticleSpec): string => {
   const index = [
     ...a.sections.map((s, i) => `<li><a href="#${s.id}">${i + 1}. ${s.title}</a></li>`),
     `<li><a href="#${a.prefix}-faqs">Preguntas Frecuentes</a></li>`,

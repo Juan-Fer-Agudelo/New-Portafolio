@@ -4,6 +4,8 @@ import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
 import peptidosOg from '../assets/images/peptidos-og.jpg';
 import perfectbOg from '../assets/images/perfectb-og.webp';
 import { EXTRA_WRITING_ARTICLES } from './blogArticles';
+import { MORE_WRITING_ARTICLES_1 } from './blogArticlesMore1';
+import { MORE_WRITING_ARTICLES_2 } from './blogArticlesMore2';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
@@ -1003,4 +1005,6 @@ export const WRITING_ARTICLES: WritingArticle[] = [
     contentHtml: WEB_SECURITY_CONTENT,
   },
   ...EXTRA_WRITING_ARTICLES,
+  ...MORE_WRITING_ARTICLES_1,
+  ...MORE_WRITING_ARTICLES_2,
 ];
