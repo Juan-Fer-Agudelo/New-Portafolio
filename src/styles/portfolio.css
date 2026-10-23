@@ -5197,14 +5197,14 @@
 
 .article-author-photo {
   display: block;
-  position: relative;
-  top: -6px;
   flex-shrink: 0;
   width: 96px;
   height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
+  /* photo.png es 1080x1350 y su marco circular está centrado en y≈720px,
+     así que el recorte cuadrado debe empezar en y≈180px: 180 / (1350 - 1080) ≈ 67% */
+  object-position: 50% 67%;
   background: #fff;
   box-shadow: 0 4px 14px rgba(15, 27, 97, 0.12);
 }
