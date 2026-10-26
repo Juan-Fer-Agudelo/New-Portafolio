@@ -1,5 +1,5 @@
-import cvParte1 from '../assets/images/cv-parte-1.png';
-import cvParte2 from '../assets/images/cv-parte-2.png';
+import cvParte1 from '../assets/images/cv-5.jpg';
+import cvParte2 from '../assets/images/cv-6.jpg';
 import awsNetworking from '../assets/images/aws-application-networking-demonstrated.png';
 import awsDataLakehouse from '../assets/images/aws-data-lakehouse-demonstrated.png';
 import awsServerless from '../assets/images/aws-serverless-demonstrated.png';
@@ -34,7 +34,7 @@ export const CREDENTIALS: Credential[] = [
   },
 ];
 
-// Imágenes PNG de tu CV (2 páginas).
+// Imágenes JPG de tu CV (2 páginas).
 export const CV_IMAGES: string[] = [cvParte1, cvParte2];
 
 // Enlace opcional al PDF de tu CV (déjalo vacío si no tienes)

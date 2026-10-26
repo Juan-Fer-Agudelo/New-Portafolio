@@ -27,11 +27,11 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
   // Descarga ambas imágenes del CV
   const handleDownloadBoth = () => {
     if (CV_IMAGES[0]) {
-      handleDownloadImage(CV_IMAGES[0], 'CV-Juan-Fernando-Agudelo-Pag1.png');
+      handleDownloadImage(CV_IMAGES[0], 'CV-Juan-Fernando-Agudelo-Pag1.jpg');
     }
     if (CV_IMAGES[1]) {
       setTimeout(() => {
-        handleDownloadImage(CV_IMAGES[1], 'CV-Juan-Fernando-Agudelo-Pag2.png');
+        handleDownloadImage(CV_IMAGES[1], 'CV-Juan-Fernando-Agudelo-Pag2.jpg');
       }, 350);
     }
   };
@@ -130,7 +130,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
           </div>
         </div>
 
-        {/* Sección de CV (imágenes PNG con zoom y descarga) */}
+        {/* Sección de CV (imágenes JPG con zoom y descarga) */}
         <div className="about-cv animate-on-scroll">
           <div className="about-cv-header">
             <h2 className="about-subsection-title">{a.cvTitle}</h2>
@@ -139,14 +139,14 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                 type="button"
                 className="about-cv-download"
                 onClick={handleDownloadBoth}
-                title="Descargar ambas páginas en formato PNG"
+                title="Descargar ambas páginas en formato JPG"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                <span>{lang === 'en' ? 'Download CV (2 Pages PNG)' : 'Descargar CV (2 Páginas PNG)'} &darr;</span>
+                <span>{lang === 'en' ? 'Download CV (2 Pages JPG)' : 'Descargar CV (2 Páginas JPG)'} &darr;</span>
               </button>
               {CV_PDF_URL && (
                 <a className="about-cv-download" href={CV_PDF_URL} target="_blank" rel="noopener noreferrer" download>
@@ -199,7 +199,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                     <button
                       type="button"
                       className="cv-card-btn-download"
-                      onClick={() => handleDownloadImage(img, `CV-Juan-Fernando-Agudelo-Pag${i + 1}.png`)}
+                      onClick={() => handleDownloadImage(img, `CV-Juan-Fernando-Agudelo-Pag${i + 1}.jpg`)}
                       title={lang === 'en' ? `Download Page ${i + 1}` : `Descargar Página ${i + 1}`}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -250,7 +250,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                     onClick={() =>
                       handleDownloadImage(
                         CV_IMAGES[activeCvIdx],
-                        `CV-Juan-Fernando-Agudelo-Pag${activeCvIdx + 1}.png`
+                        `CV-Juan-Fernando-Agudelo-Pag${activeCvIdx + 1}.jpg`
                       )
                     }
                     title={lang === 'en' ? 'Download this page' : 'Descargar esta página'}
@@ -274,7 +274,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                       <polyline points="7 10 12 15 17 10"></polyline>
                       <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    <span>{lang === 'en' ? 'Download Both (PNG)' : 'Descargar Ambas (PNG)'}</span>
+                    <span>{lang === 'en' ? 'Download Both (JPG)' : 'Descargar Ambas (JPG)'}</span>
                   </button>
 
                   <button
