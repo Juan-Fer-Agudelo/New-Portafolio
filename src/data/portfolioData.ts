@@ -215,8 +215,184 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'ai-support-analyst',
+    id: 'cambios-estructura-nomina',
     number: '06',
+    type: 'APP EMPRESARIAL / POWER APPS',
+    title: 'Cambios de Estructura y Nómina',
+    subtitle: 'App en Power Apps para aprobar ascensos, traslados y cambios salariales en planta',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'renault-estructura',
+    date: 'Mayo 2025 - Octubre 2025',
+    description:
+      'App en Power Apps para la planta de Renault Sofasa (954 empleados en 2 turnos): digitaliza las solicitudes de subida de nivel, ascenso, nombramiento como jefe y traslado entre Soldadura, Pintura, Ensamble y DLI, con aprobación de Recursos Humanos, avisos automáticos al jefe actual y al jefe nuevo, y registro del cambio salarial en nómina.',
+    details:
+      'Aplicación desarrollada en Power Apps para el área de Producción de Renault Sofasa, compuesta por 954 empleados distribuidos en dos turnos y cuatro departamentos principales: Soldadura, Pintura, Ensamble y DLI (Departamento de Logística Industrial). Antes, cada vez que un empleado subía de nivel, ascendía, se convertía en jefe o se trasladaba de departamento (por ejemplo, de Soldadura a Pintura), el cambio se llevaba por escrito a Recursos Humanos, que debía aprobarlo y luego avisar manualmente al jefe anterior que uno de sus empleados se iba y al jefe nuevo que llegaba alguien de otro departamento; el proceso podía tomar hasta 14 horas. En una planta donde sale un vehículo aproximadamente cada 4 minutos bajo estándares de alta calidad, ese tiempo era crítico. La app centraliza la solicitud digital, la aprobación de Recursos Humanos, la aprobación del jefe saliente y del jefe entrante, y el registro de la novedad salarial en nómina, reduciendo el proceso de horas a minutos. Como la app es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['Power Apps', 'Power Automate', 'Power Fx', 'Microsoft 365', 'Flujos de aprobación'],
+    en: {
+      type: 'ENTERPRISE APP / POWER APPS',
+      subtitle: 'Power Apps app to approve promotions, transfers and salary changes on the plant floor',
+      date: 'May 2025 - October 2025',
+      description:
+        'Power Apps app for the Renault Sofasa plant (954 employees across 2 shifts): it digitizes requests for level increases, promotions, appointments as manager and transfers between Welding, Paint, Assembly and DLI, with Human Resources approval, automatic notices to the current and new manager, and the salary change recorded in payroll.',
+      details:
+        'Application built in Power Apps for the Production area of Renault Sofasa, made up of 954 employees across two shifts and four main departments: Welding, Paint, Assembly and DLI (Industrial Logistics Department). Previously, whenever an employee moved up a level, was promoted, became a manager or transferred between departments (for example, from Welding to Paint), the change was taken in writing to Human Resources, which had to approve it and then manually notify the previous manager that one of their employees was leaving and the new manager that someone was arriving from another department; the process could take up to 14 hours. In a plant where a vehicle rolls off the line roughly every 4 minutes under high quality standards, that time was critical. The app centralizes the digital request, Human Resources approval, approval by the outgoing and incoming managers, and the recording of the salary change in payroll, reducing the process from hours to minutes. Since the app is for internal use, the demo in this portfolio is a recreation with fictitious data.',
+    },
+  },
+  {
+    id: 'automatizacion-tasas-cambio',
+    number: '07',
+    type: 'AUTOMATIZACIÓN / RPA',
+    title: 'Automatización de Tasas de Cambio',
+    subtitle: 'Flujo en n8n que lleva las tasas de cambio oficiales al correo de Contabilidad',
+    organization: 'Simex (Colombia)',
+    country: 'co',
+    demo: 'simex-tasas',
+    date: 'Febrero 2026 - Marzo 2026',
+    description:
+      'Flujo de n8n para el área de Contabilidad de Simex: de lunes a viernes a las 7:00 p. m. toma 10 tasas de cambio de la web oficial aprobada por el jefe de área, las convierte a pesos colombianos y las envía por Outlook a la persona encargada de cargarlas en el módulo de Epicor.',
+    details:
+      'Automatización desarrollada en n8n para el área de Contabilidad de Simex en Colombia. Antes, todos los días una persona debía consultar las tasas de cambio en la web oficial aprobada por el jefe del área y pasarlas a mano al módulo de tasas de Epicor. El flujo recrea ese proceso: un Schedule Trigger lo dispara de lunes a viernes a las 7:00 p. m. (hora de Bogotá), un nodo HTTP Request consulta la web oficial, se extrae la tabla de tasas del HTML, se separa por moneda y un nodo Code normaliza cada valor a pesos colombianos (COP). Las 10 monedas son: dólar estadounidense, euro, libra esterlina, yen japonés, yuan chino, real brasileño, peso argentino, sol peruano, corona sueca y peso mexicano. Un nodo If valida que hayan llegado las 10 tasas: si están completas se arma la tabla y se envía por Microsoft Outlook al responsable de las divisas; si falta alguna, se envía una alerta para revisarla manualmente. Este sistema ahorró aproximadamente 130 horas de trabajo manual y eliminó el riesgo de error humano en un reporte contable crítico. Como el flujo es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['n8n', 'Schedule Trigger (cron)', 'HTTP Request', 'JavaScript', 'Microsoft Outlook', 'Epicor', 'RPA / Automation'],
+    en: {
+      type: 'AUTOMATION / RPA',
+      subtitle: 'n8n workflow that delivers the official exchange rates to the Accounting inbox',
+      date: 'February 2026 - March 2026',
+      description:
+        'n8n workflow for the Accounting area at Simex: Monday to Friday at 7:00 p.m. it pulls 10 exchange rates from the official website approved by the area manager, converts them to Colombian pesos and emails them via Outlook to the person in charge of loading them into the Epicor module.',
+      details:
+        'Automation built in n8n for the Accounting area at Simex in Colombia. Previously, every day someone had to look up the exchange rates on the official website approved by the area manager and type them by hand into the Epicor exchange-rate module. The workflow recreates that process: a Schedule Trigger fires it Monday to Friday at 7:00 p.m. (Bogotá time), an HTTP Request node queries the official website, the rates table is extracted from the HTML, split by currency, and a Code node normalizes each value to Colombian pesos (COP). The 10 currencies are: US dollar, euro, pound sterling, Japanese yen, Chinese yuan, Brazilian real, Argentine peso, Peruvian sol, Swedish krona and Mexican peso. An If node checks that all 10 rates arrived: if complete, the table is built and sent through Microsoft Outlook to the person in charge of currencies; if any is missing, an alert is sent so it can be checked manually. This system saved approximately 130 hours of manual work and eliminated the risk of human error in a critical accounting report. Since the workflow is for internal use, the demo in this portfolio is a recreation with fictitious data.',
+    },
+  },
+  {
+    id: 'analisis-datos-estadisticos',
+    number: '08',
+    type: 'ANÁLISIS DE DATOS / BI',
+    title: 'Análisis de Datos Estadísticos',
+    subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
+    organization: 'Renault Sofasa',
+    date: 'Octubre 2025 - Diciembre 2025',
+    description:
+      'Estructuración de tableros analíticos comprensibles para la toma de decisiones estratégicas.',
+    details:
+      'Liderazgo en la reorganización y estructuración de tableros estadísticos y de análisis de datos para transformarlos en herramientas intuitivas y comprensibles, diseñadas específicamente para perfiles no técnicos como psicólogos de selección. Utilización de Power BI, Looker Studio y Dash para presentar métricas complejas de forma clara, facilitando la evaluación de candidatos y el seguimiento de KPIs operativos.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['Power BI', 'Looker Studio', 'Dash', 'SQL'],
+    en: {
+      type: 'DATA ANALYSIS / BI',
+      subtitle: 'Analytical dashboards for strategic decision-making',
+      date: 'October 2025 - December 2025',
+      description: 'Structuring understandable analytical dashboards for strategic decision-making.',
+      details:
+        'Leadership in the reorganization and structuring of statistical and data analysis dashboards to transform them into intuitive and understandable tools, specifically designed for non-technical profiles such as selection psychologists. Use of Power BI, Looker Studio and Dash to present complex metrics clearly, facilitating candidate evaluation and the tracking of operational KPIs.',
+    },
+  },
+  {
+    id: 'bi-erp-sap-epicor',
+    number: '09',
+    type: 'BUSINESS INTELLIGENCE / ERP',
+    title: 'Inteligencia de Negocios y ERP',
+    subtitle: 'Integración de datos financieros desde SAP y Epicor',
+    organization: 'Simex / Renault',
+    date: 'Noviembre 2025 - Marzo 2026',
+    description:
+      'Integración de datos financieros y operativos desde sistemas SAP y Epicor.',
+    details:
+      'Desarrollo de ecosistemas de reportes avanzados integrando datos provenientes de ERPs corporativos como SAP, SAP Business One y Epicor. Creación de dashboards ejecutivos en Power BI y Looker que permiten una visibilidad completa de la cadena de valor, optimizando los tiempos de respuesta gerenciales mediante datos precisos y visualizaciones analíticas de alto impacto.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['SAP', 'SAP Business One', 'Epicor', 'Power BI', 'Looker Studio'],
+    en: {
+      type: 'BUSINESS INTELLIGENCE / ERP',
+      subtitle: 'Integration of financial data from SAP and Epicor',
+      date: 'November 2025 - March 2026',
+      description: 'Integration of financial and operational data from SAP and Epicor systems.',
+      details:
+        'Development of advanced reporting ecosystems integrating data from corporate ERPs such as SAP, SAP Business One and Epicor. Creation of executive dashboards in Power BI and Looker that provide complete visibility of the value chain, optimizing managerial response times through accurate data and high-impact analytical visualizations.',
+    },
+  },
+  {
+    id: 'ia-empresarial-copilot',
+    number: '10',
+    type: 'IA EMPRESARIAL',
+    title: 'IA Empresarial y Copilot',
+    subtitle: 'Optimización de procesos con asistentes inteligentes',
+    organization: 'Innovación TI',
+    date: '2025',
+    description:
+      'Optimización de procesos mediante asistentes inteligentes y Copilot Studio.',
+    details:
+      'Liderazgo en la adopción de IA generativa en el entorno corporativo, utilizando Microsoft Copilot Studio para crear agentes y asistentes que optimizan el desarrollo, el análisis de información y la automatización de flujos de trabajo repetitivos, elevando la productividad operativa del equipo.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['Copilot Studio', 'Generative AI', 'Process Automation'],
+    en: {
+      type: 'ENTERPRISE AI',
+      subtitle: 'Process optimization with intelligent assistants',
+      date: '2025',
+      description: 'Process optimization through intelligent assistants and Copilot Studio.',
+      details:
+        'Leadership in the adoption of generative AI in the corporate environment, using Microsoft Copilot Studio to create agents and assistants that optimize development, information analysis and the automation of repetitive workflows, boosting the team\'s operational productivity.',
+    },
+  },
+  {
+    id: 'asistente-bambini-van-gogh',
+    number: '11',
+    type: 'IA / INVESTIGACIÓN',
+    title: 'Asistente Bambini (Van Gogh)',
+    subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
+    organization: 'U. Salazar y Herrera',
+    date: 'Mayo 2025 - Julio 2025',
+    description:
+      'Asistente de voz inteligente para mejorar la experiencia de personas con discapacidad visual en museos.',
+    details:
+      'Proyecto de investigación desarrollado en la Universidad Salazar y Herrera. Bambini es un asistente de IA diseñado como intérprete visual en museos y sitios turísticos de Colombia. Desarrollado en Python con redes neuronales y visión artificial para describir detalladamente obras de arte, cuadros y lienzos, brindando una experiencia inmersiva, accesible y educativa para personas con discapacidad visual o baja visión.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['Python', 'Generative AI', 'Computer Vision', 'Voice Synthesis'],
+    en: {
+      type: 'AI / RESEARCH',
+      subtitle: 'Visual inclusion with AI for visually impaired people',
+      date: 'May 2025 - July 2025',
+      description:
+        'Intelligent voice assistant to improve the experience of visually impaired people in museums.',
+      details:
+        'Research project developed at Universidad Salazar y Herrera. Bambini is an AI assistant designed as a visual interpreter in museums and tourist sites in Colombia. Developed in Python with neural networks and computer vision to describe artworks, paintings and canvases in detail, providing an immersive, accessible and educational experience for people with visual impairment or low vision.',
+    },
+  },
+  {
+    id: 'sitio-contadoras-aq',
+    number: '12',
+    type: 'SITIO WEB CORPORATIVO',
+    title: 'Sitio Web Contadoras AQ',
+    subtitle: 'Plataforma web oficial para firma de contaduría',
+    organization: 'Contadoras AQ',
+    date: 'Marzo 2026 - Abril 2026',
+    description:
+      'Desarrollo y despliegue de la plataforma web oficial para la empresa de contaduría Contadoras AQ.',
+    details:
+      'Diseño y desarrollo del sitio web oficial para la firma contable Contadoras AQ utilizando React y Next.js para maximizar rendimiento y posicionamiento SEO. Desplegado en Vercel sobre dominio corporativo propio, constituyéndose como el canal digital central para la captación de clientes y presentación de servicios corporativos.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['React', 'Next.js', 'TypeScript', 'Vercel'],
+    en: {
+      type: 'CORPORATE WEBSITE',
+      subtitle: 'Official web platform for an accounting firm',
+      date: 'March 2026 - April 2026',
+      description:
+        'Development and deployment of the official web platform for the accounting firm Contadoras AQ.',
+      details:
+        'Design and development of the official website for the accounting firm Contadoras AQ using React and Next.js to maximize performance and SEO ranking. Deployed on Vercel on its own corporate domain, becoming the central digital channel for client acquisition and the presentation of corporate services.',
+    },
+  },
+  {
+    id: 'ai-support-analyst',
+    number: '13',
     type: 'INTELIGENCIA ARTIFICIAL',
     title: 'AI Support Analyst',
     subtitle: 'Sistema de IA para análisis y respuesta de tickets de soporte',
@@ -249,179 +425,6 @@ export const PROJECTS_DATA: ProjectItem[] = [
         'AI system for automated analysis, categorization and suggested responses for support tickets.',
       details:
         'Personal project developed to optimize help desk management. It uses large language models (LLM) to perform sentiment analysis, automatic categorization by urgency and topic, and generation of response drafts. Implemented with an architecture that allows processing large volumes of historical data to identify recurring failure patterns, reducing first response time by 40%.',
-    },
-  },
-  {
-    id: 'cambios-estructura-nomina',
-    number: '07',
-    type: 'APP EMPRESARIAL / POWER APPS',
-    title: 'Cambios de Estructura y Nómina',
-    subtitle: 'App en Power Apps para aprobar ascensos, traslados y cambios salariales en planta',
-    organization: 'Renault Sofasa (Envigado, Colombia)',
-    country: 'co',
-    demo: 'renault-estructura',
-    date: 'Mayo 2025 - Octubre 2025',
-    description:
-      'App en Power Apps para la planta de Renault Sofasa (954 empleados en 2 turnos): digitaliza las solicitudes de subida de nivel, ascenso, nombramiento como jefe y traslado entre Soldadura, Pintura, Ensamble y DLI, con aprobación de Recursos Humanos, avisos automáticos al jefe actual y al jefe nuevo, y registro del cambio salarial en nómina.',
-    details:
-      'Aplicación desarrollada en Power Apps para el área de Producción de Renault Sofasa, compuesta por 954 empleados distribuidos en dos turnos y cuatro departamentos principales: Soldadura, Pintura, Ensamble y DLI (Departamento de Logística Industrial). Antes, cada vez que un empleado subía de nivel, ascendía, se convertía en jefe o se trasladaba de departamento (por ejemplo, de Soldadura a Pintura), el cambio se llevaba por escrito a Recursos Humanos, que debía aprobarlo y luego avisar manualmente al jefe anterior que uno de sus empleados se iba y al jefe nuevo que llegaba alguien de otro departamento; el proceso podía tomar hasta 14 horas. En una planta donde sale un vehículo aproximadamente cada 4 minutos bajo estándares de alta calidad, ese tiempo era crítico. La app centraliza la solicitud digital, la aprobación de Recursos Humanos, la aprobación del jefe saliente y del jefe entrante, y el registro de la novedad salarial en nómina, reduciendo el proceso de horas a minutos. Como la app es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['Power Apps', 'Power Automate', 'Power Fx', 'Microsoft 365', 'Flujos de aprobación'],
-    en: {
-      type: 'ENTERPRISE APP / POWER APPS',
-      subtitle: 'Power Apps app to approve promotions, transfers and salary changes on the plant floor',
-      date: 'May 2025 - October 2025',
-      description:
-        'Power Apps app for the Renault Sofasa plant (954 employees across 2 shifts): it digitizes requests for level increases, promotions, appointments as manager and transfers between Welding, Paint, Assembly and DLI, with Human Resources approval, automatic notices to the current and new manager, and the salary change recorded in payroll.',
-      details:
-        'Application built in Power Apps for the Production area of Renault Sofasa, made up of 954 employees across two shifts and four main departments: Welding, Paint, Assembly and DLI (Industrial Logistics Department). Previously, whenever an employee moved up a level, was promoted, became a manager or transferred between departments (for example, from Welding to Paint), the change was taken in writing to Human Resources, which had to approve it and then manually notify the previous manager that one of their employees was leaving and the new manager that someone was arriving from another department; the process could take up to 14 hours. In a plant where a vehicle rolls off the line roughly every 4 minutes under high quality standards, that time was critical. The app centralizes the digital request, Human Resources approval, approval by the outgoing and incoming managers, and the recording of the salary change in payroll, reducing the process from hours to minutes. Since the app is for internal use, the demo in this portfolio is a recreation with fictitious data.',
-    },
-  },
-  {
-    id: 'automatizacion-tasas-cambio',
-    number: '08',
-    type: 'AUTOMATIZACIÓN / RPA',
-    title: 'Automatización de Tasas de Cambio',
-    subtitle: 'Sistema RPA para actualización automática de divisas',
-    organization: 'Simex',
-    date: 'Febrero 2026 - Marzo 2026',
-    description:
-      'Sistema RPA para la actualización automática de divisas y reportes financieros.',
-    details:
-      'Implementación de un flujo de automatización con n8n que actualiza diariamente más de 10 tasas de cambio mediante APIs financieras. Este sistema ahorró aproximadamente 130 horas de trabajo manual y eliminó por completo el riesgo de error humano en reportes contables críticos.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['n8n', 'APIs REST', 'JSON', 'RPA / Automation'],
-    en: {
-      type: 'AUTOMATION / RPA',
-      subtitle: 'RPA system for automatic currency updates',
-      date: 'February 2026 - March 2026',
-      description: 'RPA system for the automatic updating of currencies and financial reports.',
-      details:
-        'Implementation of an automation flow with n8n that updates more than 10 exchange rates daily through financial APIs. This system saved approximately 130 hours of manual work and completely eliminated the risk of human error in critical accounting reports.',
-    },
-  },
-  {
-    id: 'analisis-datos-estadisticos',
-    number: '09',
-    type: 'ANÁLISIS DE DATOS / BI',
-    title: 'Análisis de Datos Estadísticos',
-    subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
-    organization: 'Renault Sofasa',
-    date: 'Octubre 2025 - Diciembre 2025',
-    description:
-      'Estructuración de tableros analíticos comprensibles para la toma de decisiones estratégicas.',
-    details:
-      'Liderazgo en la reorganización y estructuración de tableros estadísticos y de análisis de datos para transformarlos en herramientas intuitivas y comprensibles, diseñadas específicamente para perfiles no técnicos como psicólogos de selección. Utilización de Power BI, Looker Studio y Dash para presentar métricas complejas de forma clara, facilitando la evaluación de candidatos y el seguimiento de KPIs operativos.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['Power BI', 'Looker Studio', 'Dash', 'SQL'],
-    en: {
-      type: 'DATA ANALYSIS / BI',
-      subtitle: 'Analytical dashboards for strategic decision-making',
-      date: 'October 2025 - December 2025',
-      description: 'Structuring understandable analytical dashboards for strategic decision-making.',
-      details:
-        'Leadership in the reorganization and structuring of statistical and data analysis dashboards to transform them into intuitive and understandable tools, specifically designed for non-technical profiles such as selection psychologists. Use of Power BI, Looker Studio and Dash to present complex metrics clearly, facilitating candidate evaluation and the tracking of operational KPIs.',
-    },
-  },
-  {
-    id: 'bi-erp-sap-epicor',
-    number: '10',
-    type: 'BUSINESS INTELLIGENCE / ERP',
-    title: 'Inteligencia de Negocios y ERP',
-    subtitle: 'Integración de datos financieros desde SAP y Epicor',
-    organization: 'Simex / Renault',
-    date: 'Noviembre 2025 - Marzo 2026',
-    description:
-      'Integración de datos financieros y operativos desde sistemas SAP y Epicor.',
-    details:
-      'Desarrollo de ecosistemas de reportes avanzados integrando datos provenientes de ERPs corporativos como SAP, SAP Business One y Epicor. Creación de dashboards ejecutivos en Power BI y Looker que permiten una visibilidad completa de la cadena de valor, optimizando los tiempos de respuesta gerenciales mediante datos precisos y visualizaciones analíticas de alto impacto.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['SAP', 'SAP Business One', 'Epicor', 'Power BI', 'Looker Studio'],
-    en: {
-      type: 'BUSINESS INTELLIGENCE / ERP',
-      subtitle: 'Integration of financial data from SAP and Epicor',
-      date: 'November 2025 - March 2026',
-      description: 'Integration of financial and operational data from SAP and Epicor systems.',
-      details:
-        'Development of advanced reporting ecosystems integrating data from corporate ERPs such as SAP, SAP Business One and Epicor. Creation of executive dashboards in Power BI and Looker that provide complete visibility of the value chain, optimizing managerial response times through accurate data and high-impact analytical visualizations.',
-    },
-  },
-  {
-    id: 'ia-empresarial-copilot',
-    number: '11',
-    type: 'IA EMPRESARIAL',
-    title: 'IA Empresarial y Copilot',
-    subtitle: 'Optimización de procesos con asistentes inteligentes',
-    organization: 'Innovación TI',
-    date: '2025',
-    description:
-      'Optimización de procesos mediante asistentes inteligentes y Copilot Studio.',
-    details:
-      'Liderazgo en la adopción de IA generativa en el entorno corporativo, utilizando Microsoft Copilot Studio para crear agentes y asistentes que optimizan el desarrollo, el análisis de información y la automatización de flujos de trabajo repetitivos, elevando la productividad operativa del equipo.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['Copilot Studio', 'Generative AI', 'Process Automation'],
-    en: {
-      type: 'ENTERPRISE AI',
-      subtitle: 'Process optimization with intelligent assistants',
-      date: '2025',
-      description: 'Process optimization through intelligent assistants and Copilot Studio.',
-      details:
-        'Leadership in the adoption of generative AI in the corporate environment, using Microsoft Copilot Studio to create agents and assistants that optimize development, information analysis and the automation of repetitive workflows, boosting the team\'s operational productivity.',
-    },
-  },
-  {
-    id: 'asistente-bambini-van-gogh',
-    number: '12',
-    type: 'IA / INVESTIGACIÓN',
-    title: 'Asistente Bambini (Van Gogh)',
-    subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
-    organization: 'U. Salazar y Herrera',
-    date: 'Mayo 2025 - Julio 2025',
-    description:
-      'Asistente de voz inteligente para mejorar la experiencia de personas con discapacidad visual en museos.',
-    details:
-      'Proyecto de investigación desarrollado en la Universidad Salazar y Herrera. Bambini es un asistente de IA diseñado como intérprete visual en museos y sitios turísticos de Colombia. Desarrollado en Python con redes neuronales y visión artificial para describir detalladamente obras de arte, cuadros y lienzos, brindando una experiencia inmersiva, accesible y educativa para personas con discapacidad visual o baja visión.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['Python', 'Generative AI', 'Computer Vision', 'Voice Synthesis'],
-    en: {
-      type: 'AI / RESEARCH',
-      subtitle: 'Visual inclusion with AI for visually impaired people',
-      date: 'May 2025 - July 2025',
-      description:
-        'Intelligent voice assistant to improve the experience of visually impaired people in museums.',
-      details:
-        'Research project developed at Universidad Salazar y Herrera. Bambini is an AI assistant designed as a visual interpreter in museums and tourist sites in Colombia. Developed in Python with neural networks and computer vision to describe artworks, paintings and canvases in detail, providing an immersive, accessible and educational experience for people with visual impairment or low vision.',
-    },
-  },
-  {
-    id: 'sitio-contadoras-aq',
-    number: '13',
-    type: 'SITIO WEB CORPORATIVO',
-    title: 'Sitio Web Contadoras AQ',
-    subtitle: 'Plataforma web oficial para firma de contaduría',
-    organization: 'Contadoras AQ',
-    date: 'Marzo 2026 - Abril 2026',
-    description:
-      'Desarrollo y despliegue de la plataforma web oficial para la empresa de contaduría Contadoras AQ.',
-    details:
-      'Diseño y desarrollo del sitio web oficial para la firma contable Contadoras AQ utilizando React y Next.js para maximizar rendimiento y posicionamiento SEO. Desplegado en Vercel sobre dominio corporativo propio, constituyéndose como el canal digital central para la captación de clientes y presentación de servicios corporativos.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['React', 'Next.js', 'TypeScript', 'Vercel'],
-    en: {
-      type: 'CORPORATE WEBSITE',
-      subtitle: 'Official web platform for an accounting firm',
-      date: 'March 2026 - April 2026',
-      description:
-        'Development and deployment of the official web platform for the accounting firm Contadoras AQ.',
-      details:
-        'Design and development of the official website for the accounting firm Contadoras AQ using React and Next.js to maximize performance and SEO ranking. Deployed on Vercel on its own corporate domain, becoming the central digital channel for client acquisition and the presentation of corporate services.',
     },
   },
 ];
