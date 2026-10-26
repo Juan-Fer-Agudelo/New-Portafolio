@@ -1085,6 +1085,29 @@
         color: var(--color-accent);
       }
 
+      /* Onda: cada letra sube y baja en bucle, desfasada respecto a la anterior */
+      .scroll-wave-letter {
+        display: inline-block;
+        animation: scrollWave 1.8s ease-in-out infinite;
+      }
+
+      @keyframes scrollWave {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-6px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .scroll-wave-letter {
+          animation: none;
+        }
+      }
+
       .hero-scroll-indicator:hover .hero-scroll-label {
         color: var(--color-primary);
       }

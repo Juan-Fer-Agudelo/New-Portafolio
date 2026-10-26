@@ -36,7 +36,7 @@ export interface ProjectItem {
   url?: string;
   image?: string;
   /** Demo interactiva con datos ficticios que se abre con el botón "Ver proyecto". */
-  demo?: 'massalud-erp' | 'renault-estructura' | 'simex-tasas' | 'renault-calidad';
+  demo?: 'massalud-erp' | 'renault-estructura' | 'simex-tasas' | 'renault-calidad' | 'agv-trazabilidad';
   // Versión en inglés de los campos de texto traducibles
   en?: ProjectLocale;
 }

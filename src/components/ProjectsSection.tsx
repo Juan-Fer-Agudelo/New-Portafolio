@@ -4,6 +4,7 @@ import { MasSaludDemo } from './MasSaludDemo';
 import { RenaultDemo } from './RenaultDemo';
 import { SimexDemo } from './SimexDemo';
 import { CalidadDemo } from './CalidadDemo';
+import { AgvDemo } from './AgvDemo';
 import { CountryFlag } from './CountryFlag';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
@@ -213,6 +214,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       <RenaultDemo isOpen={openDemo === 'renault-estructura'} onClose={closeDemo} />
       <SimexDemo isOpen={openDemo === 'simex-tasas'} onClose={closeDemo} />
       <CalidadDemo isOpen={openDemo === 'renault-calidad'} onClose={closeDemo} />
+      <AgvDemo isOpen={openDemo === 'agv-trazabilidad'} onClose={closeDemo} />
     </section>
   );
 };

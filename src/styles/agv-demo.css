@@ -1,0 +1,792 @@
+/* ==========================================================================
+   DEMO MAPA DE AGVs — Trazabilidad en tiempo real en Ensamble
+   (todas las clases con prefijo agd-)
+   ========================================================================== */
+.agd-overlay {
+  --agd-shell: #111827;
+  --agd-shell-2: #1f2937;
+  --agd-line: #374151;
+  --agd-text: #f3f4f6;
+  --agd-muted: #9ca3af;
+  --agd-doors: #2a78d6;
+  --agd-tires: #6250d6;
+  --agd-windshields: #1baf7a;
+  --agd-good: #22c55e;
+  --agd-warn: #f59e0b;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(10, 10, 14, 0.7);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--agd-text);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.agd-overlay *,
+.agd-overlay *::before,
+.agd-overlay *::after {
+  box-sizing: border-box;
+}
+
+.agd-overlay button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.agd-overlay button:focus-visible,
+.agd-agv:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.agd-app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--agd-shell);
+  overflow: hidden;
+}
+
+/* ---------- Barra superior ---------- */
+.agd-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 12px 0 16px;
+  border-bottom: 1px solid var(--agd-line);
+}
+
+.agd-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #ffcc00;
+  color: #111;
+}
+
+.agd-bar-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.agd-bar-title strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agd-bar-title span {
+  font-size: 12px;
+  color: var(--agd-muted);
+}
+
+.agd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.agd-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--agd-good);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.agd-live--paused {
+  color: var(--agd-warn);
+}
+
+.agd-live-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: agd-pulse 1.4s ease-in-out infinite;
+}
+
+.agd-live--paused .agd-live-dot {
+  animation: none;
+}
+
+@keyframes agd-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.agd-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--agd-muted);
+}
+
+.agd-close:hover {
+  background: var(--agd-shell-2);
+  color: var(--agd-text);
+}
+
+/* ---------- Indicadores ---------- */
+.agd-kpis {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 14px 16px 0;
+}
+
+.agd-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--agd-shell-2);
+  border: 1px solid var(--agd-line);
+}
+
+.agd-kpi span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--agd-muted);
+}
+
+.agd-kpi strong {
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.agd-kpi small {
+  font-size: 14px;
+  color: var(--agd-muted);
+  font-weight: 500;
+}
+
+/* ---------- Cuerpo ---------- */
+.agd-main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 14px;
+  padding: 14px 16px 16px;
+}
+
+.agd-map-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 12px;
+  background: var(--agd-shell-2);
+  border: 1px solid var(--agd-line);
+  overflow: hidden;
+}
+
+.agd-map-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--agd-line);
+}
+
+.agd-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.agd-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--agd-line);
+  border-radius: 8px;
+  background: var(--agd-shell);
+}
+
+.agd-seg {
+  display: inline-flex;
+  border: 1px solid var(--agd-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.agd-seg button {
+  padding: 7px 12px;
+  border: none;
+  background: var(--agd-shell);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--agd-muted);
+}
+
+.agd-seg button + button {
+  border-left: 1px solid var(--agd-line);
+}
+
+.agd-seg button[aria-pressed='true'] {
+  background: #ffcc00;
+  color: #111;
+}
+
+.agd-map-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  background: #ffffff;
+}
+
+.agd-map {
+  display: block;
+  width: 100%;
+  min-width: 720px;
+  height: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+
+/* Plano */
+.agd-area rect {
+  stroke: none;
+}
+
+.agd-area text {
+  font-size: 15px;
+  font-weight: 800;
+  fill: #111;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.agd-area--uet rect {
+  fill: #ffcc00;
+}
+
+.agd-area--dli rect {
+  fill: #fbb040;
+}
+
+.agd-area--dli text {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.agd-area--supply rect {
+  fill: #fbb040;
+  stroke: var(--agd-doors);
+  stroke-width: 3;
+  stroke-dasharray: 8 5;
+}
+
+.agd-area--supply text {
+  font-size: 13px;
+}
+
+.agd-area--gray rect {
+  fill: #b3b3b3;
+}
+
+.agd-area--gray text {
+  font-weight: 700;
+}
+
+.agd-area--black rect {
+  fill: #111;
+  stroke: var(--agd-tires);
+  stroke-width: 3;
+  stroke-dasharray: 8 5;
+}
+
+.agd-area--black text {
+  fill: #fff;
+}
+
+.agd-area--src-parabrisas rect {
+  stroke: var(--agd-windshields);
+  stroke-width: 3;
+  stroke-dasharray: 8 5;
+}
+
+.agd-area--target rect {
+  stroke: #7c3aed;
+  stroke-width: 3;
+}
+
+.agd-track {
+  fill: none;
+  stroke: #111;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.agd-track--extra {
+  stroke: #6b7280;
+  stroke-width: 1.5;
+}
+
+.agd-track--puertas {
+  stroke: #111;
+}
+
+.agd-track--llantas {
+  stroke: #111;
+  stroke-dasharray: 1 0;
+}
+
+.agd-node circle {
+  fill: #fff;
+  stroke: #111;
+  stroke-width: 1.5;
+}
+
+.agd-node text {
+  font-size: 8.5px;
+  fill: #111;
+  pointer-events: none;
+}
+
+.agd-stop rect {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.agd-stop text {
+  font-size: 11px;
+  font-weight: 800;
+  fill: #fff;
+  pointer-events: none;
+}
+
+.agd-stop--carga rect {
+  fill: #374151;
+}
+
+.agd-stop--entrega rect {
+  fill: #7c3aed;
+}
+
+/* AGVs */
+.agd-agv {
+  cursor: pointer;
+}
+
+.agd-agv-body {
+  fill: #fff;
+  stroke-width: 3;
+}
+
+.agd-agv--puertas .agd-agv-body {
+  stroke: var(--agd-doors);
+}
+
+.agd-agv--llantas .agd-agv-body {
+  stroke: var(--agd-tires);
+}
+
+.agd-agv--loaded.agd-agv--puertas .agd-agv-body {
+  fill: var(--agd-doors);
+}
+
+.agd-agv--loaded.agd-agv--llantas .agd-agv-body {
+  fill: var(--agd-tires);
+}
+
+.agd-agv--parabrisas .agd-agv-body {
+  stroke: var(--agd-windshields);
+}
+
+.agd-agv--loaded.agd-agv--parabrisas .agd-agv-body {
+  fill: var(--agd-windshields);
+}
+
+.agd-agv-nose {
+  fill: none;
+  stroke: #111;
+  stroke-width: 2;
+}
+
+.agd-agv--loaded .agd-agv-nose {
+  stroke: #fff;
+}
+
+.agd-agv-label {
+  font-size: 11px;
+  font-weight: 800;
+  fill: #111;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+.agd-agv-ring {
+  fill: rgba(96, 165, 250, 0.2);
+  stroke: #2563eb;
+  stroke-width: 2;
+}
+
+.agd-agv-wait {
+  fill: none;
+  stroke: var(--agd-warn);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.agd-dim {
+  opacity: 0.18;
+}
+
+/* Leyenda */
+.agd-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--agd-line);
+  font-size: 12px;
+  color: var(--agd-muted);
+}
+
+.agd-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.agd-sw {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 12px;
+  border-radius: 3px;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.agd-sw--puertas {
+  background: var(--agd-doors);
+}
+
+.agd-sw--llantas {
+  background: var(--agd-tires);
+}
+
+.agd-sw--parabrisas {
+  background: var(--agd-windshields);
+}
+
+.agd-sw--hollow.agd-sw--parabrisas {
+  color: var(--agd-windshields);
+}
+
+.agd-sw--empty {
+  background: #fff;
+  border: 2px solid var(--agd-muted);
+}
+
+.agd-sw--hollow {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.agd-sw--hollow.agd-sw--puertas {
+  color: var(--agd-doors);
+}
+
+.agd-sw--hollow.agd-sw--llantas {
+  color: var(--agd-tires);
+}
+
+.agd-sw--carga,
+.agd-sw--entrega {
+  width: 16px;
+  height: 16px;
+}
+
+.agd-sw--carga {
+  background: #374151;
+  border: 1px solid #6b7280;
+}
+
+.agd-sw--entrega {
+  background: #7c3aed;
+}
+
+/* ---------- Panel lateral ---------- */
+.agd-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+.agd-panel {
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--agd-shell-2);
+  border: 1px solid var(--agd-line);
+}
+
+.agd-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.agd-panel-head h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.agd-muted {
+  font-size: 12px;
+  color: var(--agd-muted);
+}
+
+.agd-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #60a5fa !important;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.agd-fleet {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.agd-fleet button {
+  display: grid;
+  grid-template-columns: 18px 58px 64px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  text-align: left;
+  font-size: 12.5px;
+}
+
+.agd-fleet button:hover {
+  background: var(--agd-shell);
+}
+
+.agd-fleet-id {
+  font-weight: 700;
+}
+
+.agd-fleet-cargo {
+  color: var(--agd-muted);
+}
+
+.agd-fleet-bat {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--agd-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.agd-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+}
+
+.agd-status--stopped {
+  background: rgba(96, 165, 250, 0.16);
+  color: #93c5fd;
+}
+
+.agd-status--waiting {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fbbf24;
+}
+
+.agd-detail dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agd-detail dt {
+  font-size: 12px;
+  color: var(--agd-muted);
+}
+
+.agd-detail dd {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+.agd-battery {
+  display: inline-block;
+  width: 90px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--agd-shell);
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.agd-battery span {
+  display: block;
+  height: 100%;
+  background: var(--agd-good);
+}
+
+.agd-log-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.agd-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.agd-log-item {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 8px;
+  padding-left: 8px;
+  border-left: 3px solid #6b7280;
+  font-size: 12.5px;
+}
+
+.agd-log-item--entrega {
+  border-left-color: #a78bfa;
+}
+
+.agd-log-item time {
+  color: var(--agd-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .agd-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .agd-main {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .agd-map-card {
+    min-height: 460px;
+  }
+
+  .agd-log-panel {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 700px) {
+  .agd-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .agd-kpi strong {
+    font-size: 19px;
+  }
+
+  .agd-badge,
+  .agd-bar-title span {
+    display: none;
+  }
+
+  .agd-live {
+    font-size: 11px;
+  }
+
+  .agd-main {
+    padding: 12px;
+  }
+
+  .agd-kpis {
+    padding: 12px 12px 0;
+  }
+
+  .agd-map-card {
+    min-height: 400px;
+  }
+
+  .agd-fleet button {
+    grid-template-columns: 18px 58px 1fr auto;
+  }
+
+  .agd-fleet-cargo {
+    display: none;
+  }
+}

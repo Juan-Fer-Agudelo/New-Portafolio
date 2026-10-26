@@ -76,8 +76,17 @@ export const HeroSection: React.FC = () => {
           history.replaceState(null, '', window.location.pathname);
         }}
       >
-        <span className="hero-scroll-label">
-          SCRO<span className="scroll-accent">LL</span>
+        {/* Cada letra sube y baja con un pequeño retraso para formar una onda */}
+        <span className="hero-scroll-label" aria-hidden="true">
+          {'SCROLL'.split('').map((letter, i) => (
+            <span
+              key={i}
+              className={`scroll-wave-letter ${i >= 4 ? 'scroll-accent' : ''}`}
+              style={{ animationDelay: `${2 + i * 0.12}s` }}
+            >
+              {letter}
+            </span>
+          ))}
         </span>
         <div className="hero-scroll-line" id="hero-scroll-line"></div>
       </a>

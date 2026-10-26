@@ -296,81 +296,35 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'bi-erp-sap-epicor',
+    id: 'trazabilidad-agvs',
     number: '09',
-    type: 'BUSINESS INTELLIGENCE / ERP',
-    title: 'Inteligencia de Negocios y ERP',
-    subtitle: 'Integración de datos financieros desde SAP y Epicor',
-    organization: 'Simex / Renault',
-    date: 'Noviembre 2025 - Marzo 2026',
-    description:
-      'Integración de datos financieros y operativos desde sistemas SAP y Epicor.',
-    details:
-      'Desarrollo de ecosistemas de reportes avanzados integrando datos provenientes de ERPs corporativos como SAP, SAP Business One y Epicor. Creación de dashboards ejecutivos en Power BI y Looker que permiten una visibilidad completa de la cadena de valor, optimizando los tiempos de respuesta gerenciales mediante datos precisos y visualizaciones analíticas de alto impacto.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['SAP', 'SAP Business One', 'Epicor', 'Power BI', 'Looker Studio'],
-    en: {
-      type: 'BUSINESS INTELLIGENCE / ERP',
-      subtitle: 'Integration of financial data from SAP and Epicor',
-      date: 'November 2025 - March 2026',
-      description: 'Integration of financial and operational data from SAP and Epicor systems.',
-      details:
-        'Development of advanced reporting ecosystems integrating data from corporate ERPs such as SAP, SAP Business One and Epicor. Creation of executive dashboards in Power BI and Looker that provide complete visibility of the value chain, optimizing managerial response times through accurate data and high-impact analytical visualizations.',
-    },
-  },
-  {
-    id: 'ia-empresarial-copilot',
-    number: '10',
-    type: 'IA EMPRESARIAL',
-    title: 'IA Empresarial y Copilot',
-    subtitle: 'Optimización de procesos con asistentes inteligentes',
-    organization: 'Innovación TI',
+    type: 'TRAZABILIDAD / INDUSTRIA 4.0',
+    title: 'Trazabilidad de AGVs',
+    subtitle: 'Mapa en tiempo real de los AGVs que abastecen la UET Final de Ensamble',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'agv-trazabilidad',
     date: '2025',
     description:
-      'Optimización de procesos mediante asistentes inteligentes y Copilot Studio.',
+      'Mapa de trazabilidad en tiempo real, hecho junto con el equipo de fabricación de Ensamble de Renault Sofasa, para seguir a los AGVs que llevan las puertas delanteras y traseras (lado izquierdo y derecho) desde Suministro Ensamble, una UET del DLI, hasta la UET Final, y a los AGVs que llevan las llantas y los parabrisas y lunetas a Final.',
     details:
-      'Liderazgo en la adopción de IA generativa en el entorno corporativo, utilizando Microsoft Copilot Studio para crear agentes y asistentes que optimizan el desarrollo, el análisis de información y la automatización de flujos de trabajo repetitivos, elevando la productividad operativa del equipo.',
+      'Proyecto desarrollado en el departamento de Ensamble de Renault Sofasa en colaboración con el equipo de fabricación. Se creó un mapa de la planta donde se ven en tiempo real los AGVs (vehículos de guiado automático) que transportan las puertas delanteras y traseras, tanto del lado derecho como del lado izquierdo de los vehículos, desde la UET de Suministro Ensamble, perteneciente al departamento DLI (Logística Industrial), hasta Final, la cuarta UET de Ensamble. Otros AGVs llevan las llantas desde la zona de Llantas, y los parabrisas y lunetas desde la zona de Parabrisas-Lunetas, hasta la UET Final. La trazabilidad en tiempo real era clave porque cualquier retraso de un AGV detiene el abastecimiento de la línea: el mapa muestra la posición de cada AGV sobre los nodos de guiado, si va cargado o vacío, cuándo carga, cuándo entrega en Final, si está esperando paso y el registro de cada movimiento. Como el sistema es de uso interno, la demostración de este portafolio es una recreación con un plano simplificado e información ficticia.',
     installCode: '',
     githubUrl: '',
-    techStack: ['Copilot Studio', 'Generative AI', 'Process Automation'],
+    techStack: ['Trazabilidad en tiempo real', 'AGVs', 'Mapa de planta', 'Logística interna', 'Industria 4.0'],
     en: {
-      type: 'ENTERPRISE AI',
-      subtitle: 'Process optimization with intelligent assistants',
+      type: 'TRACEABILITY / INDUSTRY 4.0',
+      subtitle: 'Real-time map of the AGVs that supply the Final UET in Assembly',
       date: '2025',
-      description: 'Process optimization through intelligent assistants and Copilot Studio.',
-      details:
-        'Leadership in the adoption of generative AI in the corporate environment, using Microsoft Copilot Studio to create agents and assistants that optimize development, information analysis and the automation of repetitive workflows, boosting the team\'s operational productivity.',
-    },
-  },
-  {
-    id: 'asistente-bambini-van-gogh',
-    number: '11',
-    type: 'IA / INVESTIGACIÓN',
-    title: 'Asistente Bambini (Van Gogh)',
-    subtitle: 'Inclusión visual con IA para personas con discapacidad visual',
-    organization: 'U. Salazar y Herrera',
-    date: 'Mayo 2025 - Julio 2025',
-    description:
-      'Asistente de voz inteligente para mejorar la experiencia de personas con discapacidad visual en museos.',
-    details:
-      'Proyecto de investigación desarrollado en la Universidad Salazar y Herrera. Bambini es un asistente de IA diseñado como intérprete visual en museos y sitios turísticos de Colombia. Desarrollado en Python con redes neuronales y visión artificial para describir detalladamente obras de arte, cuadros y lienzos, brindando una experiencia inmersiva, accesible y educativa para personas con discapacidad visual o baja visión.',
-    installCode: '',
-    githubUrl: '',
-    techStack: ['Python', 'Generative AI', 'Computer Vision', 'Voice Synthesis'],
-    en: {
-      type: 'AI / RESEARCH',
-      subtitle: 'Visual inclusion with AI for visually impaired people',
-      date: 'May 2025 - July 2025',
       description:
-        'Intelligent voice assistant to improve the experience of visually impaired people in museums.',
+        'Real-time traceability map, built together with the Renault Sofasa Assembly manufacturing team, to track the AGVs that carry the front and rear doors (left and right side) from Assembly Supply, a DLI UET, to the Final UET, and the AGVs that carry the tires and the windshields and rear windows to Final.',
       details:
-        'Research project developed at Universidad Salazar y Herrera. Bambini is an AI assistant designed as a visual interpreter in museums and tourist sites in Colombia. Developed in Python with neural networks and computer vision to describe artworks, paintings and canvases in detail, providing an immersive, accessible and educational experience for people with visual impairment or low vision.',
+        'Project developed in the Assembly department of Renault Sofasa in collaboration with the manufacturing team. A plant map was created showing in real time the AGVs (automated guided vehicles) that carry the front and rear doors, for both the right and left side of the vehicles, from the Assembly Supply UET, which belongs to the DLI (Industrial Logistics) department, to Final, the fourth Assembly UET. Other AGVs carry the tires from the Tires area, and the windshields and rear windows from the Windshields area, to the Final UET. Real-time traceability was key because any AGV delay stops the line supply: the map shows each AGV\'s position on the guidance nodes, whether it is loaded or empty, when it loads, when it delivers to Final, whether it is waiting for clearance, and a log of every movement. Since the system is for internal use, the demo in this portfolio is a recreation with a simplified layout and fictitious data.',
     },
   },
   {
     id: 'sitio-contadoras-aq',
-    number: '12',
+    number: '10',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',
@@ -391,43 +345,6 @@ export const PROJECTS_DATA: ProjectItem[] = [
         'Development and deployment of the official web platform for the accounting firm Contadoras AQ.',
       details:
         'Design and development of the official website for the accounting firm Contadoras AQ using React and Next.js to maximize performance and SEO ranking. Deployed on Vercel on its own corporate domain, becoming the central digital channel for client acquisition and the presentation of corporate services.',
-    },
-  },
-  {
-    id: 'ai-support-analyst',
-    number: '13',
-    type: 'INTELIGENCIA ARTIFICIAL',
-    title: 'AI Support Analyst',
-    subtitle: 'Sistema de IA para análisis y respuesta de tickets de soporte',
-    organization: 'Proyecto Personal',
-    date: 'Marzo 2026',
-    url: 'https://project-portafolio.vercel.app/',
-    description:
-      'Sistema de IA para el análisis automatizado, categorización y respuesta sugerida de tickets de soporte.',
-    details:
-      'Proyecto personal desarrollado para optimizar la gestión de mesas de ayuda. Utiliza modelos de lenguaje de gran escala (LLM) para realizar análisis de sentimiento, categorización automática por urgencia y tema, y generación de borradores de respuesta. Implementado con una arquitectura que permite procesar grandes volúmenes de datos históricos para identificar patrones de fallas recurrentes, reduciendo el tiempo de primera respuesta en un 40%.',
-    installCode: 'https://project-portafolio.vercel.app/',
-    githubUrl: 'https://project-portafolio.vercel.app/',
-    techStack: [
-      'React 19',
-      'TypeScript',
-      'Vite',
-      'Tailwind CSS 4',
-      'shadcn/ui',
-      'Motion',
-      'Lucide React',
-      'Sonner',
-      'Radix UI',
-      'LLM APIs (Python / Prompt Engineering)',
-    ],
-    en: {
-      type: 'ARTIFICIAL INTELLIGENCE',
-      subtitle: 'AI system for support ticket analysis and response',
-      date: 'March 2026',
-      description:
-        'AI system for automated analysis, categorization and suggested responses for support tickets.',
-      details:
-        'Personal project developed to optimize help desk management. It uses large language models (LLM) to perform sentiment analysis, automatic categorization by urgency and topic, and generation of response drafts. Implemented with an architecture that allows processing large volumes of historical data to identify recurring failure patterns, reducing first response time by 40%.',
     },
   },
 ];
