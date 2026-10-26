@@ -98,6 +98,13 @@ const statusOf = (a: AgvState) => {
   return a.loaded ? 'En ruta a Final' : 'Retornando vacío';
 };
 
+/** Versión corta del estado para la lista de la flota (el detalle muestra la completa) */
+const statusShort = (a: AgvState) => {
+  if (a.phase === 'stopped') return a.stop?.kind === 'carga' ? 'Cargando' : 'Descargando';
+  if (a.phase === 'waiting') return 'Esperando';
+  return a.loaded ? 'En ruta' : 'Retornando';
+};
+
 export const AgvDemo: React.FC<AgvDemoProps> = ({ isOpen, onClose }) => {
   const [screen, setScreen] = useState<'notice' | 'app'>('notice');
   const [running, setRunning] = useState(true);
@@ -528,13 +535,15 @@ export const AgvDemo: React.FC<AgvDemoProps> = ({ isOpen, onClose }) => {
                 <ul className="agd-fleet">
                   {agvs.map((a) => (
                     <li key={a.id} className={dim(a.route) ? 'agd-dim' : ''}>
-                      <button onClick={() => setSelected(a.id)}>
+                      <button onClick={() => setSelected(a.id)} title={`${a.id} · ${CARGO[a.cargo].label} · ${statusOf(a)}`}>
                         <i className={`agd-sw agd-sw--${a.route} ${a.loaded ? '' : 'agd-sw--hollow'}`} />
                         <span className="agd-fleet-id">{a.id}</span>
                         <span className="agd-fleet-cargo">{CARGO[a.cargo].short}</span>
-                        <span className={`agd-status agd-status--${a.phase}`}>{statusOf(a)}</span>
+                        <span className={`agd-status agd-status--${a.phase} ${!a.loaded && a.phase === 'moving' ? 'agd-status--empty' : ''}`}>
+                          {statusShort(a)}
+                        </span>
                         <span className="agd-fleet-bat">
-                          <BatteryMedium size={14} /> {Math.round(a.battery)}%
+                          <BatteryMedium size={13} aria-hidden="true" /> {Math.round(a.battery)}%
                         </span>
                       </button>
                     </li>

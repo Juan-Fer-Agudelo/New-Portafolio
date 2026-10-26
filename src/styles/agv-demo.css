@@ -199,7 +199,7 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: minmax(0, 1fr) 360px;
   gap: 14px;
   padding: 14px 16px 16px;
 }
@@ -609,12 +609,14 @@
   gap: 4px;
 }
 
+/* Fila de la flota: muestra | id | carga (se recorta) | estado | batería — todo cabe en el panel */
 .agd-fleet button {
   display: grid;
-  grid-template-columns: 18px 58px 64px 1fr auto;
+  grid-template-columns: 16px auto minmax(0, 1fr) 92px 50px;
   align-items: center;
   gap: 8px;
   width: 100%;
+  min-width: 0;
   padding: 7px 8px;
   border: none;
   border-radius: 6px;
@@ -633,14 +635,32 @@
 
 .agd-fleet-cargo {
   color: var(--agd-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .agd-fleet-bat {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 3px;
   color: var(--agd-muted);
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
+}
+
+.agd-fleet .agd-status {
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Retornando vacío: gris para distinguirlo del AGV que va cargado */
+.agd-status--empty {
+  background: rgba(156, 163, 175, 0.16);
+  color: #d1d5db;
 }
 
 .agd-status {
@@ -783,10 +803,7 @@
   }
 
   .agd-fleet button {
-    grid-template-columns: 18px 58px 1fr auto;
-  }
-
-  .agd-fleet-cargo {
-    display: none;
+    grid-template-columns: 16px auto minmax(0, 1fr) 88px 46px;
+    gap: 6px;
   }
 }
