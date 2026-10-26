@@ -187,8 +187,8 @@ export const translations = {
       },
     },
     toast: {
-      emailCopied: 'Email juanferagudelo475@gmail.com copied to clipboard!',
-      emailManual: 'Copy manually: juanferagudelo475@gmail.com',
+      emailCopied: 'Email juan.fernando.arch@gmail.com copied to clipboard!',
+      emailManual: 'Copy manually: juan.fernando.arch@gmail.com',
       formSuccess: 'Thanks, {name}! Message sent successfully.',
     },
   },
@@ -379,8 +379,8 @@ export const translations = {
       },
     },
     toast: {
-      emailCopied: '¡Correo juanferagudelo475@gmail.com copiado al portapapeles!',
-      emailManual: 'Copia manual: juanferagudelo475@gmail.com',
+      emailCopied: '¡Correo juan.fernando.arch@gmail.com copiado al portapapeles!',
+      emailManual: 'Copia manual: juan.fernando.arch@gmail.com',
       formSuccess: '¡Gracias, {name}! Mensaje enviado con éxito.',
     },
   },

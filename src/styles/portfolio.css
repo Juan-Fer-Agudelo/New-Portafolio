@@ -5326,3 +5326,97 @@ span.article-author-card-name {
   outline: 2px solid var(--color-purple);
   outline-offset: 4px;
 }
+
+/* ==========================================================================
+   HOVER UNIFICADO DE ENLACES: LÍNEA INFERIOR QUE CRECE DE IZQUIERDA A DERECHA
+   Usa el púrpura del proyecto (--color-purple) en lugar del turquesa.
+   Va al final del archivo para sobrescribir los hovers anteriores.
+   ========================================================================== */
+.nav-menu-label,
+.nav-hire-label,
+.project-card-visit,
+.social-link,
+.footer-links a,
+.article-author-name,
+.article-index a,
+.blog-page-back-link,
+.credential-link,
+.article-author-card-name,
+.article-author-card-link a {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.25s ease;
+}
+
+/* .social-link conserva su flex para alinear el ícono */
+.social-link {
+  display: inline-flex;
+}
+
+.nav-menu-label::after,
+.nav-hire-label::after,
+.project-card-visit::after,
+.social-link::after,
+.footer-links a::after,
+.article-author-name::after,
+.article-index a::after,
+.blog-page-back-link::after,
+.credential-link::after,
+button.article-author-card-name::after,
+.article-author-card-link a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background-color: var(--color-purple);
+  transition: width 0.3s ease;
+}
+
+/* La línea crece al pasar el mouse o al navegar con teclado */
+.nav-logo-btn:hover .nav-menu-label::after,
+.nav-logo-btn:focus-visible .nav-menu-label::after,
+.nav-hire-link:hover .nav-hire-label::after,
+.nav-hire-link:focus-visible .nav-hire-label::after,
+.project-card-visit:hover::after,
+.project-card-visit:focus-visible::after,
+.social-link:hover::after,
+.social-link:focus-visible::after,
+.footer-links a:hover::after,
+.footer-links a:focus-visible::after,
+.article-author-name:hover::after,
+.article-index a:hover::after,
+.article-index a:focus-visible::after,
+.blog-page-back-link:hover::after,
+.blog-page-back-link:focus-visible::after,
+.credential-link:hover::after,
+.credential-link:focus-visible::after,
+button.article-author-card-name:hover::after,
+button.article-author-card-name:focus-visible::after,
+.article-author-card-link a:hover::after,
+.article-author-card-link a:focus-visible::after {
+  width: 100%;
+}
+
+/* El texto también cambia al púrpura del proyecto (sin turquesa) */
+.nav-logo-btn:hover .nav-menu-label,
+.nav-hire-link:hover .nav-hire-label,
+.project-card-visit:hover,
+.social-link:hover,
+.footer-links a:hover,
+.article-author-name:hover,
+.article-index a:hover,
+.blog-page-back-link:hover,
+.credential-link:hover,
+button.article-author-card-name:hover,
+.article-author-card-link a:hover {
+  color: var(--color-purple);
+  text-decoration: none;
+}
+
+.nav-hire-link:hover .nav-hire-bubble {
+  stroke: var(--color-purple);
+}

@@ -234,7 +234,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onBackToHome, onLoginSuc
             ¿Problemas para ingresar?{' '}
             <a
               href="mailto:soporte@perfectb.com"
-              className="text-[#1e293b] hover:text-[#9d41e8] font-semibold transition-colors hover:underline cursor-pointer"
+              className="relative inline-block w-fit text-[#1e293b] font-semibold cursor-pointer transition-colors duration-300 hover:text-[#9d41e8] after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-[2px] after:w-0 after:bg-[#9d41e8] after:transition-all after:duration-300 hover:after:w-full focus-visible:after:w-full"
             >
               Solicitar soporte técnico
             </a>
