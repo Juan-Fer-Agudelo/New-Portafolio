@@ -273,23 +273,26 @@ export const PROJECTS_DATA: ProjectItem[] = [
     number: '08',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
-    subtitle: 'Tableros analíticos para la toma de decisiones estratégicas',
-    organization: 'Renault Sofasa',
+    subtitle: 'Indicadores de calidad de pintura y mapa de calor de defectos en las UET de Ensamble',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'renault-calidad',
     date: 'Octubre 2025 - Diciembre 2025',
     description:
-      'Estructuración de tableros analíticos comprensibles para la toma de decisiones estratégicas.',
+      'Reporte en Looker y Looker Studio con los indicadores clave de fábrica del departamento de Pintura para encontrar defectos de calidad en la fabricación de vehículos, y un mapa de calor que muestra dónde se producen los mayores defectos en las 4 UET de Ensamble: Trim, Mecánica, Final y Entregas.',
     details:
-      'Liderazgo en la reorganización y estructuración de tableros estadísticos y de análisis de datos para transformarlos en herramientas intuitivas y comprensibles, diseñadas específicamente para perfiles no técnicos como psicólogos de selección. Utilización de Power BI, Looker Studio y Dash para presentar métricas complejas de forma clara, facilitando la evaluación de candidatos y el seguimiento de KPIs operativos.',
+      'Proyecto de análisis de datos para Renault Sofasa desarrollado en Looker y Looker Studio. Se construyeron los indicadores clave de fábrica del departamento de Pintura para detectar defectos de calidad en la fabricación de vehículos: vehículos inspeccionados, defectos detectados, DPU (defectos por unidad) frente a la meta, FTT (vehículos que pasan sin retoque) y defectos críticos, con su tendencia diaria y un Pareto por tipo de defecto (rayones, golpes, desconchados, inclusiones, entre otros). Después se creó un mapa de calor de las 4 UET (Unidades Elementales de Trabajo) del departamento de Ensamble, en el orden de la línea: Trim, Mecánica, Final y Entregas, cruzado por zona del vehículo, tipo de defecto y hora del turno, para identificar en qué UET y en qué parte del vehículo se concentran los mayores defectos de calidad y priorizar las acciones de mejora. Como el reporte es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
     installCode: '',
     githubUrl: '',
-    techStack: ['Power BI', 'Looker Studio', 'Dash', 'SQL'],
+    techStack: ['Looker', 'Looker Studio', 'SQL', 'KPIs de calidad (DPU, FTT)', 'Mapas de calor', 'Análisis de Pareto'],
     en: {
       type: 'DATA ANALYSIS / BI',
-      subtitle: 'Analytical dashboards for strategic decision-making',
+      subtitle: 'Paint quality KPIs and a defect heat map across the Assembly UETs',
       date: 'October 2025 - December 2025',
-      description: 'Structuring understandable analytical dashboards for strategic decision-making.',
+      description:
+        'Looker and Looker Studio report with the key factory indicators for the Paint department to find quality defects in vehicle manufacturing, plus a heat map showing where the biggest defects occur across the 4 Assembly UETs: Trim, Mechanical, Final and Deliveries.',
       details:
-        'Leadership in the reorganization and structuring of statistical and data analysis dashboards to transform them into intuitive and understandable tools, specifically designed for non-technical profiles such as selection psychologists. Use of Power BI, Looker Studio and Dash to present complex metrics clearly, facilitating candidate evaluation and the tracking of operational KPIs.',
+        'Data analysis project for Renault Sofasa built in Looker and Looker Studio. The key factory indicators for the Paint department were built to detect quality defects in vehicle manufacturing: vehicles inspected, defects detected, DPU (defects per unit) against target, FTT (vehicles passing without rework) and critical defects, with their daily trend and a Pareto by defect type (scratches, dents, chips, inclusions, among others). A heat map was then created for the 4 UETs (Elementary Work Units) of the Assembly department, in line order: Trim, Mechanical, Final and Deliveries, crossed by vehicle zone, defect type and shift hour, to identify in which UET and which part of the vehicle the biggest quality defects concentrate and prioritize improvement actions. Since the report is for internal use, the demo in this portfolio is a recreation with fictitious data.',
     },
   },
   {
