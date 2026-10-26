@@ -11,7 +11,6 @@ import {
   Info,
   LayoutDashboard,
   ListChecks,
-  Lock,
   Search,
   Send,
   ShieldCheck,
@@ -23,6 +22,7 @@ import {
 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import '../styles/renault-demo.css';
+import { DemoNotice } from './DemoNotice';
 
 import {
   ActivityItem,
@@ -115,7 +115,6 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
   const [toast, setToast] = useState('');
   const [search, setSearch] = useState('');
   const [stageFilter, setStageFilter] = useState<RequestStage | ''>('');
-  const noticeBtnRef = useRef<HTMLButtonElement>(null);
   const toastTimer = useRef<number>();
   const counter = useRef(419);
   const onCloseRef = useRef(onClose);
@@ -138,7 +137,6 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
       if (e.key === 'Escape') onCloseRef.current();
     };
     window.addEventListener('keydown', onKey);
-    setTimeout(() => noticeBtnRef.current?.focus(), 50);
     return () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKey);
@@ -239,51 +237,27 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
 
   // Se renderiza en <body> para que ningún contenedor con transform/animación afecte al position: fixed
   if (screen === 'notice') {
-    return createPortal(
-      <div
-        className="rsd-overlay rsd-overlay--center"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="rsd-notice-title"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) onClose();
+    return (
+      <DemoNotice
+        id="rsd-notice-title"
+        eyebrow="Renault Sofasa · Power Apps"
+        title="App interna con datos ficticios"
+        compare={{
+          before: 'Formato en papel → RRHH → aviso manual al jefe actual y al jefe nuevo. Hasta ~14 h por cambio.',
+          after: 'Solicitud digital, aprobación de RRHH y avisos automáticos a ambos jefes. Minutos por cambio.',
+          afterLabel: 'Con la app',
         }}
+        points={[
+          '954 empleados en 2 turnos: Soldadura, Pintura, Ensamble y DLI.',
+          'Cambia de rol (RRHH o jefe de área) para aprobar y ver cómo avanza cada solicitud.',
+        ]}
+        actions={[{ label: 'Abrir la app', onClick: () => setScreen('app') }]}
+        onClose={onClose}
       >
-        <div className="rsd-notice">
-          <button className="rsd-notice-close" onClick={onClose} aria-label="Cerrar">
-            <X size={18} />
-          </button>
-          <span className="rsd-notice-icon" aria-hidden="true">
-            <Lock size={22} />
-          </span>
-          <h2 id="rsd-notice-title" className="rsd-notice-title">
-            App interna con datos ficticios
-          </h2>
-          <p className="rsd-notice-text">
-            Cambios de Estructura y Nómina es una app de Power Apps de uso interno de la planta de Renault Sofasa. Esta
-            es una recreación para el portafolio: todos los empleados, jefes, salarios y solicitudes que verás son{' '}
-            <strong>ficticios</strong>.
-          </p>
-          <div className="rsd-notice-compare">
-            <div>
-              <span className="rsd-notice-tag rsd-notice-tag--before">Antes</span>
-              <p>Formato en papel → RRHH → aviso manual al jefe actual y al jefe nuevo. Hasta ~14 h por cambio.</p>
-            </div>
-            <div>
-              <span className="rsd-notice-tag rsd-notice-tag--after">Con la app</span>
-              <p>Solicitud digital, aprobación de RRHH y avisos automáticos a ambos jefes. Minutos por cambio.</p>
-            </div>
-          </div>
-          <ul className="rsd-notice-list">
-            <li>954 empleados en 2 turnos: Soldadura, Pintura, Ensamble y DLI.</li>
-            <li>Cambia de rol (RRHH o jefe de área) para aprobar y ver cómo avanza cada solicitud.</li>
-          </ul>
-          <button ref={noticeBtnRef} className="rsd-btn-primary rsd-btn-block" onClick={() => setScreen('app')}>
-            Abrir la app
-          </button>
-        </div>
-      </div>,
-      document.body
+        Cambios de Estructura y Nómina es una app de Power Apps de uso interno de la planta de Renault Sofasa. Esta es
+        una recreación para el portafolio: todos los empleados, jefes, salarios y solicitudes que verás son{' '}
+        <strong>ficticios</strong>.
+      </DemoNotice>
     );
   }
 

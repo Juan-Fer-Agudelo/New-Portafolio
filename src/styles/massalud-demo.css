@@ -26,12 +26,6 @@
   box-sizing: border-box;
 }
 
-.msd-overlay--center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
 
 .msd-sr-only {
   position: absolute;
@@ -45,91 +39,7 @@
   border: 0;
 }
 
-/* ---------- Pop-up de aviso ---------- */
-.msd-notice {
-  position: relative;
-  width: 100%;
-  max-width: 520px;
-  background: #fff;
-  border-radius: 16px;
-  padding: 34px 32px 28px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
-}
 
-.msd-notice-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  display: flex;
-  border: none;
-  background: none;
-  color: var(--msd-muted);
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
-}
-
-.msd-notice-close:hover {
-  background: var(--msd-bg);
-}
-
-.msd-notice-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--msd-teal-soft);
-  color: var(--msd-teal-dark);
-  margin-bottom: 16px;
-}
-
-.msd-notice-title {
-  font-size: 21px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  color: var(--msd-text);
-}
-
-.msd-notice-text {
-  margin: 0 0 16px;
-  color: #374151;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.msd-notice-list {
-  margin: 0 0 24px;
-  padding-left: 18px;
-  color: #374151;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.msd-notice-list li + li {
-  margin-top: 4px;
-}
-
-.msd-btn-primary {
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  background: var(--msd-teal);
-  color: #fff;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 13px 18px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.msd-btn-primary:hover {
-  background: var(--msd-teal-dark);
-}
-
-.msd-btn-primary:focus-visible,
 .msd-close:focus-visible,
 .msd-card-head:focus-visible,
 .msd-tip:focus-visible,
@@ -798,58 +708,14 @@
     min-width: 0;
   }
 
-  .msd-notice {
-    padding: 28px 22px 22px;
-  }
 }
 
-/* ---------- Avisos: botones secundarios y destacado ---------- */
-.msd-notice-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
 
-.msd-btn-secondary {
-  width: 100%;
-  border: 1.5px solid var(--msd-border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--msd-text);
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 12px 18px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
 
-.msd-btn-secondary:hover {
-  background: var(--msd-bg);
-  border-color: #d1d5db;
-}
 
-.msd-btn-secondary:focus-visible,
 .msd-slack-link:focus-visible {
   outline: 2px solid var(--msd-purple);
   outline-offset: 2px;
-}
-
-.msd-notice-icon--warn {
-  background: #fef3c7;
-  color: #b45309;
-}
-
-.msd-notice-highlight {
-  margin: 0 0 14px;
-  padding: 12px 14px;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-left: 4px solid #f59e0b;
-  border-radius: 8px;
-  color: #78350f;
-  font-size: 14.5px;
-  line-height: 1.55;
 }
 
 .msd-slack-link {

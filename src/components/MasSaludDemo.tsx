@@ -11,7 +11,6 @@ import {
   Clock,
   Info,
   LayoutGrid,
-  Lock,
   Map as MapIcon,
   Moon,
   Plus,
@@ -38,6 +37,7 @@ import {
 } from './massaludData';
 import { MasSaludSlack } from './MasSaludSlack';
 import { RightsNotice } from './massaludData';
+import { DemoNotice } from './DemoNotice';
 
 /* Demo del ERP de Farmacias MasSalud (módulo Registro Horario + alertas en Slack).
    Todos los datos son ficticios; ver massaludData.tsx. */
@@ -50,14 +50,12 @@ interface MasSaludDemoProps {
 export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) => {
   // notice → aviso inicial · demo → ERP · slack-notice → aviso de datos ficticios · slack → canal de Slack
   const [step, setStep] = useState<'notice' | 'demo' | 'slack-notice' | 'slack'>('notice');
-  const slackBtnRef = useRef<HTMLButtonElement>(null);
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('');
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [tableOpen, setTableOpen] = useState(true);
   const [now, setNow] = useState(() => new Date());
-  const noticeBtnRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
@@ -72,18 +70,12 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
     };
     window.addEventListener('keydown', onKey);
     const timer = window.setInterval(() => setNow(new Date()), 30000);
-    setTimeout(() => noticeBtnRef.current?.focus(), 50);
     return () => {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKey);
       window.clearInterval(timer);
     };
   }, [isOpen]);
-
-  // Lleva el foco al botón principal del aviso de Slack
-  useEffect(() => {
-    if (step === 'slack-notice') slackBtnRef.current?.focus();
-  }, [step]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -130,93 +122,54 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
 
   // Se renderiza en <body> para que ningún contenedor con transform/animación afecte al position: fixed
   if (step === 'notice') {
-    return createPortal(
-      <div
-        className="msd-overlay msd-overlay--center"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="msd-notice-title"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) onClose();
-        }}
+    return (
+      <DemoNotice
+        id="msd-notice-title"
+        eyebrow="Farmacias MasSalud · Zapier + Slack"
+        title="ERP de uso empresarial privado"
+        points={[
+          'Marcación de huella en Nteco → Zapier → alerta de llegada tarde en Slack del jefe.',
+          'La misma marcación se registra en el módulo Registro Horario del ERP.',
+          'Solo Recursos Humanos y la Gerencia General tienen acceso a este módulo.',
+        ]}
+        actions={[
+          { label: 'Ver demostración del ERP', onClick: () => setStep('demo') },
+          { label: 'Ver alertas en Slack', onClick: () => setStep('slack-notice') },
+        ]}
+        footer={<RightsNotice />}
+        onClose={onClose}
       >
-        <div className="msd-notice">
-          <button className="msd-notice-close" onClick={onClose} aria-label="Cerrar">
-            <X size={18} />
-          </button>
-          <span className="msd-notice-icon" aria-hidden="true">
-            <Lock size={22} />
-          </span>
-          <h2 id="msd-notice-title" className="msd-notice-title">
-            ERP de uso empresarial privado
-          </h2>
-          <p className="msd-notice-text">
-            The Efficient Business System es el ERP interno de Farmacias MasSalud y su uso es empresarial y
-            privado. Para esta demostración se realizó una copia del módulo con información de ejemplo:
-            todos los empleados, códigos y marcaciones que verás son ficticios.
-          </p>
-          <ul className="msd-notice-list">
-            <li>Marcación de huella en Nteco → Zapier → alerta de llegada tarde en Slack del jefe.</li>
-            <li>La misma marcación se registra en el módulo Registro Horario del ERP.</li>
-            <li>Solo Recursos Humanos y la Gerencia General tienen acceso a este módulo.</li>
-          </ul>
-          <div className="msd-notice-actions">
-            <button ref={noticeBtnRef} className="msd-btn-primary" onClick={() => setStep('demo')}>
-              Ver demostración del ERP
-            </button>
-            <button className="msd-btn-secondary" onClick={() => setStep('slack-notice')}>
-              Ver alertas en Slack
-            </button>
-          </div>
-          <RightsNotice />
-        </div>
-      </div>,
-      document.body
+        The Efficient Business System es el ERP interno de Farmacias MasSalud y su uso es empresarial y privado. Para
+        esta demostración se realizó una copia del módulo con información de ejemplo: todos los empleados, códigos y
+        marcaciones que verás son ficticios.
+      </DemoNotice>
     );
   }
 
   if (step === 'slack-notice') {
-    return createPortal(
-      <div
-        className="msd-overlay msd-overlay--center"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="msd-slack-notice-title"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) onClose();
-        }}
-      >
-        <div className="msd-notice">
-          <button className="msd-notice-close" onClick={onClose} aria-label="Cerrar">
-            <X size={18} />
-          </button>
-          <span className="msd-notice-icon msd-notice-icon--warn" aria-hidden="true">
-            <Info size={22} />
-          </span>
-          <h2 id="msd-slack-notice-title" className="msd-notice-title">
-            Antes de continuar: todos los datos son ficticios
-          </h2>
-          <p className="msd-notice-highlight">
+    return (
+      <DemoNotice
+        id="msd-slack-notice-title"
+        eyebrow="Farmacias MasSalud · Slack"
+        icon="info"
+        title="Antes de continuar: todos los datos son ficticios"
+        highlight={
+          <>
             Los nombres, departamentos, horas y mensajes que vas a ver en Slack <strong>no son reales</strong>. Se
             crearon solo para esta demostración y no corresponden a ningún empleado de Farmacias MasSalud.
-          </p>
-          <p className="msd-notice-text">
-            La vista recrea el canal privado <strong>#registro-de-horario</strong>. Cada vez que un empleado marca
-            su huella en Nteco y llega después de su hora límite, Zapier publica automáticamente una alerta como
-            estas para que el jefe se entere en tiempo real.
-          </p>
-          <div className="msd-notice-actions">
-            <button ref={slackBtnRef} className="msd-btn-primary" onClick={() => setStep('slack')}>
-              Entendido, ver Slack
-            </button>
-            <button className="msd-btn-secondary" onClick={() => setStep('demo')}>
-              Ir al ERP
-            </button>
-          </div>
-          <RightsNotice />
-        </div>
-      </div>,
-      document.body
+          </>
+        }
+        actions={[
+          { label: 'Entendido, ver Slack', onClick: () => setStep('slack') },
+          { label: 'Ir al ERP', onClick: () => setStep('demo') },
+        ]}
+        footer={<RightsNotice />}
+        onClose={onClose}
+      >
+        La vista recrea el canal privado <strong>#registro-de-horario</strong>. Cada vez que un empleado marca su huella
+        en Nteco y llega después de su hora límite, Zapier publica automáticamente una alerta como estas para que el jefe
+        se entere en tiempo real.
+      </DemoNotice>
     );
   }
 

@@ -60,14 +60,6 @@
   outline-offset: 2px;
 }
 
-.rsd-overlay--center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  overflow-y: auto;
-}
-
 .rsd-sr-only {
   position: absolute;
   width: 1px;
@@ -78,107 +70,6 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* ---------- Aviso inicial ---------- */
-.rsd-notice {
-  position: relative;
-  width: 100%;
-  max-width: 560px;
-  margin: auto;
-  background: #fff;
-  border-radius: 16px;
-  padding: 34px 32px 28px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
-}
-
-.rsd-notice-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  display: flex;
-  border: none;
-  background: none;
-  color: var(--rsd-muted);
-  padding: 6px;
-  border-radius: 8px;
-}
-
-.rsd-notice-close:hover {
-  background: var(--rsd-bg);
-}
-
-.rsd-notice-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--rsd-ink);
-  color: var(--rsd-accent);
-  margin-bottom: 16px;
-}
-
-.rsd-notice-title {
-  font-size: 21px;
-  font-weight: 700;
-  margin: 0 0 12px;
-  color: var(--rsd-ink);
-}
-
-.rsd-notice-text {
-  margin: 0 0 18px;
-  color: #374151;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.rsd-notice-compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.rsd-notice-compare > div {
-  border: 1px solid var(--rsd-border);
-  border-radius: 12px;
-  padding: 12px 14px;
-}
-
-.rsd-notice-compare p {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #374151;
-}
-
-.rsd-notice-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 3px 8px;
-  border-radius: 999px;
-}
-
-.rsd-notice-tag--before {
-  background: var(--rsd-bad-soft);
-  color: var(--rsd-bad);
-}
-
-.rsd-notice-tag--after {
-  background: var(--rsd-ok-soft);
-  color: var(--rsd-ok);
-}
-
-.rsd-notice-list {
-  margin: 0 0 22px;
-  padding-left: 18px;
-  color: #374151;
-  line-height: 1.6;
 }
 
 /* ---------- Botones ---------- */
@@ -208,12 +99,6 @@
 .rsd-btn-primary:disabled {
   opacity: 0.45;
   cursor: not-allowed;
-}
-
-.rsd-btn-block {
-  width: 100%;
-  padding: 13px 18px;
-  font-size: 15px;
 }
 
 .rsd-btn-danger {
@@ -1474,11 +1359,7 @@ textarea.rsd-input {
 }
 
 @media (max-width: 600px) {
-  .rsd-notice {
-    padding: 28px 20px 22px;
-  }
 
-  .rsd-notice-compare,
   .rsd-form-grid,
   .rsd-kpis {
     grid-template-columns: 1fr;
