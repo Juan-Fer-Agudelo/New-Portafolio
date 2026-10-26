@@ -1145,7 +1145,7 @@
         flex-direction: column;
         justify-content: center;
         padding-top: 22px;
-        padding-bottom: 120px;
+        padding-bottom: 60px;
       }
 
       .section-vertical-line {
@@ -1197,7 +1197,7 @@
          SECCIÓN 3: PROYECTOS / OPEN SOURCE (ESTILO EXACTO ROBB OWEN)
          ========================================================================== */
       .open-source-section {
-        padding: 120px 0 100px;
+        padding: 60px 0 100px;
         width: 100%;
       }
 

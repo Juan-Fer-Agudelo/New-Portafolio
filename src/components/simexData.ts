@@ -54,8 +54,17 @@ const seeded = (seed: number) => {
 
 const daySeed = (d: Date) => d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
 
+// Mezcla la semilla para que días consecutivos no den valores casi idénticos
+const hashSeed = (n: number) => {
+  let h = Math.imul(n ^ 0x9e3779b9, 0x85ebca6b);
+  h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
+  return ((h ^ (h >>> 16)) >>> 0) % 2147483646 || 1;
+};
+
 const rawRate = (c: Currency, d: Date, i: number) => {
-  const r = seeded(daySeed(d) * 31 + i)();
+  const next = seeded(hashSeed(daySeed(d) * 31 + i));
+  next();
+  const r = next();
   return c.base * (1 + (r - 0.5) * 0.012);
 };
 

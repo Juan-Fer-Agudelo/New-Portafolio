@@ -93,7 +93,7 @@ interface Edge {
 
 const N = 64; // tamaño de un nodo
 const LANE_TOP = 120;
-const LANE_GAP = 92;
+const LANE_GAP = 100;
 const laneY = (i: number) => LANE_TOP + i * LANE_GAP;
 const MID = laneY(4.5) + N / 2; // centro vertical del flujo
 const TALL = LANE_GAP * 9 + 64; // alto de Switch y Merge
@@ -350,7 +350,7 @@ const MAIN: FlowNode[] = [
 const LANES: FlowNode[] = CURRENCIES.flatMap((c, i) => [
   {
     id: `set-${c.code}`,
-    name: `${c.code} · ${c.name}`,
+    name: `Leer ${c.code}`,
     kind: 'Edit Fields (Set)',
     icon: <Pencil size={24} />,
     color: '#7b8cff',
@@ -359,6 +359,7 @@ const LANES: FlowNode[] = CURRENCIES.flatMap((c, i) => [
     lane: c.code,
     params: () => [
       ['Viene de', `Switch → salida ${i} (codigo = "${c.code}")`],
+      ['Moneda', `${c.name} (${c.code})`],
       ['Campo', <code key="v">valor</code>],
       ['Valor', <code key="e">{'{{ $json.valor.trim() }}'}</code>],
     ],
@@ -1116,7 +1117,7 @@ const EmailPreview: React.FC<{ ctx: Ctx }> = ({ ctx }) => {
                     </td>
                     <td className="sxd-num">$ {fmtCO(r.cop, curr(r.code).decimals)}</td>
                     <td className={`sxd-num ${r.change >= 0 ? 'sxd-up' : 'sxd-down'}`}>
-                      {r.change >= 0 ? '▲' : '▼'} {Math.abs(r.change).toFixed(2)}%
+                      {r.change >= 0 ? '▲' : '▼'} {fmtCO(Math.abs(r.change), 2)} %
                     </td>
                   </tr>
                 ))}

@@ -5,10 +5,23 @@ import { RenaultDemo } from './RenaultDemo';
 import { SimexDemo } from './SimexDemo';
 import { CalidadDemo } from './CalidadDemo';
 import { AgvDemo } from './AgvDemo';
+import { DemoErrorBoundary } from './DemoErrorBoundary';
 import { CountryFlag } from './CountryFlag';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
 import { renderWithRightsHighlight } from '../utils/textHighlight';
+
+type DemoId = NonNullable<ProjectItem['demo']>;
+
+/** Demos de "Ver proyecto". Al ser Record<DemoId, …>, TypeScript avisa si se agrega una demo sin componente. */
+const DEMO_COMPONENTS: Record<DemoId, { name: string; Component: React.FC<{ isOpen: boolean; onClose: () => void }> }> = {
+  'massalud-erp': { name: 'MasSalud', Component: MasSaludDemo },
+  'renault-estructura': { name: 'Cambios de Estructura', Component: RenaultDemo },
+  'simex-tasas': { name: 'Tasas de cambio', Component: SimexDemo },
+  'renault-calidad': { name: 'Calidad de pintura', Component: CalidadDemo },
+  'agv-trazabilidad': { name: 'Trazabilidad de AGVs', Component: AgvDemo },
+};
+const DEMOS = (Object.keys(DEMO_COMPONENTS) as DemoId[]).map((id) => ({ id, ...DEMO_COMPONENTS[id] }));
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -210,11 +223,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         </div>
       </div>
 
-      <MasSaludDemo isOpen={openDemo === 'massalud-erp'} onClose={closeDemo} />
-      <RenaultDemo isOpen={openDemo === 'renault-estructura'} onClose={closeDemo} />
-      <SimexDemo isOpen={openDemo === 'simex-tasas'} onClose={closeDemo} />
-      <CalidadDemo isOpen={openDemo === 'renault-calidad'} onClose={closeDemo} />
-      <AgvDemo isOpen={openDemo === 'agv-trazabilidad'} onClose={closeDemo} />
+      {/* Cada demo va protegida: si falla, muestra un aviso y el portafolio sigue funcionando */}
+      {DEMOS.map(({ id, name, Component }) => (
+        <DemoErrorBoundary key={id} name={name} isOpen={openDemo === id} onClose={closeDemo}>
+          <Component isOpen={openDemo === id} onClose={closeDemo} />
+        </DemoErrorBoundary>
+      ))}
     </section>
   );
 };

@@ -760,11 +760,30 @@
 
   .agd-main {
     grid-template-columns: 1fr;
+    /* Cada fila toma la altura de su contenido; la columna completa se desplaza en vertical */
+    grid-auto-rows: max-content;
+    align-content: start;
     overflow-y: auto;
   }
 
   .agd-map-card {
     min-height: 460px;
+  }
+
+  /* El plano conserva su proporción y se desplaza en horizontal, sin quedar centrado ni cortado */
+  .agd-map-scroll {
+    display: block;
+    flex: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .agd-map {
+    width: 100%;
+    min-width: 760px;
+    height: auto;
+    max-height: none;
+    margin: 0;
   }
 
   .agd-log-panel {
@@ -799,7 +818,7 @@
   }
 
   .agd-map-card {
-    min-height: 400px;
+    min-height: 0;
   }
 
   .agd-fleet button {
