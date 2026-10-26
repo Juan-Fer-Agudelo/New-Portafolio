@@ -3,6 +3,13 @@ import { PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
 import { CREDENTIALS, CV_IMAGES, CV_PDF_URL } from '../data/credentialsData';
 import profilePhoto from '../assets/images/photo.png';
+import liderazgo1 from '../assets/images/liderazgo-1.jpg';
+import liderazgo2 from '../assets/images/liderazgo-2.jpg';
+import liderazgo3 from '../assets/images/liderazgo-3.jpg';
+import liderazgo4 from '../assets/images/liderazgo-4.jpg';
+
+// Fotos de la sección de liderazgo empresarial
+const LEADERSHIP_PHOTOS = [liderazgo1, liderazgo2, liderazgo3, liderazgo4];
 
 interface AboutViewProps {
   onNavigate: (view: PageView, hash?: string) => void;
@@ -103,6 +110,38 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                 {a.bookings}
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Sección de Liderazgo Empresarial */}
+        <div className="about-leadership animate-on-scroll">
+          <span className="about-leadership-eyebrow">{a.leadershipEyebrow}</span>
+          <h2 className="about-subsection-title">{a.leadershipTitle}</h2>
+          <p className="about-leadership-intro">{a.leadershipIntro}</p>
+
+          <div className="leadership-pillars">
+            {a.leadershipPillars.map((pillar, i) => (
+              <div key={i} className="leadership-pillar">
+                <span className="leadership-pillar-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="leadership-pillar-title">{pillar.title}</h3>
+                <p className="leadership-pillar-text">{pillar.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="leadership-gallery-title">{a.leadershipGalleryTitle}</h3>
+          <div className="leadership-gallery">
+            {LEADERSHIP_PHOTOS.map((src, i) => (
+              <figure key={i} className="leadership-photo">
+                <img
+                  src={src}
+                  alt={`${a.leadershipPhotoAlt} (${i + 1})`}
+                  loading="lazy"
+                />
+              </figure>
+            ))}
           </div>
         </div>
 
