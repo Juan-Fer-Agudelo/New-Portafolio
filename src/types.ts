@@ -30,11 +30,13 @@ export interface ProjectItem {
   githubUrl: string;
   techStack: string[];
   organization?: string;
+  /** País donde se realizó el proyecto; muestra su bandera junto a la organización. */
+  country?: 'do' | 'us' | 've' | 'co';
   date?: string;
   url?: string;
   image?: string;
   /** Demo interactiva con datos ficticios que se abre con el botón "Ver proyecto". */
-  demo?: 'massalud-erp';
+  demo?: 'massalud-erp' | 'renault-estructura';
   // Versión en inglés de los campos de texto traducibles
   en?: ProjectLocale;
 }

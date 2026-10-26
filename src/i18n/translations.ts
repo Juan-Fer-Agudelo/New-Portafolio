@@ -130,23 +130,23 @@ export const translations = {
       leadershipEyebrow: 'BUSINESS LEADERSHIP',
       leadershipTitle: 'Leadership that turns vision into results',
       leadershipIntro:
-        'Beyond code, Juan is a business leader. He has guided teams and projects from start to finish, connecting business strategy with technical execution. His style combines vision, closeness with people and a constant focus on measurable results.',
+        "Beyond code, I'm a business leader. I've guided teams and projects from start to finish, connecting business strategy with technical execution. My style combines vision, closeness with people and a constant focus on measurable results.",
       leadershipPillars: [
         {
           title: 'Strategic vision',
-          text: 'Turns business goals into clear roadmaps, prioritizes what creates value and makes data-driven decisions.',
+          text: 'I turn business goals into clear roadmaps, prioritize what creates value and make data-driven decisions.',
         },
         {
           title: 'Team leadership',
-          text: 'Builds, motivates and coordinates multidisciplinary teams, fostering trust, accountability and continuous learning.',
+          text: 'I build, motivate and coordinate multidisciplinary teams, fostering trust, accountability and continuous learning.',
         },
         {
           title: 'Client relationships',
-          text: 'Has worked hand in hand with companies in the United States, Venezuela and Colombia, aligning expectations and delivering solutions that work.',
+          text: "I've worked hand in hand with companies in the United States, Venezuela and Colombia, aligning expectations and delivering solutions that work.",
         },
         {
           title: 'Mentoring and growth',
-          text: 'Shares knowledge, supports the professional growth of others and promotes best practices across every organization.',
+          text: 'I share knowledge, support the professional growth of others and promote best practices across every organization.',
         },
       ],
       leadershipGalleryTitle: 'Leadership moments',
@@ -346,23 +346,23 @@ export const translations = {
       leadershipEyebrow: 'LIDERAZGO EMPRESARIAL',
       leadershipTitle: 'Liderazgo que convierte visión en resultados',
       leadershipIntro:
-        'Más allá del código, Juan es un líder empresarial. Ha guiado equipos y proyectos de principio a fin, conectando la estrategia del negocio con la ejecución técnica. Su estilo combina visión, cercanía con las personas y un enfoque constante en resultados medibles.',
+        'Más allá del código, soy un líder empresarial. He guiado equipos y proyectos de principio a fin, conectando la estrategia del negocio con la ejecución técnica. Mi estilo combina visión, cercanía con las personas y un enfoque constante en resultados medibles.',
       leadershipPillars: [
         {
           title: 'Visión estratégica',
-          text: 'Traduce los objetivos del negocio en hojas de ruta claras, prioriza lo que genera valor y toma decisiones con datos.',
+          text: 'Traduzco los objetivos del negocio en hojas de ruta claras, priorizo lo que genera valor y tomo decisiones con datos.',
         },
         {
           title: 'Liderazgo de equipos',
-          text: 'Forma, motiva y coordina equipos multidisciplinarios, creando un ambiente de confianza, responsabilidad y aprendizaje continuo.',
+          text: 'Formo, motivo y coordino equipos multidisciplinarios, creando un ambiente de confianza, responsabilidad y aprendizaje continuo.',
         },
         {
           title: 'Relación con clientes',
-          text: 'Ha trabajado de la mano con empresas de Estados Unidos, Venezuela y Colombia, alineando expectativas y entregando soluciones que cumplen.',
+          text: 'He trabajado de la mano con empresas de Estados Unidos, Venezuela y Colombia, alineando expectativas y entregando soluciones que cumplen.',
         },
         {
           title: 'Mentoría y crecimiento',
-          text: 'Comparte conocimiento, acompaña el desarrollo profesional de otros y promueve buenas prácticas dentro de cada organización.',
+          text: 'Comparto conocimiento, acompaño el desarrollo profesional de otros y promuevo buenas prácticas dentro de cada organización.',
         },
       ],
       leadershipGalleryTitle: 'Momentos de liderazgo',

@@ -8,8 +8,12 @@ import liderazgo2 from '../assets/images/liderazgo-2.jpg';
 import liderazgo3 from '../assets/images/liderazgo-3.jpg';
 import liderazgo4 from '../assets/images/liderazgo-4.jpg';
 
-// Fotos de la sección de liderazgo empresarial
-const LEADERSHIP_PHOTOS = [liderazgo1, liderazgo2, liderazgo3, liderazgo4];
+// Fotos de la sección de liderazgo empresarial.
+// Orden: liderazgo-3 (destacada al cargar), 2, 4 y 1.
+const LEADERSHIP_PHOTOS = [liderazgo3, liderazgo2, liderazgo4, liderazgo1];
+// liderazgo-1 se muestra con acercamiento en la foto destacada
+// (en el visor ampliado se sigue viendo completa)
+const ZOOMED_PHOTO = liderazgo1;
 
 interface AboutViewProps {
   onNavigate: (view: PageView, hash?: string) => void;
@@ -20,6 +24,31 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
   const { t, lang } = useLang();
   const a = t.aboutPage;
   const [activeCvIdx, setActiveCvIdx] = useState<number | null>(null);
+  // Foto de liderazgo abierta en el visor (null = cerrado)
+  const [activePhotoIdx, setActivePhotoIdx] = useState<number | null>(null);
+  // Foto destacada en la galería de liderazgo (0 = liderazgo-3)
+  const [featuredIdx, setFeaturedIdx] = useState(0);
+
+  // Teclado y bloqueo de scroll para el visor de fotos de liderazgo
+  useEffect(() => {
+    if (activePhotoIdx === null) return;
+    const total = LEADERSHIP_PHOTOS.length;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActivePhotoIdx(null);
+      } else if (e.key === 'ArrowRight') {
+        setActivePhotoIdx((prev) => (prev === null ? prev : (prev + 1) % total));
+      } else if (e.key === 'ArrowLeft') {
+        setActivePhotoIdx((prev) => (prev === null ? prev : (prev - 1 + total) % total));
+      }
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activePhotoIdx]);
 
   // Descarga una imagen individual por URL
   const handleDownloadImage = (url: string, filename: string) => {
@@ -132,15 +161,73 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
           </div>
 
           <h3 className="leadership-gallery-title">{a.leadershipGalleryTitle}</h3>
-          <div className="leadership-gallery">
+          {/* Foto destacada: se muestra completa, con el fondo difuminado de la misma foto */}
+          <div className="leadership-featured">
+            <div
+              className="leadership-featured-bg"
+              style={{ backgroundImage: `url(${LEADERSHIP_PHOTOS[featuredIdx]})` }}
+              aria-hidden="true"
+            ></div>
+
+            <button
+              type="button"
+              className={`leadership-featured-btn ${
+                LEADERSHIP_PHOTOS[featuredIdx] === ZOOMED_PHOTO ? 'is-zoomed' : ''
+              }`}
+              onClick={() => setActivePhotoIdx(featuredIdx)}
+              aria-label={lang === 'en' ? 'Enlarge featured photo' : 'Ampliar foto destacada'}
+              title={lang === 'en' ? 'Click to enlarge' : 'Clic para ampliar'}
+            >
+              <img
+                key={featuredIdx}
+                src={LEADERSHIP_PHOTOS[featuredIdx]}
+                alt={`${a.leadershipPhotoAlt} (${featuredIdx + 1})`}
+                className="leadership-featured-img"
+              />
+            </button>
+
+            <button
+              type="button"
+              className="leadership-featured-arrow prev"
+              onClick={() =>
+                setFeaturedIdx((prev) => (prev - 1 + LEADERSHIP_PHOTOS.length) % LEADERSHIP_PHOTOS.length)
+              }
+              aria-label={lang === 'en' ? 'Previous photo' : 'Foto anterior'}
+            >
+              &#8249;
+            </button>
+            <button
+              type="button"
+              className="leadership-featured-arrow next"
+              onClick={() => setFeaturedIdx((prev) => (prev + 1) % LEADERSHIP_PHOTOS.length)}
+              aria-label={lang === 'en' ? 'Next photo' : 'Foto siguiente'}
+            >
+              &#8250;
+            </button>
+
+            <span className="leadership-featured-counter" aria-live="polite">
+              {featuredIdx + 1} / {LEADERSHIP_PHOTOS.length}
+            </span>
+          </div>
+
+          {/* Miniaturas para cambiar la foto destacada */}
+          <div className="leadership-thumbs">
             {LEADERSHIP_PHOTOS.map((src, i) => (
-              <figure key={i} className="leadership-photo">
+              <button
+                key={i}
+                type="button"
+                className={`leadership-thumb ${i === featuredIdx ? 'active' : ''}`}
+                onClick={() => setFeaturedIdx(i)}
+                aria-label={lang === 'en' ? `Show photo ${i + 1}` : `Mostrar foto ${i + 1}`}
+                aria-pressed={i === featuredIdx}
+              >
                 <img
                   src={src}
-                  alt={`${a.leadershipPhotoAlt} (${i + 1})`}
+                  alt=""
                   loading="lazy"
+                  className={src === ZOOMED_PHOTO ? 'is-zoomed' : undefined}
                 />
-              </figure>
+              </button>
             ))}
           </div>
         </div>
@@ -387,6 +474,79 @@ export const AboutView: React.FC<AboutViewProps> = ({ onNavigate, onOpenContactM
                   ))}
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Visor ampliado de las fotos de liderazgo (muestra la foto completa) */}
+        {activePhotoIdx !== null && (
+          <div
+            className="cv-lightbox-backdrop"
+            role="dialog"
+            aria-modal="true"
+            aria-label={lang === 'en' ? 'Enlarged photo viewer' : 'Visor de fotos ampliadas'}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setActivePhotoIdx(null);
+            }}
+          >
+            <div className="cv-lightbox-modal">
+              <div className="cv-lightbox-topbar">
+                <div className="cv-lightbox-page-indicator">
+                  <span className="cv-lightbox-dot" aria-hidden="true"></span>
+                  <span>
+                    {lang === 'en'
+                      ? `Photo ${activePhotoIdx + 1} of ${LEADERSHIP_PHOTOS.length}`
+                      : `Foto ${activePhotoIdx + 1} de ${LEADERSHIP_PHOTOS.length}`}
+                  </span>
+                </div>
+                <div className="cv-lightbox-actions">
+                  <button
+                    type="button"
+                    className="cv-lightbox-close-btn"
+                    onClick={() => setActivePhotoIdx(null)}
+                    aria-label={lang === 'en' ? 'Close viewer' : 'Cerrar visor'}
+                    autoFocus
+                  >
+                    &times;
+                  </button>
+                </div>
+              </div>
+
+              <div className="cv-lightbox-body">
+                <button
+                  type="button"
+                  className="cv-lightbox-nav-arrow prev"
+                  onClick={() =>
+                    setActivePhotoIdx((prev) =>
+                      prev === null ? prev : (prev - 1 + LEADERSHIP_PHOTOS.length) % LEADERSHIP_PHOTOS.length
+                    )
+                  }
+                  aria-label={lang === 'en' ? 'Previous photo' : 'Foto anterior'}
+                >
+                  &#8249;
+                </button>
+
+                <div className="cv-lightbox-img-wrap">
+                  <img
+                    src={LEADERSHIP_PHOTOS[activePhotoIdx]}
+                    alt={`${a.leadershipPhotoAlt} (${activePhotoIdx + 1})`}
+                    className="cv-lightbox-img"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  className="cv-lightbox-nav-arrow next"
+                  onClick={() =>
+                    setActivePhotoIdx((prev) =>
+                      prev === null ? prev : (prev + 1) % LEADERSHIP_PHOTOS.length
+                    )
+                  }
+                  aria-label={lang === 'en' ? 'Next photo' : 'Foto siguiente'}
+                >
+                  &#8250;
+                </button>
+              </div>
             </div>
           </div>
         )}

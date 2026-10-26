@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import { ProjectItem, WritingArticle, ActiveModal, PageView } from '../types';
 import { useLang } from '../i18n/LangContext';
 import { ArticleAuthorCard } from './ArticleAuthorCard';
+import { CountryFlag } from './CountryFlag';
 import { renderWithRightsHighlight } from '../utils/textHighlight';
 
 // Configuración de EmailJS - Reemplaza con tus credenciales de https://www.emailjs.com/
@@ -346,7 +347,10 @@ export const Modals: React.FC<ModalsProps> = ({
           {(selectedProject?.organization || projDate) && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '18px' }}>
               {selectedProject?.organization && (
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: 'var(--color-primary)' }}>
+                <span className="project-org-with-flag" style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 600, color: 'var(--color-primary)' }}>
+                  {selectedProject.country && (
+                    <CountryFlag country={selectedProject.country} lang={lang === 'en' ? 'en' : 'es'} />
+                  )}
                   {selectedProject.organization}
                 </span>
               )}

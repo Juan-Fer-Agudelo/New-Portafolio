@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { ProjectItem } from '../types';
 import { MasSaludDemo } from './MasSaludDemo';
+import { RenaultDemo } from './RenaultDemo';
+import { CountryFlag } from './CountryFlag';
 import { PROJECTS_DATA } from '../data/portfolioData';
 import { useLang } from '../i18n/LangContext';
 import { renderWithRightsHighlight } from '../utils/textHighlight';
@@ -141,7 +143,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                     <div className="project-card-meta">
                       {project.organization && (
-                        <span className="project-card-org">{project.organization}</span>
+                        <span className="project-card-org">
+                          {project.country && <CountryFlag country={project.country} lang={lang} />}
+                          {project.organization}
+                        </span>
                       )}
                       {loc(project).date && (
                         <span className="project-card-date">{loc(project).date}</span>
@@ -203,6 +208,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       </div>
 
       <MasSaludDemo isOpen={openDemo === 'massalud-erp'} onClose={closeDemo} />
+      <RenaultDemo isOpen={openDemo === 'renault-estructura'} onClose={closeDemo} />
     </section>
   );
 };

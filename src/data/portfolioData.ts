@@ -16,6 +16,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     subtitle: 'Plataforma líder de empleos en medicina estética del sur de Florida',
     image: enhanceOg,
     organization: 'Enhance.Work (South Florida, FL)',
+    country: 'us',
     date: 'Julio 2026',
     url: 'https://enhance.work',
     description:
@@ -56,6 +57,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     subtitle: 'Plataforma de reservas para alquiler de casas inflables en South Miami',
     image: miamiBounceOg,
     organization: 'Miami Bounce (South Miami, FL)',
+    country: 'us',
     date: 'Junio 2026',
     url: 'https://miabounce.com/',
     description:
@@ -99,6 +101,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     subtitle: 'E-commerce de péptidos importados con protocolo clínico',
     image: peptidosOg,
     organization: 'Peptidos Venezuela',
+    country: 've',
     date: 'Mayo 2026',
     url: 'https://peptidosvzla.com/',
     description:
@@ -142,6 +145,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     subtitle: 'Sitio para clínica de medicina estética con reservas y pagos online',
     image: perfectbOg,
     organization: 'Perfect B Aesthetic Medicine (Doral, FL)',
+    country: 'us',
     date: 'Abril 2026',
     url: 'https://perfectb.com/',
     description:
@@ -178,8 +182,41 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'ai-support-analyst',
+    id: 'massalud-control-asistencia',
     number: '05',
+    type: 'AUTOMATIZACIÓN / RPA',
+    title: 'Control de Asistencia MasSalud',
+    subtitle: 'Alertas de llegadas tarde en Slack e indicadores de asistencia en el ERP',
+    organization: 'Farmacias MasSalud (Santo Domingo, República Dominicana)',
+    country: 'do',
+    demo: 'massalud-erp',
+    description:
+      'Automatización RPA con Zapier para Farmacias MasSalud: cada vez que un empleado marca su huella en el sistema biométrico Nteco y llega tarde, el jefe recibe la notificación en Slack y la marcación se registra en el ERP interno "The Efficient Business System", en un módulo de indicadores visible solo para Recursos Humanos y la Gerencia General. Todos los derechos reservados son reservados para Talent Phi.',
+    details:
+      'Automatización del control de asistencia para Farmacias MasSalud en Santo Domingo, República Dominicana. Cada marcación de huella en el sistema biométrico Nteco dispara un flujo en Zapier que compara la hora de marcación con la hora esperada del turno del empleado. Si la llegada es tarde, envía en tiempo real una notificación al Slack del jefe con el nombre del empleado, la hora y los minutos de retraso. En paralelo, todas las marcaciones se registran en el ERP interno de la compañía, "The Efficient Business System", dentro del módulo Registro Horario: un panel con los indicadores clave (llegadas tarde, empleados con tardanza, minutos acumulados), filtros por fechas, nombre y departamento, y el registro detallado de fichajes. El módulo tiene acceso restringido y solo pueden verlo los usuarios de Recursos Humanos y el gerente general. Como el ERP es de uso empresarial privado, la demostración de este portafolio es una copia con información ficticia. Todos los derechos reservados son reservados para Talent Phi.',
+    installCode: '',
+    githubUrl: '',
+    techStack: [
+      'Zapier',
+      'Nteco (biométrico)',
+      'Slack',
+      'Webhooks',
+      'APIs REST',
+      'ERP The Efficient Business System',
+      'RPA / Automation',
+    ],
+    en: {
+      type: 'AUTOMATION / RPA',
+      subtitle: 'Late-arrival alerts in Slack and attendance KPIs in the ERP',
+      description:
+        'RPA automation with Zapier for Farmacias MasSalud: every time an employee clocks in with their fingerprint on the Nteco biometric system and arrives late, the manager gets a Slack notification and the punch is recorded in the internal ERP "The Efficient Business System", in a KPI module visible only to Human Resources and the General Manager. All rights reserved to Talent Phi.',
+      details:
+        'Attendance control automation for Farmacias MasSalud in Santo Domingo, Dominican Republic. Each fingerprint punch on the Nteco biometric system triggers a Zapier flow that compares the punch time with the employee\'s expected shift time. If the arrival is late, it sends a real-time notification to the manager\'s Slack with the employee name, time and minutes late. In parallel, every punch is recorded in the company\'s internal ERP, "The Efficient Business System", in the Time Tracking module: a dashboard with key indicators (late arrivals, employees with lateness, accumulated minutes), filters by date, name and department, and the detailed punch log. The module has restricted access and can only be viewed by Human Resources users and the general manager. Since the ERP is for private business use, the demo in this portfolio is a copy with fictitious data. All rights reserved to Talent Phi.',
+    },
+  },
+  {
+    id: 'ai-support-analyst',
+    number: '06',
     type: 'INTELIGENCIA ARTIFICIAL',
     title: 'AI Support Analyst',
     subtitle: 'Sistema de IA para análisis y respuesta de tickets de soporte',
@@ -216,32 +253,34 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'cambios-estructura-nomina',
-    number: '06',
-    type: 'APP MÓVIL EMPRESARIAL',
+    number: '07',
+    type: 'APP EMPRESARIAL / POWER APPS',
     title: 'Cambios de Estructura y Nómina',
-    subtitle: 'Aplicativo móvil para gestión de cambios organizacionales y nómina',
-    organization: 'Renault Sofasa',
+    subtitle: 'App en Power Apps para aprobar ascensos, traslados y cambios salariales en planta',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'renault-estructura',
     date: 'Mayo 2025 - Octubre 2025',
     description:
-      'Aplicativo móvil para gestionar cambios organizacionales y novedades de nómina críticos en planta.',
+      'App en Power Apps para la planta de Renault Sofasa (954 empleados en 2 turnos): digitaliza las solicitudes de subida de nivel, ascenso, nombramiento como jefe y traslado entre Soldadura, Pintura, Ensamble y DLI, con aprobación de Recursos Humanos, avisos automáticos al jefe actual y al jefe nuevo, y registro del cambio salarial en nómina.',
     details:
-      'Desarrollo de una solución en React Native para automatizar la gestión de la estructura organizacional y novedades de nómina. Redujo procesos manuales que tomaban hasta 14 horas a tan solo minutos (reducción del 99%), eliminando errores y beneficiando a más de 12 áreas críticas incluyendo Recursos Humanos y Producción.',
+      'Aplicación desarrollada en Power Apps para el área de Producción de Renault Sofasa, compuesta por 954 empleados distribuidos en dos turnos y cuatro departamentos principales: Soldadura, Pintura, Ensamble y DLI (Departamento de Logística Industrial). Antes, cada vez que un empleado subía de nivel, ascendía, se convertía en jefe o se trasladaba de departamento (por ejemplo, de Soldadura a Pintura), el cambio se llevaba por escrito a Recursos Humanos, que debía aprobarlo y luego avisar manualmente al jefe anterior que uno de sus empleados se iba y al jefe nuevo que llegaba alguien de otro departamento; el proceso podía tomar hasta 14 horas. En una planta donde sale un vehículo aproximadamente cada 4 minutos bajo estándares de alta calidad, ese tiempo era crítico. La app centraliza la solicitud digital, la aprobación de Recursos Humanos, la aprobación del jefe saliente y del jefe entrante, y el registro de la novedad salarial en nómina, reduciendo el proceso de horas a minutos. Como la app es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
     installCode: '',
     githubUrl: '',
-    techStack: ['React Native', 'TypeScript', 'Node.js', 'SQL Server'],
+    techStack: ['Power Apps', 'Power Automate', 'Power Fx', 'Microsoft 365', 'Flujos de aprobación'],
     en: {
-      type: 'ENTERPRISE MOBILE APP',
-      subtitle: 'Mobile app for managing organizational changes and payroll',
+      type: 'ENTERPRISE APP / POWER APPS',
+      subtitle: 'Power Apps app to approve promotions, transfers and salary changes on the plant floor',
       date: 'May 2025 - October 2025',
       description:
-        'Mobile app to manage critical organizational changes and payroll updates on the plant floor.',
+        'Power Apps app for the Renault Sofasa plant (954 employees across 2 shifts): it digitizes requests for level increases, promotions, appointments as manager and transfers between Welding, Paint, Assembly and DLI, with Human Resources approval, automatic notices to the current and new manager, and the salary change recorded in payroll.',
       details:
-        'Development of a React Native solution to automate the management of organizational structure and payroll updates. It reduced manual processes that took up to 14 hours down to just minutes (a 99% reduction), eliminating errors and benefiting more than 12 critical areas including Human Resources and Production.',
+        'Application built in Power Apps for the Production area of Renault Sofasa, made up of 954 employees across two shifts and four main departments: Welding, Paint, Assembly and DLI (Industrial Logistics Department). Previously, whenever an employee moved up a level, was promoted, became a manager or transferred between departments (for example, from Welding to Paint), the change was taken in writing to Human Resources, which had to approve it and then manually notify the previous manager that one of their employees was leaving and the new manager that someone was arriving from another department; the process could take up to 14 hours. In a plant where a vehicle rolls off the line roughly every 4 minutes under high quality standards, that time was critical. The app centralizes the digital request, Human Resources approval, approval by the outgoing and incoming managers, and the recording of the salary change in payroll, reducing the process from hours to minutes. Since the app is for internal use, the demo in this portfolio is a recreation with fictitious data.',
     },
   },
   {
     id: 'automatizacion-tasas-cambio',
-    number: '07',
+    number: '08',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Automatización de Tasas de Cambio',
     subtitle: 'Sistema RPA para actualización automática de divisas',
@@ -261,38 +300,6 @@ export const PROJECTS_DATA: ProjectItem[] = [
       description: 'RPA system for the automatic updating of currencies and financial reports.',
       details:
         'Implementation of an automation flow with n8n that updates more than 10 exchange rates daily through financial APIs. This system saved approximately 130 hours of manual work and completely eliminated the risk of human error in critical accounting reports.',
-    },
-  },
-  {
-    id: 'massalud-control-asistencia',
-    number: '08',
-    type: 'AUTOMATIZACIÓN / RPA',
-    title: 'Control de Asistencia MasSalud',
-    subtitle: 'Alertas de llegadas tarde en Slack e indicadores de asistencia en el ERP',
-    organization: 'Farmacias MasSalud (Santo Domingo, República Dominicana)',
-    demo: 'massalud-erp',
-    description:
-      'Automatización RPA con Zapier para Farmacias MasSalud: cada vez que un empleado marca su huella en el sistema biométrico Nteco y llega tarde, el jefe recibe la notificación en Slack y la marcación se registra en el ERP interno "The Efficient Business System", en un módulo de indicadores visible solo para Recursos Humanos y la Gerencia General. Todos los derechos reservados son reservados para Talent Phi.',
-    details:
-      'Automatización del control de asistencia para Farmacias MasSalud en Santo Domingo, República Dominicana. Cada marcación de huella en el sistema biométrico Nteco dispara un flujo en Zapier que compara la hora de marcación con la hora esperada del turno del empleado. Si la llegada es tarde, envía en tiempo real una notificación al Slack del jefe con el nombre del empleado, la hora y los minutos de retraso. En paralelo, todas las marcaciones se registran en el ERP interno de la compañía, "The Efficient Business System", dentro del módulo Registro Horario: un panel con los indicadores clave (llegadas tarde, empleados con tardanza, minutos acumulados), filtros por fechas, nombre y departamento, y el registro detallado de fichajes. El módulo tiene acceso restringido y solo pueden verlo los usuarios de Recursos Humanos y el gerente general. Como el ERP es de uso empresarial privado, la demostración de este portafolio es una copia con información ficticia. Todos los derechos reservados son reservados para Talent Phi.',
-    installCode: '',
-    githubUrl: '',
-    techStack: [
-      'Zapier',
-      'Nteco (biométrico)',
-      'Slack',
-      'Webhooks',
-      'APIs REST',
-      'ERP The Efficient Business System',
-      'RPA / Automation',
-    ],
-    en: {
-      type: 'AUTOMATION / RPA',
-      subtitle: 'Late-arrival alerts in Slack and attendance KPIs in the ERP',
-      description:
-        'RPA automation with Zapier for Farmacias MasSalud: every time an employee clocks in with their fingerprint on the Nteco biometric system and arrives late, the manager gets a Slack notification and the punch is recorded in the internal ERP "The Efficient Business System", in a KPI module visible only to Human Resources and the General Manager. All rights reserved to Talent Phi.',
-      details:
-        'Attendance control automation for Farmacias MasSalud in Santo Domingo, Dominican Republic. Each fingerprint punch on the Nteco biometric system triggers a Zapier flow that compares the punch time with the employee\'s expected shift time. If the arrival is late, it sends a real-time notification to the manager\'s Slack with the employee name, time and minutes late. In parallel, every punch is recorded in the company\'s internal ERP, "The Efficient Business System", in the Time Tracking module: a dashboard with key indicators (late arrivals, employees with lateness, accumulated minutes), filters by date, name and department, and the detailed punch log. The module has restricted access and can only be viewed by Human Resources users and the general manager. Since the ERP is for private business use, the demo in this portfolio is a copy with fictitious data. All rights reserved to Talent Phi.',
     },
   },
   {

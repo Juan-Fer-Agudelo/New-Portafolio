@@ -5506,31 +5506,149 @@ button.article-author-card-name:hover,
   margin-bottom: 18px;
 }
 
-.leadership-gallery {
+/* --- Foto destacada (se ve completa, sin recortes) --- */
+.leadership-featured {
+  position: relative;
+  height: clamp(320px, 62vh, 620px);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-primary);
+  border: 1.5px solid var(--color-border-subtle);
+  box-shadow: 0 14px 40px rgba(15, 27, 97, 0.12);
+}
+
+/* Fondo difuminado con la misma foto para rellenar los lados */
+.leadership-featured-bg {
+  position: absolute;
+  inset: -30px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(28px) brightness(0.55);
+  transform: scale(1.1);
+  transition: background-image 0.3s ease;
+}
+
+.leadership-featured-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+}
+
+.leadership-featured-btn:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: -6px;
+}
+
+.leadership-featured-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+  animation: leadershipFade 0.35s ease;
+}
+
+@keyframes leadershipFade {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.leadership-featured-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(15, 27, 97, 0.6);
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.leadership-featured-arrow.prev { left: 16px; }
+.leadership-featured-arrow.next { right: 16px; }
+
+.leadership-featured-arrow:hover,
+.leadership-featured-arrow:focus-visible {
+  background: var(--color-purple);
+  border-color: var(--color-purple);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.leadership-featured-counter {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  z-index: 2;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(15, 27, 97, 0.65);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* --- Miniaturas --- */
+.leadership-thumbs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
-.leadership-photo {
-  margin: 0;
-  aspect-ratio: 3 / 4;
+.leadership-thumb {
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 14px;
-  border: 1.5px solid var(--color-border-subtle);
   background: #ffffff;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
-.leadership-photo img {
+.leadership-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.leadership-photo:hover img {
-  transform: scale(1.04);
+.leadership-thumb:hover,
+.leadership-thumb:focus-visible {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.leadership-thumb:focus-visible {
+  outline: 3px solid var(--color-purple);
+  outline-offset: 2px;
+}
+
+.leadership-thumb.active {
+  opacity: 1;
+  border-color: var(--color-purple);
+  box-shadow: 0 6px 18px rgba(104, 42, 233, 0.2);
 }
 
 @media (max-width: 860px) {
@@ -5543,8 +5661,75 @@ button.article-author-card-name:hover,
     font-size: 15.5px;
   }
 
-  .leadership-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+  .leadership-featured {
+    height: clamp(260px, 55vh, 460px);
   }
+
+  .leadership-featured-btn {
+    padding: 10px;
+  }
+
+  .leadership-featured-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+  }
+
+  .leadership-featured-arrow.prev { left: 8px; }
+  .leadership-featured-arrow.next { right: 8px; }
+
+  .leadership-thumbs {
+    gap: 8px;
+    margin-top: 10px;
+  }
+}
+
+/* liderazgo-1: acercamiento hacia la persona (lado izquierdo de la foto).
+   La foto llena el recuadro y se amplía desde la zona del atril. */
+.leadership-featured-btn.is-zoomed {
+  padding: 0;
+  overflow: hidden;
+}
+
+.leadership-featured-btn.is-zoomed .leadership-featured-img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: 12% 35%;
+  border-radius: 0;
+  box-shadow: none;
+  transform: scale(1.41);
+  transform-origin: 12% 35%;
+  animation: none;
+}
+
+/* Miniatura de liderazgo-1 centrada en la persona */
+.leadership-thumb img.is-zoomed {
+  object-position: 12% 35%;
+  transform: scale(1.4);
+  transform-origin: 12% 35%;
+}
+
+@media (max-width: 860px) {
+  .leadership-featured-btn.is-zoomed .leadership-featured-img {
+    transform: scale(1.176);
+  }
+}
+
+/* Bandera del país junto a la organización del proyecto */
+.project-card-org,
+.project-org-with-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.country-flag {
+  width: 24px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(15, 27, 97, 0.15);
 }
