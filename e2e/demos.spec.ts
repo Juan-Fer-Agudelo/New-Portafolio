@@ -60,12 +60,12 @@ const expectNoPageScrollX = async (page: Page) => {
 
 const closeWithEscape = async (page: Page) => {
   await page.keyboard.press('Escape');
-  await expect(page.locator('.dn-overlay, .msd-overlay, .rsd-overlay, .sxd-overlay, .cqd-overlay, .agd-overlay, .rzd-overlay')).toHaveCount(0);
+  await expect(page.locator('.dn-overlay, .msd-overlay, .rsd-overlay, .sxd-overlay, .cqd-overlay, .agd-overlay, .rzd-overlay, .sld-overlay')).toHaveCount(0);
 };
 
-test('el portafolio carga con los 11 proyectos', async ({ page }) => {
-  await expect(page.locator('article.project-card-item')).toHaveCount(11);
-  await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(6);
+test('el portafolio carga con los 12 proyectos', async ({ page }) => {
+  await expect(page.locator('article.project-card-item')).toHaveCount(12);
+  await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(7);
 });
 
 test('MasSalud: ERP y alertas de Slack', async ({ page }) => {
@@ -146,6 +146,29 @@ test('Rechazos: escanear una pieza y registrarla en la base de datos de Calidad'
   await expect(rows.first()).toContainText('Deformación');
   await expect(page.locator('.rzd-kpi strong').first()).toHaveText(String(before + 1));
   await expectFitsContainer(page, '.rzd-table');
+  await expectNoPageScrollX(page);
+  await closeWithEscape(page);
+});
+
+test('Selección: calificar un grupo desde la tablet y verlo en la base de datos de RRHH', async ({ page }) => {
+  await openDemo(page, 'Selección de Operarios');
+  await page.getByRole('button', { name: 'Abrir la app' }).click();
+  await page.getByRole('tab', { name: /Soldadura/ }).click();
+  await expect(page.locator('.sld-person')).toHaveCount(4);
+  // Cada aspirante muestra su resultado calculado a partir de la calidad y el tiempo
+  await expect(page.locator('.sld-person .sld-verdict')).toHaveCount(4);
+  await page.getByRole('button', { name: /Subir Calidad/ }).first().click();
+  await page.getByRole('button', { name: 'Enviar calificaciones a RRHH' }).click();
+  await expect(page.locator('.sld-toast--show')).toContainText('T-3');
+  await page.getByRole('button', { name: 'Ver en RRHH' }).click();
+  await page.locator('.sld-seg button').filter({ hasText: 'Tarde' }).click();
+  // Las 4 personas del grupo T-3 ya tienen resultado en Soldadura (verde, amarillo o rojo)
+  const t3 = page.locator('.sld-table tbody tr', { hasText: 'T-3' });
+  await expect(t3).toHaveCount(4);
+  await expect(t3.locator('td[data-label="Soldadura"]:not(.sld-tone--none)')).toHaveCount(4);
+  await expect(page.locator('.sld-table .sld-cell.sld-tone--ok').first()).toBeVisible();
+  await expect(page.locator('.sld-table .sld-cell.sld-tone--bad').first()).toBeVisible();
+  await expectFitsContainer(page, '.sld-table');
   await expectNoPageScrollX(page);
   await closeWithEscape(page);
 });

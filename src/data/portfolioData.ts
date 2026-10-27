@@ -350,8 +350,35 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'sitio-contadoras-aq',
+    id: 'seleccion-operarios',
     number: '11',
+    type: 'APP MÓVIL / REACT NATIVE',
+    title: 'Selección de Operarios',
+    subtitle: 'App en tablets para calificar a los aspirantes en las escuelas de destreza y la RAC 5',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'renault-seleccion',
+    date: '2025',
+    description:
+      'App en React Native para el proceso de selección de nuevos operarios de fabricación: los maestros de las escuelas de destreza de Ensamble, DLI, Soldadura y Pintura califican desde sus tablets la calidad y el tiempo de cada aspirante, las psicólogas de RRHH evalúan en la RAC 5, y el sistema calcula en qué áreas queda cada persona en la base de datos de RRHH: verde (apto), amarillo (en espera) o rojo (no apto).',
+    details:
+      'Aplicación desarrollada en React Native para el proceso de selección de nuevos operarios de las áreas de fabricación de Renault Sofasa. Los aspirantes llegaban en dos jornadas, mañana y tarde, en grupos de 4, y pasaban por 5 bases: las escuelas de destreza de Ensamble, DLI, Soldadura y Pintura, y luego la RAC 5, una oficina donde las psicólogas de Recursos Humanos evaluaban la parte psicológica. En cada escuela de destreza dos maestros evaluaban las destrezas propias de su área con una calificación del trabajo y requisitos de evaluación como el tiempo y la calidad, y registraban la puntuación desde las tablets que entregó la empresa. Con esas calificaciones el sistema calcula en qué lugar de la fábrica queda cada aspirante: apto para todas las áreas, apto para algunas, medianamente apto (personas que quedan en espera por si se necesita más gente y se les puede llamar) o no apto. Todo se envía a la base de datos de Recursos Humanos, donde cada área aparece en verde si la persona es apta, en amarillo si es medianamente apta y en rojo si no lo es; una misma persona puede estar en verde para un área, en amarillo para otra y en rojo para otra. Como la app es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['React Native', 'TypeScript', 'Tablets', 'Base de datos de RRHH', 'Evaluación por criterios'],
+    en: {
+      type: 'MOBILE APP / REACT NATIVE',
+      subtitle: 'Tablet app to grade applicants at the skills schools and the RAC 5',
+      date: '2025',
+      description:
+        'React Native app for the hiring process of new manufacturing operators: the instructors at the Assembly, DLI, Welding and Paint skills schools grade each applicant\'s quality and time from their tablets, the HR psychologists evaluate at the RAC 5, and the system calculates which areas each person qualifies for in the HR database: green (fit), yellow (on hold) or red (not fit).',
+      details:
+        'Application built in React Native for the hiring process of new operators for the Renault Sofasa manufacturing areas. Applicants arrived in two shifts, morning and afternoon, in groups of 4, and went through 5 stations: the Assembly, DLI, Welding and Paint skills schools, and then the RAC 5, an office where the Human Resources psychologists evaluated the psychological side. At each skills school two instructors assessed the skills of their area with a grade for the work and evaluation requirements such as time and quality, and recorded the score from tablets provided by the company. With those grades the system calculates where in the plant each applicant fits: fit for all areas, fit for some, partially fit (people kept on hold in case more staff is needed and who can be called later) or not fit. Everything is sent to the Human Resources database, where each area shows in green if the person is fit, yellow if partially fit and red if not; the same person can be green for one area, yellow for another and red for another. Since the app is for internal use, the demo in this portfolio is a recreation with fictitious data.',
+    },
+  },
+  {
+    id: 'sitio-contadoras-aq',
+    number: '12',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',

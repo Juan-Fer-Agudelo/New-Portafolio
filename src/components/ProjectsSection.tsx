@@ -6,6 +6,7 @@ import { SimexDemo } from './SimexDemo';
 import { CalidadDemo } from './CalidadDemo';
 import { AgvDemo } from './AgvDemo';
 import { RechazosDemo } from './RechazosDemo';
+import { SeleccionDemo } from './SeleccionDemo';
 import { DemoErrorBoundary } from './DemoErrorBoundary';
 import { CountryFlag } from './CountryFlag';
 import { PROJECTS_DATA } from '../data/portfolioData';
@@ -22,6 +23,7 @@ const DEMO_COMPONENTS: Record<DemoId, { name: string; Component: React.FC<{ isOp
   'renault-calidad': { name: 'Calidad de pintura', Component: CalidadDemo },
   'agv-trazabilidad': { name: 'Trazabilidad de AGVs', Component: AgvDemo },
   'renault-rechazos': { name: 'Rechazos de calidad', Component: RechazosDemo },
+  'renault-seleccion': { name: 'Selección de operarios', Component: SeleccionDemo },
 };
 const DEMOS = (Object.keys(DEMO_COMPONENTS) as DemoId[]).map((id) => ({ id, ...DEMO_COMPONENTS[id] }));
 
