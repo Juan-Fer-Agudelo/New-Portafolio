@@ -323,8 +323,35 @@ export const PROJECTS_DATA: ProjectItem[] = [
     },
   },
   {
-    id: 'sitio-contadoras-aq',
+    id: 'rechazos-defectos-calidad',
     number: '10',
+    type: 'APP EMPRESARIAL / POWER AUTOMATE',
+    title: 'Rechazos de Defectos de Calidad',
+    subtitle: 'App para rechazar piezas defectuosas escaneando su identificador y registrar su valor al instante',
+    organization: 'Renault Sofasa (Envigado, Colombia)',
+    country: 'co',
+    demo: 'renault-rechazos',
+    date: '2025',
+    description:
+      'App con Power Automate para que las UET de Ensamble y Soldadura rechacen piezas defectuosas escaneando su identificador: el rechazo y el valor de la pieza llegan de inmediato a la base de datos de la UET de Calidad, sin que el operario tenga que llevar la pieza ni calcular su precio.',
+    details:
+      'Aplicación desarrollada para Renault Sofasa con Power Automate, usada por las UET (Unidades Elementales de Trabajo) de áreas como Ensamble y Soldadura para rechazar piezas defectuosas que ya no estaban aptas para su ensamble o su fabricación. Cada rechazo tiene un valor real que se carga a la UET que estaba ensamblando o soldando la pieza. Antes, el operario debía llevar la pieza hasta la UET de Calidad y luego calcular su precio, perdiendo tiempo de producción. Con la solución propuesta, basada en el identificador de cada pieza, el operario solo la escanea desde la app, elige el motivo y la cantidad, y el flujo obtiene el precio, calcula el valor del rechazo y lo registra de inmediato en la base de datos de la UET de Calidad. En Renault Sofasa el tiempo es el recurso más valioso porque no regresa: cada minuto de mano de obra perdido es un carro menos fabricado, y un carro menos fabricado son menos ventas e ingresos para la compañía; por eso la app le devuelve ese tiempo a la línea de producción. Como la app es de uso interno, la demostración de este portafolio es una recreación con información ficticia.',
+    installCode: '',
+    githubUrl: '',
+    techStack: ['Power Automate', 'Power Apps', 'Escaneo de códigos', 'Base de datos de Calidad', 'Microsoft 365'],
+    en: {
+      type: 'ENTERPRISE APP / POWER AUTOMATE',
+      subtitle: 'App to reject defective parts by scanning their identifier and record their value instantly',
+      date: '2025',
+      description:
+        'App built with Power Automate so the Assembly and Welding UETs can reject defective parts by scanning their identifier: the rejection and the part value reach the Quality UET database immediately, without the operator having to carry the part or calculate its price.',
+      details:
+        'Application built for Renault Sofasa with Power Automate, used by the UETs (Elementary Work Units) of areas such as Assembly and Welding to reject defective parts that were no longer fit for assembly or manufacturing. Each rejection has a real value that is charged to the UET that was assembling or welding the part. Previously, the operator had to carry the part to the Quality UET and then calculate its price, losing production time. With the proposed solution, based on each part\'s identifier, the operator simply scans it from the app, chooses the reason and quantity, and the flow gets the price, calculates the rejection value and records it immediately in the Quality UET database. At Renault Sofasa time is the most valuable resource because it never comes back: every minute of lost labor is one less car built, and one less car built means fewer sales and less revenue for the company; that is why the app gives that time back to the production line. Since the app is for internal use, the demo in this portfolio is a recreation with fictitious data.',
+    },
+  },
+  {
+    id: 'sitio-contadoras-aq',
+    number: '11',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
     subtitle: 'Plataforma web oficial para firma de contaduría',

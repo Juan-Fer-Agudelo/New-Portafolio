@@ -358,6 +358,33 @@
   max-width: 280px;
 }
 
+/* Botón para abrir el flujo de Power Automate (azul de Power Automate) */
+.rsd-flow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #0f6cbd;
+  border-radius: 8px;
+  background: #ebf3fc;
+  color: #0f6cbd !important;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rsd-flow-btn:hover {
+  background: #d6e8fa;
+}
+
+.rsd-drawer-flow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0;
+  color: #0f6cbd !important;
+}
+
 .rsd-content {
   flex: 1;
   overflow-y: auto;

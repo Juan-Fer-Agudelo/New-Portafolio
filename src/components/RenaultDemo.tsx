@@ -18,11 +18,13 @@ import {
   UserCog,
   Users,
   Wallet,
+  Workflow,
   X,
 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import '../styles/renault-demo.css';
 import { DemoNotice } from './DemoNotice';
+import { RenaultFlow } from './RenaultFlow';
 
 import {
   ActivityItem,
@@ -107,7 +109,9 @@ const ChangeSummary: React.FC<{ r: ChangeRequest }> = ({ r }) => (
 );
 
 export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+  // flow → réplica del flujo de Power Automate que envía la aprobación y los correos
+  const [screen, setScreen] = useState<'notice' | 'app' | 'flow'>('notice');
+  const [flowFor, setFlowFor] = useState<string | undefined>(undefined);
   const [view, setView] = useState<View>('panel');
   const [role, setRole] = useState<Role>('rrhh');
   const [requests, setRequests] = useState<ChangeRequest[]>([]);
@@ -236,7 +240,22 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
 
   if (!isOpen) return null;
 
+  const openFlow = (id?: string) => {
+    setFlowFor(id);
+    setSelectedId(null);
+    setScreen('flow');
+  };
+
   // Se renderiza en <body> para que ningún contenedor con transform/animación afecte al position: fixed
+  if (screen === 'flow') {
+    return createPortal(
+      <div className="rsd-overlay" role="dialog" aria-modal="true" aria-label="Flujo de Power Automate de la app (datos ficticios)">
+        <RenaultFlow requests={requests} initialId={flowFor} onBack={() => setScreen('app')} onClose={onClose} />
+      </div>,
+      document.body
+    );
+  }
+
   if (screen === 'notice') {
     return (
       <DemoNotice
@@ -251,8 +270,12 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
         points={[
           '954 empleados en 2 turnos: Soldadura, Pintura, Ensamble y DLI.',
           'Cambia de rol (RRHH o jefe de área) para aprobar y ver cómo avanza cada solicitud.',
+          'Mira el flujo de Power Automate que pide la aprobación a RRHH y avisa por correo al jefe actual y al jefe nuevo.',
         ]}
-        actions={[{ label: 'Abrir la app', onClick: () => setScreen('app') }]}
+        actions={[
+          { label: 'Abrir la app', onClick: () => setScreen('app') },
+          { label: 'Ver el flujo en Power Automate', onClick: () => openFlow() },
+        ]}
         onClose={onClose}
       >
         Cambios de Estructura y Nómina es una app de Power Apps de uso interno de la planta de Renault Sofasa. Esta es
@@ -321,6 +344,9 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
                   ))}
                 </select>
               </label>
+              <button className="rsd-flow-btn" onClick={() => openFlow()}>
+                <Workflow size={16} aria-hidden="true" /> Flujo en Power Automate
+              </button>
             </header>
 
             <main className="rsd-content">
@@ -368,7 +394,14 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
         </nav>
 
         {selected && (
-          <DetailDrawer r={selected} role={role} onClose={() => setSelectedId(null)} onDecide={decide} onRole={setRole} />
+          <DetailDrawer
+            r={selected}
+            role={role}
+            onClose={() => setSelectedId(null)}
+            onDecide={decide}
+            onRole={setRole}
+            onFlow={() => openFlow(selected.id)}
+          />
         )}
 
         <div className={`rsd-toast ${toast ? 'rsd-toast--show' : ''}`} role="status" aria-live="polite">
@@ -918,7 +951,8 @@ const DetailDrawer: React.FC<{
   onClose: () => void;
   onDecide: (r: ChangeRequest, step: Step, approve: boolean) => void;
   onRole: (role: Role) => void;
-}> = ({ r, role, onClose, onDecide, onRole }) => {
+  onFlow: () => void;
+}> = ({ r, role, onClose, onDecide, onRole, onFlow }) => {
   const from = dept(r.employee.dept);
   const to = dept(r.toDept);
   const stage = stageOf(r);
@@ -1028,6 +1062,9 @@ const DetailDrawer: React.FC<{
         </ol>
 
         <p className="rsd-drawer-created">Creada {fmtDateTime(r.createdAt)}</p>
+        <button className="rsd-link rsd-drawer-flow" onClick={onFlow}>
+          <Workflow size={14} aria-hidden="true" /> Ver el flujo de Power Automate de esta solicitud
+        </button>
 
         {mine.length > 0 && (
           <div className="rsd-drawer-actions">

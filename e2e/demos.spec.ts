@@ -44,6 +44,12 @@ const expectFitsContainer = async (page: Page, selector: string) => {
   expect(wide, `Tablas más anchas que su contenedor (${selector})`).toEqual([]);
 };
 
+/** En celular la lista de correos está oculta detrás del botón «Correos enviados» */
+const openMailList = async (page: Page) => {
+  const back = page.locator('.rpf-mail-back');
+  if (await back.isVisible()) await back.click();
+};
+
 const isNarrow = (page: Page) => (page.viewportSize()?.width ?? 1000) <= 600;
 
 /** La demo abierta no debe provocar scroll horizontal en la página */
@@ -54,12 +60,12 @@ const expectNoPageScrollX = async (page: Page) => {
 
 const closeWithEscape = async (page: Page) => {
   await page.keyboard.press('Escape');
-  await expect(page.locator('.dn-overlay, .msd-overlay, .rsd-overlay, .sxd-overlay, .cqd-overlay, .agd-overlay')).toHaveCount(0);
+  await expect(page.locator('.dn-overlay, .msd-overlay, .rsd-overlay, .sxd-overlay, .cqd-overlay, .agd-overlay, .rzd-overlay')).toHaveCount(0);
 };
 
-test('el portafolio carga con los 10 proyectos', async ({ page }) => {
-  await expect(page.locator('article.project-card-item')).toHaveCount(10);
-  await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(5);
+test('el portafolio carga con los 11 proyectos', async ({ page }) => {
+  await expect(page.locator('article.project-card-item')).toHaveCount(11);
+  await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(6);
 });
 
 test('MasSalud: ERP y alertas de Slack', async ({ page }) => {
@@ -87,6 +93,59 @@ test('Renault: aprobar una solicitud de cambio', async ({ page }) => {
   await nav.filter({ hasText: 'Solicitudes' }).first().click();
   await expect(page.locator('.rsd-table tbody tr').first()).toBeVisible();
   await expectFitsContainer(page, '.rsd-table');
+  await expectNoPageScrollX(page);
+  await closeWithEscape(page);
+});
+
+test('Renault: flujo de Power Automate envía los correos a RRHH y a los dos jefes', async ({ page }) => {
+  await openDemo(page, 'Cambios de Estructura y Nómina');
+  await page.getByRole('button', { name: 'Ver el flujo en Power Automate' }).click();
+  await expect(page.locator('.rpf-card').first()).toBeVisible();
+  // CE-0418: traslado de Soldadura a Pintura (cambia de departamento → avisa a los dos jefes)
+  await page.locator('.rpf-select select').selectOption('CE-0418');
+  await page.getByRole('button', { name: 'Probar flujo' }).click();
+  await expect(page.locator('.rpf-banner--ok')).toBeVisible({ timeout: 15_000 });
+  await page.getByRole('tab', { name: /Correos/ }).click();
+  const mails = page.locator('.rpf-mail-item');
+  await expect(mails).toHaveCount(3);
+  await expect(page.locator('.rpf-mail-tag')).toHaveText(['RRHH · Aprobación', 'Jefe actual · Sale', 'Jefe nuevo · Llega']);
+  // El jefe actual ve quién se va de su área y el jefe nuevo quién llega
+  await openMailList(page);
+  await mails.nth(1).click();
+  await expect(page.locator('.rpf-letter')).toContainText('sale de tu área');
+  await openMailList(page);
+  await mails.nth(2).click();
+  await expect(page.locator('.rpf-letter')).toContainText('llega a tu área');
+  await expectNoPageScrollX(page);
+
+  // Caso de rechazo: solo se avisa al jefe actual
+  await page.getByRole('tab', { name: 'Diseñador' }).click();
+  await page.getByLabel('Simular rechazo de RRHH').check();
+  await page.getByRole('button', { name: 'Probar flujo' }).click();
+  await expect(page.locator('.rpf-banner--bad')).toBeVisible({ timeout: 15_000 });
+  await page.getByRole('tab', { name: /Correos/ }).click();
+  await expect(page.locator('.rpf-mail-tag')).toHaveText(['RRHH · Aprobación', 'Rechazo']);
+  await closeWithEscape(page);
+});
+
+test('Rechazos: escanear una pieza y registrarla en la base de datos de Calidad', async ({ page }) => {
+  await openDemo(page, 'Rechazos de Defectos de Calidad');
+  await page.getByRole('button', { name: 'Abrir la app' }).click();
+  const rows = page.locator('.rzd-table tbody tr');
+  await expect(rows.first()).toBeVisible();
+  const before = Number(await page.locator('.rzd-kpi strong').first().innerText());
+  await page.getByRole('button', { name: 'Escanear pieza' }).click();
+  await expect(page.locator('.rzd-piece')).toBeVisible();
+  await page.locator('.rzd-chip').filter({ hasText: 'Deformación' }).click();
+  await page.getByRole('button', { name: 'Más' }).click();
+  await page.getByRole('button', { name: 'Registrar rechazo' }).click();
+  // El flujo termina, el rechazo aparece de primero en la base de datos y sube el contador
+  await expect(page.locator('.rzd-toast--show')).toContainText('RC-2055');
+  await expect(page.locator('.rzd-step--done')).toHaveCount(5);
+  await expect(rows.first()).toContainText('RC-2055');
+  await expect(rows.first()).toContainText('Deformación');
+  await expect(page.locator('.rzd-kpi strong').first()).toHaveText(String(before + 1));
+  await expectFitsContainer(page, '.rzd-table');
   await expectNoPageScrollX(page);
   await closeWithEscape(page);
 });
