@@ -51,6 +51,7 @@ test('los datos estructurados describen a la persona y sus cargos', async ({ pag
   expect(person.name).toBe('Juan Fernando Agudelo');
   expect(person.jobTitle).toEqual(['Ingeniero de IA', 'Ingeniero de Datos', 'Desarrollador Full Stack']);
   expect(person.url).toBe(`${SITE}/`);
+  expect(person.sameAs).toContain('https://www.linkedin.com/in/juan-fernando-agudelo-861b13264/');
   expect(graph.map((n) => n['@type'])).toEqual(expect.arrayContaining(['WebSite', 'ProfilePage', 'Person']));
 });
 

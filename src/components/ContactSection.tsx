@@ -68,7 +68,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             GITHUB &rarr;
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/juan-fernando-agudelo-861b13264/"
             target="_blank"
             rel="noopener noreferrer"
             className="social-link"
