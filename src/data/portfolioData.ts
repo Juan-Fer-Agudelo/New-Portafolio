@@ -405,7 +405,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 
 export const ARTICLE_AUTHOR: ArticleAuthor = {
   name: 'Juan Fernando Agudelo',
-  role: 'Desarrollador Fullstack & Data/AI',
+  role: 'Ingeniero de IA, Datos y Full Stack',
   bio: 'Juan Fernando Agudelo es desarrollador Fullstack con más de 3 años de experiencia en desarrollo web escalable, análisis de datos y soluciones de IA. Ha construido plataformas en producción para clínicas, e-commerce y empresas del sur de Florida junto a Talent Phi, además de proyectos de automatización, Business Intelligence e IA empresarial. Le apasiona convertir problemas de negocio en sistemas simples, medibles y fáciles de mantener.',
   profileLabel: 'GitHub',
   profileHandle: 'Juan-Fer-Agudelo',

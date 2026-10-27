@@ -1,0 +1,7 @@
+# Portafolio de Juan Fernando Agudelo
+User-agent: *
+Allow: /
+# Panel de administración del blog: no debe aparecer en buscadores
+Disallow: /admin
+
+Sitemap: https://juan-fer-digital.vercel.app/sitemap.xml

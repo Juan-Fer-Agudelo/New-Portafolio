@@ -21,6 +21,10 @@ import { useScrollAnimations } from './hooks/useScrollAnimations';
 const DEFAULT_DOCUMENT_TITLE = document.title;
 const DEFAULT_META_DESCRIPTION =
   document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+const DEFAULT_META_ROBOTS = document.querySelector('meta[name="robots"]')?.getAttribute('content') || 'index, follow';
+
+/** El panel de administración no debe aparecer en los buscadores */
+const setRobots = (content: string) => document.querySelector('meta[name="robots"]')?.setAttribute('content', content);
 
 export const App: React.FC = () => {
   const isInitialAdmin =
@@ -125,8 +129,10 @@ export const App: React.FC = () => {
       document
         .querySelector('meta[name="description"]')
         ?.setAttribute('content', 'Ingreso administrativo PERFECT B Aesthetic Medicine');
+      setRobots('noindex, nofollow');
       return;
     }
+    setRobots(DEFAULT_META_ROBOTS);
 
     if (activeModal === 'writing-detail' && selectedArticle) {
       document.title = `${selectedArticle.title} | Juan Fernando Agudelo`;
