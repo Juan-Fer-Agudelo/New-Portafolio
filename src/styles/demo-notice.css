@@ -175,6 +175,8 @@
 .dn-points {
   margin: 0 0 22px;
   padding-left: 18px;
+  /* El CSS global del portafolio quita las viñetas de las listas */
+  list-style: disc;
   color: var(--dn-body);
   line-height: 1.6;
 }

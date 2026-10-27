@@ -3557,6 +3557,33 @@
   font-weight: 400;
 }
 
+/* En celular el selector se compacta (va después de las reglas base para que no lo anulen) */
+@media (max-width: 768px) {
+  .nav-lang-toggle {
+    padding: 3px 8px;
+    margin-right: 0;
+    letter-spacing: 1px;
+  }
+
+  .nav-lang-option,
+  .nav-lang-sep {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Teléfonos angostos: se oculta el separador "|" para que MENÚ, idioma y CONTRÁTAME no se encimen */
+@media (max-width: 400px) {
+  .nav-divider {
+    display: none;
+  }
+
+  .nav-menu-label,
+  .nav-hire-label {
+    letter-spacing: 1px;
+  }
+}
+
       /* ==========================================================================
          PÁGINA "SOBRE MÍ" (ABOUT VIEW)
          ========================================================================== */

@@ -34,6 +34,18 @@ const expectNoOverflow = async (page: Page, selector: string) => {
   expect(overflowing, `Elementos desbordados en ${selector}`).toEqual([]);
 };
 
+/** Cada tabla debe caber en el ancho de su contenedor (en celular no debe obligar a deslizar de lado) */
+const expectFitsContainer = async (page: Page, selector: string) => {
+  const wide = await page.locator(selector).evaluateAll((els) =>
+    els
+      .filter((el) => el.getBoundingClientRect().width > (el.parentElement?.clientWidth ?? Infinity) + 1)
+      .map((el) => `${el.className}: ${Math.round(el.getBoundingClientRect().width)}px`)
+  );
+  expect(wide, `Tablas más anchas que su contenedor (${selector})`).toEqual([]);
+};
+
+const isNarrow = (page: Page) => (page.viewportSize()?.width ?? 1000) <= 600;
+
 /** La demo abierta no debe provocar scroll horizontal en la página */
 const expectNoPageScrollX = async (page: Page) => {
   const { sw, w } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, w: window.innerWidth }));
@@ -55,6 +67,7 @@ test('MasSalud: ERP y alertas de Slack', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'ERP de uso empresarial privado' })).toBeVisible();
   await page.getByRole('button', { name: 'Ver demostración del ERP' }).click();
   await expect(page.locator('.msd-table tbody tr').first()).toBeVisible();
+  await expectFitsContainer(page, '.msd-table');
   await page.locator('.msd-slack-cta:visible, .msd-slack-link:visible').first().click();
   await page.getByRole('button', { name: 'Entendido, ver Slack' }).click();
   await expectNoPageScrollX(page);
@@ -65,11 +78,15 @@ test('Renault: aprobar una solicitud de cambio', async ({ page }) => {
   await openDemo(page, 'Cambios de Estructura y Nómina');
   await page.getByRole('button', { name: 'Abrir la app' }).click();
   await expect(page.locator('.rsd-kpi')).toHaveCount(4);
-  await page.locator('.rsd-nav-item:visible, .rsd-tabbar button:visible').filter({ hasText: 'Mis aprobaciones' }).first().click();
+  const nav = page.locator('.rsd-nav-item:visible, .rsd-tabbar button:visible');
+  await nav.filter({ hasText: /Aprobaciones/i }).first().click();
   const before = await page.locator('.rsd-inbox-card').count();
   expect(before).toBeGreaterThan(0);
   await page.locator('.rsd-inbox-card').first().getByRole('button', { name: 'Aprobar' }).click();
   await expect(page.locator('.rsd-toast--show')).toBeVisible();
+  await nav.filter({ hasText: 'Solicitudes' }).first().click();
+  await expect(page.locator('.rsd-table tbody tr').first()).toBeVisible();
+  await expectFitsContainer(page, '.rsd-table');
   await expectNoPageScrollX(page);
   await closeWithEscape(page);
 });
@@ -86,6 +103,7 @@ test('Simex: ejecutar el flujo de n8n y ver el correo en Outlook', async ({ page
   // Las tasas deben variar de un día a otro (no todas en 0,00 %)
   const changes = await page.locator('.sxd-mail-table tbody td:last-child').allInnerTexts();
   expect(changes.filter((c) => !/0,00\s*%/.test(c)).length).toBeGreaterThan(5);
+  await expectFitsContainer(page, '.sxd-mail-table');
   await expectNoPageScrollX(page);
   await closeWithEscape(page);
 });
@@ -95,10 +113,19 @@ test('Calidad: indicadores y mapa de calor de las UET', async ({ page }) => {
   await page.getByRole('button', { name: 'Abrir el reporte' }).click();
   await expect(page.locator('.cqd-card')).toHaveCount(5);
   await page.getByRole('button', { name: '90 días' }).click();
+  await expectFitsContainer(page, '.cqd-table');
   await page.locator('.cqd-page').filter({ hasText: 'Mapa de calor' }).click();
-  await expect(page.locator('.cqd-heat tbody tr')).toHaveCount(4);
-  await expect(page.locator('.cqd-heat tbody th')).toHaveText(['Trim', 'Mecánica', 'Final', 'Entregas']);
+  const uets = ['Trim', 'Mecánica', 'Final', 'Entregas'];
+  if (isNarrow(page)) {
+    // En celular la tabla está girada: las UET son las columnas y cada zona es una fila
+    await expect(page.locator('.cqd-heat thead th button')).toHaveText(uets);
+    await expect(page.locator('.cqd-heat tbody tr')).toHaveCount(10);
+  } else {
+    await expect(page.locator('.cqd-heat tbody tr')).toHaveCount(4);
+    await expect(page.locator('.cqd-heat tbody th')).toHaveText(uets);
+  }
   await page.getByRole('button', { name: 'Tipo de defecto' }).click();
+  await expectFitsContainer(page, '.cqd-heat');
   await expectNoPageScrollX(page);
   await closeWithEscape(page);
 });

@@ -19,6 +19,8 @@ export default defineConfig({
   projects: [
     { name: 'escritorio', use: { ...devices['Desktop Chrome'], ...browser, viewport: { width: 1440, height: 900 } } },
     { name: 'celular', use: { ...devices['Pixel 7'], ...browser } },
+    // Teléfono angosto: es donde más se notan los desbordes
+    { name: 'celular-360', use: { ...devices['Pixel 7'], ...browser, viewport: { width: 360, height: 740 } } },
   ],
   webServer: {
     command: 'npx vite build && npx vite preview --port 4173 --strictPort',

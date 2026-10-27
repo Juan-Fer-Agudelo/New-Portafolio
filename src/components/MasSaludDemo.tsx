@@ -461,24 +461,29 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
                     <tbody>
                       {filtered.map((r) => (
                         <tr key={r.id}>
+                          {/* data-label: en celular cada fichaje se muestra como tarjeta */}
                           <td className="msd-td-name">
                             <EmployeeName name={r.employee.name} />
                           </td>
-                          <td className="msd-td-code">{r.employee.code}</td>
-                          <td>
+                          <td className="msd-td-code" data-label="Código">
+                            {r.employee.code}
+                          </td>
+                          <td data-label="Fecha">
                             {DAY_NAMES[r.date.getDay()]}, {r.date.getDate()} {MONTH_SHORT[r.date.getMonth()]}
                           </td>
-                          <td>{r.employee.expected}:00</td>
-                          <td>{fmtSec(r.markedSec)}</td>
-                          <td>
+                          <td data-label="Hora esperada">{r.employee.expected}:00</td>
+                          <td data-label="Marcación">{fmtSec(r.markedSec)}</td>
+                          <td className="msd-td-status">
                             {r.lateMin > 0 ? (
                               <span className="msd-status msd-status--late">Llegó tarde ({r.lateMin} min)</span>
                             ) : (
                               <span className="msd-status msd-status--ok">A tiempo</span>
                             )}
                           </td>
-                          <td className="msd-td-dept">{r.employee.dept}</td>
-                          <td>
+                          <td className="msd-td-dept" data-label="Área">
+                            {r.employee.dept}
+                          </td>
+                          <td className="msd-td-actions">
                             <span className="msd-trash" aria-hidden="true">
                               <Trash2 size={15} />
                             </span>

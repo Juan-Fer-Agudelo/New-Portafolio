@@ -1226,6 +1226,37 @@
   text-align: right;
 }
 
+.sxd-mail-code-inline {
+  display: none;
+}
+
+/* Celular: Moneda (con su código debajo) · valor en COP · variación — sin scroll horizontal */
+@media (max-width: 600px) {
+  .sxd-mail-table .sxd-mail-idx,
+  .sxd-mail-table .sxd-mail-code {
+    display: none;
+  }
+
+  .sxd-mail-code-inline {
+    display: table;
+    margin-top: 3px;
+  }
+
+  .sxd-mail-table th,
+  .sxd-mail-table td {
+    padding: 8px;
+    white-space: normal;
+  }
+
+  .sxd-mail-table td.sxd-num {
+    white-space: nowrap;
+  }
+
+  .sxd-mail-num-h {
+    font-size: 12px;
+  }
+}
+
 .sxd-mail-table td.sxd-up {
   color: #107c41;
 }

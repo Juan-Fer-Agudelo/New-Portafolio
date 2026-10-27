@@ -758,12 +758,17 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* Toda la demo se desplaza junta: los indicadores no quedan fijos ocupando la pantalla */
+  .agd-app {
+    overflow-y: auto;
+  }
+
   .agd-main {
+    flex: none;
     grid-template-columns: 1fr;
-    /* Cada fila toma la altura de su contenido; la columna completa se desplaza en vertical */
+    /* Cada fila toma la altura de su contenido */
     grid-auto-rows: max-content;
     align-content: start;
-    overflow-y: auto;
   }
 
   .agd-map-card {
@@ -794,10 +799,31 @@
 @media (max-width: 700px) {
   .agd-kpis {
     grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .agd-kpi {
+    padding: 10px 12px;
+  }
+
+  .agd-kpi span {
+    font-size: 11.5px;
   }
 
   .agd-kpi strong {
     font-size: 19px;
+  }
+
+  /* El quinto indicador ocupa la fila completa en lugar de quedar solo a la izquierda */
+  .agd-kpi:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .agd-bar {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: var(--agd-shell);
   }
 
   .agd-badge,

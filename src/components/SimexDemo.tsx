@@ -1100,10 +1100,10 @@ const EmailPreview: React.FC<{ ctx: Ctx }> = ({ ctx }) => {
             <table className="sxd-mail-table">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th className="sxd-mail-idx">#</th>
                   <th>Moneda</th>
-                  <th>Código</th>
-                  <th>1 unidad = COP</th>
+                  <th className="sxd-mail-code">Código</th>
+                  <th className="sxd-mail-num-h">1 unidad = COP</th>
                   <th>Var. día</th>
                 </tr>
               </thead>
@@ -1111,8 +1111,12 @@ const EmailPreview: React.FC<{ ctx: Ctx }> = ({ ctx }) => {
                 {ctx.rates.map((r, i) => (
                   <tr key={r.code}>
                     <td className="sxd-mail-idx">{i + 1}</td>
-                    <td>{r.name}</td>
                     <td>
+                      {r.name}
+                      {/* En celular se oculta la columna Código y el código se muestra aquí */}
+                      <code className="sxd-mail-code-inline">{r.code}</code>
+                    </td>
+                    <td className="sxd-mail-code">
                       <code>{r.code}</code>
                     </td>
                     <td className="sxd-num">$ {fmtCO(r.cop, curr(r.code).decimals)}</td>

@@ -888,4 +888,130 @@
   .cqd-report-head h2 {
     font-size: 18px;
   }
+
+  /* Pestañas de página con nombres cortos para que quepan las dos */
+  .cqd-page-long {
+    display: none;
+  }
+
+  .cqd-pages {
+    gap: 6px;
+  }
+
+  .cqd-page {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 10px;
+  }
+
+  .cqd-panel {
+    padding: 14px;
+  }
+
+  /* Mapa de calor girado: 4 columnas de UET que caben en el ancho */
+  .cqd-heat--narrow {
+    border-spacing: 2px;
+    font-size: 12px;
+  }
+
+  .cqd-heat--narrow thead th {
+    min-width: 0;
+    padding: 4px 2px;
+  }
+
+  .cqd-heat--narrow thead th button {
+    padding: 4px 2px;
+    border: none;
+    background: none;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .cqd-heat--narrow tbody th {
+    vertical-align: middle;
+    max-width: 92px;
+    padding: 4px 4px 4px 0;
+    white-space: normal;
+    line-height: 1.2;
+    font-size: 12px;
+  }
+
+  .cqd-heat--narrow td {
+    height: 38px;
+    padding: 0 2px;
+  }
+
+  .cqd-heat--narrow .cqd-heat-dim {
+    opacity: 0.28;
+  }
+
+  .cqd-scale-bar {
+    width: 140px;
+  }
+
+  .cqd-car-val {
+    font-size: 17px;
+  }
+
+  /* Tabla de últimos defectos → tarjetas */
+  .cqd-table {
+    min-width: 0;
+  }
+
+  .cqd-table thead {
+    display: none;
+  }
+
+  .cqd-table,
+  .cqd-table tbody {
+    display: block;
+  }
+
+  .cqd-table tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--cqd-border);
+  }
+
+  .cqd-table td {
+    padding: 0;
+    border: none;
+  }
+
+  .cqd-table .cqd-td-date {
+    font-weight: 600;
+  }
+
+  .cqd-table .cqd-td-sev {
+    text-align: right;
+  }
+
+  .cqd-table td[data-label] {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .cqd-table td[data-label]::before {
+    content: attr(data-label);
+    margin-right: auto;
+    color: var(--cqd-muted);
+    font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif;
+    font-size: 12px;
+  }
+}
+
+/* Nombre corto de las pestañas: solo en celular */
+.cqd-page-short {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .cqd-page-short {
+    display: inline;
+  }
 }

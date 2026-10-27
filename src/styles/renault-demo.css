@@ -752,7 +752,8 @@
   gap: 4px;
 }
 
-.rsd-inbox-grid span:first-child {
+/* Solo la etiqueta de cada dato (no los chips de departamento que van dentro) */
+.rsd-inbox-grid > div > span:first-child {
   font-size: 11px;
   color: var(--rsd-muted);
   text-transform: uppercase;
@@ -1411,6 +1412,115 @@ textarea.rsd-input {
 
   .rsd-filters > label {
     flex: 1 1 100%;
+  }
+
+  /* Encabezado más compacto: título y rol en menos espacio */
+  .rsd-topbar {
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .rsd-view-title {
+    font-size: 17px;
+  }
+
+  .rsd-kpis {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .rsd-kpi {
+    padding: 12px;
+  }
+
+  .rsd-kpi strong {
+    font-size: 21px;
+  }
+
+  /* Aprobar ocupa todo el ancho; Rechazar y Ver detalle debajo, lado a lado */
+  .rsd-inbox-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rsd-inbox-actions .rsd-btn-primary {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .rsd-inbox-actions .rsd-btn-ghost {
+    border-color: var(--rsd-border);
+  }
+
+  /* Tabla de solicitudes → tarjetas */
+  .rsd-table {
+    min-width: 0;
+  }
+
+  .rsd-table thead {
+    display: none;
+  }
+
+  .rsd-table,
+  .rsd-table tbody,
+  .rsd-table tr {
+    display: block;
+  }
+
+  .rsd-table tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--rsd-border);
+  }
+
+  .rsd-table td {
+    display: block;
+    padding: 0;
+    border: none;
+  }
+
+  .rsd-table .rsd-td-name {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .rsd-table .rsd-td-stage {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .rsd-table .rsd-td-id {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .rsd-table td[data-label] {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .rsd-table td[data-label]::before {
+    content: attr(data-label);
+    margin-right: auto;
+    color: var(--rsd-muted);
+    font-size: 12px;
+  }
+
+  .rsd-table .rsd-td-money {
+    text-align: right;
+  }
+
+  .rsd-table .rsd-td-money .rsd-td-sub {
+    display: inline;
+    margin-left: 6px;
   }
 }
 

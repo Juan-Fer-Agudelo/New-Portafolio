@@ -61,11 +61,12 @@ interface RenaultDemoProps {
 type View = 'panel' | 'bandeja' | 'solicitudes' | 'nueva';
 type Step = 'rrhh' | 'outgoing' | 'incoming';
 
-const NAV: { id: View; label: string; icon: React.ReactNode }[] = [
-  { id: 'panel', label: 'Panel', icon: <LayoutDashboard size={18} /> },
-  { id: 'bandeja', label: 'Mis aprobaciones', icon: <Inbox size={18} /> },
-  { id: 'solicitudes', label: 'Solicitudes', icon: <ListChecks size={18} /> },
-  { id: 'nueva', label: 'Nueva solicitud', icon: <FilePlus size={18} /> },
+// short: etiqueta de la barra inferior en celular, donde no caben los nombres largos
+const NAV: { id: View; label: string; short: string; icon: React.ReactNode }[] = [
+  { id: 'panel', label: 'Panel', short: 'Panel', icon: <LayoutDashboard size={18} /> },
+  { id: 'bandeja', label: 'Mis aprobaciones', short: 'Aprobaciones', icon: <Inbox size={18} /> },
+  { id: 'solicitudes', label: 'Solicitudes', short: 'Solicitudes', icon: <ListChecks size={18} /> },
+  { id: 'nueva', label: 'Nueva solicitud', short: 'Nueva', icon: <FilePlus size={18} /> },
 ];
 
 const roleLabel = (role: Role) => (role === 'rrhh' ? `Recursos Humanos · ${HR_MANAGER}` : `Jefe de ${dept(role).name} · ${dept(role).boss}`);
@@ -356,10 +357,11 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
               key={n.id}
               className={view === n.id ? 'rsd-tab--active' : ''}
               aria-current={view === n.id ? 'page' : undefined}
+              aria-label={n.label}
               onClick={() => setView(n.id)}
             >
               {n.icon}
-              <span>{n.label}</span>
+              <span>{n.short}</span>
               {n.id === 'bandeja' && pendingByRole[role] > 0 && <span className="rsd-nav-count">{pendingByRole[role]}</span>}
             </button>
           ))}
@@ -663,24 +665,25 @@ const RequestsView: React.FC<{
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id} onClick={() => onOpen(r.id)}>
+                  {/* data-label: en celular cada fila se muestra como tarjeta con la etiqueta de cada dato */}
                   <td className="rsd-td-id">
                     <button onClick={() => onOpen(r.id)}>{r.id}</button>
                   </td>
-                  <td>
+                  <td className="rsd-td-name">
                     <strong>{r.employee.name}</strong>
                     <span className="rsd-td-sub">
                       {r.employee.position} · T{r.employee.shift}
                     </span>
                   </td>
-                  <td>{CHANGE_TYPES[r.type]}</td>
-                  <td>
+                  <td data-label="Tipo">{CHANGE_TYPES[r.type]}</td>
+                  <td data-label="Movimiento">
                     <ChangeSummary r={r} />
                   </td>
-                  <td className="rsd-td-money">
+                  <td className="rsd-td-money" data-label="Salario">
                     {formatCOP(salaryOf(r.employee.level))}
                     <span className="rsd-td-sub">→ {formatCOP(salaryOf(r.toLevel))}</span>
                   </td>
-                  <td>
+                  <td className="rsd-td-stage">
                     <StageBadge stage={stageOf(r)} />
                   </td>
                 </tr>

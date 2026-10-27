@@ -69,6 +69,19 @@ const useWidth = <T extends HTMLElement>() => {
   return [ref, w] as const;
 };
 
+/** true en pantallas angostas (celular), y se actualiza si cambia el tamaño */
+const useNarrow = (query = '(max-width: 600px)') => {
+  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = () => setNarrow(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [query]);
+  return narrow;
+};
+
 /** Datos del periodo actual y del anterior (para comparar los indicadores) */
 const slice = (f: Filters, offset: number) => {
   const days = DATA.days.slice(DATA.days.length - f.period * (offset + 1), DATA.days.length - f.period * offset);
@@ -184,10 +197,12 @@ export const CalidadDemo: React.FC<CalidadDemoProps> = ({ isOpen, onClose }) => 
         <div className="cqd-body">
           <nav className="cqd-pages" aria-label="Páginas del reporte">
             <button className={page === 'kpis' ? 'cqd-page cqd-page--active' : 'cqd-page'} onClick={() => setPage('kpis')}>
-              <LayoutDashboard size={16} /> <span>1 · Indicadores de pintura</span>
+              <LayoutDashboard size={16} /> <span className="cqd-page-long">1 · Indicadores de pintura</span>
+              <span className="cqd-page-short">Indicadores</span>
             </button>
             <button className={page === 'heatmap' ? 'cqd-page cqd-page--active' : 'cqd-page'} onClick={() => setPage('heatmap')}>
-              <Flame size={16} /> <span>2 · Mapa de calor UET</span>
+              <Flame size={16} /> <span className="cqd-page-long">2 · Mapa de calor UET</span>
+              <span className="cqd-page-short">Mapa de calor</span>
             </button>
           </nav>
 
@@ -359,15 +374,18 @@ const KpiPage: React.FC<{
             <tbody>
               {recent.map((d) => (
                 <tr key={d.id}>
-                  <td>
+                  {/* data-label: en celular cada fila se muestra como tarjeta */}
+                  <td className="cqd-td-date">
                     {fmtShortDate(d.date)} · {SHIFT_HOURS[d.hour]}
                   </td>
-                  <td>T{d.shift}</td>
-                  <td className="cqd-mono">{d.vin}</td>
-                  <td>{uetName(d.uet)}</td>
-                  <td>{d.zone}</td>
-                  <td>{d.type}</td>
-                  <td>
+                  <td data-label="Turno">T{d.shift}</td>
+                  <td className="cqd-mono" data-label="VIN">
+                    {d.vin}
+                  </td>
+                  <td data-label="UET">{uetName(d.uet)}</td>
+                  <td data-label="Zona">{d.zone}</td>
+                  <td data-label="Tipo">{d.type}</td>
+                  <td className="cqd-td-sev">
                     <span className={`cqd-sev cqd-sev--${d.severity === 'Crítico' ? 'crit' : d.severity === 'Mayor' ? 'major' : 'minor'}`}>
                       {d.severity}
                     </span>
@@ -594,6 +612,41 @@ const HeatmapPage: React.FC<{
 
   const selectedUet = filters.uet;
   const zoneCounts = ZONES.map((z) => defects.filter((d) => d.zone === z && (!selectedUet || d.uet === selectedUet)).length);
+  const narrow = useNarrow();
+
+  /** Celda del mapa de calor para la UET i y la columna j (la misma en ambas orientaciones) */
+  const heatCell = (i: number, j: number, className = '') => {
+    const v = matrix[i][j];
+    return (
+      <td
+        key={`${i}-${j}`}
+        className={className}
+        style={{ background: heatColor(v, max), color: heatInk(v, max) }}
+        onPointerMove={(e) =>
+          setTip({
+            x: e.clientX,
+            y: e.clientY,
+            content: (
+              <>
+                <strong>
+                  {UETS[i].name} × {cols[j]}
+                </strong>
+                <span>
+                  <b>{fmtNum(v)}</b> defectos
+                </span>
+                <span>
+                  {rowTotals[i] ? fmtNum((v / rowTotals[i]) * 100, 1) : 0} % de la UET · {total ? fmtNum((v / total) * 100, 1) : 0} % del total
+                </span>
+              </>
+            ),
+          })
+        }
+        onPointerLeave={() => setTip(null)}
+      >
+        {fmtNum(v)}
+      </td>
+    );
+  };
 
   return (
     <>
@@ -650,68 +703,74 @@ const HeatmapPage: React.FC<{
         </div>
 
         <div className="cqd-heat-wrap">
-          <table className="cqd-heat">
-            <thead>
-              <tr>
-                <th className="cqd-heat-corner">UET</th>
-                {cols.map((c) => (
-                  <th key={c} scope="col">
-                    {c}
-                  </th>
-                ))}
-                <th scope="col" className="cqd-heat-total">
-                  Total
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {UETS.map((u, i) => (
-                <tr key={u.id} className={selectedUet && selectedUet !== u.id ? 'cqd-heat-dim' : ''}>
-                  <th scope="row">
-                    <button onClick={() => onUet(selectedUet === u.id ? '' : u.id)}>{u.name}</button>
-                  </th>
-                  {matrix[i].map((v, j) => (
-                    <td
-                      key={j}
-                      style={{ background: heatColor(v, max), color: heatInk(v, max) }}
-                      onPointerMove={(e) =>
-                        setTip({
-                          x: e.clientX,
-                          y: e.clientY,
-                          content: (
-                            <>
-                              <strong>
-                                {u.name} × {cols[j]}
-                              </strong>
-                              <span>
-                                <b>{fmtNum(v)}</b> defectos
-                              </span>
-                              <span>
-                                {rowTotals[i] ? fmtNum((v / rowTotals[i]) * 100, 1) : 0} % de la UET · {total ? fmtNum((v / total) * 100, 1) : 0} % del total
-                              </span>
-                            </>
-                          ),
-                        })
-                      }
-                      onPointerLeave={() => setTip(null)}
-                    >
-                      {fmtNum(v)}
-                    </td>
+          {narrow ? (
+            /* Celular: tabla girada — una fila por zona/tipo/hora y las 4 UET como columnas, para que quepa sin deslizar */
+            <table className="cqd-heat cqd-heat--narrow">
+              <thead>
+                <tr>
+                  <th className="cqd-heat-corner">{CROSS_LABEL[cross]}</th>
+                  {UETS.map((u) => (
+                    <th key={u.id} scope="col" className={selectedUet && selectedUet !== u.id ? 'cqd-heat-dim' : ''}>
+                      <button onClick={() => onUet(selectedUet === u.id ? '' : u.id)}>{u.name}</button>
+                    </th>
                   ))}
-                  <td className="cqd-heat-total">{fmtNum(rowTotals[i])}</td>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <th scope="row">Total</th>
-                {colTotals.map((v, j) => (
-                  <td key={j}>{fmtNum(v)}</td>
+              </thead>
+              <tbody>
+                {/* Sin columna Total para que quepa: el total por zona se ve en el vehículo y su top 5 */}
+                {cols.map((c, j) => (
+                  <tr key={c}>
+                    <th scope="row">{c}</th>
+                    {UETS.map((u, i) => heatCell(i, j, selectedUet && selectedUet !== u.id ? 'cqd-heat-dim' : ''))}
+                  </tr>
                 ))}
-                <td className="cqd-heat-total">{fmtNum(total)}</td>
-              </tr>
-            </tfoot>
-          </table>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  {rowTotals.map((v, i) => (
+                    <td key={i}>{fmtNum(v)}</td>
+                  ))}
+                </tr>
+              </tfoot>
+            </table>
+          ) : (
+            <table className="cqd-heat">
+              <thead>
+                <tr>
+                  <th className="cqd-heat-corner">UET</th>
+                  {cols.map((c) => (
+                    <th key={c} scope="col">
+                      {c}
+                    </th>
+                  ))}
+                  <th scope="col" className="cqd-heat-total">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {UETS.map((u, i) => (
+                  <tr key={u.id} className={selectedUet && selectedUet !== u.id ? 'cqd-heat-dim' : ''}>
+                    <th scope="row">
+                      <button onClick={() => onUet(selectedUet === u.id ? '' : u.id)}>{u.name}</button>
+                    </th>
+                    {matrix[i].map((_, j) => heatCell(i, j))}
+                    <td className="cqd-heat-total">{fmtNum(rowTotals[i])}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  {colTotals.map((v, j) => (
+                    <td key={j}>{fmtNum(v)}</td>
+                  ))}
+                  <td className="cqd-heat-total">{fmtNum(total)}</td>
+                </tr>
+              </tfoot>
+            </table>
+          )}
         </div>
 
         <div className="cqd-scale" aria-hidden="true">

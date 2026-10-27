@@ -21,7 +21,10 @@ export const renderWithRightsHighlight = (
   return (
     <>
       {parts.map((part, idx) => {
-        if (regex.test(part)) {
+        // Con un grupo de captura, split deja las frases encontradas en las posiciones impares.
+        // Un punto suelto justo después del recuadro se omite: en celular quedaba solo en una línea.
+        if (idx % 2 === 0 && idx > 0 && /^\s*\.\s*$/.test(part)) return null;
+        if (idx % 2 === 1) {
           return (
             <a
               key={idx}
