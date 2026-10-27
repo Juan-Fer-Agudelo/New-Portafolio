@@ -12,15 +12,20 @@ export interface Uet {
   area: Area;
 }
 
-/** UET que rechazan piezas: el valor del rechazo se carga a la UET que la estaba ensamblando o soldando */
+/**
+ * UET que rechazan piezas, en el orden de la línea: el valor del rechazo se carga a la UET que la
+ * estaba soldando o ensamblando. Pintura va entre Soldadura y Ensamble, pero sus defectos se
+ * manejan por otro proceso y no forman parte de esta app.
+ */
 export const UETS: Uet[] = [
+  { id: 'base-rodante', name: 'Base rodante', area: 'Soldadura' },
+  { id: 'superestructuras', name: 'Superestructuras', area: 'Soldadura' },
+  { id: 'ferrage', name: 'Ferrage', area: 'Soldadura' },
+  { id: 'ouvrants', name: 'Ouvrants', area: 'Soldadura' },
   { id: 'trim', name: 'Trim', area: 'Ensamble' },
   { id: 'mecanica', name: 'Mecánica', area: 'Ensamble' },
   { id: 'final', name: 'Final', area: 'Ensamble' },
   { id: 'entregas', name: 'Entregas', area: 'Ensamble' },
-  { id: 'laterales', name: 'Laterales', area: 'Soldadura' },
-  { id: 'piso', name: 'Piso', area: 'Soldadura' },
-  { id: 'cierre', name: 'Cierre de carrocería', area: 'Soldadura' },
 ];
 
 export const uetById = (id: string) => UETS.find((u) => u.id === id)!;
@@ -37,7 +42,7 @@ export interface Piece {
 }
 
 export const PIECES: Piece[] = [
-  { code: 'PZ-40218', part: '8201-4471', name: 'Bisagra de puerta delantera', price: 46_500, uets: ['trim', 'laterales'] },
+  { code: 'PZ-40218', part: '8201-4471', name: 'Bisagra de puerta delantera', price: 46_500, uets: ['trim', 'ferrage'] },
   { code: 'PZ-40377', part: '8201-5532', name: 'Moldura de puerta trasera', price: 58_900, uets: ['trim', 'final'] },
   { code: 'PZ-40452', part: '8201-6094', name: 'Tapizado de puerta delantera', price: 265_000, uets: ['trim'] },
   { code: 'PZ-40519', part: '8201-1187', name: 'Arnés eléctrico de tablero', price: 785_000, uets: ['trim', 'final'] },
@@ -46,12 +51,21 @@ export const PIECES: Piece[] = [
   { code: 'PZ-40781', part: '8201-3305', name: 'Faro delantero izquierdo', price: 690_000, uets: ['final', 'entregas'] },
   { code: 'PZ-40846', part: '8201-3418', name: 'Parachoques delantero', price: 845_000, uets: ['final', 'entregas'] },
   { code: 'PZ-40912', part: '8201-3702', name: 'Espejo retrovisor derecho', price: 312_000, uets: ['final', 'entregas'] },
-  { code: 'PZ-41027', part: '8201-0815', name: 'Refuerzo de pilar B', price: 176_500, uets: ['laterales'] },
-  { code: 'PZ-41093', part: '8201-0922', name: 'Panel lateral izquierdo', price: 1_420_000, uets: ['laterales', 'cierre'] },
-  { code: 'PZ-41158', part: '8201-0640', name: 'Travesaño trasero', price: 333_000, uets: ['piso'] },
-  { code: 'PZ-41224', part: '8201-0701', name: 'Piso trasero', price: 1_120_000, uets: ['piso'] },
-  { code: 'PZ-41301', part: '8201-1033', name: 'Panel de techo', price: 980_000, uets: ['cierre'] },
-  { code: 'PZ-41376', part: '8201-1092', name: 'Capó', price: 1_240_000, uets: ['cierre', 'final'] },
+  // Soldadura · Base rodante: piso y estructura inferior
+  { code: 'PZ-41158', part: '8201-0640', name: 'Travesaño trasero', price: 333_000, uets: ['base-rodante'] },
+  { code: 'PZ-41224', part: '8201-0701', name: 'Piso trasero', price: 1_120_000, uets: ['base-rodante'] },
+  { code: 'PZ-41262', part: '8201-0688', name: 'Larguero delantero', price: 458_000, uets: ['base-rodante'] },
+  // Soldadura · Superestructuras: laterales y techo
+  { code: 'PZ-41027', part: '8201-0815', name: 'Refuerzo de pilar B', price: 176_500, uets: ['superestructuras'] },
+  { code: 'PZ-41093', part: '8201-0922', name: 'Panel lateral izquierdo', price: 1_420_000, uets: ['superestructuras'] },
+  { code: 'PZ-41301', part: '8201-1033', name: 'Panel de techo', price: 980_000, uets: ['superestructuras'] },
+  // Soldadura · Ferrage: montaje de bisagras y ajuste de las partes móviles
+  { code: 'PZ-41412', part: '8201-4520', name: 'Bisagra de capó', price: 38_700, uets: ['ferrage'] },
+  { code: 'PZ-41448', part: '8201-4588', name: 'Soporte de cerradura de portón', price: 62_400, uets: ['ferrage'] },
+  // Soldadura · Ouvrants: partes que abren (puertas, capó, portón)
+  { code: 'PZ-41376', part: '8201-1092', name: 'Capó', price: 1_240_000, uets: ['ouvrants', 'final'] },
+  { code: 'PZ-41503', part: '8201-1240', name: 'Puerta delantera derecha', price: 1_860_000, uets: ['ouvrants'] },
+  { code: 'PZ-41567', part: '8201-1305', name: 'Portón trasero', price: 1_390_000, uets: ['ouvrants'] },
 ];
 
 export const REASONS = [

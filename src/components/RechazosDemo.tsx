@@ -42,7 +42,7 @@ interface RechazosDemoProps {
   onClose: () => void;
 }
 
-type AreaFilter = 'Todas' | 'Ensamble' | 'Soldadura';
+type AreaFilter = 'Todas' | 'Soldadura' | 'Ensamble';
 
 const OPERATOR = 'Operario T1 · Cód. 10533';
 
@@ -169,7 +169,8 @@ export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose }) =
           afterLabel: 'Con la app',
         }}
         points={[
-          'Elige la UET que rechaza (Ensamble o Soldadura): el valor de la pieza se carga a esa UET.',
+          'Elige la UET que rechaza: Soldadura (Base rodante, Superestructuras, Ferrage, Ouvrants) o Ensamble (Trim, Mecánica, Final, Entregas). El valor de la pieza se carga a esa UET.',
+          'Pintura va entre Soldadura y Ensamble, pero sus defectos se manejan por otro proceso.',
           'Pulsa «Escanear pieza», marca el motivo y registra el rechazo.',
           'Mira cómo Power Automate obtiene el precio y lo guarda en la base de datos de la UET de Calidad.',
         ]}
@@ -226,7 +227,7 @@ export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose }) =
                       setPiece(null);
                     }}
                   >
-                    {(['Ensamble', 'Soldadura'] as const).map((a) => (
+                    {(['Soldadura', 'Ensamble'] as const).map((a) => (
                       <optgroup key={a} label={a}>
                         {UETS.filter((x) => x.area === a).map((x) => (
                           <option key={x.id} value={x.id}>
@@ -335,7 +336,7 @@ export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose }) =
                   <Database size={16} /> Base de datos · UET de Calidad
                 </h3>
                 <div className="rzd-seg" role="group" aria-label="Filtrar por área">
-                  {(['Todas', 'Ensamble', 'Soldadura'] as AreaFilter[]).map((a) => (
+                  {(['Todas', 'Soldadura', 'Ensamble'] as AreaFilter[]).map((a) => (
                     <button key={a} aria-pressed={area === a} onClick={() => setArea(a)}>
                       {a}
                     </button>
