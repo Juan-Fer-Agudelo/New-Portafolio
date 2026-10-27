@@ -15,16 +15,20 @@ export interface School {
   test: string;
   /** Tiempo estándar de la prueba, en segundos */
   standard: number;
-  masters: [string, string];
+  /** Maestros que califican en la escuela (DLI tiene uno solo) */
+  masters: string[];
 }
 
 /** Las 4 escuelas de destreza, en el orden en que las recorren los grupos */
 export const SCHOOLS: School[] = [
-  { id: 'ensamble', name: 'Ensamble', test: 'Montaje de un subconjunto con torque', standard: 180, masters: ['Jaime Ospina', 'Lucía Bedoya'] },
-  { id: 'dli', name: 'DLI', test: 'Armado de un kit de piezas (picking)', standard: 150, masters: ['Óscar Muñoz', 'Paola Quintero'] },
-  { id: 'soldadura', name: 'Soldadura', test: 'Puntos de soldadura en probeta', standard: 240, masters: ['Ricardo Gil', 'Sandra Velásquez'] },
-  { id: 'pintura', name: 'Pintura', test: 'Aplicación uniforme en panel de prueba', standard: 210, masters: ['Andrés Toro', 'Mónica Rendón'] },
+  { id: 'ensamble', name: 'Ensamble', test: 'Montaje de un subconjunto con torque', standard: 180, masters: ['Jaime', 'Daniela'] },
+  { id: 'dli', name: 'DLI', test: 'Armado de un kit de piezas (picking)', standard: 150, masters: ['Uriel'] },
+  { id: 'soldadura', name: 'Soldadura', test: 'Puntos de soldadura en probeta', standard: 240, masters: ['Juan', 'Robert'] },
+  { id: 'pintura', name: 'Pintura', test: 'Aplicación uniforme en panel de prueba', standard: 210, masters: ['Jota', 'Gabriel'] },
 ];
+
+/** "Maestros: Jaime y Daniela" o "Maestro: Uriel" */
+export const mastersLabel = (s: School) => `${s.masters.length > 1 ? 'Maestros' : 'Maestro'}: ${s.masters.join(' y ')}`;
 
 export const RAC5 = { name: 'RAC 5', test: 'Evaluación psicológica', psychologists: ['Catalina Ríos', 'Natalia Uribe'] as [string, string] };
 
@@ -34,9 +38,9 @@ export const school = (id: Station) => SCHOOLS.find((s) => s.id === id)!;
 export const RULES = { aptoQuality: 8, medioQuality: 6, medioTimeFactor: 1.2 };
 
 export interface Grade {
-  /** Calidad 0–10 de cada maestro */
+  /** Calidad 0–10 de cada maestro (q2 no existe en escuelas con un solo maestro) */
   q1: number;
-  q2: number;
+  q2?: number;
   /** Tiempo de la prueba en segundos */
   time: number;
 }
@@ -51,7 +55,8 @@ export interface Aspirant {
   rac5?: Psych;
 }
 
-export const quality = (g: Grade) => (g.q1 + g.q2) / 2;
+/** Calidad final: promedio de los maestros, o la del único maestro */
+export const quality = (g: Grade) => (g.q2 === undefined ? g.q1 : (g.q1 + g.q2) / 2);
 
 export const verdictOf = (station: Station, g: Grade): Verdict => {
   const std = school(station).standard;
@@ -114,7 +119,10 @@ export const suggestGrade = (rand: () => number, station: Station): Grade => {
   const std = school(station).standard;
   const base = 5 + rand() * 5;
   const q = (d: number) => Math.max(3, Math.min(10, Math.round(base + d)));
-  return { q1: q(rand() - 0.5), q2: q(rand() - 0.5), time: Math.round((std * (0.75 + rand() * 0.6)) / 5) * 5 };
+  const q1 = q(rand() - 0.5);
+  const q2 = q(rand() - 0.5);
+  const time = Math.round((std * (0.75 + rand() * 0.6)) / 5) * 5;
+  return school(station).masters.length > 1 ? { q1, q2, time } : { q1, time };
 };
 
 /**
@@ -126,7 +134,10 @@ const gradeFor = (rand: () => number, station: Station, skill: number): Grade =>
   const base = 4 + skill * 6 + (rand() - 0.5) * 2.4;
   const q = () => Math.max(3, Math.min(10, Math.round(base + (rand() - 0.5))));
   const factor = 1.3 - skill * 0.5 + (rand() - 0.5) * 0.25;
-  return { q1: q(), q2: q(), time: Math.round((std * factor) / 5) * 5 };
+  const q1 = q();
+  const q2 = q();
+  const time = Math.round((std * factor) / 5) * 5;
+  return school(station).masters.length > 1 ? { q1, q2, time } : { q1, time };
 };
 
 export const buildAspirants = (): Aspirant[] => {

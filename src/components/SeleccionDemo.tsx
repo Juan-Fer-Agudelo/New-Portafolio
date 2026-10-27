@@ -22,6 +22,7 @@ import {
   buildAspirants,
   draftFor,
   fmtTime,
+  mastersLabel,
   placementOf,
   quality,
   school,
@@ -126,7 +127,7 @@ export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose })
         title="App interna con datos ficticios"
         points={[
           'Los aspirantes llegan en dos jornadas (mañana y tarde), en grupos de 4, y pasan por 5 bases: las escuelas de destreza de Ensamble, DLI, Soldadura y Pintura, y la RAC 5 con las psicólogas de RRHH.',
-          'En cada escuela, 2 maestros califican la calidad y se mide el tiempo frente al estándar desde su tablet.',
+          'En cada escuela los maestros califican la calidad y se mide el tiempo frente al estándar desde su tablet: Jaime y Daniela en Ensamble, Uriel en DLI, Juan y Robert en Soldadura, y Jota y Gabriel en Pintura.',
           'En la base de datos de RRHH cada área aparece en verde (apto), amarillo (medianamente apto, en espera) o rojo (no apto).',
         ]}
         actions={[{ label: 'Abrir la app', onClick: () => setScreen('app') }]}
@@ -191,7 +192,7 @@ export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose })
             <div className="sld-tablet">
               <div className="sld-tab-bar">
                 <strong>{isRac ? 'RAC 5 · Psicología (RRHH)' : 'Escuelas de destreza'}</strong>
-                <span>{isRac ? `Psicólogas: ${RAC5.psychologists.join(' y ')}` : `Maestros: ${sc!.masters.join(' y ')}`}</span>
+                <span>{isRac ? `Psicólogas: ${RAC5.psychologists.join(' y ')}` : mastersLabel(sc!)}</span>
               </div>
 
               <div className="sld-tab-body">
@@ -273,8 +274,18 @@ export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose })
                           </span>
                         </div>
                         <div className="sld-scores">
-                          <Stepper label={`Calidad · ${sc!.masters[0].split(' ')[0]}`} value={g.q1} min={0} max={10} onChange={(q1) => setGrade(a.id, { q1 })} disabled={sending} />
-                          <Stepper label={`Calidad · ${sc!.masters[1].split(' ')[0]}`} value={g.q2} min={0} max={10} onChange={(q2) => setGrade(a.id, { q2 })} disabled={sending} />
+                          {/* Una calificación de calidad por cada maestro de la escuela */}
+                          {sc!.masters.map((m, k) => (
+                            <Stepper
+                              key={m}
+                              label={`Calidad · ${m}`}
+                              value={(k === 0 ? g.q1 : g.q2) ?? g.q1}
+                              min={0}
+                              max={10}
+                              onChange={(v) => setGrade(a.id, k === 0 ? { q1: v } : { q2: v })}
+                              disabled={sending}
+                            />
+                          ))}
                           <Stepper
                             label="Tiempo"
                             value={g.time}
