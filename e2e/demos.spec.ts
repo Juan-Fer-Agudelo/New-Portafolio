@@ -68,6 +68,24 @@ test('el portafolio carga con los 12 proyectos', async ({ page }) => {
   await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(7);
 });
 
+test('los filtros por categoría muestran los proyectos de cada una', async ({ page }) => {
+  const filters = page.getByRole('group', { name: 'Filtrar proyectos por categoría' });
+  const cards = page.locator('article.project-card-item');
+  await filters.scrollIntoViewIfNeeded();
+  await expect(filters.getByRole('button', { pressed: true })).toHaveText(/Todos/);
+
+  for (const [name, count] of [['Desarrollo web', 5], ['Automatización', 5], ['Datos', 4], ['Todos', 12]] as const) {
+    const button = filters.getByRole('button', { name: new RegExp(name) });
+    await button.click();
+    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    await expect(button).toContainText(String(count));
+    await expect(cards).toHaveCount(count);
+    // Las tarjetas que vuelven a aparecer deben verse, no quedarse transparentes por la animación de scroll
+    await expect(cards.last()).toHaveCSS('opacity', '1');
+  }
+  await expectNoPageScrollX(page);
+});
+
 test('MasSalud: ERP y alertas de Slack', async ({ page }) => {
   await openDemo(page, 'Control de Asistencia MasSalud');
   await expect(page.getByRole('heading', { name: 'ERP de uso empresarial privado' })).toBeVisible();

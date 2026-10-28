@@ -504,6 +504,8 @@
         justify-content: center;
         padding-top: 100px;
         padding-bottom: 0;
+        /* La cabeza del avatar al girar sobresalía unos px y creaba scroll horizontal */
+        overflow-x: clip;
       }
 
       .hero-container {
@@ -1455,6 +1457,61 @@
         gap: 12px;
         margin-bottom: 40px;
         max-width: 640px;
+      }
+
+      /* Filtros por categoría de la sección de proyectos */
+      .projects-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 48px;
+      }
+
+      .projects-filter {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-body);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-primary);
+        background: transparent;
+        border: 1.5px solid var(--color-border-subtle);
+        border-radius: 999px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s, color 0.2s;
+      }
+
+      .projects-filter:hover {
+        border-color: var(--color-purple);
+      }
+
+      .projects-filter:focus-visible {
+        outline: 2px solid var(--color-purple);
+        outline-offset: 2px;
+      }
+
+      .projects-filter.is-active {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #fff;
+      }
+
+      .projects-filter-count {
+        font-size: 12px;
+        font-weight: 700;
+        min-width: 22px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: rgba(170, 220, 236, 0.45);
+        color: var(--color-primary);
+        text-align: center;
+      }
+
+      .projects-filter.is-active .projects-filter-count {
+        background: var(--color-accent);
+        color: var(--color-primary);
       }
 
       .projects-search-input {
@@ -2889,6 +2946,31 @@
         display: block;
       }
 
+      /* Diagramas de la plantilla: versión horizontal en escritorio y vertical en celular */
+      .article-figure {
+        margin: 24px 0;
+      }
+
+      .article-figure .article-diagram {
+        width: 100%;
+        height: auto;
+      }
+
+      .article-diagram--narrow {
+        display: none !important;
+      }
+
+      @media (max-width: 600px) {
+        .article-diagram--wide {
+          display: none !important;
+        }
+
+        .article-diagram--narrow {
+          display: block !important;
+          padding: 12px;
+        }
+      }
+
       /* Bloque de Puntos Clave / Key Takeaways */
       .article-takeaways {
         background: rgba(115, 187, 197, 0.1);
@@ -2941,7 +3023,17 @@
         text-decoration: underline;
       }
 
-      /* Tabla comparativa */
+      /* Tabla comparativa: el contenedor la deja desplazar en pantallas angostas */
+      .article-table-wrap {
+        overflow-x: auto;
+        margin: 8px 0 28px 0;
+      }
+
+      .article-table-wrap .article-table {
+        margin: 0;
+        min-width: 520px;
+      }
+
       .article-table {
         width: 100%;
         border-collapse: collapse;
@@ -3300,6 +3392,16 @@
           max-width: 100%;
           margin-bottom: 20px;
           gap: 8px;
+        }
+
+        .projects-filters {
+          margin: 0 0 24px;
+          gap: 8px;
+        }
+
+        .projects-filter {
+          font-size: 14px;
+          padding: 7px 12px;
         }
 
         .projects-search-input {

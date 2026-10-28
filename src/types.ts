@@ -18,8 +18,13 @@ export interface ProjectLocale {
   date?: string;
 }
 
+/** Categorías de los filtros de la sección de proyectos. */
+export type ProjectCategory = 'web' | 'automatizacion' | 'datos';
+
 export interface ProjectItem {
   id: string;
+  /** Un proyecto puede estar en más de una categoría. */
+  categories: ProjectCategory[];
   number: string;
   type: string;
   title: string;

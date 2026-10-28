@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { ProjectItem } from '../types';
+import { ProjectCategory, ProjectItem } from '../types';
 import { MasSaludDemo } from './MasSaludDemo';
 import { RenaultDemo } from './RenaultDemo';
 import { SimexDemo } from './SimexDemo';
@@ -27,6 +27,11 @@ const DEMO_COMPONENTS: Record<DemoId, { name: string; Component: React.FC<{ isOp
 };
 const DEMOS = (Object.keys(DEMO_COMPONENTS) as DemoId[]).map((id) => ({ id, ...DEMO_COMPONENTS[id] }));
 
+type Filter = 'all' | ProjectCategory;
+const FILTERS: Filter[] = ['all', 'web', 'automatizacion', 'datos'];
+const projectsIn = (filter: Filter) =>
+  filter === 'all' ? PROJECTS_DATA : PROJECTS_DATA.filter((project) => project.categories.includes(filter));
+
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
   searchQuery?: string;
@@ -46,6 +51,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const p = t.projects;
   const [openDemo, setOpenDemo] = useState<ProjectItem['demo'] | null>(null);
   const closeDemo = useCallback(() => setOpenDemo(null), []);
+  const [filter, setFilter] = useState<Filter>('all');
+  // Las tarjetas que vuelven a aparecer al filtrar ya no las ve el observador de scroll: se muestran directo
+  const [revealAll, setRevealAll] = useState(false);
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
   // Devuelve los campos de texto del proyecto en el idioma actual
@@ -67,7 +75,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   };
 
   const filteredProjects = normalizedQuery
-    ? PROJECTS_DATA.filter((project) => {
+    ? projectsIn(filter).filter((project) => {
         const haystack = [
           project.title,
           project.type,
@@ -83,7 +91,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           .toLowerCase();
         return haystack.includes(normalizedQuery);
       })
-    : PROJECTS_DATA;
+    : projectsIn(filter);
 
   return (
     <section id="proyectos" className="section-reveal open-source-section">
@@ -129,6 +137,25 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </div>
         )}
 
+        {/* Filtros por categoría */}
+        <div className="projects-filters animate-on-scroll" role="group" aria-label={p.filtersLabel}>
+          {FILTERS.map((key) => (
+            <button
+              key={key}
+              type="button"
+              className={`projects-filter${filter === key ? ' is-active' : ''}`}
+              aria-pressed={filter === key}
+              onClick={() => {
+                setFilter(key);
+                setRevealAll(true);
+              }}
+            >
+              {p.filters[key]}
+              <span className="projects-filter-count">{projectsIn(key).length}</span>
+            </button>
+          ))}
+        </div>
+
         {/* Lista de proyectos */}
         <div className="open-source-projects-list">
           {filteredProjects.length === 0 ? (
@@ -138,7 +165,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           ) : (
             filteredProjects.map((project, idx) => (
               <React.Fragment key={project.id}>
-                <article className="open-source-item project-card-item animate-on-scroll">
+                <article className={`open-source-item project-card-item animate-on-scroll${revealAll || normalizedQuery ? ' visible' : ''}`}>
                   {project.image && (
                     <div className="project-card-image-wrap">
                       <img

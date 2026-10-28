@@ -4,12 +4,15 @@ import miamiBounceOg from '../assets/images/miami-bounce-og.jpg';
 import peptidosOg from '../assets/images/peptidos-og.jpg';
 import perfectbOg from '../assets/images/perfectb-og.webp';
 import { EXTRA_WRITING_ARTICLES } from './blogArticles';
+import { CORE_WRITING_ARTICLES } from './blogArticlesCore';
 import { MORE_WRITING_ARTICLES_1 } from './blogArticlesMore1';
 import { MORE_WRITING_ARTICLES_2 } from './blogArticlesMore2';
+import { SECURITY_WRITING_ARTICLES } from './blogArticlesSecurity';
 
 export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'enhance-work',
+    categories: ['web'],
     number: '01',
     type: 'PLATAFORMA WEB B2B/B2C',
     title: 'Enhance.Work',
@@ -51,6 +54,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'miami-bounce-company',
+    categories: ['web'],
     number: '02',
     type: 'PLATAFORMA WEB',
     title: 'Miami Bounce Company',
@@ -95,6 +99,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'peptidos-venezuela',
+    categories: ['web'],
     number: '03',
     type: 'E-COMMERCE',
     title: 'Péptidos Venezuela',
@@ -139,6 +144,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'perfect-b-aesthetic',
+    categories: ['web'],
     number: '04',
     type: 'SITIO WEB CLÍNICO / RESERVAS',
     title: 'Perfect B',
@@ -183,6 +189,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'massalud-control-asistencia',
+    categories: ['automatizacion'],
     number: '05',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Control de Asistencia MasSalud',
@@ -216,6 +223,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'cambios-estructura-nomina',
+    categories: ['automatizacion'],
     number: '06',
     type: 'APP EMPRESARIAL / POWER APPS',
     title: 'Cambios de Estructura y Nómina',
@@ -243,6 +251,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'automatizacion-tasas-cambio',
+    categories: ['automatizacion', 'datos'],
     number: '07',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Automatización de Tasas de Cambio',
@@ -270,6 +279,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'analisis-datos-estadisticos',
+    categories: ['datos'],
     number: '08',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
@@ -297,6 +307,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'trazabilidad-agvs',
+    categories: ['datos'],
     number: '09',
     type: 'TRAZABILIDAD / INDUSTRIA 4.0',
     title: 'Trazabilidad de AGVs',
@@ -324,6 +335,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'rechazos-defectos-calidad',
+    categories: ['automatizacion', 'datos'],
     number: '10',
     type: 'APP EMPRESARIAL / POWER AUTOMATE',
     title: 'Rechazos de Defectos de Calidad',
@@ -351,6 +363,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'seleccion-operarios',
+    categories: ['automatizacion'],
     number: '11',
     type: 'APP MÓVIL / REACT NATIVE',
     title: 'Selección de Operarios',
@@ -378,6 +391,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   },
   {
     id: 'sitio-contadoras-aq',
+    categories: ['web'],
     number: '12',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
@@ -412,582 +426,9 @@ export const ARTICLE_AUTHOR: ArticleAuthor = {
   profileUrl: 'https://github.com/Juan-Fer-Agudelo',
 };
 
-const MONOLITH_TO_MICROSERVICES_CONTENT = `
-<p class="article-intro">Migrar a microservicios porque "es lo que hace todo el mundo" es la forma más rápida de convertir un sistema lento en un sistema lento, distribuido y difícil de depurar. La pregunta que de verdad importa no es arquitectónica, es operativa: ¿qué parte de tu monolito te está costando dinero o velocidad de entrega cada semana? Este artículo responde eso con criterios concretos y un plan de migración incremental, sin big bang, sin downtime y sin reescribir el sistema desde cero.</p>
-
-<div class="article-takeaways">
-  <span class="article-block-label">Puntos Clave</span>
-  <ul>
-    <li>Los microservicios no resuelven problemas de diseño: un monolito con módulos acoplados se convierte en microservicios acoplados por red, solo que más lentos y más difíciles de depurar.</li>
-    <li>Las señales reales para migrar son de despliegue y de organización de equipos, no de "líneas de código" ni de moda tecnológica.</li>
-    <li>El patrón Strangler Fig permite extraer servicios de forma incremental, con rollback inmediato si algo falla en producción.</li>
-    <li>La mayoría de los equipos de menos de 15 ingenieros no necesitan microservicios: necesitan un monolito mejor modularizado.</li>
-  </ul>
-</div>
-
-<div class="article-index">
-  <span class="article-block-label">Índice de Contenidos</span>
-  <ol>
-    <li><a href="#ms-pregunta">1. La pregunta equivocada: "¿Necesito microservicios?"</a></li>
-    <li>
-      <a href="#ms-senales">2. Las 3 señales reales de que tu monolito necesita cambiar</a>
-      <ol>
-        <li><a href="#ms-cuellos">2.1 Cuellos de botella de despliegue</a></li>
-        <li><a href="#ms-equipos">2.2 Límites de equipo, no solo de código</a></li>
-        <li><a href="#ms-escalado">2.3 Escalado desigual de módulos</a></li>
-      </ol>
-    </li>
-    <li><a href="#ms-comparativa">3. Monolito vs. microservicios: comparativa técnica</a></li>
-    <li><a href="#ms-strangler">4. La estrategia Strangler Fig: migrar sin romper producción</a></li>
-    <li><a href="#ms-errores">5. Errores comunes que convierten la migración en un incendio</a></li>
-    <li><a href="#ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</a></li>
-    <li><a href="#ms-faqs">Preguntas Frecuentes</a></li>
-    <li><a href="#ms-referencias">Referencias y Enlaces</a></li>
-  </ol>
-</div>
-
-<h2 id="ms-pregunta">1. La pregunta equivocada: "¿Necesito microservicios?"</h2>
-<p>Esa pregunta no tiene una respuesta útil porque está planteada al revés. Ningún sistema "necesita" microservicios por sí mismo; una organización necesita desplegar más rápido, escalar un componente específico o dejar que equipos trabajen sin pisarse. La arquitectura es una consecuencia de esas restricciones, no un objetivo en sí misma. Antes de hablar de servicios, colas o service mesh, hay que identificar en qué parte exacta del ciclo de entrega está el dolor real: ¿en el despliegue, en el escalado, en la coordinación entre equipos, o simplemente en un código mal modularizado que nadie ha ordenado?</p>
-<p>La Ley de Conway explica por qué tantas migraciones fallan: los sistemas terminan replicando la estructura de comunicación de la organización que los construye. Si trocear el monolito en servicios no viene acompañado de equipos autónomos con ownership real sobre cada uno, el resultado es un monolito distribuido: la misma falta de límites claros, ahora con la latencia y la complejidad operativa de la red añadidas encima.</p>
-
-<h2 id="ms-senales">2. Las 3 señales reales de que tu monolito necesita cambiar</h2>
-<p>Hay señales legítimas para migrar y hay excusas disfrazadas de argumento técnico. Estas tres son las que valido primero en cualquier auditoría de arquitectura, porque son medibles y no dependen de preferencias personales.</p>
-
-<h3 id="ms-cuellos">2.1 Cuellos de botella de despliegue</h3>
-<p>Cuando un cambio de una línea en el módulo de facturación obliga a re-testear y desplegar todo el catálogo de productos, el costo de cada release deja de ser proporcional al cambio. Si tu equipo mide el "lead time" de un fix trivial en días en lugar de horas, y la causa es coordinación de despliegue (no falta de pruebas), esa es una señal real.</p>
-
-<h3 id="ms-equipos">2.2 Límites de equipo, no solo de código</h3>
-<p>Si tienes tres equipos con ownership de producto claramente distinto pero comparten un único pipeline de despliegue y un único repositorio sin límites de módulo, la arquitectura y la estructura organizacional están en conflicto. Este es el caso donde extraer servicios alineados a esos equipos reduce fricción real, no solo complejidad percibida.</p>
-
-<h3 id="ms-escalado">2.3 Escalado desigual de módulos</h3>
-<p>Un módulo de procesamiento de imágenes, generación de reportes o envío masivo de notificaciones puede consumir el 80% de la CPU en picos puntuales, mientras el resto del sistema está prácticamente ocioso. En un monolito, esto obliga a escalar horizontalmente todo el proceso para resolver el cuello de botella de una sola pieza, encareciendo la infraestructura sin necesidad.</p>
-
-<h2 id="ms-comparativa">3. Monolito vs. microservicios: comparativa técnica</h2>
-<p>Ninguna de las dos arquitecturas es superior en abstracto; cada una optimiza para restricciones distintas. Esta tabla resume las decisiones que de verdad cambian según el camino que tomes.</p>
-
-<svg class="article-diagram" viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; margin: 24px 0;">
-  <!-- Monolito -->
-  <g>
-    <rect x="50" y="50" width="350" height="300" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="8"/>
-    <text x="225" y="85" font-size="24" font-weight="bold" text-anchor="middle" fill="#0f1b61">Monolito</text>
-    <circle cx="225" cy="180" r="80" fill="#0f1b61" opacity="0.9"/>
-    <text x="225" y="190" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Todo en un</text>
-    <text x="225" y="210" font-size="14" font-weight="bold" text-anchor="middle" fill="white">proceso</text>
-    <text x="60" y="310" font-size="12" fill="#53647f">✓ Simple al inicio</text>
-    <text x="60" y="330" font-size="12" fill="#53647f">✓ Deploy único</text>
-  </g>
-
-  <!-- Microservicios -->
-  <g>
-    <rect x="600" y="50" width="350" height="300" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="8"/>
-    <text x="775" y="85" font-size="24" font-weight="bold" text-anchor="middle" fill="#0f1b61">Microservicios</text>
-    <circle cx="700" cy="180" r="40" fill="#73bbc5" opacity="0.9"/>
-    <circle cx="775" cy="200" r="40" fill="#682ae9" opacity="0.9"/>
-    <circle cx="850" cy="180" r="40" fill="#73bbc5" opacity="0.9"/>
-    <text x="775" y="195" font-size="10" font-weight="bold" text-anchor="middle" fill="white">API</text>
-    <text x="610" y="310" font-size="12" fill="#53647f">✓ Deploy independiente</text>
-    <text x="610" y="330" font-size="12" fill="#53647f">✓ Escalado granular</text>
-  </g>
-
-  <!-- Flechas de complejidad -->
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#682ae9"/>
-    </marker>
-  </defs>
-  <text x="500" y="30" font-size="14" font-weight="bold" text-anchor="middle" fill="#682ae9">Complejidad ➜</text>
-</svg>
-<table class="article-table">
-  <thead>
-    <tr>
-      <th>Criterio</th>
-      <th>Monolito</th>
-      <th>Microservicios</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Despliegue</td>
-      <td>Un solo pipeline, simple al inicio</td>
-      <td>Independiente por servicio, requiere CI/CD maduro</td>
-    </tr>
-    <tr>
-      <td>Escalabilidad</td>
-      <td>Vertical; escala todo el sistema junto</td>
-      <td>Horizontal; escala solo el servicio con carga</td>
-    </tr>
-    <tr>
-      <td>Complejidad operativa</td>
-      <td>Baja: un solo proceso, un solo log</td>
-      <td>Alta: orquestación, tracing distribuido, observabilidad</td>
-    </tr>
-    <tr>
-      <td>Consistencia de datos</td>
-      <td>Transacciones ACID nativas</td>
-      <td>Consistencia eventual; requiere sagas o CDC</td>
-    </tr>
-    <tr>
-      <td>Velocidad inicial</td>
-      <td>Alta; ideal para MVP y validación de mercado</td>
-      <td>Baja; overhead de infraestructura desde el día uno</td>
-    </tr>
-    <tr>
-      <td>Costo de infraestructura</td>
-      <td>Predecible y bajo</td>
-      <td>Mayor: red, colas, service mesh, monitoreo</td>
-    </tr>
-    <tr>
-      <td>Ideal para</td>
-      <td>Equipos &lt; 15 ingenieros, productos en validación</td>
-      <td>Organizaciones con equipos autónomos y dominios definidos</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="ms-strangler">4. La estrategia Strangler Fig: migrar sin romper producción</h2>
-<p>El patrón Strangler Fig (popularizado por Martin Fowler) consiste en envolver el monolito con una capa de enrutamiento y extraer funcionalidad hacia servicios nuevos de forma incremental, mientras el sistema legacy sigue operando sin interrupción. Nunca hay un "big bang": en cualquier momento del proceso, el sistema en producción es una combinación funcional de monolito y servicios nuevos.</p>
-
-<h3>Paso 1 — Identificar el "seam" de dominio</h3>
-<p>Usando límites de dominio (bounded contexts), se elige el primer candidato a extraer. La regla que aplico: nunca el módulo transaccional core (pagos, inventario crítico); sí un módulo periférico, de alto dolor operativo y bajo acoplamiento de datos, como notificaciones, búsqueda o generación de reportes.</p>
-
-<h3>Paso 2 — Levantar un proxy de enrutamiento</h3>
-<p>Antes de mover una sola línea de lógica de negocio, se coloca un proxy o API Gateway delante del monolito. Esto permite decidir, por ruta, qué peticiones siguen yendo al sistema legacy y cuáles empiezan a resolverse en el nuevo servicio, sin que el cliente note el cambio.</p>
-
-<svg class="article-diagram" viewBox="0 0 1000 350" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; margin: 24px 0;">
-  <!-- Cliente -->
-  <circle cx="150" cy="100" r="40" fill="#0f1b61"/>
-  <text x="150" y="105" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Cliente</text>
-
-  <!-- API Gateway -->
-  <rect x="300" y="60" width="120" height="80" fill="#682ae9" rx="4"/>
-  <text x="360" y="90" font-size="12" font-weight="bold" text-anchor="middle" fill="white">API</text>
-  <text x="360" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="white">Gateway</text>
-
-  <!-- Monolito Legacy (izquierda) -->
-  <rect x="550" y="40" width="130" height="100" fill="#f0f4f8" stroke="#0f1b61" stroke-width="2" rx="4"/>
-  <text x="615" y="70" font-size="11" font-weight="bold" text-anchor="middle" fill="#0f1b61">Monolito</text>
-  <text x="615" y="90" font-size="11" font-weight="bold" text-anchor="middle" fill="#0f1b61">Legacy</text>
-  <text x="615" y="120" font-size="9" text-anchor="middle" fill="#53647f">/api/products</text>
-
-  <!-- Nuevo Servicio (derecha) -->
-  <rect x="550" y="180" width="130" height="100" fill="#73bbc5" opacity="0.8" rx="4"/>
-  <text x="615" y="210" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Nuevo</text>
-  <text x="615" y="230" font-size="11" font-weight="bold" text-anchor="middle" fill="#ffffff">Servicio</text>
-  <text x="615" y="260" font-size="9" text-anchor="middle" fill="rgba(255,255,255,0.9)">/api/notifications</text>
-
-  <!-- Flechas -->
-  <defs>
-    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#0f1b61"/>
-    </marker>
-  </defs>
-
-  <!-- Cliente a Gateway -->
-  <line x1="190" y1="100" x2="300" y2="100" stroke="#0f1b61" stroke-width="2" marker-end="url(#arrowhead2)"/>
-
-  <!-- Gateway a Monolito -->
-  <path d="M 420 80 Q 480 80 550 90" stroke="#682ae9" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
-  <text x="460" y="70" font-size="10" fill="#682ae9">/api/products →</text>
-
-  <!-- Gateway a Nuevo Servicio -->
-  <path d="M 420 120 Q 480 150 550 230" stroke="#4ECDC4" stroke-width="2" fill="none" marker-end="url(#arrowhead2)"/>
-  <text x="440" y="150" font-size="10" fill="#4ECDC4">← /api/notifications</text>
-
-  <!-- Leyenda -->
-  <text x="750" y="100" font-size="11" fill="#53647f">✓ Tráfico redirigido</text>
-  <text x="750" y="125" font-size="11" fill="#53647f">✓ Sin downtime</text>
-  <text x="750" y="150" font-size="11" fill="#53647f">✓ Rollback inmediato</text>
-</svg>
-<pre class="article-code"><code># nginx.conf — enrutamiento incremental estilo Strangler Fig
-# El módulo de notificaciones ya vive en un servicio nuevo;
-# todo lo demás sigue resolviéndose en el monolito.
-
-location /api/notifications/ {
-    proxy_pass http://notifications-service:4000;
-}
-
-location /api/ {
-    proxy_pass http://legacy-monolith:3000;
-}</code></pre>
-
-<h3>Paso 3 — Extraer, medir y tener plan de rollback</h3>
-<p>La lógica se mueve al nuevo servicio detrás de un feature flag o un rollout por porcentaje de tráfico (canary), comparando métricas de error y latencia contra la ruta legacy. El código antiguo se mantiene desplegable durante varias semanas: si algo falla, el rollback es cambiar una regla de enrutamiento, no un despliegue de emergencia. Solo se elimina el camino legacy cuando el nuevo servicio ha demostrado estabilidad bajo carga real.</p>
-
-<h2 id="ms-errores">5. Errores comunes que convierten la migración en un incendio</h2>
-<ul>
-  <li><strong>Migrar el módulo core primero.</strong> Empezar por el componente de mayor riesgo (pagos, autenticación) maximiza el blast radius del primer error.</li>
-  <li><strong>Partir el sistema sin observabilidad distribuida.</strong> Sin trazabilidad (correlation IDs, tracing) un error 500 se convierte en una cacería a ciegas entre varios servicios.</li>
-  <li><strong>Compartir una sola base de datos entre "microservicios".</strong> Eso no es una arquitectura de microservicios: es un monolito distribuido, con toda la complejidad de la red y ninguno de sus beneficios de aislamiento.</li>
-  <li><strong>No versionar los contratos de API.</strong> Cambiar un endpoint sin versión rompe a los consumidores en cada despliegue y erosiona la confianza en la migración.</li>
-  <li><strong>Subestimar la consistencia eventual.</strong> Migrar operaciones que cruzan varios servicios sin implementar sagas o compensaciones deja transacciones a medio completar cuando algo falla a mitad de camino.</li>
-</ul>
-
-<h2 id="ms-nomigrar">6. Cuándo NO migrar (honestidad técnica)</h2>
-<p>Si tu equipo tiene menos de 15 ingenieros y un solo pipeline de despliegue les funciona sin fricción notable, migrar a microservicios no resuelve un problema que tienes: crea uno nuevo. Los microservicios multiplican el costo operativo (red, colas, monitoreo distribuido, on-call más complejo) y ese costo solo se justifica cuando el dolor de despliegue, escalado o coordinación de equipos ya es real y medible. Si el problema es que el código está mal organizado dentro del monolito, la solución correcta casi siempre es más barata y menos arriesgada: convertirlo en un monolito modular, con límites de dominio claros dentro del mismo proceso, antes de pagar el costo de distribuirlo.</p>
-
-<h2 id="ms-faqs">Preguntas Frecuentes</h2>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Cuánto tiempo tarda una migración típica a microservicios?</summary>
-  <div class="article-faq-answer"><p>Depende del tamaño del monolito y de la capacidad de tu equipo. El patrón Strangler Fig es incremental, así que es más útil pensar en sprints de 2-4 semanas extrayendo un servicio a la vez, que en un proyecto global. Equipos de 5-10 ingenieros suelen tardar entre 6 y 18 meses en migrar un monolito de mediano tamaño de forma segura y sin pausar la entrega de features.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Necesito Kubernetes para usar microservicios?</summary>
-  <div class="article-faq-answer"><p>No obligatoriamente. Kubernetes es una opción cuando tienes 15+ servicios y necesitas orquestación declarativa de recursos. Para un equipo pequeño empezando, Docker + Docker Compose o incluso serverless functions (AWS Lambda, Cloud Functions) pueden ser suficientes y menos complejos de operar.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Qué herramientas recomiendas para tracing distribuido?</summary>
-  <div class="article-faq-answer"><p>Jaeger, Zipkin y Datadog son opciones maduras. Si usas AWS, X-Ray es una opción nativa. Para startups o equipos pequeños, comenzar con logging estructurado (ELK stack) y correlation IDs simples puede ser suficiente antes de invertir en APM full.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Es posible hacer rollback de una migración parcial?</summary>
-  <div class="article-faq-answer"><p>Sí, ese es el punto del patrón Strangler Fig. Si un servicio nuevo falla bajo carga, cambias el proxy/gateway para que todas las peticiones vuelvan al monolito legacy en minutos. Por eso es crítico que el código antiguo permanezca desplegable durante la transición.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Qué pasa si el equipo no está preparado técnicamente?</summary>
-  <div class="article-faq-answer"><p>Es la razón número uno por la que fracasan las migraciones. Antes de empezar, asegúrate de que tu equipo entienda: API versioning, eventual consistency, circuit breakers, distributed tracing y cómo debuggear fallos en la red. Si no, invierte primero en entrenamiento que en infraestructura.</p></div>
-</details>
-
-<h2 id="ms-referencias">Referencias y Enlaces</h2>
-<ul>
-  <li><strong>Strangler Fig Pattern</strong> — Martin Fowler: <a href="https://martinfowler.com/bliki/StranglerFigApplication.html" target="_blank" rel="noopener noreferrer">martinfowler.com/bliki/StranglerFigApplication.html</a></li>
-  <li><strong>Building Microservices</strong> — Sam Newman (libro recomendado): Segunda edición cubre patrones modernos de migración incremental</li>
-  <li><strong>Microservices Patterns</strong> — Chris Richardson: Referencia sobre sagas, CDC y patrones de datos distribuidos</li>
-  <li><strong>The Art of Scalability</strong> — Martin Abbott &amp; Michael Fisher: Decisiones arquitectónicas basadas en escala real</li>
-  <li><strong>Conway's Law</strong> — Melvin E. Conway: <a href="https://www.melconway.com/Home/Committees_Paper.html" target="_blank" rel="noopener noreferrer">melconway.com/Home/Committees_Paper.html</a></li>
-  <li><strong>Observability Engineering</strong> — Yuri Shkuro: Trazabilidad distribuida en sistemas complejos</li>
-  <li><strong>Release It! (2nd Edition)</strong> — Michael T. Nygard: Estabilidad en producción y patrones de resiliencia</li>
-  <li><strong>Domain-Driven Design</strong> — Eric Evans: Fundamentación teórica de bounded contexts y agregados</li>
-</ul>
-
-<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. Si tienes preguntas específicas sobre tu arquitectura o necesitas auditoría técnica, no dudes en contactarme.</p>
-`;
-
-const RENDER_PERF_CONTENT = `
-<p class="article-intro">Una aplicación React lenta rara vez lo es por "React". Casi siempre es por renders que no deberían ocurrir, trabajo pesado en el hilo principal y datos que viajan sin control entre componentes. Este artículo recorre las causas reales de los cuellos de botella de rendimiento en el frontend y cómo medirlas antes de optimizar a ciegas.</p>
-
-<div class="article-takeaways">
-  <span class="article-block-label">Puntos Clave</span>
-  <ul>
-    <li>Optimizar sin medir es adivinar: el React Profiler y las Performance tabs del navegador te dicen dónde está el costo real.</li>
-    <li>La mayoría de los re-renders innecesarios vienen de referencias nuevas en cada render (objetos, funciones, arrays) pasadas como props.</li>
-    <li>memo, useMemo y useCallback son herramientas quirúrgicas, no decoradores que se ponen en todos lados.</li>
-    <li>El code splitting y la carga diferida reducen el bundle inicial, que suele ser el mayor factor de lentitud percibida.</li>
-  </ul>
-</div>
-
-<div class="article-index">
-  <span class="article-block-label">Índice de Contenidos</span>
-  <ol>
-    <li><a href="#rp-medir">1. Primero medir, nunca adivinar</a></li>
-    <li><a href="#rp-renders">2. Por qué se re-renderiza lo que no debería</a></li>
-    <li><a href="#rp-memo">3. memo, useMemo y useCallback sin abusar</a></li>
-    <li><a href="#rp-bundle">4. Bundle inicial y code splitting</a></li>
-    <li><a href="#rp-faqs">Preguntas Frecuentes</a></li>
-    <li><a href="#rp-referencias">Referencias y Enlaces</a></li>
-  </ol>
-</div>
-
-<h2 id="rp-medir">1. Primero medir, nunca adivinar</h2>
-<p>Antes de tocar una sola línea, abre el React DevTools Profiler y graba una interacción típica. Te muestra qué componentes se renderizaron, cuántas veces y cuánto costó cada uno. La pestaña Performance del navegador complementa esto con el panorama completo: layout, paint, scripting y tareas largas que bloquean el hilo principal. Si no tienes un número antes y después, no estás optimizando, estás reorganizando código y esperando suerte.</p>
-<p>La métrica que importa al usuario no es cuántos renders ocurren, sino cuánto tarda la interfaz en responder. Un render extra de un componente trivial no se nota; uno de 300 ms en una lista grande sí. Prioriza por impacto medible.</p>
-
-<h2 id="rp-renders">2. Por qué se re-renderiza lo que no debería</h2>
-<p>Cuando un componente padre se renderiza, todos sus hijos se renderizan por defecto, aunque sus props no hayan cambiado de valor. El problema se agrava cuando pasas props que son referencias nuevas en cada render: un objeto literal, una función inline o un array recién creado. Para React esas referencias son distintas en cada ciclo, así que rompe cualquier comparación superficial.</p>
-<p>La solución no es memoizar todo, sino estabilizar las referencias que realmente se pasan a componentes costosos o memoizados, y mantener el estado lo más cerca posible de donde se usa para que el árbol que se re-renderiza sea pequeño.</p>
-
-<h2 id="rp-memo">3. memo, useMemo y useCallback sin abusar</h2>
-<p><code>React.memo</code> evita el re-render de un componente si sus props no cambiaron por comparación superficial. <code>useMemo</code> cachea el resultado de un cálculo costoso y <code>useCallback</code> estabiliza la identidad de una función. La clave: cada uno tiene un costo propio (comparar props, guardar en caché). Aplicarlos a componentes baratos añade complejidad sin beneficio, y a veces empeora el rendimiento.</p>
-<p>Regla práctica: memoiza cuando el componente es caro de renderizar, recibe las mismas props con frecuencia, o cuando una referencia inestable rompe la memoización de un hijo. Fuera de esos casos, déjalo simple.</p>
-
-<h2 id="rp-bundle">4. Bundle inicial y code splitting</h2>
-<p>El mayor costo de "lentitud" que percibe un usuario nuevo suele ser el tiempo de descarga y parseo del JavaScript inicial. Dividir el bundle con <code>React.lazy</code> y <code>Suspense</code>, cargar rutas bajo demanda y diferir librerías pesadas (editores, gráficos, mapas) hasta que se usen reduce drásticamente el Time To Interactive. Herramientas como el analizador de bundles de Vite o webpack-bundle-analyzer te muestran qué dependencias están inflando el paquete.</p>
-
-<h2 id="rp-faqs">Preguntas Frecuentes</h2>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Debo envolver todos mis componentes en React.memo?</summary>
-  <div class="article-faq-answer"><p>No. memo tiene un costo de comparación de props en cada render. En componentes baratos ese costo no se recupera. Úsalo en componentes costosos o que reciben las mismas props repetidamente.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿useMemo mejora siempre el rendimiento?</summary>
-  <div class="article-faq-answer"><p>No. useMemo guarda un valor en caché y compara dependencias en cada render. Para cálculos triviales el overhead es mayor que el ahorro. Resérvalo para cálculos genuinamente costosos o referencias que deben mantenerse estables.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Cómo sé si mi bundle es demasiado grande?</summary>
-  <div class="article-faq-answer"><p>Usa un analizador de bundle (Vite tiene rollup-plugin-visualizer). Como referencia, si tu JS inicial supera varios cientos de KB comprimidos, el code splitting suele dar la mayor mejora en tiempo de carga.</p></div>
-</details>
-
-<h2 id="rp-referencias">Referencias y Enlaces</h2>
-<ul>
-  <li><strong>React Docs — Render and Commit</strong>: <a href="https://react.dev/learn/render-and-commit" target="_blank" rel="noopener noreferrer">react.dev/learn/render-and-commit</a></li>
-  <li><strong>web.dev — Performance</strong>: <a href="https://web.dev/performance" target="_blank" rel="noopener noreferrer">web.dev/performance</a></li>
-</ul>
-
-<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Dudas sobre el rendimiento de tu frontend? Escríbeme.</p>
-`;
-
-const RAG_LLM_CONTENT = `
-<p class="article-intro">Conectar un LLM a tus propios datos sin reentrenarlo es, hoy, el patrón más práctico para construir asistentes útiles. Se llama RAG (Retrieval-Augmented Generation) y combina una búsqueda semántica sobre tu información con la capacidad de redacción del modelo. Aquí explico cómo funciona de verdad y los errores que arruinan la calidad de las respuestas.</p>
-
-<div class="article-takeaways">
-  <span class="article-block-label">Puntos Clave</span>
-  <ul>
-    <li>RAG recupera fragmentos relevantes de tus datos y los inyecta en el prompt, en lugar de reentrenar el modelo.</li>
-    <li>La calidad del RAG depende más del chunking y los embeddings que del propio modelo de lenguaje.</li>
-    <li>Sin citar las fuentes recuperadas, pierdes trazabilidad y abres la puerta a alucinaciones difíciles de detectar.</li>
-    <li>Un buen sistema de evaluación (preguntas y respuestas esperadas) es lo que separa un demo de un producto confiable.</li>
-  </ul>
-</div>
-
-<div class="article-index">
-  <span class="article-block-label">Índice de Contenidos</span>
-  <ol>
-    <li><a href="#rag-que">1. Qué es RAG y por qué no reentrenar</a></li>
-    <li><a href="#rag-pipeline">2. El pipeline: chunking, embeddings y recuperación</a></li>
-    <li><a href="#rag-errores">3. Errores que arruinan la calidad</a></li>
-    <li><a href="#rag-eval">4. Cómo evaluar un sistema RAG</a></li>
-    <li><a href="#rag-faqs">Preguntas Frecuentes</a></li>
-    <li><a href="#rag-referencias">Referencias y Enlaces</a></li>
-  </ol>
-</div>
-
-<h2 id="rag-que">1. Qué es RAG y por qué no reentrenar</h2>
-<p>Reentrenar o hacer fine-tuning de un modelo para que "aprenda" tus documentos es caro, lento y se queda obsoleto en cuanto cambian los datos. RAG resuelve el problema de otra forma: en el momento de la pregunta, busca los fragmentos más relevantes de tu base de conocimiento y los pasa al modelo como contexto. El modelo no memoriza nada; redacta la respuesta usando lo que le entregaste. Actualizar el conocimiento es tan simple como actualizar los documentos indexados.</p>
-
-<h2 id="rag-pipeline">2. El pipeline: chunking, embeddings y recuperación</h2>
-<p>El flujo tiene tres piezas. Primero, el <strong>chunking</strong>: dividir los documentos en fragmentos coherentes, ni tan grandes que diluyan la relevancia ni tan pequeños que pierdan contexto. Segundo, los <strong>embeddings</strong>: convertir cada fragmento en un vector numérico que captura su significado, almacenado en una base vectorial. Tercero, la <strong>recuperación</strong>: convertir la pregunta en un vector y buscar los fragmentos más cercanos, que se inyectan en el prompt final.</p>
-
-<h2 id="rag-errores">3. Errores que arruinan la calidad</h2>
-<p>Los fallos más comunes no están en el modelo. Chunks mal cortados que parten una idea a la mitad, embeddings de baja calidad para el idioma de tus datos, recuperar demasiados fragmentos irrelevantes que confunden al modelo, y no incluir instrucciones claras para que responda solo con el contexto dado. Cada uno degrada la respuesta de forma silenciosa.</p>
-
-<h2 id="rag-eval">4. Cómo evaluar un sistema RAG</h2>
-<p>Un demo que responde bien a tres preguntas no es un producto. Construye un conjunto de evaluación con preguntas reales y respuestas esperadas, mide si la recuperación trae los fragmentos correctos y si la respuesta final es fiel a esos fragmentos. Sin esta métrica, cualquier cambio que hagas es una apuesta a ciegas.</p>
-
-<h2 id="rag-faqs">Preguntas Frecuentes</h2>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿RAG o fine-tuning?</summary>
-  <div class="article-faq-answer"><p>RAG para conocimiento que cambia y necesita trazabilidad. Fine-tuning para ajustar estilo, formato o comportamiento. A menudo se combinan: fine-tuning para el tono, RAG para los datos.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Qué base de datos vectorial elijo?</summary>
-  <div class="article-faq-answer"><p>Para empezar, pgvector sobre PostgreSQL es suficiente y evita añadir infraestructura. Para escala alta, opciones dedicadas como Pinecone, Qdrant o Weaviate ofrecen más rendimiento y funciones de filtrado.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Cómo evito que el modelo invente respuestas?</summary>
-  <div class="article-faq-answer"><p>Instruye explícitamente al modelo para responder solo con el contexto recuperado y decir "no lo sé" si no está. Y cita siempre las fuentes para que el usuario pueda verificar.</p></div>
-</details>
-
-<h2 id="rag-referencias">Referencias y Enlaces</h2>
-<ul>
-  <li><strong>Paper original de RAG</strong> — Lewis et al.: <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">arxiv.org/abs/2005.11401</a></li>
-  <li><strong>pgvector</strong>: <a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">github.com/pgvector/pgvector</a></li>
-</ul>
-
-<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Quieres construir un asistente con tus datos? Hablemos.</p>
-`;
-
-const POSTGRES_INDEX_CONTENT = `
-<p class="article-intro">Una consulta que tarda 2 segundos no siempre necesita una base de datos más grande; casi siempre necesita el índice correcto. Entender cómo PostgreSQL decide ejecutar una consulta, y cómo leer su plan de ejecución, es la diferencia entre adivinar y resolver. Este artículo va directo a lo que importa.</p>
-
-<div class="article-takeaways">
-  <span class="article-block-label">Puntos Clave</span>
-  <ul>
-    <li>EXPLAIN ANALYZE es la herramienta número uno: muestra el plan real y dónde se va el tiempo.</li>
-    <li>Un Seq Scan sobre una tabla grande casi siempre indica que falta un índice útil para ese filtro.</li>
-    <li>Los índices aceleran lecturas pero ralentizan escrituras y ocupan espacio: no se indexa todo.</li>
-    <li>El orden de las columnas en un índice compuesto determina qué consultas puede acelerar.</li>
-  </ul>
-</div>
-
-<div class="article-index">
-  <span class="article-block-label">Índice de Contenidos</span>
-  <ol>
-    <li><a href="#pg-explain">1. Leer el plan con EXPLAIN ANALYZE</a></li>
-    <li><a href="#pg-scans">2. Seq Scan vs. Index Scan</a></li>
-    <li><a href="#pg-compuestos">3. Índices compuestos y orden de columnas</a></li>
-    <li><a href="#pg-costo">4. El costo oculto de indexar de más</a></li>
-    <li><a href="#pg-faqs">Preguntas Frecuentes</a></li>
-    <li><a href="#pg-referencias">Referencias y Enlaces</a></li>
-  </ol>
-</div>
-
-<h2 id="pg-explain">1. Leer el plan con EXPLAIN ANALYZE</h2>
-<p>Antes de añadir un índice, ejecuta <code>EXPLAIN ANALYZE</code> sobre la consulta lenta. Esto no solo estima el plan, lo ejecuta y mide tiempos reales. Fíjate en los nodos más costosos, el número de filas estimadas frente a las reales (una gran diferencia indica estadísticas desactualizadas) y si aparece un escaneo secuencial sobre una tabla grande.</p>
-
-<h2 id="pg-scans">2. Seq Scan vs. Index Scan</h2>
-<p>Un <strong>Seq Scan</strong> lee toda la tabla fila por fila. Para tablas pequeñas es lo correcto y más rápido. Para tablas grandes filtradas por una columna selectiva, es una señal de que falta un índice. Un <strong>Index Scan</strong> usa un índice para saltar directo a las filas relevantes. El planner elige según sus estadísticas, así que mantener <code>ANALYZE</code> al día es parte del trabajo.</p>
-
-<h2 id="pg-compuestos">3. Índices compuestos y orden de columnas</h2>
-<p>Un índice sobre <code>(a, b)</code> acelera filtros por <code>a</code> y por <code>a, b</code>, pero no por <code>b</code> solo. El orden importa: pon primero la columna que más filtra o que aparece en igualdades, y después la de rango. Un índice mal ordenado simplemente no se usa.</p>
-
-<h2 id="pg-costo">4. El costo oculto de indexar de más</h2>
-<p>Cada índice debe mantenerse en cada INSERT, UPDATE y DELETE, y ocupa espacio en disco y memoria. Indexar columnas que nunca se filtran, o duplicar índices que se solapan, ralentiza las escrituras sin beneficio. Audita periódicamente los índices no utilizados con las vistas de estadísticas de PostgreSQL.</p>
-
-<h2 id="pg-faqs">Preguntas Frecuentes</h2>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Por qué mi índice no se usa?</summary>
-  <div class="article-faq-answer"><p>Causas típicas: la columna está dentro de una función en el WHERE, hay un cast implícito de tipos, la tabla es tan pequeña que el Seq Scan es más barato, o las estadísticas están desactualizadas. Ejecuta ANALYZE y revisa el WHERE.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Qué tipo de índice uso?</summary>
-  <div class="article-faq-answer"><p>B-tree es el predeterminado y cubre la mayoría de los casos (igualdad y rangos). GIN para búsquedas en arrays y JSONB, GiST para datos geométricos y búsquedas por proximidad.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Indexar siempre mejora el rendimiento?</summary>
-  <div class="article-faq-answer"><p>No. Mejora las lecturas filtradas pero penaliza las escrituras y consume recursos. En tablas con muchas escrituras y pocas lecturas, un exceso de índices perjudica.</p></div>
-</details>
-
-<h2 id="pg-referencias">Referencias y Enlaces</h2>
-<ul>
-  <li><strong>PostgreSQL Docs — Using EXPLAIN</strong>: <a href="https://www.postgresql.org/docs/current/using-explain.html" target="_blank" rel="noopener noreferrer">postgresql.org/docs/current/using-explain.html</a></li>
-  <li><strong>Use The Index, Luke</strong>: <a href="https://use-the-index-luke.com" target="_blank" rel="noopener noreferrer">use-the-index-luke.com</a></li>
-</ul>
-
-<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Consultas lentas en producción? Puedo ayudarte a auditarlas.</p>
-`;
-
-const WEB_SECURITY_CONTENT = `
-<p class="article-intro">La mayoría de las brechas de seguridad en aplicaciones web no vienen de ataques sofisticados, sino de descuidos básicos: validación que falta, secretos expuestos y confianza ciega en datos del cliente. Este artículo repasa los fundamentos que todo desarrollador fullstack debería aplicar por defecto, sin necesidad de ser experto en seguridad.</p>
-
-<div class="article-takeaways">
-  <span class="article-block-label">Puntos Clave</span>
-  <ul>
-    <li>Nunca confíes en datos del cliente: valida y sanitiza en el servidor, siempre.</li>
-    <li>Las consultas parametrizadas eliminan la inyección SQL; concatenar strings la invita.</li>
-    <li>Los secretos van en variables de entorno, nunca en el código ni en el repositorio.</li>
-    <li>HTTPS, cabeceras de seguridad y cookies con flags adecuados son protección de base, no opcional.</li>
-  </ul>
-</div>
-
-<div class="article-index">
-  <span class="article-block-label">Índice de Contenidos</span>
-  <ol>
-    <li><a href="#sec-validar">1. Valida en el servidor, no solo en el cliente</a></li>
-    <li><a href="#sec-inyeccion">2. Inyección SQL y consultas parametrizadas</a></li>
-    <li><a href="#sec-secretos">3. Manejo de secretos y variables de entorno</a></li>
-    <li><a href="#sec-headers">4. HTTPS, cabeceras y cookies seguras</a></li>
-    <li><a href="#sec-faqs">Preguntas Frecuentes</a></li>
-    <li><a href="#sec-referencias">Referencias y Enlaces</a></li>
-  </ol>
-</div>
-
-<h2 id="sec-validar">1. Valida en el servidor, no solo en el cliente</h2>
-<p>La validación en el navegador mejora la experiencia de usuario, pero no es seguridad: cualquiera puede saltarse el frontend y llamar directo a tu API. Toda entrada que llega al servidor debe validarse ahí: tipos, longitudes, formatos y rangos permitidos. Trata cada dato externo como potencialmente malicioso hasta demostrar lo contrario.</p>
-
-<h2 id="sec-inyeccion">2. Inyección SQL y consultas parametrizadas</h2>
-<p>La inyección SQL ocurre cuando construyes consultas concatenando entrada del usuario. La defensa es simple y total: usa consultas parametrizadas o un ORM que las use por debajo. Nunca interpoles valores directamente en el string de la consulta. Esta única práctica elimina toda una clase de vulnerabilidades críticas.</p>
-
-<h2 id="sec-secretos">3. Manejo de secretos y variables de entorno</h2>
-<p>Claves de API, contraseñas de base de datos y tokens jamás deben vivir en el código ni subirse al repositorio. Van en variables de entorno, fuera del control de versiones (con el <code>.env</code> en el <code>.gitignore</code>). Si un secreto se filtra alguna vez, revócalo de inmediato: una vez en el historial de git, se considera comprometido.</p>
-
-<h2 id="sec-headers">4. HTTPS, cabeceras y cookies seguras</h2>
-<p>HTTPS cifra el tráfico y hoy es obligatorio, no opcional. Añade cabeceras de seguridad (Content-Security-Policy, X-Content-Type-Options, Strict-Transport-Security) para reducir la superficie de ataque. Las cookies de sesión deben marcarse <code>HttpOnly</code>, <code>Secure</code> y <code>SameSite</code> para mitigar robo de sesión y CSRF.</p>
-
-<h2 id="sec-faqs">Preguntas Frecuentes</h2>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Un ORM me protege de la inyección SQL?</summary>
-  <div class="article-faq-answer"><p>En sus operaciones normales sí, porque parametriza. Pero si usas consultas crudas (raw queries) concatenando entrada, vuelves a ser vulnerable. Mantén la parametrización incluso en raw queries.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">Subí una clave de API al repositorio por error, ¿qué hago?</summary>
-  <div class="article-faq-answer"><p>Revócala y genera una nueva de inmediato. Reescribir el historial de git ayuda, pero debes asumir que la clave quedó comprometida desde el momento en que se subió.</p></div>
-</details>
-
-<details class="article-faq">
-  <summary class="article-faq-question">¿Necesito un pentest para estar seguro?</summary>
-  <div class="article-faq-answer"><p>Un pentest es valioso, pero primero cubre lo básico: validación en servidor, consultas parametrizadas, gestión de secretos, HTTPS y dependencias actualizadas. La mayoría de incidentes explotan fallos básicos, no vulnerabilidades exóticas.</p></div>
-</details>
-
-<h2 id="sec-referencias">Referencias y Enlaces</h2>
-<ul>
-  <li><strong>OWASP Top 10</strong>: <a href="https://owasp.org/www-project-top-ten" target="_blank" rel="noopener noreferrer">owasp.org/www-project-top-ten</a></li>
-  <li><strong>OWASP Cheat Sheet Series</strong>: <a href="https://cheatsheetseries.owasp.org" target="_blank" rel="noopener noreferrer">cheatsheetseries.owasp.org</a></li>
-</ul>
-
-<p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-muted);">Escrito por <strong>Juan Fernando Agudelo</strong>. ¿Quieres una revisión de seguridad de tu app? Contáctame.</p>
-`;
-
 export const WRITING_ARTICLES: WritingArticle[] = [
-  {
-    id: 'art-monolito-microservicios',
-    slug: 'monolito-a-microservicios-sin-romper-produccion',
-    date: 'SEPTIEMBRE 2026',
-    tag: 'ARCHITECTURE',
-    title: 'Cuándo Migrar de un Monolito a Microservicios (y Cómo Hacerlo Sin Romper Producción)',
-    metaDescription:
-      'Guía técnica para decidir si tu monolito necesita microservicios y migrar con el patrón Strangler Fig sin downtime ni reescrituras arriesgadas.',
-    excerpt:
-      'Guía práctica para decidir si tu monolito necesita microservicios de verdad, con el patrón Strangler Fig y un plan de rollback para migrar sin downtime ni reescrituras arriesgadas.',
-    readTime: '9 min de lectura',
-    contentHtml: MONOLITH_TO_MICROSERVICES_CONTENT,
-  },
-  {
-    id: 'art-rendimiento-react',
-    slug: 'optimizar-rendimiento-react-sin-adivinar',
-    date: 'AGOSTO 2026',
-    tag: 'FRONTEND',
-    title: 'Optimizar el Rendimiento de React Sin Adivinar: Renders, Memoización y Bundle',
-    metaDescription:
-      'Cómo encontrar y resolver cuellos de botella reales en React: medir con el Profiler, evitar re-renders, usar memo/useMemo/useCallback con criterio y reducir el bundle inicial.',
-    excerpt:
-      'Guía práctica para diagnosticar por qué tu app React va lenta y resolverlo midiendo primero: re-renders innecesarios, memoización con criterio y code splitting para reducir el bundle.',
-    readTime: '7 min de lectura',
-    contentHtml: RENDER_PERF_CONTENT,
-  },
-  {
-    id: 'art-rag-llm',
-    slug: 'rag-conectar-llm-a-tus-datos',
-    date: 'JULIO 2026',
-    tag: 'AI / LLM',
-    title: 'RAG: Cómo Conectar un LLM a Tus Propios Datos Sin Reentrenarlo',
-    metaDescription:
-      'Qué es Retrieval-Augmented Generation (RAG), cómo funciona el pipeline de chunking, embeddings y recuperación, y los errores que arruinan la calidad de las respuestas.',
-    excerpt:
-      'El patrón más práctico para construir asistentes con tus datos sin fine-tuning: cómo funciona el pipeline de RAG, los errores que degradan la calidad y cómo evaluarlo de verdad.',
-    readTime: '8 min de lectura',
-    contentHtml: RAG_LLM_CONTENT,
-  },
-  {
-    id: 'art-postgres-indices',
-    slug: 'indices-postgresql-consultas-lentas',
-    date: 'JUNIO 2026',
-    tag: 'DATABASES',
-    title: 'Índices en PostgreSQL: Por Qué Tu Consulta Es Lenta y Cómo Arreglarla',
-    metaDescription:
-      'Cómo leer EXPLAIN ANALYZE, diferenciar Seq Scan de Index Scan, diseñar índices compuestos con el orden correcto y evitar el costo oculto de indexar de más en PostgreSQL.',
-    excerpt:
-      'Una consulta lenta rara vez necesita más hardware: necesita el índice correcto. Cómo leer el plan de ejecución, elegir índices y evitar el costo oculto de indexar de más.',
-    readTime: '7 min de lectura',
-    contentHtml: POSTGRES_INDEX_CONTENT,
-  },
-  {
-    id: 'art-seguridad-web',
-    slug: 'fundamentos-seguridad-web-fullstack',
-    date: 'MAYO 2026',
-    tag: 'SECURITY',
-    title: 'Seguridad Web para Fullstack: Los Fundamentos Que Evitan el 90% de las Brechas',
-    metaDescription:
-      'Validación en servidor, consultas parametrizadas contra inyección SQL, manejo seguro de secretos y configuración de HTTPS, cabeceras y cookies: lo básico que todo fullstack debe aplicar.',
-    excerpt:
-      'La mayoría de las brechas explotan descuidos básicos, no ataques sofisticados. Validación en servidor, consultas parametrizadas, gestión de secretos y cabeceras seguras aplicadas por defecto.',
-    readTime: '7 min de lectura',
-    contentHtml: WEB_SECURITY_CONTENT,
-  },
+  ...SECURITY_WRITING_ARTICLES,
+  ...CORE_WRITING_ARTICLES,
   ...EXTRA_WRITING_ARTICLES,
   ...MORE_WRITING_ARTICLES_1,
   ...MORE_WRITING_ARTICLES_2,

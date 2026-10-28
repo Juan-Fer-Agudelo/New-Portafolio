@@ -34,6 +34,8 @@ export const translations = {
       noResultsEnd: '".',
       viewDetails: 'View details',
       visitSite: 'Visit site',
+      filtersLabel: 'Filter projects by category',
+      filters: { all: 'All', web: 'Web development', automatizacion: 'Automation', datos: 'Data' },
       techLabel: 'Tech Stack',
     },
     work: {
@@ -250,6 +252,8 @@ export const translations = {
       noResultsEnd: '".',
       viewDetails: 'Ver detalles',
       visitSite: 'Visitar sitio',
+      filtersLabel: 'Filtrar proyectos por categoría',
+      filters: { all: 'Todos', web: 'Desarrollo web', automatizacion: 'Automatización', datos: 'Datos' },
       techLabel: 'Stack Tecnológico',
     },
     work: {

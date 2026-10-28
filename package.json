@@ -10,7 +10,9 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "test": "playwright test",
-    "check": "npm run build && npm test"
+    "test:blog": "tsx scripts/check-blog-structure.ts",
+    "test:blog-links": "tsx scripts/check-blog-links.ts",
+    "check": "npm run test:blog && npm run build && npm test"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
