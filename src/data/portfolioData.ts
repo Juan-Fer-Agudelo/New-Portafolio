@@ -13,6 +13,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'enhance-work',
     categories: ['web'],
+    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    impact: [
+      { value: 'B2B + B2C', label: 'una sola plataforma para empleadores y candidatos' },
+      { value: 'Suscripciones', label: 'cobros recurrentes integrados con Stripe' },
+      { value: 'En producción', label: 'publicada en enhance.work' },
+    ],
     number: '01',
     type: 'PLATAFORMA WEB B2B/B2C',
     title: 'Enhance.Work',
@@ -43,6 +49,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Node.js',
     ],
     en: {
+      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      impact: [
+        { value: 'B2B + B2C', label: 'one platform for employers and candidates' },
+        { value: 'Subscriptions', label: 'recurring payments integrated with Stripe' },
+        { value: 'Live', label: 'published at enhance.work' },
+      ],
       type: 'B2B/B2C WEB PLATFORM',
       subtitle: 'Leading aesthetic medicine job platform in South Florida',
       date: 'July 2026',
@@ -55,6 +67,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'miami-bounce-company',
     categories: ['web'],
+    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    impact: [
+      { value: 'Reserva directa', label: 'el cliente contacta y reserva con la dueña sin intermediarios' },
+      { value: 'GA4 + Meta', label: 'medición de las campañas publicitarias desde el lanzamiento' },
+      { value: 'En producción', label: 'publicada en miabounce.com' },
+    ],
     number: '02',
     type: 'PLATAFORMA WEB',
     title: 'Miami Bounce Company',
@@ -88,6 +106,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'SEO Schemas',
     ],
     en: {
+      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      impact: [
+        { value: 'Direct booking', label: 'customers contact and book with the owner, no middlemen' },
+        { value: 'GA4 + Meta', label: 'ad campaign tracking from day one' },
+        { value: 'Live', label: 'published at miabounce.com' },
+      ],
       type: 'WEB PLATFORM',
       subtitle: 'Booking platform for bounce house rentals in South Miami',
       date: 'June 2026',
@@ -100,6 +124,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'peptidos-venezuela',
     categories: ['web'],
+    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    impact: [
+      { value: 'EE. UU. → Caracas', label: 'venta en línea de producto importado con protocolo clínico' },
+      { value: '4 herramientas', label: 'de medición: GTM, GA4, Meta Pixel y Clarity' },
+      { value: 'En producción', label: 'publicada en peptidosvzla.com' },
+    ],
     number: '03',
     type: 'E-COMMERCE',
     title: 'Péptidos Venezuela',
@@ -133,6 +163,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'SEO Schemas',
     ],
     en: {
+      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      impact: [
+        { value: 'US → Caracas', label: 'online sales of imported products under clinical protocol' },
+        { value: '4 tools', label: 'for tracking: GTM, GA4, Meta Pixel and Clarity' },
+        { value: 'Live', label: 'published at peptidosvzla.com' },
+      ],
       type: 'E-COMMERCE',
       subtitle: 'E-commerce for imported peptides with clinical protocol',
       date: 'May 2026',
@@ -145,6 +181,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'perfect-b-aesthetic',
     categories: ['web'],
+    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    impact: [
+      { value: '24/7', label: 'reservas y pagos en línea, sin llamar a la clínica' },
+      { value: '2 idiomas', label: 'sitio y reservas en inglés y español' },
+      { value: 'Phorest + Stripe', label: 'agenda y pagos conectados al sistema de la clínica' },
+    ],
     number: '04',
     type: 'SITIO WEB CLÍNICO / RESERVAS',
     title: 'Perfect B',
@@ -178,6 +220,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'LiteSpeed / CyberPanel',
     ],
     en: {
+      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      impact: [
+        { value: '24/7', label: 'online booking and payments, no phone call needed' },
+        { value: '2 languages', label: 'site and booking in English and Spanish' },
+        { value: 'Phorest + Stripe', label: 'schedule and payments connected to the clinic system' },
+      ],
       type: 'CLINIC WEBSITE / BOOKING',
       subtitle: 'Aesthetic medicine clinic site with online booking and payments',
       date: 'April 2026',
@@ -190,6 +238,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'massalud-control-asistencia',
     categories: ['automatizacion'],
+    role: 'Diseño y desarrollo de la automatización con Talent Phi',
+    impact: [
+      { value: 'Tiempo real', label: 'el jefe se entera de la llegada tarde al instante, no días después' },
+      { value: '0 pasos manuales', label: 'cada marcación queda registrada en el ERP' },
+      { value: 'Acceso restringido', label: 'indicadores visibles solo para RR. HH. y la Gerencia' },
+    ],
     number: '05',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Control de Asistencia MasSalud',
@@ -213,6 +267,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'RPA / Automation',
     ],
     en: {
+      role: 'Design and development of the automation with Talent Phi',
+      impact: [
+        { value: 'Real time', label: 'managers learn about late arrivals instantly, not days later' },
+        { value: '0 manual steps', label: 'every clock-in is recorded in the ERP' },
+        { value: 'Restricted access', label: 'metrics visible only to HR and senior management' },
+      ],
       type: 'AUTOMATION / RPA',
       subtitle: 'Late-arrival alerts in Slack and attendance KPIs in the ERP',
       description:
@@ -224,6 +284,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'cambios-estructura-nomina',
     categories: ['automatizacion'],
+    role: 'Diseño y desarrollo de la app, con Recursos Humanos como área usuaria',
+    impact: [
+      { value: '14 h → minutos', label: 'tiempo para aprobar un cambio de estructura' },
+      { value: '954', label: 'empleados en 2 turnos cubiertos por la app' },
+      { value: '4 departamentos', label: 'Soldadura, Pintura, Ensamble y DLI' },
+    ],
     number: '06',
     type: 'APP EMPRESARIAL / POWER APPS',
     title: 'Cambios de Estructura y Nómina',
@@ -240,6 +306,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Power Apps', 'Power Automate', 'Power Fx', 'Microsoft 365', 'Flujos de aprobación'],
     en: {
+      role: 'Design and development of the app, with HR as the user area',
+      impact: [
+        { value: '14 h → minutes', label: 'time to approve a structure change' },
+        { value: '954', label: 'employees across 2 shifts covered by the app' },
+        { value: '4 departments', label: 'Welding, Paint, Assembly and DLI' },
+      ],
       type: 'ENTERPRISE APP / POWER APPS',
       subtitle: 'Power Apps app to approve promotions, transfers and salary changes on the plant floor',
       date: 'May 2025 - October 2025',
@@ -252,6 +324,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'automatizacion-tasas-cambio',
     categories: ['automatizacion', 'datos'],
+    role: 'Diseño y desarrollo del flujo para el área de Contabilidad',
+    impact: [
+      { value: '≈130 h', label: 'de trabajo manual ahorradas' },
+      { value: '10 tasas', label: 'cada día hábil, sin digitarlas a mano' },
+      { value: 'Validación', label: 'alerta automática si falta alguna de las 10 tasas' },
+    ],
     number: '07',
     type: 'AUTOMATIZACIÓN / RPA',
     title: 'Automatización de Tasas de Cambio',
@@ -268,6 +346,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['n8n', 'Schedule Trigger (cron)', 'HTTP Request', 'JavaScript', 'Microsoft Outlook', 'Epicor', 'RPA / Automation'],
     en: {
+      role: 'Design and development of the workflow for Accounting',
+      impact: [
+        { value: '≈130 h', label: 'of manual work saved' },
+        { value: '10 rates', label: 'every business day, no manual typing' },
+        { value: 'Validation', label: 'automatic alert if any of the 10 rates is missing' },
+      ],
       type: 'AUTOMATION / RPA',
       subtitle: 'n8n workflow that delivers the official exchange rates to the Accounting inbox',
       date: 'February 2026 - March 2026',
@@ -280,6 +364,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'analisis-datos-estadisticos',
     categories: ['datos'],
+    role: 'Análisis de datos y construcción del reporte para Pintura y Ensamble',
+    impact: [
+      { value: '5 KPIs', label: 'de calidad de Pintura, entre ellos DPU y FTT' },
+      { value: '4 UET', label: 'de Ensamble en un mapa de calor de defectos' },
+      { value: 'Pareto', label: 'para priorizar las acciones de mejora por tipo de defecto' },
+    ],
     number: '08',
     type: 'ANÁLISIS DE DATOS / BI',
     title: 'Análisis de Datos Estadísticos',
@@ -296,6 +386,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Looker', 'Looker Studio', 'SQL', 'KPIs de calidad (DPU, FTT)', 'Mapas de calor', 'Análisis de Pareto'],
     en: {
+      role: 'Data analysis and report building for Paint and Assembly',
+      impact: [
+        { value: '5 KPIs', label: 'for Paint quality, including DPU and FTT' },
+        { value: '4 UETs', label: 'of Assembly in a defect heat map' },
+        { value: 'Pareto', label: 'to prioritize improvement actions by defect type' },
+      ],
       type: 'DATA ANALYSIS / BI',
       subtitle: 'Paint quality KPIs and a defect heat map across the Assembly UETs',
       date: 'October 2025 - December 2025',
@@ -308,6 +404,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'trazabilidad-agvs',
     categories: ['datos'],
+    role: 'Desarrollo del mapa junto con el equipo de fabricación de Ensamble',
+    impact: [
+      { value: 'Tiempo real', label: 'posición y estado de cada AGV en el mapa de planta' },
+      { value: '3 flujos', label: 'puertas, llantas y parabrisas hacia la UET Final' },
+      { value: 'Historial', label: 'registro de cada movimiento para analizar retrasos' },
+    ],
     number: '09',
     type: 'TRAZABILIDAD / INDUSTRIA 4.0',
     title: 'Trazabilidad de AGVs',
@@ -324,6 +426,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Trazabilidad en tiempo real', 'AGVs', 'Mapa de planta', 'Logística interna', 'Industria 4.0'],
     en: {
+      role: 'Map development with the Assembly manufacturing team',
+      impact: [
+        { value: 'Real time', label: 'position and status of every AGV on the plant map' },
+        { value: '3 flows', label: 'doors, tires and windshields to the Final UET' },
+        { value: 'History', label: 'log of every movement to analyze delays' },
+      ],
       type: 'TRACEABILITY / INDUSTRY 4.0',
       subtitle: 'Real-time map of the AGVs that supply the Final UET in Assembly',
       date: '2025',
@@ -336,6 +444,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'rechazos-defectos-calidad',
     categories: ['automatizacion', 'datos'],
+    role: 'Diseño de la solución y desarrollo del flujo para Calidad, Soldadura y Ensamble',
+    impact: [
+      { value: '1 escaneo', label: 'reemplaza llevar la pieza a Calidad y calcular su precio' },
+      { value: '8 UET', label: 'de Soldadura y Ensamble usan la app' },
+      { value: 'Al instante', label: 'el valor del rechazo llega a la base de datos de Calidad' },
+    ],
     number: '10',
     type: 'APP EMPRESARIAL / POWER AUTOMATE',
     title: 'Rechazos de Defectos de Calidad',
@@ -352,6 +466,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Power Automate', 'Power Apps', 'Escaneo de códigos', 'Base de datos de Calidad', 'Microsoft 365'],
     en: {
+      role: 'Solution design and workflow development for Quality, Welding and Assembly',
+      impact: [
+        { value: '1 scan', label: 'replaces carrying the part to Quality and pricing it' },
+        { value: '8 UETs', label: 'in Welding and Assembly use the app' },
+        { value: 'Instantly', label: 'the reject value reaches the Quality database' },
+      ],
       type: 'ENTERPRISE APP / POWER AUTOMATE',
       subtitle: 'App to reject defective parts by scanning their identifier and record their value instantly',
       date: '2025',
@@ -364,6 +484,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'seleccion-operarios',
     categories: ['automatizacion'],
+    role: 'Desarrollo de la app con los maestros de 4 escuelas y las psicólogas de RR. HH.',
+    impact: [
+      { value: '5 bases', label: '4 escuelas de destreza y la RAC 5 en un mismo sistema' },
+      { value: 'Automático', label: 'cálculo de las áreas para las que es apto cada aspirante' },
+      { value: 'Semáforo', label: 'verde, amarillo o rojo por área en la base de datos de RR. HH.' },
+    ],
     number: '11',
     type: 'APP MÓVIL / REACT NATIVE',
     title: 'Selección de Operarios',
@@ -380,6 +506,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['React Native', 'TypeScript', 'Tablets', 'Base de datos de RRHH', 'Evaluación por criterios'],
     en: {
+      role: 'App development with the masters of 4 schools and the HR psychologists',
+      impact: [
+        { value: '5 stations', label: '4 skills schools and RAC 5 in a single system' },
+        { value: 'Automatic', label: 'calculation of the areas each applicant is fit for' },
+        { value: 'Traffic light', label: 'green, yellow or red per area in the HR database' },
+      ],
       type: 'MOBILE APP / REACT NATIVE',
       subtitle: 'Tablet app to grade applicants at the skills schools and the RAC 5',
       date: '2025',
@@ -392,6 +524,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'sitio-contadoras-aq',
     categories: ['web'],
+    role: 'Diseño, desarrollo y despliegue del sitio',
+    impact: [
+      { value: 'Next.js', label: 'sitio optimizado para rendimiento y SEO' },
+      { value: 'Dominio propio', label: 'canal digital central para captar clientes' },
+      { value: 'En producción', label: 'desplegado en Vercel' },
+    ],
     number: '12',
     type: 'SITIO WEB CORPORATIVO',
     title: 'Sitio Web Contadoras AQ',
@@ -406,6 +544,12 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['React', 'Next.js', 'TypeScript', 'Vercel'],
     en: {
+      role: 'Site design, development and deployment',
+      impact: [
+        { value: 'Next.js', label: 'site optimized for performance and SEO' },
+        { value: 'Own domain', label: 'main digital channel to win new clients' },
+        { value: 'Live', label: 'deployed on Vercel' },
+      ],
       type: 'CORPORATE WEBSITE',
       subtitle: 'Official web platform for an accounting firm',
       date: 'March 2026 - April 2026',

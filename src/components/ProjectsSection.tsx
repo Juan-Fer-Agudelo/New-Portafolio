@@ -64,6 +64,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         subtitle: project.en.subtitle,
         description: project.en.description,
         date: project.en.date ?? project.date,
+        role: project.en.role ?? project.role,
+        impact: project.en.impact ?? project.impact,
       };
     }
     return {
@@ -71,6 +73,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       subtitle: project.subtitle,
       description: project.description,
       date: project.date,
+      role: project.role,
+      impact: project.impact,
     };
   };
 
@@ -151,7 +155,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               }}
             >
               {p.filters[key]}
-              <span className="projects-filter-count">{projectsIn(key).length}</span>
+              {/* Dos dígitos, como el número de cada proyecto (01, 02…) */}
+              <span className="projects-filter-count">{String(projectsIn(key).length).padStart(2, '0')}</span>
             </button>
           ))}
         </div>
@@ -201,6 +206,23 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </div>
 
                     <p className="open-source-desc">{renderWithRightsHighlight(loc(project).description)}</p>
+
+                    {/* Rol e impacto: lo que hizo Juan y qué resultado tuvo para el negocio */}
+                    <div className="project-card-results">
+                      <p className="project-card-role">
+                        <span className="project-card-results-label">{p.roleLabel}</span>
+                        {loc(project).role}
+                      </p>
+                      <span className="project-card-results-label">{p.impactLabel}</span>
+                      <ul className="project-impact-list">
+                        {loc(project).impact.map((item) => (
+                          <li key={item.value} className="project-impact-item">
+                            <strong className="project-impact-value">{item.value}</strong>
+                            <span className="project-impact-label">{item.label}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
                     <div className="project-card-tech">
                       {project.techStack.slice(0, 6).map((tech) => (

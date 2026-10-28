@@ -10,12 +10,20 @@ export interface ArticleAuthor {
   profileUrl?: string;
 }
 
+/** Un resultado medible del proyecto: la cifra o el hecho destacado y su explicación. */
+export interface ProjectImpact {
+  value: string;
+  label: string;
+}
+
 export interface ProjectLocale {
   type: string;
   subtitle: string;
   description: string;
   details: string;
   date?: string;
+  role?: string;
+  impact?: ProjectImpact[];
 }
 
 /** Categorías de los filtros de la sección de proyectos. */
@@ -25,6 +33,10 @@ export interface ProjectItem {
   id: string;
   /** Un proyecto puede estar en más de una categoría. */
   categories: ProjectCategory[];
+  /** Qué hizo Juan en el proyecto. */
+  role: string;
+  /** Resultados para el negocio. Solo datos reales, nada estimado. */
+  impact: ProjectImpact[];
   number: string;
   type: string;
   title: string;

@@ -68,6 +68,16 @@ test('el portafolio carga con los 12 proyectos', async ({ page }) => {
   await expect(page.getByRole('button', { name: /Ver proyecto/ })).toHaveCount(7);
 });
 
+test('cada proyecto muestra su rol y su impacto', async ({ page }) => {
+  const cards = page.locator('article.project-card-item');
+  await expect(cards).toHaveCount(12);
+  for (const card of await cards.all()) {
+    await expect(card.locator('.project-card-role')).toContainText(/\S{3,}/);
+    expect(await card.locator('.project-impact-item').count()).toBeGreaterThanOrEqual(2);
+  }
+  await expectNoOverflow(page, '.project-impact-item');
+});
+
 test('los filtros por categoría muestran los proyectos de cada una', async ({ page }) => {
   const filters = page.getByRole('group', { name: 'Filtrar proyectos por categoría' });
   const cards = page.locator('article.project-card-item');
