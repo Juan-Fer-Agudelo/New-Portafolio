@@ -226,6 +226,19 @@ export const MenuOverlay: React.FC<MenuOverlayProps> = ({
             </a>
             <p className="menu-nav-desc">{m.writingDesc}</p>
           </li>
+          <li className="menu-nav-row">
+            {/* El juego 3D usa teclado, audio y pantalla completa: se abre en su propia pestaña */}
+            <a
+              href="/portafolio-interactivo/index.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="menu-nav-title menu-item-link"
+              id="menu-interactive-link"
+            >
+              {m.interactive}
+            </a>
+            <p className="menu-nav-desc">{m.interactiveDesc}</p>
+          </li>
         </ul>
       </nav>
     </div>

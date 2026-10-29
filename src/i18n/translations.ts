@@ -169,6 +169,8 @@ export const translations = {
       skillsDesc: 'Technologies and tools I work with.',
       writing: 'Blog',
       writingDesc: 'My latest writing on technology.',
+      interactive: 'Interactive portfolio',
+      interactiveDesc: 'Explore my work in an interactive way.',
     },
     modals: {
       enfoque: {
@@ -389,6 +391,8 @@ export const translations = {
       skillsDesc: 'Tecnologías y herramientas con las que trabajo.',
       writing: 'Blog',
       writingDesc: 'Mis escritos más recientes sobre tecnología.',
+      interactive: 'Portafolio interactivo',
+      interactiveDesc: 'Explora mi trabajo de forma interactiva.',
     },
     modals: {
       enfoque: {
