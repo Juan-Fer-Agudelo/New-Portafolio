@@ -752,7 +752,7 @@ function drawScore(n){
 let supportT = 0;
 function checkSupports(){
   for (const c of bodies){ if (!c.asleep || c.kind==='rock' || c.kind==='tire') continue; const half=c.h/2, ground = Math.max(terrainH(c.x,c.z), SEA_Y-.5) + half; if (c.y <= ground + .02) continue;
-    let held = false; for (const o of bodies){ if (o===c || o.kind==='pin') continue;
+    let held = false; const nb = neighbours(c); for (let k=0;k<nb.length;k++){ const o = nb[k]; if (o.kind==='pin') continue;
       if (o.y < c.y - (o.h+c.h)*.3 && Math.abs(o.x-c.x) < (o.r+c.r)*.85 && Math.abs(o.z-c.z) < (o.r+c.r)*.85 && Math.abs((o.y+o.h/2+half) - c.y) < .08){ held = true; break; }
       if (c.kind==='letter' && o.kind==='letter' && o.asleep && Math.abs(o.y-c.y) < .05 && Math.abs(o.z-c.z) < .1 && Math.abs(o.x-c.x) < BRICK*1.15){ held = true; break; } }
     if (!held){ c.asleep = false; c.still = 0; } }
@@ -1396,9 +1396,40 @@ const HALF = Math.PI/2;
 const CAR_MASS = 6;
 
 const camShake = {v:0};
+let sndGate = 0;
+// spatial hash: each body only checks the bodies in its own and the 8 neighbouring cells.
+// Without it every body was compared against all ~530 others each frame, which spiked to ~20 ms when the wall crumbled.
+const hash = { cells: new Map(), used: [], size: 4 };
+const gridKey = (ix, iz) => (ix + 512) * 2048 + (iz + 512);
+function buildGrid(){
+  let maxR = 1; for (const c of bodies) if (c.r > maxR) maxR = c.r;
+  hash.size = maxR*2 + 1.5; // two radii plus the distance a body can travel in a frame
+  for (const cell of hash.used) cell.length = 0; hash.used.length = 0;
+  const s = hash.size;
+  for (let i=0;i<bodies.length;i++){
+    const c = bodies[i]; c.i = i;
+    const k = gridKey(Math.floor(c.x/s), Math.floor(c.z/s));
+    let cell = hash.cells.get(k); if (!cell){ cell = []; hash.cells.set(k, cell); }
+    if (cell.length === 0) hash.used.push(cell);
+    cell.push(c);
+  }
+}
+const nbuf = [];
+function neighbours(c){ // fills and returns a reused array, so no allocation per call
+  nbuf.length = 0;
+  const s = hash.size, ix = Math.floor(c.x/s), iz = Math.floor(c.z/s);
+  for (let dx=-1; dx<=1; dx++) for (let dz=-1; dz<=1; dz++){
+    const cell = hash.cells.get(gridKey(ix+dx, iz+dz)); if (!cell) continue;
+    for (let i=0;i<cell.length;i++) if (cell[i] !== c) nbuf.push(cell[i]);
+  }
+  return nbuf;
+}
+const rollAxis = new T.Vector3();
 function updateBodies(dt){
   bodies.sort((a,b)=>a.y-b.y);
+  buildGrid();
   const cvx = Math.sin(car.h)*car.speed, cvz = Math.cos(car.h)*car.speed;
+  let hitMass = 0; // mass the kart hit this frame; the slowdown is applied once, not once per brick
   for (const c of bodies){
     const half = c.h/2;
     // sleeping bodies skip the expensive part until something touches them
@@ -1414,10 +1445,11 @@ function updateBodies(dt){
         c.vx += nx*j; c.vz += nz*j;
         c.vy += Math.min(9, j*.35) * (c.kind==='rock' ? .6 : 1);
         c.spin += (Math.random()-.5)*j;
-        car.speed *= 1 - Math.min(.6, c.mass/(c.mass+CAR_MASS)*.9);
+        hitMass += c.mass;
         if (c.kind==='pin' || ((c.kind==='brick' || c.kind==='fence') && j > 2)) c.lying = true;
         camShake.v = Math.min(1, camShake.v + j*.05*c.mass);
-        if (j > 1.2 && (!c.sndT || performance.now() - c.sndT > 180)){ c.sndT = performance.now(); if (c.kind==='letter' || c.kind==='brick') audio.clang(j); else if (c.kind==='box' || c.kind==='fence') audio.knock(j); else audio.bump(j); }
+        // one impact sound every 45 ms at most: a crumbling wall used to fire ~180 sounds in a single frame and froze it
+        if (j > 1.2 && performance.now() - sndGate > 45){ sndGate = performance.now(); if (c.kind==='letter' || c.kind==='brick') audio.clang(j); else if (c.kind==='box' || c.kind==='fence') audio.knock(j); else audio.bump(j); }
       }
       c.wake = 1;
     }
@@ -1426,9 +1458,9 @@ function updateBodies(dt){
     const wet = inWater(c.x,c.z);
     let floor = Math.max(terrainH(c.x,c.z), SEA_Y - .5) + half;
     if (c.mass < 1.2 && c.y > floor + .3){ c.vx += wind.x*wind.g*3*dt; c.vz += wind.z*wind.g*3*dt; } // light things drift in the wind
-    if (c.kind!=='rock' && c.kind!=='tire') for (const o of bodies){
-      if (o!==c && o.kind!=='pin' && o.y < c.y - (o.h+c.h)*.3 && Math.abs(o.x-c.x) < (o.r+c.r)*.85 && Math.abs(o.z-c.z) < (o.r+c.r)*.85) floor = Math.max(floor, o.y + o.h/2 + half);
-    }
+    if (c.kind!=='rock' && c.kind!=='tire'){ const nb = neighbours(c); for (let k=0;k<nb.length;k++){ const o = nb[k];
+      if (o.kind!=='pin' && o.y < c.y - (o.h+c.h)*.3 && Math.abs(o.x-c.x) < (o.r+c.r)*.85 && Math.abs(o.z-c.z) < (o.r+c.r)*.85) floor = Math.max(floor, o.y + o.h/2 + half);
+    } }
     if (c.lying) floor = Math.min(floor, Math.max(terrainH(c.x,c.z), SEA_Y-.5) + c.r);
     if (c.y < floor){
       c.y = floor;
@@ -1446,10 +1478,14 @@ function updateBodies(dt){
     // fall asleep after resting a while
     if (Math.abs(c.vx)+Math.abs(c.vz)+Math.abs(c.vy) < .03 && Math.abs(c.spin) < .05 && c.y <= floor + .01){ c.still += dt; if (c.still > 1.2) c.asleep = true; } else c.still = 0;
   }
-  // --- body vs body: mass-weighted circles
-  for (let i=0;i<bodies.length;i++) for (let j=i+1;j<bodies.length;j++){
-    const a=bodies[i], b=bodies[j];
-    if (a.asleep && b.asleep) continue;
+  if (hitMass > 0){ const hm = Math.min(hitMass, 12); car.speed *= 1 - Math.min(.6, hm/(hm+CAR_MASS)*.9); }
+  // --- body vs body: mass-weighted circles, only between neighbouring cells
+  for (let i=0;i<bodies.length;i++){
+    const a=bodies[i]; if (a.asleep) continue;
+    const nb = neighbours(a);
+    for (let k=0;k<nb.length;k++){
+    const b=nb[k];
+    if (!b.asleep && b.i < a.i) continue; // awake pairs are handled once, from the lower index
     if (Math.abs(a.y-b.y) > (a.h+b.h)/2 - .05) continue;
     const dx=b.x-a.x, dz=b.z-a.z, d=Math.hypot(dx,dz), min=a.r+b.r;
     if (d < min && d > 1e-4){
@@ -1465,6 +1501,7 @@ function updateBodies(dt){
         if (hit > .6){ a.spin += (Math.random()-.5)*hit; b.spin += (Math.random()-.5)*hit; }
       }
     }
+    }
   }
   // --- visuals
   for (const c of bodies){
@@ -1472,7 +1509,7 @@ function updateBodies(dt){
     m.position.set(c.x,c.y,c.z);
     if (c.kind==='rock' || c.kind==='tire'){
       // roll: rotate around axis perpendicular to velocity
-      if (sp > .05){ const ax = new T.Vector3(c.vz, 0, -c.vx).normalize(); m.rotateOnWorldAxis(ax, sp*dt/c.r); }
+      if (sp > .05){ rollAxis.set(c.vz, 0, -c.vx).normalize(); m.rotateOnWorldAxis(rollAxis, sp*dt/c.r); }
       continue;
     }
     m.rotation.y += c.spin*dt;
@@ -1522,7 +1559,7 @@ function updateZones(t){
   showZone(started ? near : null);
 }
 
-const camPos = new T.Vector3(0, 30, 40), look = new T.Vector3();
+const camPos = new T.Vector3(0, 30, 40), look = new T.Vector3(), camTarget = new T.Vector3(), lookTarget = new T.Vector3();
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clock = new T.Clock();
 let rafOk = false;
@@ -1542,13 +1579,12 @@ function tick(){
   for (const d of dust){ if (d.life>0){ d.life -= dt*1.8; d.m.position.y += dt*.6; d.m.scale.setScalar(1+(1-d.life)*1.6); d.m.material.opacity = Math.max(0,d.life)*.45; if (d.life<=0) d.m.visible=false; } }
 
   const mobile = innerWidth < 640;
-  let target;
-  if (!started && !reduce){ const a=t*.15; target = new T.Vector3(car.x+Math.sin(a)*22, 15, car.z+Math.cos(a)*22); }
-  else target = new T.Vector3(car.x + 3.5, mobile ? 22 : 17, car.z + (mobile ? 19 : 17));
-  camPos.lerp(target, 1 - Math.exp(-3.5*dt));
+  if (!started && !reduce){ const a=t*.15; camTarget.set(car.x+Math.sin(a)*22, 15, car.z+Math.cos(a)*22); }
+  else camTarget.set(car.x + 3.5, mobile ? 22 : 17, car.z + (mobile ? 19 : 17));
+  camPos.lerp(camTarget, 1 - Math.exp(-3.5*dt));
   camera.position.copy(camPos);
   if (camShake.v > 0.01 && !reduce){ camera.position.x += (Math.random()-.5)*camShake.v*.5; camera.position.y += (Math.random()-.5)*camShake.v*.4; camShake.v *= Math.exp(-7*dt); }
-  look.lerp(new T.Vector3(car.x + Math.sin(car.h)*car.speed*.12, 0, car.z + Math.cos(car.h)*car.speed*.12), 1 - Math.exp(-6*dt));
+  look.lerp(lookTarget.set(car.x + Math.sin(car.h)*car.speed*.12, 0, car.z + Math.cos(car.h)*car.speed*.12), 1 - Math.exp(-6*dt));
   camera.lookAt(look);
 
   const sd = day.sunDir || new T.Vector3(-.4,.8,.3);
