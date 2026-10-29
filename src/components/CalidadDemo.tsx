@@ -163,7 +163,7 @@ export const CalidadDemo: React.FC<CalidadDemoProps> = ({ isOpen, onClose }) => 
         actions={[{ label: 'Abrir el reporte', onClick: () => setScreen('app') }]}
         onClose={onClose}
       >
-        Este reporte de Looker Studio se construyó para el departamento de Pintura de Renault Sofasa. Es una recreación
+        Construí este reporte de Looker Studio para el departamento de Pintura de Renault Sofasa. Es una recreación
         para el portafolio: todos los vehículos, defectos y cifras que verás son <strong>ficticios</strong>.
       </DemoNotice>
     );

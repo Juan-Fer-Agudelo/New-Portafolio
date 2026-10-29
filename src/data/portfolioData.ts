@@ -13,7 +13,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'enhance-work',
     categories: ['web'],
-    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    role: 'Hice el desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
     impact: [
       { value: 'B2B + B2C', label: 'una sola plataforma para empleadores y candidatos' },
       { value: 'Suscripciones', label: 'cobros recurrentes integrados con Stripe' },
@@ -49,7 +49,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'Node.js',
     ],
     en: {
-      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      role: 'I did the full stack development with Talent Phi and Santiago Loaiza',
       impact: [
         { value: 'B2B + B2C', label: 'one platform for employers and candidates' },
         { value: 'Subscriptions', label: 'recurring payments integrated with Stripe' },
@@ -67,7 +67,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'miami-bounce-company',
     categories: ['web'],
-    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    role: 'Hice el desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
     impact: [
       { value: 'Reserva directa', label: 'el cliente contacta y reserva con la dueña sin intermediarios' },
       { value: 'GA4 + Meta', label: 'medición de las campañas publicitarias desde el lanzamiento' },
@@ -106,7 +106,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'SEO Schemas',
     ],
     en: {
-      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      role: 'I did the full stack development with Talent Phi and Santiago Loaiza',
       impact: [
         { value: 'Direct booking', label: 'customers contact and book with the owner, no middlemen' },
         { value: 'GA4 + Meta', label: 'ad campaign tracking from day one' },
@@ -124,7 +124,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'peptidos-venezuela',
     categories: ['web'],
-    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    role: 'Hice el desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
     impact: [
       { value: 'EE. UU. → Caracas', label: 'venta en línea de producto importado con protocolo clínico' },
       { value: '4 herramientas', label: 'de medición: GTM, GA4, Meta Pixel y Clarity' },
@@ -163,7 +163,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'SEO Schemas',
     ],
     en: {
-      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      role: 'I did the full stack development with Talent Phi and Santiago Loaiza',
       impact: [
         { value: 'US → Caracas', label: 'online sales of imported products under clinical protocol' },
         { value: '4 tools', label: 'for tracking: GTM, GA4, Meta Pixel and Clarity' },
@@ -181,7 +181,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'perfect-b-aesthetic',
     categories: ['web'],
-    role: 'Desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
+    role: 'Hice el desarrollo full stack en equipo con Talent Phi y Santiago Loaiza',
     impact: [
       { value: '24/7', label: 'reservas y pagos en línea, sin llamar a la clínica' },
       { value: '2 idiomas', label: 'sitio y reservas en inglés y español' },
@@ -220,7 +220,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'LiteSpeed / CyberPanel',
     ],
     en: {
-      role: 'Full stack development with Talent Phi and Santiago Loaiza',
+      role: 'I did the full stack development with Talent Phi and Santiago Loaiza',
       impact: [
         { value: '24/7', label: 'online booking and payments, no phone call needed' },
         { value: '2 languages', label: 'site and booking in English and Spanish' },
@@ -238,7 +238,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'massalud-control-asistencia',
     categories: ['automatizacion'],
-    role: 'Diseño y desarrollo de la automatización con Talent Phi',
+    role: 'Diseñé y desarrollé la automatización con Talent Phi',
     impact: [
       { value: 'Tiempo real', label: 'el jefe se entera de la llegada tarde al instante, no días después' },
       { value: '0 pasos manuales', label: 'cada marcación queda registrada en el ERP' },
@@ -267,7 +267,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       'RPA / Automation',
     ],
     en: {
-      role: 'Design and development of the automation with Talent Phi',
+      role: 'I designed and built the automation with Talent Phi',
       impact: [
         { value: 'Real time', label: 'managers learn about late arrivals instantly, not days later' },
         { value: '0 manual steps', label: 'every clock-in is recorded in the ERP' },
@@ -284,7 +284,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'cambios-estructura-nomina',
     categories: ['automatizacion'],
-    role: 'Diseño y desarrollo de la app, con Recursos Humanos como área usuaria',
+    role: 'Diseñé y desarrollé la app, con Recursos Humanos como área usuaria',
     impact: [
       { value: '14 h → minutos', label: 'tiempo para aprobar un cambio de estructura' },
       { value: '954', label: 'empleados en 2 turnos cubiertos por la app' },
@@ -306,7 +306,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Power Apps', 'Power Automate', 'Power Fx', 'Microsoft 365', 'Flujos de aprobación'],
     en: {
-      role: 'Design and development of the app, with HR as the user area',
+      role: 'I designed and built the app, with HR as the user area',
       impact: [
         { value: '14 h → minutes', label: 'time to approve a structure change' },
         { value: '954', label: 'employees across 2 shifts covered by the app' },
@@ -324,7 +324,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'automatizacion-tasas-cambio',
     categories: ['automatizacion', 'datos'],
-    role: 'Diseño y desarrollo del flujo para el área de Contabilidad',
+    role: 'Diseñé y desarrollé el flujo para el área de Contabilidad',
     impact: [
       { value: '≈130 h', label: 'de trabajo manual ahorradas' },
       { value: '10 tasas', label: 'cada día hábil, sin digitarlas a mano' },
@@ -346,7 +346,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['n8n', 'Schedule Trigger (cron)', 'HTTP Request', 'JavaScript', 'Microsoft Outlook', 'Epicor', 'RPA / Automation'],
     en: {
-      role: 'Design and development of the workflow for Accounting',
+      role: 'I designed and built the workflow for Accounting',
       impact: [
         { value: '≈130 h', label: 'of manual work saved' },
         { value: '10 rates', label: 'every business day, no manual typing' },
@@ -364,7 +364,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'analisis-datos-estadisticos',
     categories: ['datos'],
-    role: 'Análisis de datos y construcción del reporte para Pintura y Ensamble',
+    role: 'Analicé los datos y construí el reporte para Pintura y Ensamble',
     impact: [
       { value: '5 KPIs', label: 'de calidad de Pintura, entre ellos DPU y FTT' },
       { value: '4 UET', label: 'de Ensamble en un mapa de calor de defectos' },
@@ -386,7 +386,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Looker', 'Looker Studio', 'SQL', 'KPIs de calidad (DPU, FTT)', 'Mapas de calor', 'Análisis de Pareto'],
     en: {
-      role: 'Data analysis and report building for Paint and Assembly',
+      role: 'I analyzed the data and built the report for Paint and Assembly',
       impact: [
         { value: '5 KPIs', label: 'for Paint quality, including DPU and FTT' },
         { value: '4 UETs', label: 'of Assembly in a defect heat map' },
@@ -404,7 +404,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'trazabilidad-agvs',
     categories: ['datos'],
-    role: 'Desarrollo del mapa junto con el equipo de fabricación de Ensamble',
+    role: 'Desarrollé el mapa junto con el equipo de fabricación de Ensamble',
     impact: [
       { value: 'Tiempo real', label: 'posición y estado de cada AGV en el mapa de planta' },
       { value: '3 flujos', label: 'puertas, llantas y parabrisas hacia la UET Final' },
@@ -426,7 +426,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Trazabilidad en tiempo real', 'AGVs', 'Mapa de planta', 'Logística interna', 'Industria 4.0'],
     en: {
-      role: 'Map development with the Assembly manufacturing team',
+      role: 'I built the map with the Assembly manufacturing team',
       impact: [
         { value: 'Real time', label: 'position and status of every AGV on the plant map' },
         { value: '3 flows', label: 'doors, tires and windshields to the Final UET' },
@@ -444,7 +444,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'rechazos-defectos-calidad',
     categories: ['automatizacion', 'datos'],
-    role: 'Diseño de la solución y desarrollo del flujo para Calidad, Soldadura y Ensamble',
+    role: 'Diseñé la solución y desarrollé el flujo para Calidad, Soldadura y Ensamble',
     impact: [
       { value: '1 escaneo', label: 'reemplaza llevar la pieza a Calidad y calcular su precio' },
       { value: '8 UET', label: 'de Soldadura y Ensamble usan la app' },
@@ -466,7 +466,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['Power Automate', 'Power Apps', 'Escaneo de códigos', 'Base de datos de Calidad', 'Microsoft 365'],
     en: {
-      role: 'Solution design and workflow development for Quality, Welding and Assembly',
+      role: 'I designed the solution and built the workflow for Quality, Welding and Assembly',
       impact: [
         { value: '1 scan', label: 'replaces carrying the part to Quality and pricing it' },
         { value: '8 UETs', label: 'in Welding and Assembly use the app' },
@@ -484,7 +484,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'seleccion-operarios',
     categories: ['automatizacion'],
-    role: 'Desarrollo de la app con los maestros de 4 escuelas y las psicólogas de RR. HH.',
+    role: 'Desarrollé la app con los maestros de 4 escuelas y las psicólogas de RR. HH.',
     impact: [
       { value: '5 bases', label: '4 escuelas de destreza y la RAC 5 en un mismo sistema' },
       { value: 'Automático', label: 'cálculo de las áreas para las que es apto cada aspirante' },
@@ -506,7 +506,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['React Native', 'TypeScript', 'Tablets', 'Base de datos de RRHH', 'Evaluación por criterios'],
     en: {
-      role: 'App development with the masters of 4 schools and the HR psychologists',
+      role: 'I built the app with the masters of 4 schools and the HR psychologists',
       impact: [
         { value: '5 stations', label: '4 skills schools and RAC 5 in a single system' },
         { value: 'Automatic', label: 'calculation of the areas each applicant is fit for' },
@@ -524,7 +524,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: 'sitio-contadoras-aq',
     categories: ['web'],
-    role: 'Diseño, desarrollo y despliegue del sitio',
+    role: 'Diseñé, desarrollé y desplegué el sitio',
     impact: [
       { value: 'Next.js', label: 'sitio optimizado para rendimiento y SEO' },
       { value: 'Dominio propio', label: 'canal digital central para captar clientes' },
@@ -544,7 +544,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     githubUrl: '',
     techStack: ['React', 'Next.js', 'TypeScript', 'Vercel'],
     en: {
-      role: 'Site design, development and deployment',
+      role: 'I designed, built and deployed the site',
       impact: [
         { value: 'Next.js', label: 'site optimized for performance and SEO' },
         { value: 'Own domain', label: 'main digital channel to win new clients' },
@@ -564,7 +564,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
 export const ARTICLE_AUTHOR: ArticleAuthor = {
   name: 'Juan Fernando Agudelo',
   role: 'Ingeniero de IA, Datos y Full Stack',
-  bio: 'Juan Fernando Agudelo es desarrollador Fullstack con más de 3 años de experiencia en desarrollo web escalable, análisis de datos y soluciones de IA. Ha construido plataformas en producción para clínicas, e-commerce y empresas del sur de Florida junto a Talent Phi, además de proyectos de automatización, Business Intelligence e IA empresarial. Le apasiona convertir problemas de negocio en sistemas simples, medibles y fáciles de mantener.',
+  bio: 'Soy desarrollador Fullstack con más de 3 años de experiencia en desarrollo web escalable, análisis de datos y soluciones de IA. He construido plataformas en producción para clínicas, e-commerce y empresas del sur de Florida junto a Talent Phi, además de proyectos de automatización, Business Intelligence e IA empresarial. Me apasiona convertir problemas de negocio en sistemas simples, medibles y fáciles de mantener.',
   profileLabel: 'GitHub',
   profileHandle: 'Juan-Fer-Agudelo',
   profileUrl: 'https://github.com/Juan-Fer-Agudelo',

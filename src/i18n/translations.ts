@@ -102,7 +102,7 @@ export const translations = {
     },
     footer: {
       copyright:
-        '© MMXXVI. Portfolio by Juan. Designed and built with artisanal precision in Medellín, Colombia.',
+        '© MMXXVI. My portfolio. I designed and built it with artisanal precision in Medellín, Colombia.',
       scrollTop: 'Back to Top',
       about: 'About',
       projects: 'Projects',
@@ -119,10 +119,10 @@ export const translations = {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'AI ENGINEER · DATA ENGINEER · FULL STACK DEVELOPER',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO is an AI engineer, data engineer and Full Stack developer based in Medellín, Colombia, combining over 3 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. His work combines solid engineering vision with robust, efficient and reliable solutions.',
-        'As a Fullstack developer, Juan specializes in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. He has led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
-        'His enterprise experience includes work with Renault Sofasa and Simex, where he developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
-        'Juan continues to lead at the intersection of software architecture, data science and artificial intelligence, building solutions that promote efficiency, scalability and a positive impact on the organizations and people he works with.',
+        "I'm JUAN FERNANDO AGUDELO, an AI engineer, data engineer and Full Stack developer based in Medellín, Colombia, with over 3 years of experience designing scalable system architectures, data analysis and data science solutions, web platforms and artificial intelligence. My work combines solid engineering vision with robust, efficient and reliable solutions.",
+        'As a Fullstack developer, I specialize in system architecture design, data analytics, data science, databases, process automation and integrating AI models that deliver real business impact. I have led and built projects for companies in the United States, Venezuela and Colombia, from B2B/B2C platforms to complex analytical and e-commerce solutions.',
+        'My enterprise experience includes work with Renault Sofasa and Simex, where I developed mobile applications, RPA automations and business intelligence dashboards integrating ERPs such as SAP and Epicor, reducing manual processes by up to 99%.',
+        'I keep leading at the intersection of software architecture, data science and artificial intelligence, building solutions that promote efficiency, scalability and a positive impact on the organizations and people I work with.',
       ],
       representedBy: 'available for',
       representedByName: 'ARCHITECTURE & FREELANCE PROJECTS',
@@ -322,7 +322,7 @@ export const translations = {
     },
     footer: {
       copyright:
-        '© MMXXVI. Portafolio de Juan. Diseñado y construido con precisión artesanal en Medellín, Colombia.',
+        '© MMXXVI. Mi portafolio. Lo diseñé y construí con precisión artesanal en Medellín, Colombia.',
       scrollTop: 'Subir al Inicio',
       about: 'Sobre Mí',
       projects: 'Proyectos',
@@ -339,10 +339,10 @@ export const translations = {
       name: 'JUAN FERNANDO AGUDELO',
       subtitle: 'INGENIERO DE IA · INGENIERO DE DATOS · DESARROLLADOR FULL STACK',
       paragraphs: [
-        'JUAN FERNANDO AGUDELO es un ingeniero de IA, ingeniero de datos y desarrollador Full Stack radicado en Medellín, Colombia, que combina más de 3 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Su trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
-        'Como desarrollador Fullstack, Juan se especializa en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. Ha liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
-        'Su experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrolló aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
-        'Juan continúa liderando en la intersección entre arquitectura de software, ciencia de datos e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabaja.',
+        'Soy JUAN FERNANDO AGUDELO, ingeniero de IA, ingeniero de datos y desarrollador Full Stack radicado en Medellín, Colombia, con más de 3 años de experiencia diseñando arquitecturas escalables, soluciones de análisis de datos, ciencia de datos, plataformas web, aplicaciones móviles e inteligencia artificial. Mi trabajo combina una sólida visión de ingeniería con soluciones robustas, eficientes y confiables.',
+        'Como desarrollador Fullstack, me especializo en el diseño de arquitecturas de sistemas, análisis y ciencia de datos, bases de datos, automatización de procesos y la integración de modelos de inteligencia artificial que generan un impacto real. He liderado y desarrollado proyectos para empresas de Estados Unidos, Venezuela y Colombia, desde plataformas de empleo B2B/B2C hasta e-commerce con protocolos clínicos y analítica avanzada.',
+        'Mi experiencia empresarial incluye trabajo con Renault Sofasa y Simex, donde desarrollé aplicaciones móviles, automatizaciones RPA y tableros de inteligencia de negocios integrando ERPs como SAP y Epicor, reduciendo procesos manuales hasta en un 99%.',
+        'Sigo liderando en la intersección entre arquitectura de software, ciencia de datos e inteligencia artificial, construyendo soluciones que promueven la accesibilidad, la eficiencia y un impacto positivo en las organizaciones y personas con las que trabajo.',
       ],
       representedBy: 'disponible para',
       representedByName: 'PROYECTOS DE ARQUITECTURA Y FREELANCE',
