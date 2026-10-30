@@ -7,10 +7,10 @@
 <meta name="description" content="Portafolio 3D interactivo de Juan Fernando Agudelo: conduce un monster truck por una isla con sus proyectos, habilidades y contacto.">
 <style>html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}body{margin:0;background:#fff;color:#000;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
-<body>
+<body class="pre">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Figtree:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Figtree:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Permanent+Marker&display=swap" media="print" onload="this.media='all'">
 <style>
 /* Layout: full-screen 3D blueprint world under a thin HUD; zone panel docks right (bottom sheet on phones). Single deliberate dark "blueprint" look. */
 :root{
@@ -67,7 +67,9 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
 .legend .projlist b{color:var(--coral);margin-right:4px}
 #scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
 
-.hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;
+body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
+.minimap{transition:opacity .6s}
+.hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;transition:opacity .6s;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-bottom,0px))}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
@@ -122,24 +124,29 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
   .chip{padding:7px 10px;font-size:11px}
 }
 
-.intro{position:fixed;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--deep) 55%,transparent);backdrop-filter:blur(3px);transition:opacity .5s;
+/* start screen: the island is already visible behind, the truck waits inside a glowing ring and a hand-written "click to start" points at it */
+.intro{position:fixed;inset:0;background:var(--deep);transition:opacity .5s,background .8s;cursor:pointer;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.intro.ready{background:transparent}
 .intro.gone{opacity:0;pointer-events:none}
-.card{max-width:460px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px 26px}
-.card .eyebrow{font:700 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--kart)}
-.card h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,9vw,52px);line-height:1;margin:10px 0 10px;letter-spacing:.02em}
-.card p{color:var(--muted);margin:0 0 20px}
-.card .go{font:700 15px var(--f-display);letter-spacing:.04em;background:var(--kart);color:var(--deep);border:0;border-radius:12px;padding:14px 22px;cursor:pointer}
-.card .go:hover{filter:brightness(1.07)}
-.card .go:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.card .hint{font:500 12px var(--f-mono);color:var(--muted);margin-top:16px}
-.card .go[disabled]{opacity:.55;cursor:progress}
-.card .load{margin-top:14px;font:500 12px var(--f-mono);color:var(--muted);display:flex;align-items:center;gap:10px}
-.card .load .bar{flex:1;height:6px;border-radius:3px;background:#2a3a4e;overflow:hidden}
-.card .load .bar i{display:block;height:100%;width:0;background:var(--kart);transition:width .3s}
-.card .load.done{display:none}
-.card .fail{margin-top:14px;font:500 12px var(--f-mono);color:#ffb3a7;background:#3a1f2a;border:1px solid #7a3a3a;border-radius:10px;padding:10px 12px;overflow-wrap:anywhere}
-@media (prefers-reduced-motion:reduce){.panel,.intro{transition:none}}
+.start{position:absolute;right:4%;top:20%;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;transform:rotate(-7deg)}
+.start .arrow{width:70px;height:46px;stroke:#fff;fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;align-self:flex-start;margin:0 0 -6px -58px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}
+.start .go{font:400 clamp(30px,4vw,44px)/1 'Permanent Marker',var(--f-display),cursive;max-width:7em;color:#fff;background:none;border:0;padding:0;cursor:pointer;text-transform:uppercase;letter-spacing:.02em;
+  text-shadow:0 2px 10px rgba(0,0,0,.55),0 0 24px rgba(179,136,255,.45);animation:breathe 1.6s ease-in-out infinite alternate}
+.start .go[disabled]{font:500 14px var(--f-mono);letter-spacing:.14em;color:var(--muted);animation:none;cursor:progress;text-shadow:none}
+.start .go:focus-visible{outline:2px solid #fff;outline-offset:6px;border-radius:8px}
+.start .mute{pointer-events:auto;width:46px;height:40px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;background:none;border:0;padding:0;cursor:pointer;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));margin-top:6px}
+.start .mute svg{width:100%;height:100%;display:block}
+.start .mute .waves{transition:opacity .2s}.start .mute.off .waves{opacity:0}.start .mute .cross{opacity:0}.start .mute.off .cross{opacity:1}
+.start .mute:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:8px}
+.start .load{font:500 12px var(--f-mono);color:var(--muted);display:flex;align-items:center;gap:10px;width:220px;transform:rotate(7deg)}
+.start .load .bar{flex:1;height:6px;border-radius:3px;background:#2a3a4e;overflow:hidden}
+.start .load .bar i{display:block;height:100%;width:0;background:var(--kart);transition:width .3s}
+.start .load.done{display:none}
+.start .fail{font:500 12px var(--f-mono);color:#ffb3a7;background:#3a1f2a;border:1px solid #7a3a3a;border-radius:10px;padding:10px 12px;overflow-wrap:anywhere;max-width:300px;transform:rotate(7deg)}
+@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.05)}}
+@media (max-width:640px){.start{right:auto;left:50%;top:auto;bottom:16%;transform:translateX(-50%) rotate(-5deg)}.start .arrow{display:none}}
+@media (prefers-reduced-motion:reduce){.panel,.intro{transition:none}.start .go{animation:none}}
 </style>
 
 <canvas id="scene" aria-label="Mundo 3D donde se conduce un carrito entre zonas del portafolio"></canvas>
@@ -171,14 +178,12 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
   </div>
 </div>
 
-<div class="intro" id="intro">
-  <div class="card">
-    <div class="eyebrow">Portafolio interactivo</div>
-    <h1>Juan Agudelo</h1>
-    <p>Ingeniero de IA, datos y full stack en Medellín. Maneja el truck por la isla, entra a cada zona para ver quién soy, mis proyectos, mis habilidades y cómo contactarme. Choca las piedras, tumba el muro, derriba los bolos, métete a la laguna y pisa un tanque rojo para salir volando.</p>
+<div class="intro" id="intro" aria-label="Pantalla de inicio: haz clic para empezar">
+  <div class="start">
+    <svg class="arrow" viewBox="0 0 70 46" aria-hidden="true"><path d="M64 6 C 50 2, 24 6, 10 30"/><path d="M8 18 L 10 31 L 23 30"/></svg>
     <button class="go" id="go" disabled>Cargando la isla…</button>
     <div class="load" id="load"><div class="bar"><i id="loadbar"></i></div><span id="loadmsg">Preparando</span></div>
-    <div class="hint">Teclado: W A S D o flechas · Espacio salta · M silencia · Celular: botones en pantalla</div>
+    <button class="mute" id="premute" type="button" aria-pressed="false" aria-label="Empezar con o sin música"><svg viewBox="0 0 46 40" aria-hidden="true"><path d="M6 15 h8 l9 -8 v26 l-9 -8 h-8 z"/><g class="waves"><path d="M29 13 q5 7 0 14"/><path d="M34 8 q9 12 0 24"/></g><path class="cross" d="M30 14 l10 12 M40 14 l-10 12"/></svg></button>
     <div class="fail" id="fail" hidden></div>
   </div>
 </div>
@@ -806,6 +811,11 @@ await loading('Construyendo la plaza y los árboles');
 const paveTex = tex(512,512,(g,w)=>{ g.fillStyle='#e0b48a'; g.fillRect(0,0,w,w); for (let y=0;y<w;y+=64) for (let x=0;x<w;x+=64){ const o=(y/64)%2?32:0; g.fillStyle=`hsl(${26+Math.random()*8},${40+Math.random()*14}%,${66+Math.random()*10}%)`; g.fillRect(x+o+3,y+3,58,58); } });
 paveTex.wrapS = paveTex.wrapT = T.RepeatWrapping; paveTex.repeat.set(5,5);
 const pave = new T.Mesh(new T.CircleGeometry(9,48), new T.MeshStandardMaterial({map:paveTex, roughness:.9})); pave.rotation.x=-Math.PI/2; pave.position.y=.018; pave.receiveShadow=true; scene.add(pave);
+// glowing ring the truck waits in on the start screen; it fades out once the game starts
+const startRing = new T.Mesh(new T.RingGeometry(4.55,4.85,96), new T.MeshBasicMaterial({color:0x8d5cff, transparent:true, opacity:.9, depthWrite:false}));
+startRing.rotation.x=-Math.PI/2; startRing.position.set(0,.06,2); scene.add(startRing);
+const startHalo = new T.Mesh(new T.RingGeometry(4.2,5.3,96), new T.MeshBasicMaterial({color:0x9b6bff, transparent:true, opacity:.25, depthWrite:false}));
+startHalo.rotation.x=-Math.PI/2; startHalo.position.set(0,.055,2); scene.add(startHalo);
 // wooden fence: posts + two rails, around the plaza with gaps toward each zone
 const woodMat = mat(0xa8784e), woodDark = mat(0x7d5537), ironMat = mat(0x1d2a3a);
 // each fence section (one post + two rails) is a light body: the truck knocks it over
@@ -1035,7 +1045,8 @@ groundDecal(8,1.5,640,128,(g,w,h)=>{ g.textAlign='center'; g.textBaseline='middl
 
 await loading('Armando el monster truck');
 // ---------- kart ----------
-const car = {x:0, z:2, h:Math.PI, speed:0, steer:0};
+const START_H = 1.25; // parked nose toward the viewer's right, as on the start screen
+const car = {x:0, z:2, h:START_H, speed:0, steer:0};
 const kart = new T.Group(); scene.add(kart);
 const body = new T.Group(); kart.add(body);
 const red = new T.MeshStandardMaterial({color:0xe0452b, roughness:.35, metalness:.05}),
@@ -1235,6 +1246,9 @@ const audio = (()=>{
   }
   return {
     start(){ try{ ensure(); apply(); }catch(e){} },
+    enabled(){ return enabled; },
+    // the speaker on the start screen: choose music on/off before the game (and its audio) starts
+    pretoggle(){ enabled = !enabled; try{ localStorage.setItem('empleado-music', enabled?'on':'off'); }catch(e){} return enabled; },
     toggle(){ enabled = !enabled; try{ localStorage.setItem('empleado-music', enabled?'on':'off'); }catch(e){} this.start(); },
     engine(speed, air){ return; if (!ctx) return; const base = 46 + speed*7 + (air? 40:0); engOsc.frequency.setTargetAtTime(base, ctx.currentTime, .05); engOsc2.frequency.setTargetAtTime(base*1.5, ctx.currentTime, .05); engFilter.frequency.setTargetAtTime(240 + speed*40, ctx.currentTime, .05); engGain.gain.setTargetAtTime(Math.min(.11, .025 + speed*.006), ctx.currentTime, .08); },
     boom(){ if (!ctx) return; const t=ctx.currentTime; hit(fx,t,.9,'lowpass',900,1.2); const o=ctx.createOscillator(), g=ctx.createGain(); o.frequency.setValueAtTime(120,t); o.frequency.exponentialRampToValueAtTime(30,t+.6); g.gain.setValueAtTime(.9,t); g.gain.exponentialRampToValueAtTime(.001,t+.7); o.connect(g).connect(fx); o.start(t); o.stop(t+.75); },
@@ -1282,11 +1296,13 @@ document.querySelectorAll('.touch button').forEach(b=>{
   b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointercancel', off); b.addEventListener('lostpointercapture', off);
 });
 document.getElementById('t-jump').addEventListener('pointerdown', e=>{ e.preventDefault(); jump(); });
-function resetCar(){ car.x=0; car.z=2; car.h=Math.PI; car.speed=0; car.y=0; car.vy=0; car.air=false; body.rotation.set(0,0,0); }
+function resetCar(){ car.x=0; car.z=2; car.h=START_H; car.speed=0; car.y=0; car.vy=0; car.air=false; body.rotation.set(0,0,0); }
 
 const intro = document.getElementById('intro');
-function start(){ if (started || !ready) return; started = true; intro.classList.add('gone'); try{ canvas.focus(); }catch(e){} try{ audio.start(); }catch(e){ console.warn('audio', e); } }
-document.getElementById('go').addEventListener('click', start);
+function start(){ if (started || !ready) return; started = true; intro.classList.add('gone'); document.body.classList.remove('pre'); try{ canvas.focus(); }catch(e){} try{ audio.start(); }catch(e){ console.warn('audio', e); } }
+intro.addEventListener('click', start); // anywhere on the start screen
+{ const pm = document.getElementById('premute'); const paint = on => { pm.classList.toggle('off', !on); pm.setAttribute('aria-pressed', String(!on)); }; paint(audio.enabled());
+  pm.addEventListener('click', e => { e.stopPropagation(); paint(audio.pretoggle()); }); }
 
 // ---------- panels ----------
 const content = {
@@ -1646,8 +1662,10 @@ function tick(){
   for (const d of dust){ if (d.life>0){ d.life -= dt*1.8; d.m.position.y += dt*.6; d.m.scale.setScalar(1+(1-d.life)*1.6); d.m.material.opacity = Math.max(0,d.life)*.45; if (d.life<=0) d.m.visible=false; } }
 
   const mobile = innerWidth < 640;
-  if (!started && !reduce){ const a=t*.15; camTarget.set(car.x+Math.sin(a)*22, 15, car.z+Math.cos(a)*22); }
+  if (!started) camTarget.set(car.x + (mobile ? 8 : 9), mobile ? 13.5 : 10, car.z + (mobile ? 13 : 13.5)); // start screen: three-quarter view of the parked truck with the whole ring in frame
   else camTarget.set(car.x + 3.5, mobile ? 22 : 17, car.z + (mobile ? 19 : 17));
+  startRing.material.opacity += ((started ? 0 : .8 + Math.sin(t*2.6)*.15) - startRing.material.opacity) * Math.min(1, 3*dt);
+  startHalo.material.opacity = startRing.material.opacity * .3; startRing.visible = startHalo.visible = startRing.material.opacity > .01;
   camPos.lerp(camTarget, 1 - Math.exp(-3.5*dt));
   camera.position.copy(camPos);
   if (camShake.v > 0.01 && !reduce){ camera.position.x += (Math.random()-.5)*camShake.v*.5; camera.position.y += (Math.random()-.5)*camShake.v*.4; camShake.v *= Math.exp(-7*dt); }
@@ -1660,7 +1678,7 @@ function tick(){
 }
 frame(); window.__started3d = true;
 // if rAF never fires (hidden or throttled frame), tick on a timer instead
-setTimeout(function poll(){ if (!rafOk){ try{ tick(); }catch(e){} } rafOk = false; setTimeout(poll, 50); }, 500); ready = true; { const g=document.getElementById('go'); g.disabled=false; g.textContent='Arrancar con música'; document.getElementById('load').classList.add('done'); } 
+setTimeout(function poll(){ if (!rafOk){ try{ tick(); }catch(e){} } rafOk = false; setTimeout(poll, 50); }, 500); ready = true; { const g=document.getElementById('go'); g.disabled=false; g.textContent='Clic para empezar'; intro.classList.add('ready'); document.getElementById('load').classList.add('done'); } 
 })();
 </script>
 
