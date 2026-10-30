@@ -134,6 +134,27 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
   transform:translate(calc(100% + 40px),-50%);transition:transform .45s cubic-bezier(.2,.9,.25,1.15);
   background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 20px 50px -20px #000a}
 .panel.open{transform:translate(0,-50%)}
+.panel::before{content:'';position:absolute;left:0;top:0;right:0;height:4px;background:linear-gradient(90deg,var(--zc),transparent 70%)}
+.phead{display:flex;align-items:center;gap:12px}
+.pnum{flex:none;width:44px;height:44px;border-radius:50%;background:var(--zc);color:#fff;font:800 15px var(--f-mono);display:grid;place-items:center;box-shadow:0 0 0 3px #fff,0 0 0 6px color-mix(in srgb,var(--zc) 35%,transparent)}
+.pnum.sm{width:28px;height:28px;font-size:11px;box-shadow:0 0 0 2px #fff}
+.pmeta{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}
+.pmeta span{display:inline-flex;align-items:center;gap:6px;font:600 11px var(--f-mono);padding:5px 10px;border-radius:999px;background:#16222f;border:1px solid var(--line);color:var(--muted)}
+.pmeta svg,.social svg,.mail svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.pmeta svg{color:var(--zc)}
+.panel .desc{font-size:14.5px;line-height:1.55;color:#e3e9f0;background:#16222f;border-left:3px solid var(--zc);border-radius:0 12px 12px 0;padding:10px 12px;margin:0 0 14px}
+.profile{display:flex;align-items:center;gap:12px;background:#16222f;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.avatar{flex:none;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--zc),#8d5cff);display:grid;place-items:center;font:800 16px var(--f-display);color:#fff;box-shadow:0 0 0 3px #16222f,0 0 0 5px color-mix(in srgb,var(--zc) 40%,transparent)}
+.profile b{display:block;font:700 15px/1.2 var(--f-body);color:#f6f8fa}
+.profile small{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:3px}
+.social{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.social a{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;background:#16222f;border:1px solid var(--line);color:var(--ink);text-decoration:none;font:600 13px var(--f-body);transition:border-color .15s,transform .15s}
+.social a:hover,.social a:focus-visible{border-color:var(--zc);transform:translateY(-1px);outline:none}
+.social i{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--zc) 22%,transparent);color:#fff;font:800 12px var(--f-display);font-style:normal}
+.social svg{width:16px;height:16px}
+.pactions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.pactions a{display:inline-flex;align-items:center;gap:8px;font:700 13px var(--f-body);text-decoration:none;border-radius:10px;padding:9px 14px;background:var(--zc);color:#0b1a2a}
+.pactions a:hover{filter:brightness(1.08)}
 .panel .tag{font:700 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--zc)}
 .panel h2{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1.1;margin:6px 0 12px;text-wrap:balance}
 .panel p{margin:0 0 12px;color:var(--ink)}
@@ -142,15 +163,18 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 .facts dt{font:500 11px/1.9 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .facts dd{margin:0}
 .proj{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
-.proj li{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.proj b{display:block;font-weight:600}
-.proj small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.proj li{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:#16222f}
+.proj li>span{min-width:0}
+.proj strong{display:block;font:700 13.5px/1.25 var(--f-body);color:#f3f6f9}
+.proj small{display:block;color:var(--muted);font:500 11px var(--f-mono);margin-top:3px}
 .stack{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
-.stack span{font:500 11px var(--f-mono);border-radius:6px;padding:2px 7px;background:color-mix(in srgb,var(--zc) 18%,transparent);color:var(--ink)}
+.stack{gap:6px}
+.stack span{font:600 11.5px var(--f-mono);border-radius:999px;padding:5px 10px;background:color-mix(in srgb,var(--zc) 14%,#16222f);border:1px solid color-mix(in srgb,var(--zc) 45%,transparent);color:#f3f6f9}
 .skills{display:flex;flex-direction:column;gap:12px}
 .skills h3{font:700 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
-.mail{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:12px}
-.mail code{font:700 14px var(--f-mono);user-select:all;flex:1;min-width:0;overflow-wrap:anywhere}
+.mail{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:12px;background:#16222f}
+.mail svg{color:var(--zc);width:18px;height:18px}
+.mail code{font:700 12.5px var(--f-mono);user-select:all;flex:1;min-width:0;overflow-wrap:anywhere}
 .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .links a{font:600 13px var(--f-body);color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:color-mix(in srgb,var(--zc) 16%,transparent)}
 .links a:hover,.links a:focus-visible{border-color:var(--zc);outline:none}
@@ -1746,7 +1770,7 @@ const content = {
     <div class="note">Recorre la isla: cada estación numerada es un proyecto y cada cubito una tecnología.</div>`,
   proyectos:`<div class="tag">Zona 02</div><h2>Proyectos</h2>
     <p>12 estaciones repartidas por la isla, cada una con un letrero y una pila de cubitos con sus tecnologías. Llega con el truck a una estación para ver el detalle, o ábrelas desde el mapa (P).</p>
-    <ul class="proj">` + projects.map(pr=>`<li><b>${String(pr.n).padStart(2,'0')} · ${pr.name}</b><small>${pr.place} · ${pr.date}</small></li>`).join('') + `</ul>`,
+    <ul class="proj">` + projects.map(pr=>`<li><b class="pnum sm">${String(pr.n).padStart(2,'0')}</b><span><strong>${pr.name}</strong><small>${pr.place} · ${pr.date}</small></span></li>`).join('') + `</ul>`,
   habilidades:`<div class="tag">Zona 03</div><h2>Habilidades</h2>
     <p>Cada cubito es una tecnología. Choca contra las pilas para revolverlas.</p>
     <div class="skills">
@@ -1756,18 +1780,20 @@ const content = {
       <div><h3>Marketing e infraestructura</h3><div class="stack"><span>GTM</span><span>GA4</span><span>Meta Pixel / CAPI</span><span>Clarity</span><span>SEO</span><span>DigitalOcean</span><span>CyberPanel</span><span>Vercel</span><span>Microsoft 365</span></div></div>
     </div>`,
   contacto:`<div class="tag">Zona 04</div><h2>Hablemos</h2>
-    <p>Disponible para proyectos freelance, consultoría en arquitectura de software, análisis de datos e IA. Escríbeme o conéctate por estos canales:</p>
-    <div class="mail"><code id="mail">juan.fernando.arch@gmail.com</code><button class="btn" id="copy">Copiar</button></div>
-    <dl class="facts"><dt>Nombre</dt><dd>Juan Fernando Agudelo</dd><dt>Cargo</dt><dd>Ingeniero de IA, Ingeniero de Datos y Desarrollador Full Stack</dd><dt>Ubicación</dt><dd>Medellín, Colombia</dd></dl>
-    <div class="links">
-      <a href="https://www.linkedin.com/in/juan-fernando-agudelo-861b13264/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://github.com/Juan-Fer-Agudelo" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://instagram.com/juanfer2351" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://juan-fer-digital.vercel.app" target="_blank" rel="noopener">Portafolio web</a>
-    </div>`
+    <div class="profile"><div class="avatar">JA</div><div><b>Juan Fernando Agudelo</b><small>Ingeniero de IA · Ingeniero de Datos · Desarrollador Full Stack</small><small>📍 Medellín, Colombia</small></div></div>
+    <p class="desc">Disponible para proyectos freelance, consultoría en arquitectura de software, análisis de datos e IA.</p>
+    <div class="mail"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><code id="mail">juan.fernando.arch@gmail.com</code><button class="btn" id="copy">Copiar</button></div>
+    <div class="social">
+      <a href="https://www.linkedin.com/in/juan-fernando-agudelo-861b13264/" target="_blank" rel="noopener"><i>in</i>LinkedIn</a>
+      <a href="https://github.com/Juan-Fer-Agudelo" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" style="fill:#fff;stroke:none"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></i>GitHub</a>
+      <a href="https://instagram.com/juanfer2351" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></i>Instagram</a>
+      <a href="https://juan-fer-digital.vercel.app" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></i>Portafolio web</a>
+    </div>
+    <div class="pactions"><a href="mailto:juan.fernando.arch@gmail.com?subject=Hola%20Juan%2C%20vi%20tu%20portafolio%20interactivo">✉ Escribir correo</a></div>`
 };
-projects.forEach(pr=>{ pr.id = 'p'+pr.n; pr.css = '#e0452b'; content[pr.id] = `<div class="tag">Proyecto ${String(pr.n).padStart(2,'0')} · ${pr.place}</div><h2>${pr.name}</h2>
-    <p>${pr.desc}</p><dl class="facts"><dt>Fecha</dt><dd>${pr.date}</dd></dl>
+projects.forEach(pr=>{ pr.id = 'p'+pr.n; pr.css = '#e0452b'; content[pr.id] = `<div class="phead"><div class="pnum">${String(pr.n).padStart(2,'0')}</div><div><div class="tag">Proyecto ${String(pr.n).padStart(2,'0')} de 12</div><h2 style="margin:4px 0 0">${pr.name}</h2></div></div>
+    <div class="pmeta"><span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${pr.place}</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>${pr.date}</span><span><svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>${pr.tech.length} tecnologías</span></div>
+    <p class="desc">${pr.desc}</p>
     <div class="skills"><div><h3>Tecnologías</h3><div class="stack">${pr.tech.map(t=>`<span>${t}</span>`).join('')}</div></div></div>`; });
 const panel = document.getElementById('panel');
 let activeZone = null;
