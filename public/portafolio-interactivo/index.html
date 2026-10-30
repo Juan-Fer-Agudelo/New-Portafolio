@@ -577,8 +577,27 @@ function addBody(m, x, y, z, r, h, mass, kind){
   bodies.push(b); return b;
 }
 
-// the name wall: every brick is a light body, so the letters crumble brick by brick
-nameBricks.forEach((nb,i)=>{
+// the name: big solid 3D letters standing on the ground; each one is a body the truck can shove around.
+// If the typeface can't be downloaded, the old brick wall is built instead.
+let nameFont = null;
+try {
+  nameFont = await new Promise((res, rej) => { const to = setTimeout(()=>rej(new Error('tiempo agotado')), 8000);
+    new T.FontLoader().load('https://unpkg.com/three@0.128.0/examples/fonts/helvetiker_bold.typeface.json', f=>{ clearTimeout(to); res(f); }, undefined, e=>{ clearTimeout(to); rej(e); }); });
+} catch(e){ console.warn('fuente de las letras 3D', e); }
+if (nameFont){
+  const letterMat = new T.MeshStandardMaterial({color:0xf2a0a4, roughness:.55});
+  const SZ = 2.4, DEPTH = 1.1, GAP = .3; let cx = 0; const parts = [];
+  for (const ch of 'JUAN AGUDELO'){
+    if (ch === ' '){ cx += SZ*.45; continue; }
+    const geo = new T.TextGeometry(ch, {font:nameFont, size:SZ, height:DEPTH, curveSegments:6, bevelEnabled:true, bevelThickness:.1, bevelSize:.07, bevelSegments:3});
+    geo.computeBoundingBox(); const bb = geo.boundingBox, w = bb.max.x-bb.min.x, h = bb.max.y-bb.min.y, d = bb.max.z-bb.min.z;
+    geo.translate(-(bb.min.x+bb.max.x)/2, -(bb.min.y+bb.max.y)/2, -(bb.min.z+bb.max.z)/2); // centred, so it spins around itself
+    parts.push({geo, w, h, d, x: cx + w/2}); cx += w + GAP;
+  }
+  const total = cx - GAP;
+  for (const p of parts){ const x = p.x - total/2;
+    const b = addBody(new T.Mesh(p.geo, letterMat), x, terrainH(x,15) + p.h/2, 15, Math.max(p.w,p.d)/2*.8, p.h, 2.6, 'letter'); b.asleep = true; }
+} else nameBricks.forEach((nb,i)=>{
   const m = new T.Mesh(brickGeoSmall, brickWhite[i%4]);
   const b = addBody(m, nb.x, terrainH(0,15) + nb.y, nb.z, BRICK*.5, BRICK, .22, 'letter');
   b.asleep = true;
@@ -772,21 +791,32 @@ function updateBowling(dt){
 const tireGeo = new T.TorusGeometry(.55,.26,8,14); tireGeo.rotateX(Math.PI/2);
 const tireMat = mat(0x1d2a3a);
 
-// ---------- fuel tanks (launch pads) ----------
+// ---------- explosive crates (launch pads) ----------
 const tanks = [];
-const tankBody = new T.CylinderGeometry(.75,.75,1.7,14), tankMat = mat(0xe0452b,{roughness:.5}), tankBand = mat(0xf2b705);
-const tankLabel = new T.MeshStandardMaterial({roughness:.6, map:tex(256,256,(g,w)=>{
-  g.fillStyle='#e0452b'; g.fillRect(0,0,w,w);
-  g.fillStyle='#f6efe0'; g.textAlign='center'; g.textBaseline='middle'; g.font='800 120px Unbounded, Arial Black, sans-serif'; g.fillText('!',w/2,w/2+4);
-})});
+// merges several boxes into one geometry, so each crate is three meshes instead of thirty
+function mergeBoxes(items){ // [geometry, x, y, z, yaw]
+  const P=[], N=[], U=[], I=[]; let off=0;
+  for (const [geo,x,y,z,ry] of items){ const g = geo.clone(); if (ry) g.rotateY(ry); g.translate(x,y,z);
+    P.push(...g.attributes.position.array); N.push(...g.attributes.normal.array); U.push(...g.attributes.uv.array);
+    for (let i=0;i<g.index.count;i++) I.push(g.index.array[i]+off); off += g.attributes.position.count; }
+  const out = new T.BufferGeometry(); out.setAttribute('position', new T.Float32BufferAttribute(P,3)); out.setAttribute('normal', new T.Float32BufferAttribute(N,3)); out.setAttribute('uv', new T.Float32BufferAttribute(U,2)); out.setIndex(I); return out;
+}
+const CR = 1.5, hc = CR/2, crateCore = mat(0xe8532f,{roughness:.6}), crateSlat = mat(0xff8f3f,{roughness:.6}), crateFrame = mat(0x8e9bb0,{roughness:.5});
+const crateCoreGeo = new T.BoxGeometry(CR,CR,CR);
+// three orange slats on every face, standing a little proud of the red core
+const slatSide = new T.BoxGeometry(CR*.9, .2, .1), slatTop = new T.BoxGeometry(CR*.9, .1, .2), slats = [];
+for (const o of [-.4, 0, .4]){ const y = o*CR;
+  slats.push([slatSide,0,y,hc,0], [slatSide,0,y,-hc,0], [slatSide,hc,y,0,Math.PI/2], [slatSide,-hc,y,0,Math.PI/2], [slatTop,0,hc,o*CR,0]); }
+const crateSlatGeo = mergeBoxes(slats);
+// grey metal frame along the twelve edges
+const E = .16, edgeX = new T.BoxGeometry(CR+E,E,E), edgeY = new T.BoxGeometry(E,CR+E,E), edgeZ = new T.BoxGeometry(E,E,CR+E), edges = [];
+for (const a of [-hc,hc]) for (const b of [-hc,hc]){ edges.push([edgeX,0,a,b,0], [edgeY,a,0,b,0], [edgeZ,a,b,0,0]); }
+const crateFrameGeo = mergeBoxes(edges);
 [[8,-9],[-9,-11],[14,6],[-15,-3],[30,-4],[-30,8],[10,30],[-24,-24],[26,26],[-34,-10],[52,-50],[48,30],[-22,52],[62,8],[-60,-60],[20,-60],[72,52],[-10,80],[84,-20],[40,80]].forEach(([x,z])=>{ if (inWater(x,z,-.6)) return;
   const g = new T.Group();
-  const b = new T.Mesh(tankBody, tankMat); b.castShadow=true; g.add(b);
-  [-.5,.5].forEach(y=>{ const r = new T.Mesh(new T.CylinderGeometry(.78,.78,.16,14), tankBand); r.position.y=y; g.add(r); });
-  const cap = new T.Mesh(new T.CylinderGeometry(.25,.25,.2,10), mat(0x1d2a3a)); cap.position.y=.95; g.add(cap);
-  const lbl = new T.Mesh(new T.PlaneGeometry(.7,.7), tankLabel); lbl.position.set(0,0,.76); g.add(lbl);
-  const lbl2 = lbl.clone(); lbl2.rotation.y=Math.PI; lbl2.position.z=-.76; g.add(lbl2);
-  g.position.set(x,terrainH(x,z)+.85,z); scene.add(g);
+  for (const [geo,m] of [[crateCoreGeo,crateCore],[crateSlatGeo,crateSlat],[crateFrameGeo,crateFrame]]){ const p = new T.Mesh(geo, m); p.castShadow = true; g.add(p); }
+  g.rotation.y = ((x*13 + z*7) % 60) / 60 * .8; // each crate sits at a slightly different angle
+  g.position.set(x,terrainH(x,z)+hc+.02,z); scene.add(g);
   const halo = new T.Mesh(new T.RingGeometry(1.2,1.45,32), new T.MeshBasicMaterial({color:0xe0452b, transparent:true, opacity:.6, depthWrite:false}));
   halo.rotation.x=-Math.PI/2; halo.position.set(x,terrainH(x,z)+.035,z); scene.add(halo);
   tanks.push({g, halo, x, z, respawn:0});
@@ -1025,7 +1055,7 @@ function paintMini(){
   g.fillStyle='#0e4f7a'; g.fillRect(0,0,W,W); g.drawImage(bigCv.__base, sx, sz, view*scale, view*scale, 0,0,W,W);
   g.save(); g.translate(W/2,W/2); g.rotate(-car.h + Math.PI); g.fillStyle='#f2b705'; g.strokeStyle='#1d2a3a'; g.lineWidth=2; g.beginPath(); g.moveTo(0,-8); g.lineTo(5,6); g.lineTo(0,3); g.lineTo(-5,6); g.closePath(); g.fill(); g.stroke(); g.restore();
 }
-document.getElementById('legend').innerHTML = [['#f2b705','Sobre mí'],['#e0452b','Proyectos'],['#2fa28c','Habilidades'],['#6a5acd','Contacto'],['#e0452b','Tanques (vuelo)','sq'],['#5a9b4a','Árboles'],['#1d8fbf','Mar']].map(([c,l,k])=>`<span><i class="${k||''}" style="--c:${c}"></i>${l}</span>`).join('') + '<div class="projlist">' + projects.map(pr=>`<span><b>${String(pr.n).padStart(2,'0')}</b> ${pr.name}</span>`).join('') + '</div>';
+document.getElementById('legend').innerHTML = [['#f2b705','Sobre mí'],['#e0452b','Proyectos'],['#2fa28c','Habilidades'],['#6a5acd','Contacto'],['#e0452b','Cajas (vuelo)','sq'],['#5a9b4a','Árboles'],['#1d8fbf','Mar']].map(([c,l,k])=>`<span><i class="${k||''}" style="--c:${c}"></i>${l}</span>`).join('') + '<div class="projlist">' + projects.map(pr=>`<span><b>${String(pr.n).padStart(2,'0')}</b> ${pr.name}</span>`).join('') + '</div>';
 function openMap(){ paintMap(bigCv,true); mapview.hidden=false; } function closeMap(){ mapview.hidden=true; }
 document.getElementById('minimap').addEventListener('click', ()=>{ start(); openMap(); });
 document.getElementById('mapclose').addEventListener('click', closeMap);
@@ -1041,7 +1071,7 @@ function ripple(x,z){ if (ripples.length > 40) return; const m=new T.Mesh(new T.
 [['MURO',24,10.5],['BOWLING',-34,-39]].forEach(([txt,x,z])=>groundDecal(6,1.5,512,128,(g,w,h)=>{
   g.textAlign='center'; g.textBaseline='middle'; g.fillStyle='#9f8c5e'; g.font='700 64px "JetBrains Mono", monospace'; g.fillText(txt,w/2,h/2);
 },x,z,.9));
-groundDecal(8,1.5,640,128,(g,w,h)=>{ g.textAlign='center'; g.textBaseline='middle'; g.fillStyle='#c8502f'; g.font='700 56px "JetBrains Mono", monospace'; g.fillText('TANQUES = VUELO',w/2,h/2); },8,-6.3,.9);
+groundDecal(8,1.5,640,128,(g,w,h)=>{ g.textAlign='center'; g.textBaseline='middle'; g.fillStyle='#c8502f'; g.font='700 56px "JetBrains Mono", monospace'; g.fillText('CAJAS = VUELO',w/2,h/2); },8,-6.3,.9);
 
 await loading('Armando el monster truck');
 // ---------- kart ----------
@@ -1602,7 +1632,7 @@ function updateBodies(dt){
       const dir = c.lieDir ?? (c.lieDir = Math.atan2(c.vx||Math.random()-.5, c.vz||Math.random()-.5));
       const tx = Math.cos(dir)*HALF, tz = Math.sin(dir)*HALF;
       m.rotation.x += (tx - m.rotation.x)*k; m.rotation.z += (-tz - m.rotation.z)*k;
-    } else if (sp > 1.2 || airborne){
+    } else if ((sp > 1.2 || airborne) && c.kind !== 'letter'){ // the big letters slide and spin but stay upright
       m.rotation.x += c.vz*dt*1.4; m.rotation.z -= c.vx*dt*1.4;
     } else {
       const k=Math.min(1,8*dt);
