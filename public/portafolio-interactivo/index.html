@@ -341,7 +341,7 @@ function updateDay(dt){
   const night = Math.max(0, Math.min(1, (-sy + .15) * 2));
   starMat.opacity = night*.9; headLight.intensity = night*.9;
   lampMatNight.emissiveIntensity = .4 + night; tailMat.emissiveIntensity = (started && keys.brake) ? 2.6 : .3 + night*.8;
-  windowsMat.emissiveIntensity = .22 + night*.6; // the glass glows pink from the dashboard, more so at night
+  windowsMat.emissiveIntensity = night*.9;
   return night;
 }
 
@@ -1280,102 +1280,120 @@ const envMap = (()=>{ const c=document.createElement('canvas'); c.width=256; c.h
   const sky=g.createLinearGradient(0,0,0,128); sky.addColorStop(0,'#4f86d4'); sky.addColorStop(.42,'#bfe0f5'); sky.addColorStop(.5,'#f6ead0'); sky.addColorStop(.53,'#d8bf8e'); sky.addColorStop(1,'#9c7f55'); g.fillStyle=sky; g.fillRect(0,0,256,128);
   const sun=g.createRadialGradient(72,34,2,72,34,30); sun.addColorStop(0,'rgba(255,252,235,1)'); sun.addColorStop(.25,'rgba(255,244,205,.85)'); sun.addColorStop(1,'rgba(255,244,205,0)'); g.fillStyle=sun; g.fillRect(0,0,256,128);
   const t=new T.CanvasTexture(c); t.mapping=T.EquirectangularReflectionMapping; t.encoding=T.sRGBEncoding; const pm=new T.PMREMGenerator(renderer); pm.compileEquirectangularShader(); const out=pm.fromEquirectangular(t).texture; pm.dispose(); t.dispose(); return out; })();
-const red = new T.MeshStandardMaterial({color:0x8a0b1f, roughness:.72, metalness:.05, envMap, envMapIntensity:.12}),   // matte crimson paint
-      trim = new T.MeshStandardMaterial({color:0x231619, roughness:.85}), black = new T.MeshStandardMaterial({color:0x121216, roughness:.7}),
-      dark = new T.MeshStandardMaterial({color:0x1d2a3a, roughness:.6, envMap, envMapIntensity:.3}), chrome = new T.MeshStandardMaterial({color:0x3a3d44, roughness:.35, metalness:.8, envMap, envMapIntensity:.6}),
-      glass = new T.MeshStandardMaterial({color:0x1a0f1e, roughness:.25, metalness:.2, emissive:0xff2d8a, emissiveIntensity:.22, envMap, envMapIntensity:.5}), // dark glass lit pink from inside
-      pink = new T.MeshBasicMaterial({color:0xff3fa6}), magenta = new T.MeshBasicMaterial({color:0xff2bd6}), amber = new T.MeshBasicMaterial({color:0xffa62b}),
-      coral = pink, cream = red, neon = pink, rubber = new T.MeshStandardMaterial({color:0x1f2228, roughness:.85}), rim = new T.MeshStandardMaterial({color:0x2c2f36, roughness:.5, metalness:.5, envMap, envMapIntensity:.4});
+const red = new T.MeshPhysicalMaterial({color:0xdb3f24, roughness:.3, metalness:.08, clearcoat:1, clearcoatRoughness:.1, envMap, envMapIntensity:.3}),
+      cream = new T.MeshStandardMaterial({color:0xf6efe0, roughness:.45, envMap, envMapIntensity:.4}), dark = new T.MeshStandardMaterial({color:0x1d2a3a, roughness:.6, envMap, envMapIntensity:.3}),
+      chrome = new T.MeshStandardMaterial({color:0xdfe4ea, roughness:.15, metalness:.9, envMap, envMapIntensity:.9}),
+      glass = new T.MeshPhysicalMaterial({color:0x3f7f93, roughness:.05, metalness:.1, clearcoat:1, clearcoatRoughness:.05, transparent:true, opacity:.78, envMap, envMapIntensity:1, emissive:0xffe2a0, emissiveIntensity:0}),
+      coral = new T.MeshStandardMaterial({color:0xf2b705, roughness:.4, metalness:.2, envMap, envMapIntensity:.5}),
+      neon = new T.MeshBasicMaterial({color:0x35e8ff}), rubber = new T.MeshStandardMaterial({color:0x20262e, roughness:.8});
 const windowsMat = glass;
 function box(w,h,d,m,x,y,z,p=body,rx=0){ const b=new T.Mesh(new T.BoxGeometry(w,h,d),m); b.position.set(x,y,z); b.rotation.x=rx; b.castShadow=true; p.add(b); return b; }
-// ===== NEON OFF-ROAD TRUCK (boxy crimson 4x4, pink light bars, amber headlights) =====
+// ===== MONSTER TRUCK =====
 const WH = .95;           // wheel radius
 const CH = 1.55;          // chassis floor height
-// frame rails + axles + shocks (pink coil springs)
-box(.14,.14,3.4,trim,-.55,CH-.25,0); box(.14,.14,3.4,trim,.55,CH-.25,0);
+// frame rails + axles + shocks
+box(.14,.14,3.4,dark,-.55,CH-.25,0); box(.14,.14,3.4,dark,.55,CH-.25,0);
 const axles = new T.Group(); kart.add(axles);   // axles ride with the wheels, not the body
 const shocks = [];
 [1.25,-1.25].forEach(z=>{ const ax=new T.Mesh(new T.CylinderGeometry(.09,.09,2.7,8).rotateZ(Math.PI/2), chrome); ax.position.set(0,WH,z); axles.add(ax);
-  const diff=new T.Mesh(new T.SphereGeometry(.26,8,6), trim); diff.position.set(0,WH,z); axles.add(diff);
+  const diff=new T.Mesh(new T.SphereGeometry(.26,8,6), dark); diff.position.set(0,WH,z); axles.add(diff);
   [-.75,.75].forEach(x=>{
-    const sh=new T.Mesh(new T.CylinderGeometry(.06,.06,1,6).translate(0,-.5,0), pink); sh.position.set(x,CH-.1,z*.78); sh.scale.y=.75; body.add(sh); shocks.push(sh);
+    // shock: yellow piston anchored to the body, chrome sleeve anchored to the axle; the piston scales when the suspension stretches
+    const sh=new T.Mesh(new T.CylinderGeometry(.06,.06,1,6).translate(0,-.5,0), coral); sh.position.set(x,CH-.1,z*.78); sh.scale.y=.75; body.add(sh); shocks.push(sh);
     const sp=new T.Mesh(new T.CylinderGeometry(.13,.13,.5,6), chrome); sp.position.set(x,WH+.35,z*.78); axles.add(sp);
-    const spring=new T.Mesh(new T.TorusGeometry(.14,.03,6,10), pink); spring.position.set(x,WH+.62,z*.78); spring.rotation.x=Math.PI/2; axles.add(spring); }); });
-// body: dark rocker band, crimson tub, angular fender flares
-box(2.0,.3,3.5,trim,0,CH+.05,0);                       // lower band
-box(2.0,.6,3.5,red,0,CH+.45,0);                        // tub
-[[-1,1.25],[1,1.25],[-1,-1.25],[1,-1.25]].forEach(([s,z])=>{ const f=box(.5,.42,2.0,red,s*1.0,CH+.22,z); f.rotation.z=-s*.22; box(.44,.08,2.0,trim,s*1.06,CH+.02,z).rotation.z=-s*.22; });
-// hood with vents, front face with the grille and amber lights, bumper with skid plate
-box(1.9,.4,1.25,red,0,CH+.95,1.05);                    // hood block
-box(1.86,.06,1.2,red,0,CH+1.17,1.05);                  // hood lid
-[-.45,.45].forEach(x=>{ box(.5,.03,.55,black,x,CH+1.21,1.0); for (let i=0;i<3;i++) box(.42,.02,.05,trim,x,CH+1.225,.82+i*.18); });
-box(1.75,.55,.08,black,0,CH+.9,1.68);                  // grille block
-for (let i=0;i<4;i++) box(1.5,.05,.03,trim,0,CH+.72+i*.12,1.73);   // grille slats
-[-.55,.55].forEach(x=>{ box(.55,.13,.05,amber,x,CH+.66,1.74); box(.22,.08,.04,amber,x*1.25,CH+1.06,1.74); }); // amber headlights + small top lights
-box(2.1,.32,.34,trim,0,CH+.28,1.7); box(1.2,.1,.3,black,0,CH+.12,1.78); // bumper + skid plate
-[-.7,.7].forEach(x=> box(.14,.14,.12,pink,x,CH+.28,1.88));            // pink tow hooks
-// cab: tall and boxy, dark glass glowing pink from the dashboard
-box(1.9,.95,1.55,red,0,CH+1.17,-.12);                  // cab
-box(1.62,.55,.05,glass,0,CH+1.37,.62,body,-.2);        // windshield
-box(.05,.5,1.15,glass,-.96,CH+1.37,-.15); box(.05,.5,1.15,glass,.96,CH+1.37,-.15);
-box(1.55,.5,.05,glass,0,CH+1.37,-.9);                  // rear window
-[[-.3,.08],[0,.1],[.3,.08]].forEach(([x,h],i)=>{ box(.14,h,.02,i===1?magenta:pink,x,CH+1.24,.58); }); // dashboard glow seen through the glass
-[-.93,.93].forEach(x=>{ box(.07,.6,.07,black,x,CH+1.37,.6); box(.07,.6,.07,black,x,CH+1.37,-.88); box(.03,.6,.04,black,x,CH+1.3,-.1); }); // pillars + door seams
-box(1.96,.1,1.6,red,0,CH+1.69,-.12);                   // roof
-// roof rack with light bar
-[-.85,.85].forEach(x=> box(.07,.14,1.4,black,x,CH+1.82,-.12));
-[-.7,-.15,.4].forEach(z=> box(1.75,.05,.06,black,0,CH+1.85,z));
-box(1.5,.14,.14,black,0,CH+1.86,.62); box(1.4,.07,.03,pink,0,CH+1.86,.7); box(1.4,.07,.03,pink,0,CH+1.86,.54); // light bar, lit both ways
-// bed behind the cab, with a rack carrying another pink bar
-box(1.9,.5,.95,red,0,CH+.95,-1.27); box(1.6,.04,.8,black,0,CH+1.18,-1.27);
-[-.8,.8].forEach(x=>{ const v=new T.Mesh(new T.CylinderGeometry(.05,.05,.75,8), black); v.position.set(x,CH+1.55,-.98); body.add(v); });
-box(1.7,.09,.09,black,0,CH+1.92,-.98); box(1.3,.05,.03,pink,0,CH+1.92,-.92); box(1.3,.05,.03,pink,0,CH+1.92,-1.04);
-// rear face: pink tail bar, reverse lights, bumper, twin exhausts
-const tailMat = new T.MeshStandardMaterial({color:0xff2d6a, emissive:0xff2d6a, emissiveIntensity:.7});
-box(1.6,.1,.05,tailMat,0,CH+1.08,-1.77);
-box(2.1,.32,.3,trim,0,CH+.28,-1.75);
-[-.6,.6].forEach(x=>{ const e=new T.Mesh(new T.CylinderGeometry(.08,.08,.35,8).rotateX(Math.PI/2), chrome); e.position.set(x,CH+.12,-1.85); body.add(e); });
-// mirrors, handles, side steps
-[-1,1].forEach(s=>{ box(.22,.05,.05,black,s*1.0,CH+1.45,.45); box(.08,.2,.26,trim,s*1.14,CH+1.45,.45);
-  box(.03,.04,.18,black,s*.97,CH+1.08,-.05);
-  const step=new T.Mesh(new T.CylinderGeometry(.045,.045,1.7,8).rotateX(Math.PI/2), black); step.position.set(s*1.1,CH-.2,-.05); body.add(step); });
+    const spring=new T.Mesh(new T.TorusGeometry(.14,.03,6,10), coral); spring.position.set(x,WH+.62,z*.78); spring.rotation.x=Math.PI/2; axles.add(spring); }); });
+// pickup body
+box(1.9,.42,3.3,red,0,CH+.2,0);                         // tub
+box(1.9,.3,1.35,red,0,CH+.55,.95);                      // hood block
+box(1.9,.16,1.3,red,0,CH+.74,.95,body,.1);              // hood top
+box(1.72,.7,1.25,red,0,CH+.75,-.25);                    // cab
+box(1.5,.55,.05,glass,0,CH+.85,.42,body,-.3);           // windshield
+box(.05,.5,1.0,glass,-.87,CH+.8,-.25); box(.05,.5,1.0,glass,.87,CH+.8,-.25);
+box(1.5,.4,.05,glass,0,CH+.8,-.9);
+box(1.8,.08,1.35,red,0,CH+1.14,-.25);                   // roof
+box(1.8,.5,1.0,red,0,CH+.45,-1.15); box(1.5,.06,.9,dark,0,CH+.71,-1.15); // bed
+box(.6,.05,3.0,cream,0,CH+.42,.1); box(.14,.05,3.0,cream,-.45,CH+.42,.1); box(.14,.05,3.0,cream,.45,CH+.42,.1); // stripes (hood/roof)
+box(.6,.05,1.3,cream,0,CH+1.18,-.25);
+// grille, bumpers, exhaust stacks
+const grille = new T.MeshStandardMaterial({roughness:.6, map:tex(128,64,(g,w,h)=>{ g.fillStyle='#1d2a3a'; g.fillRect(0,0,w,h); g.fillStyle='#55667a'; for(let y=6;y<h;y+=14) g.fillRect(6,y,w-12,6); })});
+box(1.2,.34,.06,grille,0,CH+.5,1.66);
+box(2.1,.2,.3,chrome,0,CH+.05,1.75); box(2.0,.2,.3,chrome,0,CH+.05,-1.75);
+[-.95,.95].forEach(x=>{ const e=new T.Mesh(new T.CylinderGeometry(.09,.11,1.0,8), chrome); e.position.set(x,CH+.95,-.95); e.rotation.z = x<0?.15:-.15; body.add(e); const tip=new T.Mesh(new T.CylinderGeometry(.11,.07,.25,8), dark); tip.position.set(x+(x<0?-.07:.07),CH+1.55,-.95); body.add(tip); });
+// roll cage + roof light bar
+const bar = new T.CylinderGeometry(.05,.05,1,6);
+[[-.8,-.25],[.8,-.25],[-.8,-1.5],[.8,-1.5]].forEach(([x,z])=>{ const p=new T.Mesh(bar, dark); p.scale.y = z<-1? .95 : .4; p.position.set(x, z<-1? CH+.95 : CH+1.3, z); body.add(p); });
+[[-.8,CH+1.4,-1.5],[.8,CH+1.4,-1.5]].forEach(([x,y,z])=>{ const p=new T.Mesh(new T.CylinderGeometry(.05,.05,1.3,6).rotateX(Math.PI/2), dark); p.position.set(x,y,z+.62); body.add(p); });
+const cross = new T.Mesh(new T.CylinderGeometry(.05,.05,1.6,6).rotateZ(Math.PI/2), dark); cross.position.set(0,CH+1.4,-1.5); body.add(cross);
+const lampMat = lampMatNight;
+const tailMat = new T.MeshStandardMaterial({color:0xff2d2d, emissive:0xff2d2d, emissiveIntensity:.7});
+box(1.4,.16,.18,dark,0,CH+1.3,.2); for (let i=0;i<5;i++) box(.2,.1,.06,lampMat,-.5+i*.25,CH+1.3,.31);
+[-.62,.62].forEach(x=>{ const l=new T.Mesh(new T.CylinderGeometry(.16,.16,.1,10).rotateX(Math.PI/2), lampMat); l.position.set(x,CH+.55,1.67); body.add(l); const ring=new T.Mesh(new T.CylinderGeometry(.2,.2,.06,10).rotateX(Math.PI/2), chrome); ring.position.set(x,CH+.55,1.64); body.add(ring); });
+box(.32,.14,.05,tailMat,-.7,CH+.5,-1.68); box(.32,.14,.05,tailMat,.7,CH+.5,-1.68);
 // number on the doors
-const plate = new T.MeshStandardMaterial({roughness:.6, map:tex(128,128,(g,w)=>{ g.fillStyle='#1a1216'; g.beginPath(); g.arc(w/2,w/2,56,0,7); g.fill(); g.lineWidth=8; g.strokeStyle='#ff3fa6'; g.stroke(); g.fillStyle='#ff3fa6'; g.font='800 70px Unbounded, Arial Black, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('01',w/2,w/2+4); })});
-[-1,1].forEach(s=>{ const pl=new T.Mesh(new T.CircleGeometry(.3,24), plate); pl.position.set(s*.985, CH+.95, -.15); pl.rotation.y = s*Math.PI/2; body.add(pl); });
+const plate = new T.MeshStandardMaterial({roughness:.6, map:tex(128,128,(g,w)=>{ g.fillStyle='#f6efe0'; g.beginPath(); g.arc(w/2,w/2,56,0,7); g.fill(); g.lineWidth=8; g.strokeStyle='#1d2a3a'; g.stroke(); g.fillStyle='#1d2a3a'; g.font='800 70px Unbounded, Arial Black, sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText('01',w/2,w/2+4); }), transparent:true});
+[-1,1].forEach(s=>{ const pl=new T.Mesh(new T.CircleGeometry(.3,24), plate); pl.position.set(s*.96, CH+.2, -.2); pl.rotation.y = s*Math.PI/2; body.add(pl); });
 // shadow blob (reads well in flight)
 const blob = new T.Mesh(new T.CircleGeometry(1.7,24), new T.MeshBasicMaterial({color:0x1d2a3a, transparent:true, opacity:.22, depthWrite:false}));
 blob.rotation.x=-Math.PI/2; blob.position.y=.025; scene.add(blob);
-// turn signals (amber), reverse lights (white) and their glow halos
+// giant knobby wheels
+const wheelGeo = new T.CylinderGeometry(WH,WH,.78,30); wheelGeo.rotateZ(Math.PI/2);
+const treadMat = new T.MeshStandardMaterial({color:0x1d2a3a, roughness:.95, map:tex(128,512,(g,w,h)=>{ g.fillStyle='#161f2c'; g.fillRect(0,0,w,h); g.fillStyle='#2b3647'; for(let y=0;y<h;y+=32){ g.fillRect(4,y+4,w*.42,18); g.fillRect(w*.55,y+18,w*.42,18); } })});
+const sideMat = new T.MeshStandardMaterial({color:0x1d2a3a, roughness:.9});
+const wheels = [], pivots = [];
+[[-1.3,1.25,true],[1.3,1.25,true],[-1.3,-1.25,false],[1.3,-1.25,false]].forEach(([x,z,front])=>{
+  const pv = new T.Group(); pv.position.set(x,WH,z); kart.add(pv);
+  const w = new T.Mesh(wheelGeo, [treadMat, sideMat, sideMat]); w.castShadow=true; pv.add(w);
+  for (let i=0;i<16;i++) for (const [ox,ph] of [[-.21,0],[.21,.5]]){ const k=new T.Mesh(new T.BoxGeometry(.27,.13,.16), rubber); const a=(i+ph)/16*Math.PI*2; k.position.set(ox, Math.cos(a)*WH, Math.sin(a)*WH); k.rotation.x=-a; k.rotation.z=ox<0?.22:-.22; w.add(k); }
+  const out = Math.sign(x); for (let i=0;i<6;i++){ const n=new T.Mesh(new T.CylinderGeometry(.05,.05,.1,6).rotateZ(Math.PI/2), chrome); const a=i/6*Math.PI*2; n.position.set(out*.45, Math.cos(a)*.31, Math.sin(a)*.31); w.add(n); }
+  const cap=new T.Mesh(new T.SphereGeometry(.16,10,8), chrome); cap.position.set(out*.42,0,0); w.add(cap);
+  const rim = new T.Mesh(new T.CylinderGeometry(.5,.5,.8,10).rotateZ(Math.PI/2), coral); w.add(rim);
+  const hub = new T.Mesh(new T.CylinderGeometry(.2,.2,.84,8).rotateZ(Math.PI/2), chrome); w.add(hub);
+  for (let i=0;i<5;i++){ const sp=new T.Mesh(new T.BoxGeometry(.82,.1,.3), chrome); sp.rotation.x=i/5*Math.PI; w.add(sp); }
+  wheels.push(w); if (front) pivots.push(pv);
+});
+
+// ===== detail pass: fenders, bull bar, mirrors, side steps, spare tyre, antenna and a neon underglow =====
+// flared fenders over each wheel, joined by a side lip with a neon strip underneath
+[[-1.3,1.25],[1.3,1.25],[-1.3,-1.25],[1.3,-1.25]].forEach(([x,z])=>{ const f=new T.Mesh(new T.TorusGeometry(.98,.17,10,20,Math.PI), red); f.rotation.y=Math.PI/2; f.scale.set(.8,1,1); f.position.set(x,WH+.02,z); f.castShadow=true; body.add(f); });
+[-1,1].forEach(s=>{ box(.42,.1,3.3,red,s*1.1,CH-.04,0); box(.08,.04,3.0,neon,s*1.12,CH-.11,0); box(.3,.08,.9,red,s*1.08,CH+.05,-1.15); });
+// bull bar, winch and fog lights at the front
+[-.55,.55].forEach(x=>{ const v=new T.Mesh(new T.CylinderGeometry(.05,.05,.95,8), chrome); v.position.set(x,CH+.42,1.96); body.add(v); });
+[CH+.78, CH+.26].forEach(y=>{ const h=new T.Mesh(new T.CylinderGeometry(.05,.05,1.7,8).rotateZ(Math.PI/2), chrome); h.position.set(0,y,1.96); body.add(h); });
+[-.5,.5].forEach(x=>{ const fog=new T.Mesh(new T.CylinderGeometry(.1,.1,.08,10).rotateX(Math.PI/2), lampMat); fog.position.set(x,CH+.24,2.0); body.add(fog); });
+box(.5,.22,.2,dark,0,CH+.1,1.88); const hook=new T.Mesh(new T.TorusGeometry(.06,.02,6,10), chrome); hook.position.set(0,CH+.1,2.0); body.add(hook);
+// hood scoop
+box(.62,.14,.72,red,0,CH+.9,.95); box(.5,.08,.05,dark,0,CH+.9,1.32);
+// side mirrors, door seams, handles and chrome side steps
+[-1,1].forEach(s=>{
+  box(.22,.05,.05,dark,s*.98,CH+.98,.55); box(.08,.2,.28,dark,s*1.12,CH+.98,.55); box(.02,.15,.22,chrome,s*1.165,CH+.98,.55);
+  box(.015,.6,.03,dark,s*.87,CH+.75,-.25); box(.03,.04,.18,chrome,s*.88,CH+.8,-.05);
+  const step=new T.Mesh(new T.CylinderGeometry(.045,.045,1.7,8).rotateX(Math.PI/2), chrome); step.position.set(s*1.12,CH-.22,-.05); body.add(step);
+  [-.6,.4].forEach(z=>{ const br=new T.Mesh(new T.CylinderGeometry(.03,.03,.3,6), chrome); br.position.set(s*1.0,CH-.1,z); br.rotation.z=s*1.2; body.add(br); });
+});
+// bed: spare tyre and a toolbox
+const spare=new T.Mesh(new T.TorusGeometry(.42,.2,10,22), rubber); spare.rotation.x=Math.PI/2; spare.position.set(.25,CH+.86,-1.25); spare.castShadow=true; body.add(spare);
+const spareHub=new T.Mesh(new T.CylinderGeometry(.24,.24,.12,12), coral); spareHub.position.set(.25,CH+.86,-1.25); body.add(spareHub);
+box(.5,.32,.9,chrome,-.55,CH+.9,-1.15);
+// roof rack rails and an antenna
+[-.62,.62].forEach(x=>{ const r=new T.Mesh(new T.CylinderGeometry(.03,.03,1.15,6).rotateX(Math.PI/2), dark); r.position.set(x,CH+1.24,-.25); body.add(r); });
+const ant=new T.Mesh(new T.CylinderGeometry(.012,.018,.9,5), dark); ant.position.set(-.75,CH+1.6,-.75); ant.rotation.x=.15; body.add(ant);
+const antTip=new T.Mesh(new T.SphereGeometry(.04,8,6), coral); antTip.position.set(-.75,CH+2.05,-.82); body.add(antTip);
+// mud flaps behind the rear wheels
+[-1.3,1.3].forEach(x=>{ box(.72,.5,.04,rubber,x,WH-.05,-2.22); });
+// turn signals (amber, front and rear corners), reverse lights (white, by the tail lights) and their glow halos
 const sigL = new T.MeshStandardMaterial({color:0xf0a030, emissive:0xffa21e, emissiveIntensity:.12}), sigR = sigL.clone(), revMat = new T.MeshStandardMaterial({color:0xf4f4f0, emissive:0xffffff, emissiveIntensity:.08});
 const glowTex = tex(64,64,(g,w)=>{ const r=g.createRadialGradient(w/2,w/2,2,w/2,w/2,w/2); r.addColorStop(0,'rgba(255,255,255,1)'); r.addColorStop(.4,'rgba(255,255,255,.45)'); r.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=r; g.fillRect(0,0,w,w); });
 function glowQuad(color, size, x, y, z, back){ const m=new T.Mesh(new T.PlaneGeometry(size,size), new T.MeshBasicMaterial({map:glowTex, color, transparent:true, opacity:.9, blending:T.AdditiveBlending, depthWrite:false, side:T.DoubleSide})); m.position.set(x,y,z); if (back) m.rotation.y=Math.PI; m.visible=false; body.add(m); return m; }
 const glowL = [], glowR = [], glowRev = [];
 [-1,1].forEach(s=>{ const m = s<0 ? sigL : sigR, list = s<0 ? glowL : glowR;
-  box(.2,.1,.05,m,s*.92,CH+.44,1.73);  list.push(glowQuad(0xffa21e, .9, s*.92, CH+.44, 1.8, false));    // front corners
-  box(.22,.1,.05,m,s*.82,CH+.92,-1.77); list.push(glowQuad(0xffa21e, .9, s*.82, CH+.92, -1.84, true));   // rear corners
-  box(.06,.08,.24,m,s*1.2,CH+.3,1.0);                                                                     // side repeater on the flare
-  box(.24,.1,.05,revMat,s*.4,CH+.92,-1.77); glowRev.push(glowQuad(0xffffff, 1.1, s*.4, CH+.92, -1.84, true)); // reverse lights
+  box(.2,.12,.05,m,s*.9,CH+.36,1.65);  list.push(glowQuad(0xffa21e, .9, s*.9, CH+.36, 1.72, false));   // front, below the headlights
+  box(.32,.1,.05,m,s*.7,CH+.64,-1.68); list.push(glowQuad(0xffa21e, .9, s*.7, CH+.64, -1.75, true));   // rear, above the tail lights
+  box(.07,.1,.26,m,s*1.17,CH+.08,.95);                                                                  // side repeater on the front fender lip
+  box(.24,.14,.05,revMat,s*.4,CH+.5,-1.68); glowRev.push(glowQuad(0xffffff, 1.1, s*.4, CH+.5, -1.76, true)); // reverse lights
 });
-// pink underglow on the ground beneath the truck
-const underglow = new T.Mesh(new T.PlaneGeometry(3.8,5.2), new T.MeshBasicMaterial({map:tex(128,128,(g,w)=>{ const r=g.createRadialGradient(w/2,w/2,4,w/2,w/2,w/2); r.addColorStop(0,'rgba(255,30,140,.9)'); r.addColorStop(.45,'rgba(255,30,140,.3)'); r.addColorStop(1,'rgba(255,30,140,0)'); g.fillStyle=r; g.fillRect(0,0,w,w); }), transparent:true, opacity:.28, blending:T.AdditiveBlending, depthWrite:false}));
+// neon underglow on the ground beneath the truck
+const underglow = new T.Mesh(new T.PlaneGeometry(3.6,5.0), new T.MeshBasicMaterial({map:tex(128,128,(g,w)=>{ const r=g.createRadialGradient(w/2,w/2,4,w/2,w/2,w/2); r.addColorStop(0,'rgba(53,232,255,.9)'); r.addColorStop(.45,'rgba(53,232,255,.35)'); r.addColorStop(1,'rgba(53,232,255,0)'); g.fillStyle=r; g.fillRect(0,0,w,w); }), transparent:true, opacity:.4, blending:T.AdditiveBlending, depthWrite:false}));
 underglow.rotation.x=-Math.PI/2; underglow.position.y=.08; kart.add(underglow);
-// big black tyres on dark rims
-const wheelGeo = new T.CylinderGeometry(WH,WH,.85,30); wheelGeo.rotateZ(Math.PI/2);
-const treadMat = new T.MeshStandardMaterial({color:0x14161a, roughness:.95, map:tex(128,512,(g,w,h)=>{ g.fillStyle='#101216'; g.fillRect(0,0,w,h); g.fillStyle='#1e2127'; for(let y=0;y<h;y+=32){ g.fillRect(4,y+4,w*.42,18); g.fillRect(w*.55,y+18,w*.42,18); } })});
-const sideMat = new T.MeshStandardMaterial({color:0x14161a, roughness:.9});
-const wheels = [], pivots = [];
-[[-1.3,1.25,true],[1.3,1.25,true],[-1.3,-1.25,false],[1.3,-1.25,false]].forEach(([x,z,front])=>{
-  const pv = new T.Group(); pv.position.set(x,WH,z); kart.add(pv);
-  const w = new T.Mesh(wheelGeo, [treadMat, sideMat, sideMat]); w.castShadow=true; pv.add(w);
-  for (let i=0;i<16;i++) for (const [ox,ph] of [[-.23,0],[.23,.5]]){ const k=new T.Mesh(new T.BoxGeometry(.26,.09,.15), sideMat); const a=(i+ph)/16*Math.PI*2; k.position.set(ox, Math.cos(a)*(WH-.01), Math.sin(a)*(WH-.01)); k.rotation.x=-a; w.add(k); }
-  const out = Math.sign(x);
-  const rm = new T.Mesh(new T.CylinderGeometry(.52,.52,.88,10).rotateZ(Math.PI/2), rim); w.add(rm);
-  const dish = new T.Mesh(new T.CylinderGeometry(.4,.4,.9,10).rotateZ(Math.PI/2), black); w.add(dish);
-  for (let i=0;i<5;i++){ const sp=new T.Mesh(new T.BoxGeometry(.92,.1,.26), rim); sp.rotation.x=i/5*Math.PI; w.add(sp); }
-  for (let i=0;i<6;i++){ const n=new T.Mesh(new T.CylinderGeometry(.05,.05,.1,6).rotateZ(Math.PI/2), chrome); const a=i/6*Math.PI*2; n.position.set(out*.47, Math.cos(a)*.28, Math.sin(a)*.28); w.add(n); }
-  const cap=new T.Mesh(new T.CylinderGeometry(.14,.14,.1,10).rotateZ(Math.PI/2), pink); cap.position.set(out*.47,0,0); w.add(cap);
-  wheels.push(w); if (front) pivots.push(pv);
-});
 
 // ---------- dust ----------
 const dustMat = new T.MeshBasicMaterial({color:0xc9b27c, transparent:true, opacity:.5, depthWrite:false});
