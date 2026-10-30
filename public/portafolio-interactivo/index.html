@@ -90,6 +90,12 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
 
 body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 .minimap{transition:opacity .6s}
+.monprompt{position:fixed;left:0;top:0;z-index:6;display:none;align-items:center;gap:14px;transform:translate(-50%,-100%) scale(.6);opacity:0;pointer-events:auto;cursor:pointer;text-decoration:none;transition:transform .18s,opacity .18s;user-select:none}
+.monprompt.show{display:flex}.monprompt.in{transform:translate(-50%,-100%) scale(1);opacity:1}
+.monprompt .key{width:48px;height:48px;display:grid;place-items:center;background:#1a1216;border:3px solid #fff;transform:rotate(45deg);box-shadow:0 0 0 3px #1a1216;flex:none}
+.monprompt .key svg{width:24px;height:24px;transform:rotate(-45deg);stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.monprompt b{font:800 clamp(24px,3.2vw,36px)/1 var(--f-display);letter-spacing:.02em;color:#fff;text-shadow:3px 0 0 #1a1216,-3px 0 0 #1a1216,0 3px 0 #1a1216,0 -3px 0 #1a1216,2px 2px 0 #1a1216,-2px -2px 0 #1a1216,2px -2px 0 #1a1216,-2px 2px 0 #1a1216,4px 4px 0 #1a1216}
+.monprompt:hover .key,.monprompt:active .key{background:#8d5cff}
 .hud{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;transition:opacity .6s;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-bottom,0px))}
@@ -178,6 +184,7 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 <canvas id="scene" aria-label="Mundo 3D donde se conduce un carrito entre zonas del portafolio"></canvas>
 <audio id="bgm" preload="none"></audio><audio id="bgm2" preload="none"></audio>
 
+<a class="monprompt" id="monprompt" target="_blank" rel="noopener noreferrer"><span class="key"><svg viewBox="0 0 24 24"><path d="M20 5v6a3 3 0 0 1-3 3H6"/><path d="M9 10l-4 4 4 4"/></svg></span><b id="monlabel">LINKEDIN</b></a>
 <div class="hud">
   <div class="top">
     <div class="brand"><b>JUAN AGUDELO</b><span>IA · Datos · Full stack</span><span class="wind">Viento <em id="wind">—</em></span></div>
@@ -947,6 +954,7 @@ while (bt < 40 && btTries < 4000){ btTries++; const x=(rnd()-.5)*200, z=(rnd()-.
 bushyTree(ISLET[0], ISLET[1], 1.7, true);
 const isletRings = [3.9, 5.4, 6.9].map((r,i)=>{ const m = new T.Mesh(new T.RingGeometry(r, r+.16, 64), new T.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:.22, depthWrite:false}));
   m.rotation.x = -Math.PI/2; m.position.set(ISLET[0], SEA_Y+.42, ISLET[1]); m.userData.ph = i*2.1; scene.add(m); return m; });
+const monuments = []; // {key, label, url, x, z}: driving up to one shows a prompt that opens the link
 const platforms = []; // static pedestals {x, z, hw, top}: a body standing over one rests at its top instead of falling to the ground
 await loading('Tallando los monumentos');
 // ---------- monument plaza: stone statues of the social networks on pedestals in a half-moon, and a liberty statue in the middle ----------
@@ -1027,11 +1035,11 @@ await loading('Tallando los monumentos');
     const base = pedestal ? .82 : .7;
     addBody(sg, x, base + spec.h/2, z, spec.r, spec.h, 3, 'statue');
   }
-  const order = [['linkedin','LINKEDIN'],['github','GITHUB'],['email','CORREO'],['instagram','INSTAGRAM']];
+  const order = [['linkedin','LINKEDIN','https://www.linkedin.com/in/juan-fernando-agudelo-861b13264/'],['github','GITHUB','https://github.com/Juan-Fer-Agudelo'],['email','CORREO','mailto:juan.fernando.arch@gmail.com'],['instagram','INSTAGRAM','https://instagram.com/juanfer2351']];
   const statueAt = i => MON_A + Math.PI + (i-1.5)*Math.PI/3; // 60° apart: an 8-unit gap between pedestals, wide enough for the truck
-  order.forEach(([key, label], i)=>{
+  order.forEach(([key, label, url], i)=>{
     const th = statueAt(i), x = MON[0]+Math.cos(th)*MON_R, z = MON[1]+Math.sin(th)*MON_R, yaw = Math.atan2(MON[0]-x, MON[1]-z); // faces the middle of the plaza
-    monument(x, z, yaw, logos[key], true);
+    monument(x, z, yaw, logos[key], true); monuments.push({key, label, url, x, z});
     // little stone cubes stacked by the front corners of the pedestal: they go flying with the explosions
     for (const side of [-1,1]) for (let k=0;k<2;k++){ const cx = x + Math.cos(yaw)*side*2.3 + Math.sin(yaw)*2.1, cz = z - Math.sin(yaw)*side*2.3 + Math.cos(yaw)*2.1;
       const m = new T.Mesh(cubeGeo, k ? stoneLight : stone); m.rotation.y = yaw; addBody(m, cx, CUBE/2 + k*CUBE, cz, .33, CUBE, .5, 'box'); }
@@ -1551,6 +1559,19 @@ document.getElementById('sound').addEventListener('click', e=>{ audio.toggle(); 
 // ---------- input ----------
 const keys = {fwd:false, back:false, left:false, right:false, brake:false};
 let started = false;
+// ---------- monument prompt: "⏎ LINKEDIN" floating over the statue the truck is next to; Enter, a click or a tap opens the link ----------
+const monPrompt = document.getElementById('monprompt'), monLabel = document.getElementById('monlabel'), monV = new T.Vector3();
+let monNear = null, monShownAt = 0;
+function updateMonPrompt(){
+  let best = null, bd = 9;
+  if (started) for (const m of monuments){ const d = Math.hypot(car.x-m.x, car.z-m.z); if (d < bd){ bd = d; best = m; } }
+  if (best !== monNear){ monNear = best; if (best){ monLabel.textContent = best.label; monPrompt.href = best.url; monPrompt.classList.add('show'); requestAnimationFrame(()=>monPrompt.classList.add('in')); if (!best.seen){ best.seen = true; audio.ding(); } } else { monPrompt.classList.remove('in'); setTimeout(()=>{ if (!monNear) monPrompt.classList.remove('show'); }, 200); } }
+  if (!monNear) return;
+  monV.set(monNear.x, 5.2, monNear.z).project(camera);
+  if (monV.z > 1){ monPrompt.style.opacity = 0; return; }
+  monPrompt.style.opacity = ''; monPrompt.style.left = ((monV.x+1)/2*innerWidth) + 'px'; monPrompt.style.top = ((1-monV.y)/2*innerHeight) + 'px';
+}
+function openMonument(){ if (monNear) window.open(monNear.url, '_blank', 'noopener'); }
 const keyMap = {KeyW:'fwd',ArrowUp:'fwd',KeyS:'back',ArrowDown:'back',KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',ShiftLeft:'brake',ShiftRight:'brake'};
 function jump(){
   if (!started || car.air) return;
@@ -1562,6 +1583,7 @@ function jump(){
 addEventListener('keydown', e=>{
   if (!started && (e.code==='Enter' || e.code==='Space')) { if (ready) start(); e.preventDefault(); return; }
   if (e.code==='Space' && started){ e.preventDefault(); if (!e.repeat) jump(); return; }
+  if (e.code==='Enter' && started && monNear){ e.preventDefault(); openMonument(); return; }
   if (keyMap[e.code]) { keys[keyMap[e.code]] = true; if (started) e.preventDefault(); }
   if (e.code==='KeyR' && started) resetCar();
   if (e.code==='KeyM' && started) audio.toggle();
@@ -2023,6 +2045,7 @@ function tick(){
   if (camShake.v > 0.01 && !reduce){ camera.position.x += (Math.random()-.5)*camShake.v*.5; camera.position.y += (Math.random()-.5)*camShake.v*.4; camShake.v *= Math.exp(-7*dt); }
   look.lerp(lookTarget.set(car.x + Math.sin(car.h)*car.speed*.12, 0, car.z + Math.cos(car.h)*car.speed*.12), 1 - Math.exp(-6*dt));
   camera.lookAt(look);
+  updateMonPrompt();
 
   const sd = day.sunDir || new T.Vector3(-.4,.8,.3);
   sun.position.set(car.x + sd.x*40, sd.y*40, car.z + sd.z*40); sun.target.position.set(car.x,0,car.z);
