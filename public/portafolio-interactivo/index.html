@@ -120,15 +120,19 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 
 /* touch controls: drag anywhere on the right half to drive (a stick appears under the finger); one big jump button on the left */
 .touch{display:none}
-.stickzone{position:fixed;top:0;right:0;bottom:0;width:50%;touch-action:none;pointer-events:auto;z-index:3;user-select:none;-webkit-user-select:none}
-.stickzone .hint{position:absolute;left:50%;bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 112px);transform:translateX(-50%);white-space:nowrap;font:600 12px var(--f-body);color:var(--ink);background:color-mix(in srgb,var(--panel) 80%,transparent);border:1px solid var(--line);border-radius:999px;padding:7px 12px;transition:opacity .5s;pointer-events:none}
-.stickzone.used .hint{opacity:0}
-.stick{position:absolute;width:124px;height:124px;margin:-62px 0 0 -62px;border-radius:50%;border:2px solid #f6efe0aa;background:#1d2a3a66;pointer-events:none;--dx:0px;--dy:0px}
-.stick i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:var(--kart);box-shadow:0 4px 12px #0006;transform:translate(var(--dx),var(--dy))}
-.jump{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 14px);width:92px;height:92px;border-radius:50%;border:0;background:var(--coral);color:var(--ink);box-shadow:0 6px 18px #0005;z-index:3;display:grid;place-items:center;gap:0;touch-action:none;user-select:none;-webkit-user-select:none;pointer-events:auto;padding:0}
-.jump b{font:800 26px/1 var(--f-mono)}.jump span{font:800 11px var(--f-display);letter-spacing:.08em}
-.jump:active{transform:scale(.94)}
-@media (pointer:coarse){.touch{display:block}.keys{display:none}.hud .bottom{flex-direction:column;align-items:center;gap:8px}.sound.ach{margin-right:0}} /* the pills sit between the jump button and the minimap */
+/* touch controls: big buttons instead of a joystick. Left pad steers, right pad has gas, reverse and jump */
+.pad{position:fixed;bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 14px);display:flex;gap:10px;z-index:3;pointer-events:auto}
+.pad.l{left:max(16px,env(safe-area-inset-left,0px));align-items:flex-end}
+.pad.r{right:max(16px,env(safe-area-inset-right,0px));flex-direction:column;align-items:flex-end}
+.pad .row{display:flex;gap:10px;align-items:flex-end}
+.pad button{width:78px;height:78px;border-radius:22px;border:2px solid #f6efe03a;background:#1d2a3acc;color:var(--ink);font:800 30px/1 var(--f-mono);display:grid;place-items:center;align-content:center;gap:2px;box-shadow:0 6px 18px #0005;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;padding:0;backdrop-filter:blur(4px);transition:transform .08s,background .08s}
+.pad button span{font:800 9px var(--f-display);letter-spacing:.08em}
+.pad button.on{background:var(--kart);color:#1d2a3a;transform:scale(.93)}
+.pad .gas{width:96px;height:96px;background:#2fa28ccc}
+.pad .rev{width:96px;height:62px;font-size:22px}
+.pad .jump{background:var(--coral)}
+.pad .jump b{font:800 26px/1 var(--f-mono)}
+@media (pointer:coarse){.touch{display:block}.keys{display:none}.hud .bottom{flex-direction:column;align-items:center;gap:8px;margin-bottom:184px}.sound.ach{margin-right:0}.minimap{bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 196px)}} /* the pills sit between the jump button and the minimap */
 
 .panel{position:fixed;top:50%;right:max(16px,env(safe-area-inset-right,0px));width:min(380px,calc(100vw - 32px));max-height:min(78vh,640px);overflow:auto;
   transform:translate(calc(100% + 40px),-50%);transition:transform .45s cubic-bezier(.2,.9,.25,1.15);
@@ -228,8 +232,11 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
   </div>
 </div>
 <div class="touch" id="touch">
-  <div class="stickzone" id="stickzone" aria-label="Zona táctil: arrastra para conducir"><div class="stick" id="stick" hidden><i></i></div><span class="hint">Toca y arrastra aquí para conducir</span></div>
-  <button id="t-jump" class="jump" type="button" aria-label="Saltar"><b>⤒</b><span>SALTAR</span></button>
+  <div class="pad l"><button id="t-left" type="button" aria-label="Girar a la izquierda">◀<span>IZQ</span></button><button id="t-right" type="button" aria-label="Girar a la derecha">▶<span>DER</span></button></div>
+  <div class="pad r">
+    <div class="row"><button id="t-jump" class="jump" type="button" aria-label="Saltar"><b>⤒</b><span>SALTAR</span></button><button id="t-gas" class="gas" type="button" aria-label="Acelerar">▲<span>ACELERAR</span></button></div>
+    <button id="t-rev" class="rev" type="button" aria-label="Reversa">▼<span>REVERSA</span></button>
+  </div>
 </div>
 
 <aside class="panel" id="panel" aria-live="polite"></aside>
@@ -1689,17 +1696,12 @@ addEventListener('keydown', e=>{
 addEventListener('keyup', e=>{ if (keyMap[e.code]) keys[keyMap[e.code]] = false; });
 addEventListener('blur', ()=>{ for (const k in keys) keys[k]=false; });
 // virtual stick: the finger's first touch is the centre; dragging up/down accelerates/reverses and left/right steers
-const stick = {x:0, y:0, id:null, ox:0, oy:0};
-{ const zone = document.getElementById('stickzone'), knob = document.getElementById('stick'), R = 56, DEAD = .12;
-  const release = e => { if (e.pointerId !== stick.id) return; stick.id = null; stick.x = stick.y = 0; knob.hidden = true; };
-  zone.addEventListener('pointerdown', e => { if (stick.id !== null) return; e.preventDefault(); stick.id = e.pointerId; stick.ox = e.clientX; stick.oy = e.clientY;
-    const zr = zone.getBoundingClientRect(); knob.style.left = (e.clientX - zr.left) + 'px'; knob.style.top = (e.clientY - zr.top) + 'px'; knob.style.setProperty('--dx','0px'); knob.style.setProperty('--dy','0px'); knob.hidden = false;
-    zone.classList.add('used'); try{ zone.setPointerCapture(e.pointerId); }catch(_){} });
-  zone.addEventListener('pointermove', e => { if (e.pointerId !== stick.id) return; e.preventDefault();
-    const dx = e.clientX - stick.ox, dy = e.clientY - stick.oy, d = Math.hypot(dx,dy), k = d > R ? R/d : 1;
-    const nx = dx*k/R, ny = -dy*k/R; stick.x = Math.abs(nx) < DEAD ? 0 : nx; stick.y = Math.abs(ny) < DEAD ? 0 : ny;
-    knob.style.setProperty('--dx', (dx*k)+'px'); knob.style.setProperty('--dy', (dy*k)+'px'); });
-  zone.addEventListener('pointerup', release); zone.addEventListener('pointercancel', release); zone.addEventListener('lostpointercapture', release); }
+const stick = {x:0, y:0}; // kept at zero: touch steering uses buttons that set the same keys as the keyboard
+function holdButton(id, key){ const b = document.getElementById(id);
+  const on = e => { e.preventDefault(); keys[key] = true; b.classList.add('on'); try{ b.setPointerCapture(e.pointerId); }catch(_){} };
+  const off = () => { keys[key] = false; b.classList.remove('on'); };
+  b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointercancel', off); b.addEventListener('lostpointercapture', off); b.addEventListener('contextmenu', e=>e.preventDefault()); }
+holdButton('t-left','left'); holdButton('t-right','right'); holdButton('t-gas','fwd'); holdButton('t-rev','back');
 document.getElementById('t-jump').addEventListener('pointerdown', e=>{ e.preventDefault(); jump(); });
 function resetCar(){ car.x=0; car.z=2; car.h=START_H; car.speed=0; car.y=0; car.vy=0; car.air=false; body.rotation.set(0,0,0); }
 
