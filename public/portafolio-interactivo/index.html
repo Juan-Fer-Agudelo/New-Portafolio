@@ -66,6 +66,27 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
 .legend .projlist{flex-basis:100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px;margin-top:8px;padding-top:10px;border-top:1px dashed var(--line)}
 .legend .projlist b{color:var(--coral);margin-right:4px}
 #scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+/* achievements: console-style toasts under the name card, and a list of all of them */
+.toasts{position:fixed;top:calc(max(16px,env(safe-area-inset-top,0px)) + 104px);left:max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:10px;z-index:30;pointer-events:none;width:min(330px,calc(100vw - 32px))}
+.toast{background:#0f1416f2;border:1px solid #2b3a3e;border-radius:12px;padding:12px 14px;color:var(--ink);box-shadow:0 10px 30px #0008;transform:translateX(-120%);opacity:0;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .4s;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.toast.in{transform:none;opacity:1}
+.toast .ttl{font:800 14px var(--f-display);color:#cfe96a;letter-spacing:.03em;text-transform:uppercase}
+.toast .prog{font:700 12px var(--f-mono);color:#8fe36a;display:flex;align-items:center;gap:6px;justify-self:end}
+.toast .prog svg,.toast .ico{width:16px;height:16px;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.toast .prog svg{stroke:#8fe36a;stroke-width:3}
+.toast .desc{font:500 13px/1.35 var(--f-body);color:#dbe3ea}
+.toast .ico{stroke:#9aa6b2;stroke-width:2;justify-self:end;align-self:start}
+.achlist{display:flex;flex-direction:column}
+.achrow{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px dashed var(--line)}
+.achrow:first-child{border-top:0}
+.achrow .mark{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center}
+.achrow .mark svg{width:16px;height:16px;fill:none;stroke:#8fe36a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.achrow.done .mark{border-color:#8fe36a;background:#8fe36a22}.achrow.done .mark svg{opacity:1}
+.achrow .ttl{font:800 13px var(--f-display);color:var(--muted);letter-spacing:.03em;text-transform:uppercase}.achrow.done .ttl{color:#cfe96a}
+.achrow .desc{font:500 13px var(--f-body);color:var(--muted)}
+.achrow .prog{font:700 12px var(--f-mono);color:var(--muted)}.achrow.done .prog{color:#8fe36a}
+.sound.ach{margin-right:8px}
+@media (max-width:640px){.toasts{top:calc(max(16px,env(safe-area-inset-top,0px)) + 96px)}}
 
 body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 .minimap{transition:opacity .6s}
@@ -158,7 +179,8 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
     <nav class="chips" id="chips" aria-label="Ir a una zona"></nav>
   </div>
   <div class="bottom">
-    <div class="keys"><span><kbd>W A S D</kbd>o flechas para conducir</span><span><kbd>Espacio</kbd>saltar</span><span><kbd>Shift</kbd>freno</span><span><kbd>R</kbd>volver al inicio</span><span><kbd>M</kbd>música</span><span><kbd>P</kbd>mapa</span></div>
+    <div class="keys"><span><kbd>W A S D</kbd>o flechas para conducir</span><span><kbd>Espacio</kbd>saltar</span><span><kbd>Shift</kbd>freno</span><span><kbd>R</kbd>volver al inicio</span><span><kbd>M</kbd>música</span><span><kbd>P</kbd>mapa</span><span><kbd>L</kbd>logros</span></div>
+    <button class="sound ach" id="achbtn" type="button" aria-label="Ver los logros"><span aria-hidden="true">🏆</span><span id="achcount">Logros 0/0</span></button>
     <button class="sound" id="sound" aria-pressed="false" aria-label="Activar o silenciar la música"><span class="bars"><i></i><i></i><i></i></span><span id="sound-lbl">Música</span></button>
     <div class="touch">
       <div class="grp"><button id="t-left" data-k="left" aria-label="Girar a la izquierda">◀</button><button id="t-right" data-k="right" aria-label="Girar a la derecha">▶</button></div>
@@ -168,6 +190,13 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 </div>
 
 <aside class="panel" id="panel" aria-live="polite"></aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="mapview" id="achview" hidden>
+  <div class="mapcard">
+    <div class="maphead"><div><div class="tag">Lo que has hecho en la isla</div><h2 id="achtitle">Logros</h2></div><button class="btn" id="achclose">Cerrar</button></div>
+    <div class="achlist" id="achlist"></div>
+  </div>
+</div>
 <div class="airtime" id="airtime" aria-hidden="true">¡A VOLAR!</div>
 <button class="minimap" id="minimap" aria-label="Abrir el mapa"><canvas id="mini" width="180" height="180"></canvas><span>Mapa · P</span></button>
 <div class="mapview" id="mapview" hidden>
@@ -791,7 +820,7 @@ function checkSupports(){
 function updateBowling(dt){
   supportT += dt; if (supportT > .4){ supportT = 0; checkSupports(); }
   const n = pins.filter(p=>p.lying).length;
-  if (n !== scoreShown){ scoreShown = n; drawScore(n); if (n===10) audio.strike(); }
+  if (n !== scoreShown){ scoreShown = n; drawScore(n); if (n===10){ audio.strike(); achieve('strike'); } }
   if (n === 10){ resetT += dt; if (resetT > 6){ resetT = 0; for (const p of pins){ p.x=p.home.x; p.z=p.home.z; p.y=.75; p.vx=p.vy=p.vz=0; p.spin=0; p.lying=false; p.lieDir=undefined; p.m.rotation.set(0,0,0); } bowlingBall.x=bowlingBall.home.x; bowlingBall.z=bowlingBall.home.z; bowlingBall.vx=bowlingBall.vz=0; } } else resetT = 0;
 }
 // tire wall as a bumper
@@ -1226,6 +1255,8 @@ const audio = (()=>{
   return {
     start(){ try{ ensure(); apply(); }catch(e){} },
     enabled(){ return enabled; },
+    // achievement chime: two quick rising notes
+    ding(){ if (!ctx) return; const t=ctx.currentTime; [[880,0],[1318,.11]].forEach(([f0,o])=>{ const osc=ctx.createOscillator(), g=ctx.createGain(); osc.type='triangle'; osc.frequency.value=f0; g.gain.setValueAtTime(0,t+o); g.gain.linearRampToValueAtTime(.3,t+o+.02); g.gain.exponentialRampToValueAtTime(.001,t+o+.5); osc.connect(g).connect(fx); osc.start(t+o); osc.stop(t+o+.55); }); },
     // the speaker on the start screen: choose music on/off before the game (and its audio) starts
     pretoggle(){ enabled = !enabled; try{ localStorage.setItem('empleado-music', enabled?'on':'off'); }catch(e){} return enabled; },
     toggle(){ enabled = !enabled; try{ localStorage.setItem('empleado-music', enabled?'on':'off'); }catch(e){} this.start(); },
@@ -1252,7 +1283,7 @@ let started = false;
 const keyMap = {KeyW:'fwd',ArrowUp:'fwd',KeyS:'back',ArrowDown:'back',KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',ShiftLeft:'brake',ShiftRight:'brake'};
 function jump(){
   if (!started || car.air) return;
-  car.air = true; car.hop = true; car.vy = 10.5; car.y = Math.max(car.y||0, .01);
+  car.air = true; car.hop = true; car.vy = 10.5; car.y = Math.max(car.y||0, .01); achieve('salto');
   car.tumble = {x:-.9, z:0, y:0}; // nose lifts slightly, no tumbling
   audio.hop();
   for (let i=0;i<6;i++) puff(car.x+(Math.random()-.5)*2.5, car.z+(Math.random()-.5)*2.5);
@@ -1264,7 +1295,8 @@ addEventListener('keydown', e=>{
   if (e.code==='KeyR' && started) resetCar();
   if (e.code==='KeyM' && started) audio.toggle();
   if (e.code==='KeyP' && started){ mapview.hidden ? openMap() : closeMap(); }
-  if (e.code==='Escape') closeMap();
+  if (e.code==='KeyL' && started){ achview.hidden ? openAch() : closeAch(); }
+  if (e.code==='Escape'){ closeMap(); closeAch(); }
 });
 addEventListener('keyup', e=>{ if (keyMap[e.code]) keys[keyMap[e.code]] = false; });
 addEventListener('blur', ()=>{ for (const k in keys) keys[k]=false; });
@@ -1276,6 +1308,56 @@ document.querySelectorAll('.touch button').forEach(b=>{
 });
 document.getElementById('t-jump').addEventListener('pointerdown', e=>{ e.preventDefault(); jump(); });
 function resetCar(){ car.x=0; car.z=2; car.h=START_H; car.speed=0; car.y=0; car.vy=0; car.air=false; body.rotation.set(0,0,0); }
+
+// ---------- achievements: console-style toasts for the things you do on the island, kept in localStorage ----------
+const ACH = [
+  {id:'arranque', t:'Primer arranque', d:'Acelera por primera vez.', n:1},
+  {id:'mar', t:'Al agua', d:'Mete el truck al mar o a una laguna.', n:1},
+  {id:'salto', t:'Despegue', d:'Salta con la barra espaciadora.', n:1},
+  {id:'caja', t:'Caja sorpresa', d:'Pisa una caja explosiva y sal volando.', n:1},
+  {id:'letras', t:'Con mi nombre no', d:'Empuja una letra del nombre.', n:1},
+  {id:'muro', t:'Demoledor', d:'Tumba el muro de ladrillos.', n:1},
+  {id:'strike', t:'¡Strike!', d:'Derriba los 10 bolos.', n:1},
+  {id:'islote', t:'Bajo el árbol rosado', d:'Llega al islote de la laguna.', n:1},
+  {id:'sobre', t:'Mucho gusto', d:'Entra a la zona Sobre mí.', n:1},
+  {id:'proyectos', t:'Ojo clínico', d:'Entra a la zona de Proyectos.', n:1},
+  {id:'habilidades', t:'Caja de herramientas', d:'Entra a la zona de Habilidades.', n:1},
+  {id:'contacto', t:'Hablemos', d:'Abre el formulario de contacto.', n:1},
+  {id:'turista', t:'Vuelta completa', d:'Visita las 4 zonas.', n:4},
+  {id:'explorador', t:'Explorador', d:'Visita las 12 estaciones de proyectos.', n:12},
+];
+let achState = {}; try { achState = JSON.parse(localStorage.getItem('empleado-logros') || '{}') || {}; } catch(e){}
+const achDone = new Set(ACH.filter(a => (achState[a.id]?.n || 0) >= a.n).map(a => a.id));
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 l5.5 5.5 L20 7"/></svg>';
+const achview = document.getElementById('achview'), toasts = document.getElementById('toasts');
+function achCount(){ document.getElementById('achcount').textContent = `Logros ${achDone.size}/${ACH.length}`; }
+function toast(a, n){
+  const el = document.createElement('div'); el.className = 'toast';
+  el.innerHTML = `<div class="ttl">${a.t}</div><div class="prog">${n >= a.n ? CHECK : ''}${n}/${a.n}</div><div class="desc">${a.d}</div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M9 6H5v13h13v-4"/></svg>`;
+  toasts.appendChild(el); while (toasts.children.length > 3) toasts.firstChild.remove();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('in')));
+  setTimeout(()=>{ el.classList.remove('in'); setTimeout(()=>el.remove(), 500); }, 4600);
+  try{ audio.ding(); }catch(e){}
+}
+function achieve(id, key){ // key: a sub-item for the counted ones (a zone or project), so each one counts once
+  if (achDone.has(id)) return;
+  const a = ACH.find(x => x.id === id); if (!a) return;
+  const st = achState[id] || (achState[id] = {n:0, k:[]});
+  if (key !== undefined){ if (st.k.includes(key)) return; st.k.push(key); st.n = st.k.length; } else st.n++;
+  if (st.n >= a.n) achDone.add(id);
+  try { localStorage.setItem('empleado-logros', JSON.stringify(achState)); } catch(e){}
+  toast(a, st.n); achCount();
+}
+function openAch(){
+  document.getElementById('achlist').innerHTML = ACH.map(a => { const n = Math.min(a.n, achState[a.id]?.n || 0);
+    return `<div class="achrow${n >= a.n ? ' done' : ''}"><div class="mark">${CHECK}</div><div><div class="ttl">${a.t}</div><div class="desc">${a.d}</div></div><div class="prog">${n}/${a.n}</div></div>`; }).join('');
+  document.getElementById('achtitle').textContent = `Logros · ${achDone.size} de ${ACH.length}`;
+  achview.hidden = false;
+}
+function closeAch(){ achview.hidden = true; }
+document.getElementById('achbtn').addEventListener('click', e => { openAch(); e.currentTarget.blur(); });
+document.getElementById('achclose').addEventListener('click', closeAch);
+achCount();
 
 const intro = document.getElementById('intro');
 function start(){ if (started || !ready) return; started = true; intro.classList.add('gone'); document.body.classList.remove('pre'); try{ canvas.focus(); }catch(e){} try{ audio.start(); }catch(e){ console.warn('audio', e); } }
@@ -1321,6 +1403,7 @@ function showZone(zn){
   if (activeZone === zn) return;
   activeZone = zn;
   if (!zn){ panel.classList.remove('open'); return; }
+  if (zn.n !== undefined) achieve('explorador', zn.n); else { achieve(zn.id); achieve('turista', zn.id); }
   panel.style.setProperty('--zc', zn.css);
   panel.innerHTML = content[zn.id];
   panel.classList.add('open');
@@ -1398,7 +1481,7 @@ function updateCar(dt){
     }
     if (Math.hypot(car.x-tk.x, car.z-tk.z) < CAR_R + .8 && !car.air){
       tk.respawn = 6; tk.g.scale.setScalar(.001); tk.halo.material.opacity = 0;
-      explode(tk.x, tk.z); launch();
+      explode(tk.x, tk.z); launch(); achieve('caja');
     }
   }
   for (const p of boom){ if (p.life > 0){ p.life -= dt; p.vy -= 22*dt; p.m.position.x += p.vx*dt; p.m.position.y += p.vy*dt; p.m.position.z += p.vz*dt; if (p.m.position.y < .2){ p.m.position.y=.2; p.vy*=-.3; p.vx*=.7; p.vz*=.7; } p.m.rotation.x += dt*6; p.m.material.opacity = Math.min(1, p.life*1.5); if (p.life <= 0) p.m.visible=false; } }
@@ -1424,7 +1507,8 @@ function updateCar(dt){
   }
   car.wasWet = wet;
   car.dip = (car.dip||0) + (((wet ? -Math.min(.95, .35 + depth*.6) + Math.sin(clock.elapsedTime*2.6)*.06 : 0)) - (car.dip||0)) * Math.min(1, 4*dt);
-  const gh = Math.max(terrainH(car.x, car.z), SEA_Y); // in the sea the truck floats at the surface, wheels under water up to the chassis
+  const th = terrainH(car.x, car.z), gh = Math.max(th, SEA_Y); // in the sea the truck floats at the surface, wheels under water up to the chassis
+  if (started){ if (th < SEA_Y + .3) achieve('mar'); if (Math.abs(car.speed) > 3) achieve('arranque'); if (Math.hypot(car.x-ISLET[0], car.z-ISLET[1]) < 3) achieve('islote'); }
   kart.position.set(car.x, gh + car.dip + car.y, car.z);
   kart.rotation.y = car.h;
   // tilt with the slope
@@ -1508,6 +1592,7 @@ function updateBodies(dt){
         c.spin += (Math.random()-.5)*j;
         hitMass += c.mass;
         if (c.kind==='pin' || ((c.kind==='brick' || c.kind==='fence') && j > 2)) c.lying = true;
+        if (c.kind==='letter' && j > 1) achieve('letras'); if (c.kind==='brick' && j > 2) achieve('muro');
         camShake.v = Math.min(1, camShake.v + j*.05*c.mass);
         // one impact sound every 45 ms at most: a crumbling wall used to fire ~180 sounds in a single frame and froze it
         if (j > 1.2 && performance.now() - sndGate > 45){ sndGate = performance.now(); if (c.kind==='letter' || c.kind==='brick') audio.clang(j); else if (c.kind==='box' || c.kind==='fence') audio.knock(j); else audio.bump(j); }
