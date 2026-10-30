@@ -929,72 +929,6 @@ const grass = new T.InstancedMesh(grassGeo, grassMat, GRASS_N); grass.receiveSha
   grass.count = i; grass.instanceMatrix.needsUpdate = true; if (grass.instanceColor) grass.instanceColor.needsUpdate = true; }
 grass.frustumCulled = false;
 scene.add(grass);
-
-// ---------- tracks: the truck flattens the grass it drives over and leaves tire marks behind ----------
-// lookup grid for the tufts, so each wheel only checks the grass around it instead of all 9000
-const GCELL = 3, grassIdx = new Map(), grassPos = new Float32Array(GRASS_N*2), grassFlat = new Uint8Array(GRASS_N);
-{ const m = new T.Matrix4();
-  for (let i=0;i<grass.count;i++){ grass.getMatrixAt(i, m); const x=m.elements[12], z=m.elements[14]; grassPos[i*2]=x; grassPos[i*2+1]=z;
-    const k = Math.floor(x/GCELL)*4096 + Math.floor(z/GCELL); let a = grassIdx.get(k); if (!a) grassIdx.set(k, a=[]); a.push(i); } }
-const flatM = new T.Matrix4(), flatQ = new T.Quaternion(), tiltQ = new T.Quaternion(), flatP = new T.Vector3(), flatS = new T.Vector3(), flatCol = new T.Color(), tiltAxis = new T.Vector3();
-function flattenGrass(x, z, r, dirX, dirZ){
-  let changed = false;
-  const ix = Math.floor(x/GCELL), iz = Math.floor(z/GCELL);
-  tiltAxis.set(dirZ, 0, -dirX).normalize(); tiltQ.setFromAxisAngle(tiltAxis, 1.2); // lean the way the truck went
-  for (let dx=-1; dx<=1; dx++) for (let dz=-1; dz<=1; dz++){
-    const a = grassIdx.get((ix+dx)*4096 + iz+dz); if (!a) continue;
-    for (let n=0;n<a.length;n++){ const i = a[n]; if (grassFlat[i]) continue;
-      const gx=grassPos[i*2], gz=grassPos[i*2+1]; if ((gx-x)*(gx-x)+(gz-z)*(gz-z) > r*r) continue;
-      grassFlat[i] = 1; changed = true;
-      grass.getMatrixAt(i, flatM); flatM.decompose(flatP, flatQ, flatS);
-      flatQ.premultiply(tiltQ); flatS.y *= .45; flatM.compose(flatP, flatQ, flatS); grass.setMatrixAt(i, flatM);
-      grass.getColorAt(i, flatCol); flatCol.multiplyScalar(.7); grass.setColorAt(i, flatCol); // trodden grass looks darker
-    }
-  }
-  if (changed){ grass.instanceMatrix.needsUpdate = true; grass.instanceColor.needsUpdate = true; }
-}
-// tire marks: a ring buffer of small tread stamps laid under the rear wheels; the oldest get overwritten
-const TRACK_N = 2400;
-const trackTex = tex(64,64,(g,w,h)=>{ g.clearRect(0,0,w,h); g.fillStyle='#fff'; for (let y=3;y<h;y+=12) g.fillRect(8,y,w-16,6); });
-const trackGeo = new T.PlaneGeometry(.52,.62); trackGeo.rotateX(-Math.PI/2);
-const tracks = new T.InstancedMesh(trackGeo, new T.MeshBasicMaterial({map:trackTex, color:0xffffff, transparent:true, opacity:.55, depthWrite:false}), TRACK_N);
-// per-instance colors must exist before the first render: this Three.js build compiles the shader once and never adds them later
-tracks.instanceColor = new T.InstancedBufferAttribute(new Float32Array(TRACK_N*3), 3);
-tracks.frustumCulled = false; tracks.count = 0; scene.add(tracks);
-// a wider, soft dark band under the whole truck: trodden ground, fading out at the sides
-const TRAIL_N = TRACK_N/2;
-const trailTex = tex(64,32,(g,w,h)=>{ g.clearRect(0,0,w,h); const gr = g.createLinearGradient(0,0,w,0); gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(.3,'rgba(255,255,255,1)'); gr.addColorStop(.7,'rgba(255,255,255,1)'); gr.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=gr; g.fillRect(0,0,w,h); });
-const trailGeo = new T.PlaneGeometry(3.4,.74); trailGeo.rotateX(-Math.PI/2);
-const trail = new T.InstancedMesh(trailGeo, new T.MeshBasicMaterial({map:trailTex, color:0xffffff, transparent:true, opacity:.3, depthWrite:false}), TRAIL_N);
-trail.instanceColor = new T.InstancedBufferAttribute(new Float32Array(TRAIL_N*3), 3);
-trail.frustumCulled = false; trail.count = 0; scene.add(trail);
-let trailI = 0;
-const trackM = new T.Matrix4(), trackQ = new T.Quaternion(), trackP = new T.Vector3(), trackS = new T.Vector3(), trackCol = new T.Color(), trackUp = new T.Vector3(0,1,0);
-let trackI = 0, trackLastX = 0, trackLastZ = 2;
-function updateTracks(){
-  if (car.air || Math.abs(car.speed) < .4){ trackLastX = car.x; trackLastZ = car.z; return; }
-  const d = Math.hypot(car.x-trackLastX, car.z-trackLastZ); if (d < .58) return;
-  trackLastX = car.x; trackLastZ = car.z;
-  const dirX = Math.sin(car.h), dirZ = Math.cos(car.h), sideX = Math.cos(car.h), sideZ = -Math.sin(car.h), fwd = car.speed < 0 ? -1 : 1;
-  trackQ.setFromAxisAngle(trackUp, car.h);
-  const cx = car.x - dirX, cz = car.z - dirZ, ch = terrainH(cx,cz);
-  if (ch >= SEA_Y + .4){ // no marks on water
-    trackP.set(cx, ch+.04, cz); trackS.set(1, 1, Math.max(1, d/.74)); trackM.compose(trackP, trackQ, trackS); trail.setMatrixAt(trailI, trackM);
-    trackCol.set(grassiness(cx,cz,ch) > .45 ? 0x2c3a1e : 0xa88a5e); trail.setColorAt(trailI, trackCol);
-    trailI = (trailI+1) % TRAIL_N; if (trail.count < TRAIL_N) trail.count++;
-    trail.instanceMatrix.needsUpdate = true; trail.instanceColor.needsUpdate = true;
-  }
-  for (const s of [-1.3, 1.3]){ // the two rear wheels
-    const wx = car.x + sideX*s - dirX*1.25, wz = car.z + sideZ*s - dirZ*1.25;
-    const h = terrainH(wx,wz); if (h < SEA_Y + .4) continue;
-    flattenGrass(wx, wz, .95, dirX*fwd, dirZ*fwd);
-    trackP.set(wx, h+.05, wz); trackS.set(1, 1, Math.max(1, d/.62));
-    trackM.compose(trackP, trackQ, trackS); tracks.setMatrixAt(trackI, trackM);
-    trackCol.set(grassiness(wx,wz,h) > .45 ? 0x2e3a22 : 0x7a6240); tracks.setColorAt(trackI, trackCol);
-    trackI = (trackI+1) % TRACK_N; if (tracks.count < TRACK_N) tracks.count++;
-  }
-  tracks.instanceMatrix.needsUpdate = true; if (tracks.instanceColor) tracks.instanceColor.needsUpdate = true;
-}
 // pebbles and shells
 const pebGeo = new T.DodecahedronGeometry(.16,0), pebMat = new T.MeshStandardMaterial({color:0xffffff, roughness:.9});
 const pebbles = new T.InstancedMesh(pebGeo, pebMat, 800); pebbles.castShadow = true;
@@ -1418,7 +1352,6 @@ function updateCar(dt){
   else if (car.hop) car.h += car.steer * 1.2 * dt;
   car.x += Math.sin(car.h) * car.speed * dt;
   car.z += Math.cos(car.h) * car.speed * dt;
-  if (started) updateTracks();
 
   // flight
   if (car.air){
