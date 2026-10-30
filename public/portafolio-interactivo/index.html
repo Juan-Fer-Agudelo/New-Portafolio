@@ -105,12 +105,17 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 .keys{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.04em;display:flex;gap:14px;flex-wrap:wrap}
 .keys kbd{font:700 11px var(--f-mono);color:var(--ink);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;margin-right:4px}
 
-.touch{display:none;pointer-events:auto;width:100%;justify-content:space-between}
-.touch .grp{display:flex;gap:10px}
-.touch button{width:62px;height:62px;border-radius:16px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel) 80%,transparent);color:var(--ink);font:700 22px var(--f-mono);touch-action:none;user-select:none;-webkit-user-select:none}
-.touch button.on{background:var(--kart);color:var(--deep);border-color:var(--kart)}
-.touch button.jump{background:var(--coral);border-color:var(--coral);color:var(--ink)}
-@media (pointer:coarse){.touch{display:flex}.keys{display:none}}
+/* touch controls: drag anywhere on the right half to drive (a stick appears under the finger); one big jump button on the left */
+.touch{display:none}
+.stickzone{position:fixed;top:0;right:0;bottom:0;width:50%;touch-action:none;pointer-events:auto;z-index:3;user-select:none;-webkit-user-select:none}
+.stickzone .hint{position:absolute;left:50%;bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 112px);transform:translateX(-50%);white-space:nowrap;font:600 12px var(--f-body);color:var(--ink);background:color-mix(in srgb,var(--panel) 80%,transparent);border:1px solid var(--line);border-radius:999px;padding:7px 12px;transition:opacity .5s;pointer-events:none}
+.stickzone.used .hint{opacity:0}
+.stick{position:absolute;width:124px;height:124px;margin:-62px 0 0 -62px;border-radius:50%;border:2px solid #f6efe0aa;background:#1d2a3a66;pointer-events:none;--dx:0px;--dy:0px}
+.stick i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px;border-radius:50%;background:var(--kart);box-shadow:0 4px 12px #0006;transform:translate(var(--dx),var(--dy))}
+.jump{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 14px);width:92px;height:92px;border-radius:50%;border:0;background:var(--coral);color:var(--ink);box-shadow:0 6px 18px #0005;z-index:3;display:grid;place-items:center;gap:0;touch-action:none;user-select:none;-webkit-user-select:none;pointer-events:auto;padding:0}
+.jump b{font:800 26px/1 var(--f-mono)}.jump span{font:800 11px var(--f-display);letter-spacing:.08em}
+.jump:active{transform:scale(.94)}
+@media (pointer:coarse){.touch{display:block}.keys{display:none}.hud .bottom{flex-direction:column;align-items:center;gap:8px}.sound.ach{margin-right:0}} /* the pills sit between the jump button and the minimap */
 
 .panel{position:fixed;top:50%;right:max(16px,env(safe-area-inset-right,0px));width:min(380px,calc(100vw - 32px));max-height:min(78vh,640px);overflow:auto;
   transform:translate(calc(100% + 40px),-50%);transition:transform .45s cubic-bezier(.2,.9,.25,1.15);
@@ -146,7 +151,7 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 }
 
 /* start screen: the island is already visible behind, the truck waits inside a glowing ring and a hand-written "click to start" points at it */
-.intro{position:fixed;inset:0;background:var(--deep);transition:opacity .5s,background .8s;cursor:pointer;
+.intro{position:fixed;inset:0;z-index:40;background:var(--deep);transition:opacity .5s,background .8s;cursor:pointer;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .intro.ready{background:transparent}
 .intro.gone{opacity:0;pointer-events:none}
@@ -182,11 +187,11 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
     <div class="keys"><span><kbd>W A S D</kbd>o flechas para conducir</span><span><kbd>Espacio</kbd>saltar</span><span><kbd>Shift</kbd>freno</span><span><kbd>R</kbd>volver al inicio</span><span><kbd>M</kbd>música</span><span><kbd>P</kbd>mapa</span><span><kbd>L</kbd>logros</span></div>
     <button class="sound ach" id="achbtn" type="button" aria-label="Ver los logros"><span aria-hidden="true">🏆</span><span id="achcount">Logros 0/0</span></button>
     <button class="sound" id="sound" aria-pressed="false" aria-label="Activar o silenciar la música"><span class="bars"><i></i><i></i><i></i></span><span id="sound-lbl">Música</span></button>
-    <div class="touch">
-      <div class="grp"><button id="t-left" data-k="left" aria-label="Girar a la izquierda">◀</button><button id="t-right" data-k="right" aria-label="Girar a la derecha">▶</button></div>
-      <div class="grp"><button id="t-jump" class="jump" aria-label="Saltar">⤒</button><button id="t-back" data-k="back" aria-label="Reversa">▼</button><button id="t-fwd" data-k="fwd" aria-label="Acelerar">▲</button></div>
-    </div>
   </div>
+</div>
+<div class="touch" id="touch">
+  <div class="stickzone" id="stickzone" aria-label="Zona táctil: arrastra para conducir"><div class="stick" id="stick" hidden><i></i></div><span class="hint">Toca y arrastra aquí para conducir</span></div>
+  <button id="t-jump" class="jump" type="button" aria-label="Saltar"><b>⤒</b><span>SALTAR</span></button>
 </div>
 
 <aside class="panel" id="panel" aria-live="polite"></aside>
@@ -1300,12 +1305,18 @@ addEventListener('keydown', e=>{
 });
 addEventListener('keyup', e=>{ if (keyMap[e.code]) keys[keyMap[e.code]] = false; });
 addEventListener('blur', ()=>{ for (const k in keys) keys[k]=false; });
-document.querySelectorAll('.touch button').forEach(b=>{
-  const k = b.dataset.k;
-  const on = e=>{ e.preventDefault(); keys[k]=true; b.classList.add('on'); try{b.setPointerCapture(e.pointerId);}catch(_){} };
-  const off = ()=>{ keys[k]=false; b.classList.remove('on'); };
-  b.addEventListener('pointerdown', on); b.addEventListener('pointerup', off); b.addEventListener('pointercancel', off); b.addEventListener('lostpointercapture', off);
-});
+// virtual stick: the finger's first touch is the centre; dragging up/down accelerates/reverses and left/right steers
+const stick = {x:0, y:0, id:null, ox:0, oy:0};
+{ const zone = document.getElementById('stickzone'), knob = document.getElementById('stick'), R = 56, DEAD = .12;
+  const release = e => { if (e.pointerId !== stick.id) return; stick.id = null; stick.x = stick.y = 0; knob.hidden = true; };
+  zone.addEventListener('pointerdown', e => { if (stick.id !== null) return; e.preventDefault(); stick.id = e.pointerId; stick.ox = e.clientX; stick.oy = e.clientY;
+    const zr = zone.getBoundingClientRect(); knob.style.left = (e.clientX - zr.left) + 'px'; knob.style.top = (e.clientY - zr.top) + 'px'; knob.style.setProperty('--dx','0px'); knob.style.setProperty('--dy','0px'); knob.hidden = false;
+    zone.classList.add('used'); try{ zone.setPointerCapture(e.pointerId); }catch(_){} });
+  zone.addEventListener('pointermove', e => { if (e.pointerId !== stick.id) return; e.preventDefault();
+    const dx = e.clientX - stick.ox, dy = e.clientY - stick.oy, d = Math.hypot(dx,dy), k = d > R ? R/d : 1;
+    const nx = dx*k/R, ny = -dy*k/R; stick.x = Math.abs(nx) < DEAD ? 0 : nx; stick.y = Math.abs(ny) < DEAD ? 0 : ny;
+    knob.style.setProperty('--dx', (dx*k)+'px'); knob.style.setProperty('--dy', (dy*k)+'px'); });
+  zone.addEventListener('pointerup', release); zone.addEventListener('pointercancel', release); zone.addEventListener('lostpointercapture', release); }
 document.getElementById('t-jump').addEventListener('pointerdown', e=>{ e.preventDefault(); jump(); });
 function resetCar(){ car.x=0; car.z=2; car.h=START_H; car.speed=0; car.y=0; car.vy=0; car.air=false; body.rotation.set(0,0,0); }
 
@@ -1439,12 +1450,12 @@ function launch(){
 function updateCar(dt){
   car.y = car.y||0; car.vy = car.vy||0;
   const grounded = !car.air, control = grounded || car.hop; // a jump keeps some control; a tank launch doesn't
-  const thr = started && control ? (keys.fwd?1:0) - (keys.back?1:0) : 0;
+  const thr = started && control ? Math.max(-1, Math.min(1, (keys.fwd?1:0) - (keys.back?1:0) + stick.y)) : 0;
   car.speed += thr * (thr > 0 ? 26 : 20) * (grounded ? 1 : .35) * dt;
   car.speed -= car.speed * (grounded ? (thr ? .55 : 1.6) : .15) * dt;
   if (keys.brake && started && grounded) car.speed -= car.speed * 7 * dt;
   car.speed = Math.max(-8, Math.min(grounded ? 17 : 24, car.speed));
-  const want = started && control ? (keys.left?1:0) - (keys.right?1:0) : 0;
+  const want = started && control ? Math.max(-1, Math.min(1, (keys.left?1:0) - (keys.right?1:0) - stick.x)) : 0;
   car.steer += (want - car.steer) * Math.min(1, 10*dt);
   if (grounded) car.h += car.steer * 2.3 * dt * Math.max(-1, Math.min(1, car.speed/5));
   else if (car.hop) car.h += car.steer * 1.2 * dt;
