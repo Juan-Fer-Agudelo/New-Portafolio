@@ -375,9 +375,10 @@ const ISLET = [60,-48]; // a little grassy islet with a pink tree in the middle 
 const isletK = (x,z) => { const u = Math.max(0, Math.min(1, (Math.hypot(x-ISLET[0],z-ISLET[1]) - 2.6)/3.0)); return u*u*(3-2*u); }; // 0 on the flat top, 1 past the shore
 const ZPOS = [[0,-40],[42,-8],[-36,-10],[0,42]];
 const MON = [coastX(-42)+25, -42], MON_R = 12, MON_A = Math.atan2(-MON[1], -MON[0]); // the monument plaza sits on the wide south-west beach, well away from the bowling
+const FOUNT = [62,6]; // the magic fountain, in the open meadow on the east side
 const PPOS = [[30,-68],[58,-72],[80,-30],[82,0],[76,30],[56,60],[40,74],[-8,80],[-52,-20],[-48,-72],[8,-84],[-16,58]]; // project stations, spread around the whole island // the monument plaza: a half-moon of stone statues facing its centre, away from the projects
-const FLATS = [[-34,-54,9,17],[0,15,13,2.5],[MON[0],MON[1],19,19]]; // x, z, half-width, half-length: flattened rectangles (bowling lane, name, monuments)
-const dunes = [[62,-34,4.5,22],[52,48,3.5,18],[-6,-78,5,26],[88,10,6,30],[20,86,4,24],[-30,70,3,16],[70,-75,5,28],[-70,-70,4,22]];
+const FLATS = [[-34,-54,9,17],[0,15,13,2.5],[MON[0],MON[1],19,19],[FOUNT[0],FOUNT[1],13,13]]; // x, z, half-width, half-length: flattened rectangles (bowling lane, name, monuments)
+const dunes = [[62,-34,4.5,22],[88,10,6,30],[-30,70,3,16],[70,-75,5,28]]; // four big dunes (there used to be eight)
 function terrainH(x,z){
   const r = Math.hypot(x,z);
   let h = 0;
@@ -616,6 +617,7 @@ function clearSpot(x,z,r){
   if (Math.hypot(x,z) < 11) return false;
   if (Math.hypot(x-ISLET[0], z-ISLET[1]) < 12) return false; // the islet and its pond keep only their own tree
   if (Math.hypot(x-MON[0], z-MON[1]) < 21) return false; // the monument plaza stays open
+  if (Math.hypot(x-FOUNT[0], z-FOUNT[1]) < 15) return false; // and the fountain
   if (Math.abs(x) < 16 && Math.abs(z-15) < 6) return false;
   for (const pr of projects){ if (Math.hypot(x-pr.x,z-pr.z) < r+PROJ_R+3) return false; }
   for (const zn of zones){
@@ -871,7 +873,7 @@ const E = .16, edgeX = new T.BoxGeometry(CR+E,E,E), edgeY = new T.BoxGeometry(E,
 for (const a of [-hc,hc]) for (const b of [-hc,hc]){ edges.push([edgeX,0,a,b,0], [edgeY,a,0,b,0], [edgeZ,a,b,0,0]); }
 const crateFrameGeo = mergeBoxes(edges);
 const MON_CRATES = [0,1].map(lvl=>[MON[0]+Math.cos(MON_A+Math.PI/2)*5.2, MON[1]+Math.sin(MON_A+Math.PI/2)*5.2, lvl]); // two crates stacked beside the liberty statue
-[[8,-9],[-9,-11],[14,6],[-15,-3],[30,-4],[-30,8],[10,30],[-24,-24],[26,26],[-34,-10],[52,-50],[48,30],[-22,52],[62,8],[-60,-60],[20,-60],[72,52],[-10,80],[84,-20],[40,80],...MON_CRATES].forEach(([x,z,lvl=0])=>{ if (inWater(x,z,-.6)) return; // lvl: how many crates it sits on top of
+[[8,-9],[-9,-11],[14,6],[-15,-3],[30,-4],[-30,8],[10,30],[-24,-24],[26,26],[-34,-10],[52,-50],[48,30],[-22,52],[48,20],[-60,-60],[20,-60],[72,52],[-10,80],[84,-20],[40,80],...MON_CRATES].forEach(([x,z,lvl=0])=>{ if (inWater(x,z,-.6)) return; // lvl: how many crates it sits on top of
   const g = new T.Group();
   for (const [geo,m] of [[crateCoreGeo,crateCore],[crateSlatGeo,crateSlat],[crateFrameGeo,crateFrame]]){ const p = new T.Mesh(geo, m); p.castShadow = true; g.add(p); }
   g.rotation.y = ((x*13 + z*7) % 60) / 60 * .8; // each crate sits at a slightly different angle
@@ -1093,13 +1095,13 @@ const budGeo = new T.SphereGeometry(.05, 7, 6);
 const ZAX = new T.Vector3(0,0,1), YAX = new T.Vector3(0,1,0), XAX = new T.Vector3(1,0,0);
 const fq = new T.Quaternion(), fq2 = new T.Quaternion(), fq3 = new T.Quaternion(), fv = new T.Vector3(), fv2 = new T.Vector3(), fs = new T.Vector3(), fm = new T.Matrix4(), fc = new T.Color(), fdir = new T.Vector3(), ftan = new T.Vector3();
 function pushInst(list, pos, q, s, sy, col){ fs.set(s, sy, s); fm.compose(pos, q, fs); list.push(fm.clone(), col.clone()); }
-const bushCore = new T.MeshStandardMaterial({color:0x1d4527, roughness:1}), dryCore = new T.MeshStandardMaterial({color:0x4f5c34, roughness:1});
+const bushCore = new T.MeshStandardMaterial({color:0x1d4527, roughness:1}), dryCore = new T.MeshStandardMaterial({color:0x4f5c34, roughness:1}), goldCore = new T.MeshStandardMaterial({color:0x7a5a14, roughness:1});
 // a bush: a dark core plus leaves scattered over an ellipsoid, each facing outward, tilted and rolled at random
 // style: 'rose' (red roses), 'green', 'dry' (sage-coloured, by the sand) or 'flower' (little yellow and white blooms)
-function bush(x, z, s, style){
-  const y = terrainH(x,z), rx = .95*s*(.85+rnd()*.3), ry = .66*s*(.9+rnd()*.25), rz = .95*s*(.85+rnd()*.3), cy = y + ry*.78;
-  const core = new T.Mesh(new T.IcosahedronGeometry(1,1), style==='dry' ? dryCore : bushCore); core.position.set(x,cy,z); core.scale.set(rx*.84, ry*.86, rz*.84); core.castShadow = true; scene.add(core);
-  const dry = style==='dry', hue = dry ? .19 : .29 + rnd()*.09, sat = dry ? .3 : .5, lig = dry ? .4 : .3;
+function bush(x, z, s, style, y0){
+  const y = y0 === undefined ? terrainH(x,z) : y0, rx = .95*s*(.85+rnd()*.3), ry = .66*s*(.9+rnd()*.25), rz = .95*s*(.85+rnd()*.3), cy = y + ry*.78;
+  const core = new T.Mesh(new T.IcosahedronGeometry(1,1), style==='dry' ? dryCore : style==='gold' ? goldCore : bushCore); core.position.set(x,cy,z); core.scale.set(rx*.84, ry*.86, rz*.84); core.castShadow = true; scene.add(core);
+  const dry = style==='dry', gold = style==='gold', hue = gold ? .12 + rnd()*.03 : dry ? .19 : .29 + rnd()*.09, sat = gold ? .72 : dry ? .3 : .5, lig = gold ? .46 : dry ? .4 : .3;
   const n = Math.round(290 * rx * rz);
   for (let i=0;i<n;i++){
     const u = rnd()*2-1, a = rnd()*6.283, r = Math.sqrt(1-u*u), k = .86 + rnd()*.22; // uniform over a sphere, stretched onto the ellipsoid
@@ -1152,6 +1154,70 @@ let sb = 0, sbTries = 0;
 while (sb < 60 && sbTries < 8000){ sbTries++; if (shrubAt((rnd()-.5)*230, (rnd()-.5)*230)) sb++; }
 sb = 0; sbTries = 0; // and a second helping around the plaza, where the player spends most of the time
 while (sb < 34 && sbTries < 6000){ sbTries++; const a = rnd()*6.283, R = 14 + rnd()*48; if (shrubAt(Math.cos(a)*R, Math.sin(a)*R)) sb++; }
+// ---------- the fountain: octagonal basin, rune obelisk, stone gate with a magenta waterfall, splashes and glyphs ----------
+const fountain = { splash: [], glyphs: [], rings: [], t: 0 };
+{
+  const fg = new T.Group(); fg.position.set(FOUNT[0], 0, FOUNT[1]); scene.add(fg);
+  const fstone = new T.MeshStandardMaterial({color:0x5a4a78, roughness:.85}), fdark = new T.MeshStandardMaterial({color:0x3b2d58, roughness:.9}), salmon = new T.MeshStandardMaterial({color:0xf2a08a, roughness:.7});
+  const fadd = (geo, m, x, y, z, ry=0, shadow=true)=>{ const o=new T.Mesh(geo, m); o.position.set(x,y,z); o.rotation.y=ry; o.castShadow=o.receiveShadow=shadow; fg.add(o); return o; };
+  // basin: octagonal wall with a salmon lip, dark floor and a teal water sheet with slow-swirling streaks
+  for (let i=0;i<8;i++){ const a=(i+.5)/8*Math.PI*2, r=7.75*Math.cos(Math.PI/8); fadd(new T.BoxGeometry(6.0,.9,.95), fstone, Math.sin(a)*r,.45,Math.cos(a)*r, a); fadd(new T.BoxGeometry(6.1,.14,1.1), salmon, Math.sin(a)*r,.96,Math.cos(a)*r, a); }
+  fadd(new T.CylinderGeometry(6.9,6.9,.1,8), new T.MeshStandardMaterial({color:0x123f46, roughness:.9}), 0,.3,0, 0, false);
+  const fwater = fadd(new T.CylinderGeometry(6.9,6.9,.06,8), new T.MeshStandardMaterial({color:0x2a9a98, roughness:.18, metalness:.1, transparent:true, opacity:.85}), 0,.78,0, 0, false);
+  const flowTex = tex(256,256,(g,w)=>{ g.clearRect(0,0,w,w); g.strokeStyle='rgba(255,255,255,.55)'; g.lineWidth=2; for (let i=0;i<70;i++){ const r=20+Math.random()*105, a=Math.random()*6.3, len=.4+Math.random()*1.2; g.beginPath(); g.arc(w/2,w/2,r,a,a+len); g.stroke(); } });
+  const flow = new T.Mesh(new T.CircleGeometry(6.8,8), new T.MeshBasicMaterial({map:flowTex, transparent:true, opacity:.5, depthWrite:false})); flow.rotation.x=-Math.PI/2; flow.position.y=.83; fg.add(flow); fountain.flow = flow;
+  const rimGlow = new T.Mesh(new T.RingGeometry(6.6,6.95,8), new T.MeshBasicMaterial({color:0xa8fff6, transparent:true, opacity:.5, depthWrite:false})); rimGlow.rotation.x=-Math.PI/2; rimGlow.rotation.z=Math.PI/8; rimGlow.position.y=.84; fg.add(rimGlow); fountain.rim = rimGlow;
+  // obelisk on a stepped base, with glowing runes on its faces
+  fadd(new T.BoxGeometry(3.2,.6,3.2), fstone, -2.4,.6,1.6, .3); fadd(new T.BoxGeometry(2.3,.5,2.3), fdark, -2.4,1.1,1.6, .3);
+  const obelisk = fadd(new T.CylinderGeometry(.55,1.15,5.6,4), fstone, -2.4,4.1,1.6, Math.PI/4+.3); obelisk.geometry.computeVertexNormals();
+  fadd(new T.CylinderGeometry(.62,.62,.3,4), salmon, -2.4,2.6,1.6, Math.PI/4+.3);
+  const runeTex = tex(64,64,(g,w)=>{ g.clearRect(0,0,w,w); g.strokeStyle='#fff'; g.lineWidth=5; g.lineCap='round'; g.beginPath(); g.moveTo(16,12); g.lineTo(48,12); g.moveTo(32,12); g.lineTo(32,52); g.moveTo(18,52); g.lineTo(46,52); g.moveTo(20,32); g.lineTo(44,32); g.stroke(); });
+  const runeMats = [new T.MeshBasicMaterial({map:runeTex, color:0x5ff2ff, transparent:true, depthWrite:false}), new T.MeshBasicMaterial({map:runeTex, color:0xffa64a, transparent:true, depthWrite:false})];
+  for (let i=0;i<8;i++){ const r=new T.Mesh(new T.PlaneGeometry(.34,.34), runeMats[i%2]); const side = i%4, ang = Math.PI/4+.3 + side*Math.PI/2 + Math.PI/4, rad = 1.12 - (i/8)*.5, y = 2.2 + (i/8)*3.2;
+    r.position.set(-2.4 + Math.sin(ang)*rad, y, 1.6 + Math.cos(ang)*rad); r.rotation.y = ang; fg.add(r); }
+  // gate: two pillars, a lintel and two overhanging roof slabs with salmon edges
+  [-2.8, 2.8].forEach(x=>{ fadd(new T.BoxGeometry(1.7,7,1.7), fstone, x,3.5,-3.4); fadd(new T.BoxGeometry(1.95,.2,1.95), salmon, x,5.7,-3.4); fadd(new T.BoxGeometry(2.1,.3,2.1), fdark, x,.15,-3.4); });
+  fadd(new T.BoxGeometry(8.2,1.3,1.8), fdark, 0,6.4,-3.4);
+  fadd(new T.BoxGeometry(9.8,.7,4.8), fstone, 0,7.4,-3.4); fadd(new T.BoxGeometry(10.0,.14,5.0), salmon, 0,7.0,-3.4);
+  fadd(new T.BoxGeometry(10.8,.6,3.8), fstone, .3,8.1,-3.9, .18); fadd(new T.BoxGeometry(11.0,.14,4.0), salmon, .3,7.78,-3.9, .18);
+  // the waterfall: a dark curtain behind a scrolling magenta streak sheet, pouring from the lintel into the basin
+  const fallTex = tex(128,256,(g,w,h)=>{ g.clearRect(0,0,w,h); for (let i=0;i<60;i++){ const x=Math.random()*w, len=30+Math.random()*120, y=Math.random()*h; g.strokeStyle=`rgba(255,255,255,${.25+Math.random()*.6})`; g.lineWidth=1+Math.random()*3; g.beginPath(); g.moveTo(x,y); g.lineTo(x,y+len); g.stroke(); if (y+len>h){ g.beginPath(); g.moveTo(x,y-h); g.lineTo(x,y+len-h); g.stroke(); } } });
+  fallTex.wrapS = fallTex.wrapT = T.RepeatWrapping;
+  const curtain = new T.Mesh(new T.PlaneGeometry(3.6,5.3), new T.MeshBasicMaterial({color:0x4a1272, transparent:true, opacity:.92, depthWrite:false})); curtain.position.set(0,3.45,-3.0); fg.add(curtain);
+  const fallMats = [new T.MeshBasicMaterial({map:fallTex, color:0xd23cff, transparent:true, opacity:.95, depthWrite:false, blending:T.AdditiveBlending}), new T.MeshBasicMaterial({map:fallTex.clone(), color:0xff7af2, transparent:true, opacity:.6, depthWrite:false, blending:T.AdditiveBlending})];
+  fallMats[1].map.wrapS = fallMats[1].map.wrapT = T.RepeatWrapping; fallMats[1].map.repeat.set(1.6,1.3); fallMats[1].map.needsUpdate = true;
+  fountain.falls = fallMats.map((m,i)=>{ const f=new T.Mesh(new T.PlaneGeometry(3.4 - i*.6, 5.3), m); f.position.set(0, 3.45, -2.92 + i*.06); fg.add(f); return f; });
+  // splash drops at the foot of the waterfall, and expanding ripple rings
+  const dropGeo = new T.IcosahedronGeometry(.09,0), dropMat = new T.MeshBasicMaterial({color:0xffc2f6, transparent:true, opacity:.9});
+  for (let i=0;i<60;i++){ const d=new T.Mesh(dropGeo, dropMat); fg.add(d); fountain.splash.push({m:d, x:0, y:-1, z:0, vx:0, vy:0, vz:0, s:.6+Math.random()*.8}); }
+  for (let i=0;i<3;i++){ const r=new T.Mesh(new T.RingGeometry(.5,.62,24), new T.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:.4, depthWrite:false})); r.rotation.x=-Math.PI/2; r.position.set(0,.86,-2.6); fg.add(r); fountain.rings.push({m:r, ph:i/3}); }
+  // glyphs drifting up around the obelisk
+  const glyphTex = tex(64,64,(g,w)=>{ g.clearRect(0,0,w,w); g.strokeStyle='#fff'; g.lineWidth=6; g.lineCap='round'; g.beginPath(); g.moveTo(32,8); g.lineTo(32,56); g.moveTo(16,22); g.lineTo(32,36); g.lineTo(48,22); g.stroke(); });
+  const glyphMats = [new T.MeshBasicMaterial({map:glyphTex, color:0x5ff2ff, transparent:true, depthWrite:false}), new T.MeshBasicMaterial({map:glyphTex, color:0xffa64a, transparent:true, depthWrite:false}), new T.MeshBasicMaterial({map:glyphTex, color:0xffffff, transparent:true, depthWrite:false})];
+  for (let i=0;i<30;i++){ const m=new T.Mesh(new T.PlaneGeometry(.28,.28), glyphMats[i%3].clone()); fg.add(m); fountain.glyphs.push({m, a:Math.random()*6.3, r:1.3+Math.random()*1.4, y:Math.random()*5, v:.35+Math.random()*.5, ph:Math.random()*6}); }
+  // lily pads with a pink bloom, a lantern by the steps, golden bushes around and up on the roof
+  [[1.2,-3.6],[-1.5,-4.8],[0.4,4.6],[-4.6,-1.2]].forEach(([x,z],i)=>{ const pad=fadd(new T.CylinderGeometry(.55,.55,.06,12), new T.MeshStandardMaterial({color:0x7cb342, roughness:.9}), x,.82,z, 0, false); pad.scale.x=1.2; if (i%2===0) fadd(new T.SphereGeometry(.16,10,8), new T.MeshStandardMaterial({color:0xff5fb0, emissive:0xff5fb0, emissiveIntensity:.5}), x,.98,z, 0, false); });
+  fadd(new T.BoxGeometry(.5,.5,.5), fdark, 7.4,.25,6.6); fadd(new T.CylinderGeometry(.08,.08,1.6,6), fdark, 7.4,1.3,6.6);
+  fadd(new T.BoxGeometry(.7,.9,.7), new T.MeshStandardMaterial({color:0xffb347, emissive:0xff9a2e, emissiveIntensity:.9}), 7.4,2.4,6.6, 0, false); fadd(new T.ConeGeometry(.6,.4,4), fdark, 7.4,3.05,6.6, Math.PI/4);
+  const fl = new T.PointLight(0xff9a3c, .9, 10, 2); fl.position.set(7.4,2.4,6.6); fg.add(fl);
+  [[9.2,-5.5,1.0],[-9.4,2.5,.9],[6.5,9.0,.8],[-6.5,-8.5,.7]].forEach(([x,z,s])=> bush(FOUNT[0]+x, FOUNT[1]+z, s, 'gold'));
+  bush(FOUNT[0]-3.6, FOUNT[1]-3.4, .65, 'gold', 7.75); bush(FOUNT[0]+2.6, FOUNT[1]-3.9, .6, 'gold', 8.4); bush(FOUNT[0]-2.4, FOUNT[1]+1.6, .45, 'gold', 1.35);
+  // the basin wall keeps the truck out: a ring of small obstacle circles around the octagon
+  for (let i=0;i<16;i++){ const a=i/16*Math.PI*2; obstacles.push({x:FOUNT[0]+Math.cos(a)*7.7, z:FOUNT[1]+Math.sin(a)*7.7, r:1.6}); }
+  obstacles.push({x:FOUNT[0]+7.4, z:FOUNT[1]+6.6, r:.5});
+}
+function updateFountain(t, dt){
+  const f = fountain; f.flow.rotation.z += dt*.18; f.rim.material.opacity = .35 + Math.sin(t*2.2)*.15;
+  f.falls[0].material.map.offset.y -= dt*.9; f.falls[1].material.map.offset.y -= dt*1.4;
+  for (const r of f.rings){ const k = (t*.5 + r.ph) % 1; r.m.scale.setScalar(1 + k*5); r.m.material.opacity = .45*(1-k); }
+  for (const d of f.splash){
+    if (d.y < .85){ d.z = -2.4 + (Math.random()-.5)*1.2; d.x = (Math.random()-.5)*3.0; d.y = .9; d.vz = .5+Math.random()*2.2; d.vx = (Math.random()-.5)*2.5; d.vy = 2 + Math.random()*4.5; }
+    d.vy -= 11*dt; d.x += d.vx*dt; d.y += d.vy*dt; d.z += d.vz*dt; d.m.position.set(d.x,d.y,d.z); d.m.scale.setScalar(d.s*Math.max(.2, Math.min(1, d.vy*.25+.6)));
+  }
+  for (const g of f.glyphs){ g.y += g.v*dt; g.a += dt*.25; if (g.y > 5.8) g.y = .9; const fade = Math.min(1, (g.y-.9)*1.2) * Math.min(1, (5.8-g.y)*.8);
+    g.m.position.set(-2.4 + Math.cos(g.a)*g.r, g.y, 1.6 + Math.sin(g.a)*g.r); g.m.material.opacity = fade*(.5+Math.sin(t*4+g.ph)*.5); g.m.lookAt(camera.position); }
+  if (started && Math.hypot(car.x-FOUNT[0], car.z-FOUNT[1]) < 12) achieve('fuente');
+}
 // bake every leaf, petal and bud into one instanced mesh each
 function bake(list, geo, material, shadow){
   const n = list.length/2, im = new T.InstancedMesh(geo, material, Math.max(1,n));
@@ -1190,7 +1256,7 @@ const grass = new T.InstancedMesh(grassGeo, grassMat, GRASS_N); grass.receiveSha
     // clusters: pick a cluster center, then scatter around it
     const a=rnd()*6.3, R = Math.sqrt(rnd())*112; const cx=Math.cos(a)*R, cz=Math.sin(a)*R;
     for (let k=0;k<14 && i<GRASS_N;k++){ const x=cx+(rnd()-.5)*7, z=cz+(rnd()-.5)*7; const r=Math.hypot(x,z);
-      if (r < 9.6) continue; if (Math.abs(x+34) < 8 && z < -37 && z > -70) continue; if (Math.hypot(x-MON[0],z-MON[1]) < 18.5) continue; if (Math.abs(x) < 12 && Math.abs(z-15) < 1.6) continue; const th = terrainH(x,z); if (th < SEA_Y + .95) continue; if (rnd() > grassiness(x,z,th)) continue;
+      if (r < 9.6) continue; if (Math.abs(x+34) < 8 && z < -37 && z > -70) continue; if (Math.hypot(x-MON[0],z-MON[1]) < 18.5) continue; if (Math.hypot(x-FOUNT[0],z-FOUNT[1]) < 11) continue; if (Math.abs(x) < 12 && Math.abs(z-15) < 1.6) continue; const th = terrainH(x,z); if (th < SEA_Y + .95) continue; if (rnd() > grassiness(x,z,th)) continue;
       if (zones.some(zn => Math.hypot(x-zn.x,z-zn.z) < 5.5)) continue;
       const s=.55+rnd()*.6; pv.set(x, th-.02, z); q.setFromAxisAngle(new T.Vector3(0,1,0), rnd()*6.3); sc.set(s,s*(.8+rnd()*.7),s);
       dm.compose(pv,q,sc); grass.setMatrixAt(i, dm);
@@ -1203,7 +1269,7 @@ scene.add(grass);
 const pebGeo = new T.DodecahedronGeometry(.16,0), pebMat = new T.MeshStandardMaterial({color:0xffffff, roughness:.9});
 const pebbles = new T.InstancedMesh(pebGeo, pebMat, 800); pebbles.castShadow = true;
 { const dm=new T.Matrix4(), q=new T.Quaternion(), sc=new T.Vector3(), pv=new T.Vector3(), col=new T.Color(); let i=0;
-  while (i<800){ const x=(rnd()-.5)*260, z=(rnd()-.5)*260; if (Math.hypot(x,z)<10 || Math.hypot(x-MON[0],z-MON[1])<18 || inWater(x,z,-.3)) continue; const s=.5+rnd()*1.4;
+  while (i<800){ const x=(rnd()-.5)*260, z=(rnd()-.5)*260; if (Math.hypot(x,z)<10 || Math.hypot(x-MON[0],z-MON[1])<18 || Math.hypot(x-FOUNT[0],z-FOUNT[1])<11 || inWater(x,z,-.3)) continue; const s=.5+rnd()*1.4;
     pv.set(x,terrainH(x,z)+.06*s,z); q.setFromEuler(new T.Euler(rnd()*3,rnd()*3,rnd()*3)); sc.set(s,s*.6,s); dm.compose(pv,q,sc); pebbles.setMatrixAt(i,dm);
     col.setHSL(.09, .15+rnd()*.2, .55+rnd()*.3); pebbles.setColorAt(i,col); i++; }
   pebbles.instanceMatrix.needsUpdate = true; if (pebbles.instanceColor) pebbles.instanceColor.needsUpdate = true; }
@@ -1218,6 +1284,7 @@ const mapPOI = [
   {x:33, z:-14, c:'#1d2a3a', label:'Llantas', kind:'play'},
   {x:0, z:9.5, c:'#6a5acd', label:'Letrero 3D', kind:'play'},
   {x:MON[0], z:MON[1], c:'#7d7b76', label:'Monumentos', kind:'play'},
+  {x:FOUNT[0], z:FOUNT[1], c:'#2fa7a0', label:'Fuente', kind:'play'},
   ...projects.map(pr=>({x:pr.x, z:pr.z, c:'#e0452b', label:String(pr.n).padStart(2,'0'), kind:'proj', name:pr.name})),
 ];
 function paintMap(cv, showTruck){
@@ -1622,6 +1689,7 @@ const ACH = [
   {id:'turista', t:'Vuelta completa', d:'Visita las 4 zonas.', n:4},
   {id:'explorador', t:'Explorador', d:'Visita las 12 estaciones de proyectos.', n:12},
   {id:'estatuas', t:'Iconoclasta', d:'Derriba una estatua de la plaza de monumentos.', n:1},
+  {id:'fuente', t:'Fuente mágica', d:'Encuentra la fuente escondida en la pradera del oriente.', n:1},
 ];
 let achState = {}; try { achState = JSON.parse(localStorage.getItem('empleado-logros') || '{}') || {}; } catch(e){}
 const achDone = new Set(ACH.filter(a => (achState[a.id]?.n || 0) >= a.n).map(a => a.id));
@@ -2027,7 +2095,7 @@ function tick(){
   miniT += dt; if (started && miniT > .12){ miniT = 0; paintMini(); }
   for (const d of decals) d.m.material.opacity = d.base*(1-night*.75);
   lampGlass.emissiveIntensity = .3 + night*3; for (const l of lampLights) l.intensity = night*1.6;
-  updateWind(t, dt); updateCar(dt); updateBodies(dt); updateBowling(dt); updateWater(t, dt); updateZones(t);
+  updateWind(t, dt); updateCar(dt); updateBodies(dt); updateBowling(dt); updateWater(t, dt); updateFountain(t, dt); updateZones(t);
   headLight.position.set(car.x + Math.sin(car.h)*3.2, terrainH(car.x,car.z) + car.y + 1.4, car.z + Math.cos(car.h)*3.2);
   skyDome.position.copy(camera.position); stars.position.copy(camera.position);
   for (const d of dust){ if (d.life>0){ d.life -= dt*1.8; d.m.position.y += dt*.6; d.m.scale.setScalar(1+(1-d.life)*1.6); d.m.material.opacity = Math.max(0,d.life)*.45; if (d.life<=0) d.m.visible=false; } }
