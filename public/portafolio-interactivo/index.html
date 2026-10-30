@@ -59,12 +59,19 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
 .maphead .tag{font:700 11px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--kart)}
 .mapwrap{border-radius:14px;overflow:hidden;background:#0f3f66}
 .mapwrap canvas{width:100%;height:auto;display:block;aspect-ratio:1;max-width:100%}
-.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font:500 12px var(--f-mono);color:var(--muted)}
-.legend span{display:flex;align-items:center;gap:6px}
-.legend i{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block}
-.legend i.sq{border-radius:2px}
-.legend .projlist{flex-basis:100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px;margin-top:8px;padding-top:10px;border-top:1px dashed var(--line)}
-.legend .projlist b{color:var(--coral);margin-right:4px}
+.legend{margin-top:14px}
+.legend .ltitle{font:700 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.legend .chips{display:flex;flex-wrap:wrap;gap:8px}
+.legend .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 9px;border-radius:999px;background:#16222f;border:1px solid var(--line);font:600 12px var(--f-body);color:#e8edf3}
+.legend .chip i{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block;box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 28%,transparent)}
+.legend .chip i.sq{border-radius:2px}
+.legend .projlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:6px}
+.legend .mproj{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:#16222f;border:1px solid transparent;transition:border-color .15s,background .15s}
+.legend .mproj:hover{border-color:var(--coral);background:#1a2838}
+.legend .mproj b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--coral);color:#fff;font:800 11px var(--f-mono);display:grid;place-items:center;box-shadow:0 0 0 2px #fff,0 0 0 4px #16222f}
+.legend .mproj span{display:flex;flex-direction:column;min-width:0}
+.legend .mproj strong{font:700 13px/1.25 var(--f-body);color:#f3f6f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend .mproj small{font:500 11px var(--f-mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
 /* achievements: console-style toasts under the name card, and a list of all of them */
 .toasts{position:fixed;top:calc(max(16px,env(safe-area-inset-top,0px)) + 104px);left:max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:10px;z-index:30;pointer-events:none;width:min(330px,calc(100vw - 32px))}
@@ -1326,7 +1333,7 @@ function paintMini(){
   g.fillStyle='#0e4f7a'; g.fillRect(0,0,W,W); g.drawImage(bigCv.__base, sx, sz, view*scale, view*scale, 0,0,W,W);
   g.save(); g.translate(W/2,W/2); g.rotate(-car.h + Math.PI); g.fillStyle='#f2b705'; g.strokeStyle='#1d2a3a'; g.lineWidth=2; g.beginPath(); g.moveTo(0,-8); g.lineTo(5,6); g.lineTo(0,3); g.lineTo(-5,6); g.closePath(); g.fill(); g.stroke(); g.restore();
 }
-document.getElementById('legend').innerHTML = [['#f2b705','Sobre mí'],['#e0452b','Proyectos'],['#2fa28c','Habilidades'],['#6a5acd','Contacto'],['#e0452b','Cajas (vuelo)','sq'],['#5a9b4a','Árboles'],['#1d8fbf','Mar']].map(([c,l,k])=>`<span><i class="${k||''}" style="--c:${c}"></i>${l}</span>`).join('') + '<div class="projlist">' + projects.map(pr=>`<span><b>${String(pr.n).padStart(2,'0')}</b> ${pr.name}</span>`).join('') + '</div>';
+document.getElementById('legend').innerHTML = '<div class="ltitle">Leyenda</div><div class="chips">' + [['#f2b705','Sobre mí'],['#e0452b','Proyectos'],['#2fa28c','Habilidades'],['#6a5acd','Contacto'],['#e0452b','Cajas (vuelo)','sq'],['#5a9b4a','Árboles'],['#1d8fbf','Mar'],['#7d7b76','Monumentos','sq'],['#2fa7a0','Fuente','sq']].map(([c,l,k])=>`<span class="chip"><i class="${k||''}" style="--c:${c}"></i>${l}</span>`).join('') + '</div><div class="ltitle">Proyectos en el mapa</div><div class="projlist">' + projects.map(pr=>`<div class="mproj"><b>${String(pr.n).padStart(2,'0')}</b><span><strong>${pr.name}</strong><small>${pr.place} · ${pr.date}</small></span></div>`).join('') + '</div>';
 function openMap(){ paintMap(bigCv,true); mapview.hidden=false; } function closeMap(){ mapview.hidden=true; }
 document.getElementById('minimap').addEventListener('click', ()=>{ start(); openMap(); });
 document.getElementById('mapclose').addEventListener('click', closeMap);
