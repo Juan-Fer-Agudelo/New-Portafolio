@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { ProjectCategory, ProjectItem } from '../types';
 import { MasSaludDemo } from './MasSaludDemo';
 import { RenaultDemo } from './RenaultDemo';
@@ -50,7 +50,23 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const { t, lang } = useLang();
   const p = t.projects;
   const [openDemo, setOpenDemo] = useState<ProjectItem['demo'] | null>(null);
-  const closeDemo = useCallback(() => setOpenDemo(null), []);
+  const closeDemo = useCallback(() => {
+    setOpenDemo(null);
+    // el enlace directo #demo-<id> ya cumplió: se limpia para que recargar no vuelva a abrir la demo
+    if (window.location.hash.startsWith('#demo-')) history.replaceState(null, '', window.location.pathname);
+  }, []);
+  // Enlace directo a una demo: #demo-<id> (lo usa el portafolio interactivo)
+  useEffect(() => {
+    const openFromHash = () => {
+      const hash = window.location.hash;
+      if (!hash.startsWith('#demo-')) return;
+      const id = decodeURIComponent(hash.replace('#demo-', '')) as DemoId;
+      if (DEMO_COMPONENTS[id]) setOpenDemo(id);
+    };
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, []);
   const [filter, setFilter] = useState<Filter>('all');
   // Las tarjetas que vuelven a aparecer al filtrar ya no las ve el observador de scroll: se muestran directo
   const [revealAll, setRevealAll] = useState(false);
