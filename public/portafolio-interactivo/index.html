@@ -50,7 +50,7 @@ body{background:var(--deep);color:var(--ink);font-family:var(--f-body);font-size
 .minimap canvas{width:100%;height:100%;display:block}
 .minimap span{position:absolute;left:0;right:0;bottom:6px;text-align:center;font:700 10px var(--f-mono);letter-spacing:.08em;color:var(--ink);text-shadow:0 1px 2px #000}
 .minimap:focus-visible{outline:2px solid var(--dark);outline-offset:2px}
-@media (pointer:coarse){.minimap{bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 92px);width:92px;height:92px}}
+@media (pointer:coarse){.minimap{bottom:auto;top:max(16px,env(safe-area-inset-top,0px));width:92px;height:92px}.top{padding-right:104px}} /* on touch screens the minimap sits in the top-right corner, clear of the control pads; the header leaves room for it */
 .mapview{position:fixed;inset:0;display:grid;place-items:center;background:#0b1a2acc;backdrop-filter:blur(4px);z-index:20;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
 [hidden]{display:none!important}
 .mapcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;width:min(92vw,640px);max-height:92vh;overflow:auto}
@@ -135,7 +135,7 @@ body.pre .hud,body.pre .minimap{opacity:0;pointer-events:none}
 .pad .rev{width:96px;height:62px;font-size:22px}
 .pad .jump{background:var(--coral)}
 .pad .jump b{font:800 26px/1 var(--f-mono)}
-@media (pointer:coarse){.touch{display:block}.keys{display:none}.hud .bottom{flex-direction:column;align-items:center;gap:8px;margin-bottom:184px}.sound.ach{margin-right:0}.minimap{bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 196px)}} /* the pills sit between the jump button and the minimap */
+@media (pointer:coarse){.touch{display:block}.keys{display:none}.hud .bottom{flex-direction:column;align-items:center;gap:8px;margin-bottom:184px}.sound.ach{margin-right:0}} /* the pills sit above the control pads */
 
 .panel{position:fixed;top:50%;right:max(16px,env(safe-area-inset-right,0px));width:min(380px,calc(100vw - 32px));max-height:min(78vh,640px);overflow:auto;
   transform:translate(calc(100% + 40px),-50%);transition:transform .45s cubic-bezier(.2,.9,.25,1.15);
