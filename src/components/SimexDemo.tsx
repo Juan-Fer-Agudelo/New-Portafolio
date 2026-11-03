@@ -49,6 +49,8 @@ import {
 
 interface SimexDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -479,8 +481,8 @@ const schedule = (ctx: Ctx) => {
 const FAILED_EXECUTION_INDEX = 4;
 const STEP_MS = 380;
 
-export const SimexDemo: React.FC<SimexDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+export const SimexDemo: React.FC<SimexDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
+  const [screen, setScreen] = useState<'notice' | 'app'>(skipNotice ? 'app' : 'notice');
   const [tab, setTab] = useState<Tab>('editor');
   const executions = useMemo(() => lastExecutions(12), []);
   // Contexto de cada correo de la bandeja; el primero cambia si se simula la fuente incompleta
@@ -513,7 +515,7 @@ export const SimexDemo: React.FC<SimexDemoProps> = ({ isOpen, onClose }) => {
   // Reinicia al abrir, bloquea el scroll del fondo y cierra con Escape
   useEffect(() => {
     if (!isOpen) return;
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setTab('editor');
     setLatestFail(false);
     setCtx(makeCtx(executions[0], false));

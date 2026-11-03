@@ -57,6 +57,8 @@ import {
 
 interface RenaultDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -108,9 +110,9 @@ const ChangeSummary: React.FC<{ r: ChangeRequest }> = ({ r }) => (
   </span>
 );
 
-export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => {
+export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
   // flow → réplica del flujo de Power Automate que envía la aprobación y los correos
-  const [screen, setScreen] = useState<'notice' | 'app' | 'flow'>('notice');
+  const [screen, setScreen] = useState<'notice' | 'app' | 'flow'>(skipNotice ? 'app' : 'notice');
   const [flowFor, setFlowFor] = useState<string | undefined>(undefined);
   const [view, setView] = useState<View>('panel');
   const [role, setRole] = useState<Role>('rrhh');
@@ -131,7 +133,7 @@ export const RenaultDemo: React.FC<RenaultDemoProps> = ({ isOpen, onClose }) => 
     const initial = buildInitialRequests();
     setRequests(initial);
     setActivity(buildInitialActivity(initial));
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setView('panel');
     setRole('rrhh');
     setSelectedId(null);

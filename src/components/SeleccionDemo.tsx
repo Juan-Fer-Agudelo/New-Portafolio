@@ -35,6 +35,8 @@ import {
 
 interface SeleccionDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -44,8 +46,8 @@ type ResultFilter = 'Todos' | 'Aptos' | 'En espera' | 'No aptos' | 'En proceso';
 
 const TONE_CLASS: Record<Verdict | 'pendiente', string> = { apto: 'sld-tone--ok', medio: 'sld-tone--mid', no: 'sld-tone--bad', pendiente: 'sld-tone--none' };
 
-export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
+  const [screen, setScreen] = useState<'notice' | 'app'>(skipNotice ? 'app' : 'notice');
   const [view, setView] = useState<View>('tablet');
   const [aspirants, setAspirants] = useState<Aspirant[]>([]);
   const [base, setBase] = useState<Base>('ensamble');
@@ -63,7 +65,7 @@ export const SeleccionDemo: React.FC<SeleccionDemoProps> = ({ isOpen, onClose })
 
   useEffect(() => {
     if (!isOpen) return;
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setView('tablet');
     setAspirants(buildAspirants());
     setBase('ensamble');

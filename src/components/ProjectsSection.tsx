@@ -16,7 +16,7 @@ import { renderWithRightsHighlight } from '../utils/textHighlight';
 type DemoId = NonNullable<ProjectItem['demo']>;
 
 /** Demos de "Ver proyecto". Al ser Record<DemoId, …>, TypeScript avisa si se agrega una demo sin componente. */
-const DEMO_COMPONENTS: Record<DemoId, { name: string; Component: React.FC<{ isOpen: boolean; onClose: () => void }> }> = {
+const DEMO_COMPONENTS: Record<DemoId, { name: string; Component: React.FC<{ isOpen: boolean; onClose: () => void; skipNotice?: boolean }> }> = {
   'massalud-erp': { name: 'MasSalud', Component: MasSaludDemo },
   'renault-estructura': { name: 'Cambios de Estructura', Component: RenaultDemo },
   'simex-tasas': { name: 'Tasas de cambio', Component: SimexDemo },
@@ -50,6 +50,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const { t, lang } = useLang();
   const p = t.projects;
   const [openDemo, setOpenDemo] = useState<ProjectItem['demo'] | null>(null);
+  // true cuando la demo se abrió desde un enlace #demo-<id>: entra directo a la app, sin el aviso previo
+  const [demoDirect, setDemoDirect] = useState(false);
   const closeDemo = useCallback(() => {
     setOpenDemo(null);
     // el enlace directo #demo-<id> ya cumplió: se limpia para que recargar no vuelva a abrir la demo
@@ -61,7 +63,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       const hash = window.location.hash;
       if (!hash.startsWith('#demo-')) return;
       const id = decodeURIComponent(hash.replace('#demo-', '')) as DemoId;
-      if (DEMO_COMPONENTS[id]) setOpenDemo(id);
+      if (DEMO_COMPONENTS[id]) { setDemoDirect(true); setOpenDemo(id); }
     };
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
@@ -264,7 +266,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <button
                           type="button"
                           className="project-card-visit project-card-demo-btn"
-                          onClick={() => setOpenDemo(project.demo ?? null)}
+                          onClick={() => { setDemoDirect(false); setOpenDemo(project.demo ?? null); }}
                         >
                           {lang === 'en' ? 'View project' : 'Ver proyecto'} &rarr;
                         </button>
@@ -295,7 +297,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       {/* Cada demo va protegida: si falla, muestra un aviso y el portafolio sigue funcionando */}
       {DEMOS.map(({ id, name, Component }) => (
         <DemoErrorBoundary key={id} name={name} isOpen={openDemo === id} onClose={closeDemo}>
-          <Component isOpen={openDemo === id} onClose={closeDemo} />
+          <Component isOpen={openDemo === id} onClose={closeDemo} skipNotice={demoDirect} />
         </DemoErrorBoundary>
       ))}
     </section>

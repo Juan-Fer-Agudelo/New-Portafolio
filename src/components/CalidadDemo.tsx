@@ -26,6 +26,8 @@ import {
 
 interface CalidadDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -119,8 +121,8 @@ const countBy = <K extends string | number>(items: DefectRecord[], key: (d: Defe
   return m;
 };
 
-export const CalidadDemo: React.FC<CalidadDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+export const CalidadDemo: React.FC<CalidadDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
+  const [screen, setScreen] = useState<'notice' | 'app'>(skipNotice ? 'app' : 'notice');
   const [page, setPage] = useState<Page>('kpis');
   const [filters, setFilters] = useState<Filters>({ period: 30, shift: 0, uet: '', type: '' });
   const [tip, setTip] = useState<Tip | null>(null);
@@ -129,7 +131,7 @@ export const CalidadDemo: React.FC<CalidadDemoProps> = ({ isOpen, onClose }) => 
 
   useEffect(() => {
     if (!isOpen) return;
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setPage('kpis');
     setFilters({ period: 30, shift: 0, uet: '', type: '' });
     const prevOverflow = document.body.style.overflow;

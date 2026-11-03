@@ -24,6 +24,8 @@ import {
 
 interface AgvDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -105,8 +107,8 @@ const statusShort = (a: AgvState) => {
   return a.loaded ? 'En ruta' : 'Retornando';
 };
 
-export const AgvDemo: React.FC<AgvDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+export const AgvDemo: React.FC<AgvDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
+  const [screen, setScreen] = useState<'notice' | 'app'>(skipNotice ? 'app' : 'notice');
   const [running, setRunning] = useState(true);
   const [speed, setSpeed] = useState(1);
   const [filter, setFilter] = useState<Filter>('all');
@@ -124,7 +126,7 @@ export const AgvDemo: React.FC<AgvDemoProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (!isOpen) return;
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setRunning(true);
     setSpeed(1);
     setFilter('all');

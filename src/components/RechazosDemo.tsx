@@ -39,6 +39,8 @@ import {
 
 interface RechazosDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
@@ -60,8 +62,8 @@ const fmtMinutes = (min: number) => {
   return h ? `${h} h ${m} min` : `${m} min`;
 };
 
-export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose }) => {
-  const [screen, setScreen] = useState<'notice' | 'app'>('notice');
+export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
+  const [screen, setScreen] = useState<'notice' | 'app'>(skipNotice ? 'app' : 'notice');
   const [rejections, setRejections] = useState<Rejection[]>([]);
   const [uet, setUet] = useState('trim');
   const [scanning, setScanning] = useState(false);
@@ -87,7 +89,7 @@ export const RechazosDemo: React.FC<RechazosDemoProps> = ({ isOpen, onClose }) =
 
   useEffect(() => {
     if (!isOpen) return;
-    setScreen('notice');
+    setScreen(skipNotice ? 'app' : 'notice');
     setRejections(buildInitialRejections());
     setUet('trim');
     setPiece(null);

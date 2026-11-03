@@ -44,12 +44,14 @@ import { DemoNotice } from './DemoNotice';
 
 interface MasSaludDemoProps {
   isOpen: boolean;
+  /** Abre la app de la demo de una vez, sin el aviso previo (enlaces directos desde el portafolio interactivo) */
+  skipNotice?: boolean;
   onClose: () => void;
 }
 
-export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) => {
+export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose, skipNotice = false }) => {
   // notice → aviso inicial · demo → ERP · slack-notice → aviso de datos ficticios · slack → canal de Slack
-  const [step, setStep] = useState<'notice' | 'demo' | 'slack-notice' | 'slack'>('notice');
+  const [step, setStep] = useState<'notice' | 'demo' | 'slack-notice' | 'slack'>(skipNotice ? 'demo' : 'notice');
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('');
   const [from, setFrom] = useState('');
@@ -62,7 +64,7 @@ export const MasSaludDemo: React.FC<MasSaludDemoProps> = ({ isOpen, onClose }) =
   // Reinicia al abrir, bloquea el scroll del fondo y cierra con Escape
   useEffect(() => {
     if (!isOpen) return;
-    setStep('notice');
+    setStep(skipNotice ? 'demo' : 'notice');
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
