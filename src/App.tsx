@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageView, ActiveModal, ProjectItem, WritingArticle } from './types';
 import { useLang } from './i18n/LangContext';
-import { WRITING_ARTICLES } from './data/portfolioData';
+import { WRITING_ARTICLES, PROJECTS_DATA } from './data/portfolioData';
 import { getPublishedArticles } from './data/blogStore';
 import { Navbar } from './components/Navbar';
 import { MenuOverlay } from './components/MenuOverlay';
@@ -74,11 +74,24 @@ export const App: React.FC = () => {
     }
   };
 
+  // Abre la ficha de un proyecto desde un hash #proyecto-<id> (lo usa el portafolio interactivo)
+  const openProjectByHash = (hash: string) => {
+    const id = decodeURIComponent(hash.replace('#proyecto-', ''));
+    const project = PROJECTS_DATA.find((p) => p.id === id);
+    if (!project) return false;
+    setCurrentView('home');
+    setSelectedProject(project);
+    setActiveModal('project-detail');
+    return true;
+  };
+
   // Manejo de hashes y rutas en URL para navegación directa
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname;
       const hash = window.location.hash;
+
+      if (hash.startsWith('#proyecto-') && openProjectByHash(hash)) return;
 
       if (path === '/admin' || path === '/admin/' || hash === '#admin') {
         setCurrentView('admin');
@@ -112,6 +125,8 @@ export const App: React.FC = () => {
       }, 100);
     } else if (window.location.hash.startsWith('#blog-')) {
       openArticleBySlug(window.location.hash.replace('#blog-', ''));
+    } else if (window.location.hash.startsWith('#proyecto-')) {
+      openProjectByHash(window.location.hash);
     }
 
     window.addEventListener('hashchange', handleLocationChange);
